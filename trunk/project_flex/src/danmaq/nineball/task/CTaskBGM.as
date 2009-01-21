@@ -31,6 +31,9 @@ package danmaq.nineball.task{
 		 */
 		public var isDisposeCancel:Boolean = false;
 
+		/**	現在再生されているかどうかが格納されます。 */
+		private static var s_bPlay:Boolean = false;
+
 		/**	タスクが終了したかどうかが格納されます。 */
 		private var m_bDisposed:Boolean = false;
 
@@ -52,7 +55,20 @@ package danmaq.nineball.task{
 		/**	タイマが設定されているかどうかが格納されます。 */
 		private var m_bSetTimer:Boolean;
 		
+		/**	ミュート中かどうかが格納されます。 */
+		private var m_bMute:Boolean = false;
+		
+		/**	最大音量値が格納されます。 */
+		private var m_fMaxVolume:Number = 1;
+		
 		////////// PROPERTIES //////////
+
+		/**
+		 * 現在再生中かどうかを取得します。
+		 * 
+		 * @return 現在再生中である場合、true
+		 */
+		public static function get isPlay():Boolean{ return s_bPlay; }
 
 		/**
 		 * レイヤ値を取得します。
@@ -76,6 +92,25 @@ package danmaq.nineball.task{
 		 */
 		public function get disposed():Boolean{ return m_bDisposed; }
 
+		/**
+		 * ミュート中かどうかを取得します。
+		 * 
+		 * @return ミュートしている場合、true
+		 */
+		public function get mute():Boolean{ return m_bMute; }
+
+		/**
+		 * ミュートするかどうかを設定します。
+		 * 
+		 * @param value ミュートするかどうか
+		 */
+		public function set mute( value:Boolean ):void{
+			if( mute != value ){
+				m_bMute = value;
+				applyMute();
+			}
+		}
+
 		////////// METHODS //////////
 		
 		/**
@@ -95,9 +130,7 @@ package danmaq.nineball.task{
 		 * コンストラクタの後、タスクが管理クラスに登録された直後に、
 		 * 1度だけ自動的に呼ばれます。
 		 */
-		public function initialize():void{
-			playLoop();
-		}
+		public function initialize():void{ playLoop(); }
 
 		/**
 		 * デストラクタ。
@@ -108,6 +141,7 @@ package danmaq.nineball.task{
 				if( m_bgmch != null ){ m_bgmch.stop(); }
 				m_bgmch = null;
 				m_bDisposed = true;
+				s_bPlay = false;
 			}
 		}
 		
@@ -133,8 +167,8 @@ package danmaq.nineball.task{
 				break;
 			case PHASE_END:
 				phaseManager.isReserveNextPhase = ( uPhase == m_uFadeTime );
-				m_bgmch.soundTransform = new SoundTransform(
-					CInterpolate.slowdown( 1, 0, uPCount, m_uFadeTime ) );
+				m_fMaxVolume = CInterpolate.slowdown( 1, 0, uPCount, m_uFadeTime );
+				m_bgmch.soundTransform = new SoundTransform( m_fMaxVolume );
 				break;
 			}
 			phaseManager.count++;
@@ -151,6 +185,15 @@ package danmaq.nineball.task{
 		}
 		
 		/**
+		 * ミュート中かどうかを判断して音量を設定します。
+		 */
+		private function applyMute():void{
+			if( m_bgmch != null ){
+				m_bgmch.soundTransform = new SoundTransform( mute ? 0 : m_fMaxVolume );
+			}
+		}
+
+		/**
 		 * タイマを設定します。
 		 * 
 		 * @param nAmount タイマ発動時間
@@ -158,7 +201,7 @@ package danmaq.nineball.task{
 		 */
 		private function setTimer( nAmount:int ):Boolean{
 			var bResult:Boolean = ( !m_bSetTimer && nAmount < 100 );
-			if( bResult ){	// 長引くほど精度が落ちるので直前(1秒前)に仕掛ける
+			if( bResult ){	// 長引くほど精度が落ちるので直前(0.1秒前)に仕掛ける
 				m_bSetTimer = true;
 				var t:Timer = new Timer( Math.max( nAmount, 0 ), 1 );
 				t.addEventListener( "timer", playLoop );
@@ -178,7 +221,9 @@ package danmaq.nineball.task{
 				m_bgmch = m_preset.bgm.play(
 					event == null ? 0 : m_preset.loopStart, int.MAX_VALUE );
 				m_nStartTime = new Date().time;
+				applyMute();
 				if( schOld != null ){ schOld.stop(); }
+				s_bPlay = true;
 				m_bSetTimer = false;
 			}
 		}

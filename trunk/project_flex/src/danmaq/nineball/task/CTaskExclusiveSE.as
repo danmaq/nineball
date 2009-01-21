@@ -40,6 +40,9 @@ package danmaq.nineball.task{
 		/**	現在のフレーム時間が格納されます。 */
 		private var m_uCount:uint = 0;
 		
+		/**	ミュート中かどうかが格納されます。 */
+		private var m_bMute:Boolean = false;
+		
 		////////// PROPERTIES //////////
 
 		/**
@@ -56,6 +59,28 @@ package danmaq.nineball.task{
 		 * @param value タスク管理クラス
 		 */
 		public function set manager( value:CTaskManager ):void{}
+
+		/**
+		 * ミュート中かどうかを取得します。
+		 * 
+		 * @return ミュートしている場合、true
+		 */
+		public function get mute():Boolean{ return m_bMute; }
+
+		/**
+		 * ミュートするかどうかを設定します。
+		 * 
+		 * @param value ミュートするかどうか
+		 */
+		public function set mute( value:Boolean ):void{
+			if( mute != value ){
+				m_bMute = value;
+				for each( var aItem:Array in dicSE ){
+					var sch:SoundChannel = aItem[ 1 ];
+					if( sch != null ){ sch.soundTransform = new SoundTransform( mute ? 0 : 1 ); }
+				}
+			}
+		}
 
 		////////// METHODS //////////
 
@@ -98,8 +123,11 @@ package danmaq.nineball.task{
 					var strKey:String = QList.pop();
 					if( dicSE[ strKey ] != null ){
 						var aItem:Array = dicSE[ strKey ];
-						if( aItem[ 1 ] != null ){ ( aItem[ 1 ] as SoundChannel ).stop(); }
-						aItem[ 1 ] = ( aItem[ 0 ] as Sound ).play();
+						var sch:SoundChannel = aItem[ 1 ];
+						if( sch != null ){ sch.stop(); }
+						sch = ( aItem[ 0 ] as Sound ).play();
+						if( mute ){ sch.soundTransform = new SoundTransform( 0 ); }
+						aItem[ 1 ] = sch;
 					}
 				}
 			}
