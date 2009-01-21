@@ -7,7 +7,7 @@ package danmaq.nineball.struct{
 	import mx.utils.StringUtil;
 	
 	/**
-	 * DS画面制御用表示物体構造体
+	 * 画面オブジェクト管理クラス用表示物体構造体
 	 * 
 	 * @author Mc(danmaq)
 	 */
