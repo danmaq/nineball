@@ -25,10 +25,10 @@ package danmaq.nineball.core{
 		function dispose():void;
 
 		/**
-		 * シーンの動作処理を記述します。
-		 * |next ＼戻値|true|false |
-		 * |nextScene有|call| goto |
-		 * |nextScene無|next|return|
+		 * シーンの動作処理を記述します。<br />
+		 * |next ＼戻値|true|false |<br />
+		 * |nextScene有|call| goto |<br />
+		 * |nextScene無|next|return|<br />
 		 * 
 		 * @return 次のフレームもシーンが存続する場合、true
 		 */
