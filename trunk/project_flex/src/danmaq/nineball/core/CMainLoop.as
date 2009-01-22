@@ -90,7 +90,7 @@ package danmaq.nineball.core{
 		 */
 		public function CMainLoop( ini:CInitializeData ){
 			m_instance = this;
-			CTaskFontByte.fontHash = ini.fontHash;
+			CFontBit.fontHash = ini.fontHash;
 			var screen:CScreen = new CScreen( 0 );
 			screenList.push( screen );
 			ini.main.addChild( screen.parent.screen );
