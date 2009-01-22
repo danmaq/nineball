@@ -1,7 +1,5 @@
 package danmaq.nineball.core{
 
-	import __AS3__.vec.Vector;
-	
 	import mx.utils.StringUtil;
 
 	/**
