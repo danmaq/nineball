@@ -61,6 +61,9 @@ package danmaq.nineball.task{
 		 */
 		public var kerning:Number = 1;
 
+		/** 回転角度が格納されます。 */
+		public var rotate:Number = 1;
+
 		/**	タスク管理クラスが格納されます。 */
 		private var m_taskManager:CTaskManager = null;
 
@@ -238,6 +241,7 @@ package danmaq.nineball.task{
 			for each( var task:CTaskFontByte in taskByteList ){
 				var fHWidth:Number = task.size.x * scale.x / 2;
 				fX += fHWidth * kerning;
+				task.rotate = rotate;
 				task.pos.x = fX;
 				task.pos.y = fY;
 				task.scale.x = scale.x;

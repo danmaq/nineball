@@ -31,11 +31,14 @@ package danmaq.nineball.task{
 		
 		////////// FIELDS //////////
 		
-		/**	初期サイズが格納されます。 */
-		private var m_size:Point = new Point();
-		
 		/**	ビットマップフォントの定義リストが格納されます。 */
 		public static var fontHash:Dictionary = new Dictionary();
+
+		/**	回転角度が格納されます。 */
+		public var rotate:Number = 0;
+		
+		/**	初期サイズが格納されます。 */
+		private var m_size:Point = new Point();
 		
 		/**	レイヤ番号が格納されます。 */
 		private var m_uLayer:uint;
@@ -203,7 +206,7 @@ package danmaq.nineball.task{
 		 */
 		public function render():void{
 			m_image.transform.colorTransform = color;
-			CMisc.setMatrix( m_image, scale, 0, pos );
+			CMisc.setMatrix( m_image, scale, rotate, pos );
 		}
 		
 		/**
