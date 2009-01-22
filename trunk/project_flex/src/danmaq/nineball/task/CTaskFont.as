@@ -1,10 +1,8 @@
 package danmaq.nineball.task{
 
-	import __AS3__.vec.Vector;
-	
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.math.CMathMisc;
-	import danmaq.nineball.struct.CAlign;
+	import danmaq.nineball.struct.*;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Point;
@@ -27,7 +25,7 @@ package danmaq.nineball.task{
 		public const scale:Point = new Point( 1, 1 );
 		
 		/**	単文字フォントタスクが格納されます。 */
-		private const taskByteList:Vector.<CTaskFontByte> = new Vector.<CTaskFontByte>();
+		private const bitList:Vector.<CFontBit> = new Vector.<CFontBit>();
 
 		////////// FIELDS //////////
 		
@@ -142,9 +140,9 @@ package danmaq.nineball.task{
 		 */
 		public function get size():Point{
 			var posResult:Point = new Point();
-			for each( var task:CTaskFontByte in taskByteList ){
-				posResult.x += task.size.x * scale.x * kerning;
-				posResult.y = Math.max( posResult.y, task.size.y * scale.y );
+			for each( var bit:CFontBit in bitList ){
+				posResult.x += bit.size.x * scale.x * kerning;
+				posResult.y = Math.max( posResult.y, bit.size.y * scale.y );
 			}
 			return posResult;
 		}
@@ -238,18 +236,18 @@ package danmaq.nineball.task{
 				case CAlign.BOTTOM_RIGHT:		fY = pos.y - posSize.y / 2;	break;
 				case CAlign.CENTER:	default:	fY = pos.y;					break;
 			}
-			for each( var task:CTaskFontByte in taskByteList ){
-				var fHWidth:Number = task.size.x * scale.x / 2;
+			for each( var bit:CFontBit in bitList ){
+				var fHWidth:Number = bit.size.x * scale.x / 2;
 				fX += fHWidth * kerning;
-				task.rotate = rotate;
-				task.pos.x = fX;
-				task.pos.y = fY;
-				task.scale.x = scale.x;
-				task.scale.y = scale.y;
-				task.color.color = color;
-				task.render();
-				task.alpha = alpha;
-				task.view = view;
+				bit.rotate = rotate;
+				bit.pos.x = fX;
+				bit.pos.y = fY;
+				bit.scale.x = scale.x;
+				bit.scale.y = scale.y;
+				bit.color.color = color;
+				bit.render();
+				bit.alpha = alpha;
+				bit.view = view;
 				fX += fHWidth * kerning;
 			}
 		}
@@ -258,7 +256,7 @@ package danmaq.nineball.task{
 		 * 子タスクを抹消します。
 		 */
 		private function deleteChild():void{
-			while( taskByteList.length > 0 ){ m_taskManager.eraseTask( taskByteList.pop() ); }
+			while( bitList.length > 0 ){ m_taskManager.eraseTask( bitList.pop() ); }
 		}
 
 		/**
@@ -269,10 +267,9 @@ package danmaq.nineball.task{
 			try{
 				var uLen:uint = m_strText.length;
 				for( var i:uint = 0; i < uLen; i++ ){
-					var task:CTaskFontByte =
-						new CTaskFontByte( m_strText.charAt( i ), m_uScreen, layer );
-					taskByteList.push( task );
-					m_taskManager.add( task );
+					var bit:CFontBit =
+						new CFontBit( m_strText.charAt( i ), m_uScreen, layer );
+					bitList.push( bit );
 				}
 				if( autoRender ){ render(); }
 			}

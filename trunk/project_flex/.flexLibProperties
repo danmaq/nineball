@@ -18,10 +18,10 @@
 <classEntry path="danmaq.nineball.task.CTaskFPSView"/>
 <classEntry path="danmaq.nineball.task.CTaskExclusiveSE"/>
 <classEntry path="danmaq.nineball.misc.math.CMathTrignometric"/>
+<classEntry path="danmaq.nineball.struct.CFontBit"/>
 <classEntry path="danmaq.nineball.struct.CScreen"/>
 <classEntry path="danmaq.nineball.core.CTaskManager"/>
 <classEntry path="danmaq.nineball.misc.math.CMathMisc"/>
-<classEntry path="danmaq.nineball.task.CTaskFontByte"/>
 <classEntry path="danmaq.nineball.core.IScene"/>
 <classEntry path="danmaq.nineball.task.CTaskBGM"/>
 <classEntry path="danmaq.nineball.core.CMainLoop"/>

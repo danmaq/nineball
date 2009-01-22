@@ -1,6 +1,7 @@
-package danmaq.nineball.task{
+package danmaq.nineball.struct{
 
 	import danmaq.nineball.core.*;
+
 	import danmaq.nineball.misc.CMisc;
 	import danmaq.nineball.misc.math.CMathMisc;
 	
@@ -10,13 +11,13 @@ package danmaq.nineball.task{
 	import flash.utils.Dictionary;
 
 	/**
-	 * 単文字フォントタスクです。
+	 * 単文字フォントクラスです。
 	 * CTaskFontの内部で使用されるクラスです。
 	 * 通常、直接使用することはありません。
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public final class CTaskFontByte implements ITask, IDisposed{
+	public final class CFontBit implements IDisposed{
 
 		////////// CONSTANTS //////////
 
@@ -57,23 +58,8 @@ package danmaq.nineball.task{
 
 		/**	画像が格納されます。 */
 		private var m_image:DisplayObject = null;
-		
-		////////// PROPERTIES //////////
 
-		/**
-		 * レイヤ値を取得します。
-		 * 
-		 * @return レイヤ値
-		 */
-		public function get layer():uint{ return m_uLayer; }
-		
-		/**
-		 * タスク管理クラスを設定します。
-		 * このクラスでは特に必要ないので何も設定しません。
-		 * 
-		 * @param value タスク管理クラス
-		 */
-		public function set manager( value:CTaskManager ):void{}
+		////////// PROPERTIES //////////
 
 		/**
 		 * 解放したかどうかを取得します。
@@ -101,7 +87,7 @@ package danmaq.nineball.task{
 			if( m_bView != value ){
 				m_bView = value;
 				if( value ){
-					CMainLoop.instance.screenList[ m_uScreen ].add( m_image, layer );
+					CMainLoop.instance.screenList[ m_uScreen ].add( m_image, m_uLayer );
 				}
 				else{ CMainLoop.instance.screenList[ m_uScreen ].remove( m_image ); }
 			}
@@ -173,18 +159,14 @@ package danmaq.nineball.task{
 		 * @param uLayer レイヤ番号
 		 * @param fSpacing スペース幅
 		 */
-		public function CTaskFontByte( strByte:String, uScreen:uint = 0, uLayer:uint = 0, fSpacing:Number = 4 ){
+		public function CFontBit(
+			strByte:String, uScreen:uint = 0, uLayer:uint = 0, fSpacing:Number = 4
+		){
 			initializeHash( fSpacing );
 			m_uScreen = uScreen;
 			m_uLayer = uLayer;
 			byte = strByte;
 		}
-
-		/**
-		 * コンストラクタの後、タスクが管理クラスに登録された直後に、
-		 * 1度だけ自動的に呼ばれます。
-		 */
-		public function initialize():void{}
 
 		/**
 		 * デストラクタ。
@@ -193,14 +175,7 @@ package danmaq.nineball.task{
 			view = false;
 			m_bDisposed = true;
 		}
-		
-		/**
-		 * タスクを1フレーム分動かします。
-		 * 
-		 * @return 無条件にtrue
-		 */
-		public function update():Boolean{ return true; }
-		
+
 		/**
 		 * レンダリングします。
 		 */
