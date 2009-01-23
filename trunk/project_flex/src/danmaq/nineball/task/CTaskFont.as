@@ -60,7 +60,7 @@ package danmaq.nineball.task{
 		public var kerning:Number = 1;
 
 		/** 回転角度が格納されます。 */
-		public var rotate:Number = 1;
+		public var rotate:Number = 0;
 
 		/**	タスク管理クラスが格納されます。 */
 		private var m_taskManager:CTaskManager = null;
@@ -101,9 +101,7 @@ package danmaq.nineball.task{
 		 * 
 		 * @param value タスク管理クラス
 		 */
-		public function set manager( value:CTaskManager ):void{
-			m_taskManager = value;
-		}
+		public function set manager( value:CTaskManager ):void{ m_taskManager = value; }
 
 		/**
 		 * 解放したかどうかを取得します。
