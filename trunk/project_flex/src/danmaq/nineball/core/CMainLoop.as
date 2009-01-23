@@ -20,10 +20,10 @@ package danmaq.nineball.core{
 		public const screenList:Vector.<CScreen> = new Vector.<CScreen>();
 
 		/**	シーン管理クラスが格納されます。 */
-		private const sceneManager:CSceneManager = new CSceneManager();
+		public const sceneManager:CSceneManager = new CSceneManager();
 
 		/**	タスク管理クラスが格納されます。 */
-		private const taskManager:CTaskManager = new CTaskManager();
+		public const taskManager:CTaskManager = new CTaskManager();
 
 		////////// FIELDS //////////
 
