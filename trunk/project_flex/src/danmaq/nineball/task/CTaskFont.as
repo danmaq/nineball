@@ -256,7 +256,7 @@ package danmaq.nineball.task{
 		 * 子タスクを抹消します。
 		 */
 		private function deleteChild():void{
-			while( bitList.length > 0 ){ m_taskManager.eraseTask( bitList.pop() ); }
+			while( bitList.length > 0 ){ bitList.pop().dispose(); }
 		}
 
 		/**
