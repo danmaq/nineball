@@ -1,7 +1,6 @@
 package danmaq.nineball.struct{
 
 	import danmaq.nineball.core.*;
-
 	import danmaq.nineball.misc.CMisc;
 	import danmaq.nineball.misc.math.CMathMisc;
 	
