@@ -96,6 +96,7 @@ package danmaq.nineball.task{
 			m_uLayer = uLayer;
 			fill.graphics.beginFill( 0xFFFFFF );
 			fill.graphics.drawRect( rect.x, rect.y, rect.width, rect.height );
+			fill.graphics.endFill();
 			fill.blendMode = bWhite ? BlendMode.ADD : BlendMode.SUBTRACT;
 			var fDepth:Number = m_bIn ? 1 : 0;
 			fill.transform.colorTransform = new ColorTransform( fDepth, fDepth, fDepth );
