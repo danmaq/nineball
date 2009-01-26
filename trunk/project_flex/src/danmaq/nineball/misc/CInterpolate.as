@@ -79,10 +79,11 @@ package danmaq.nineball.misc{
 		public static function splineFSF( fStart:Number, fEnd:Number, fNow:Number, fLimit:Number ):Number{
 			if( fNow <= 0 ){ return fStart; }
 			if( fNow >= fLimit ){ return fEnd; }
-			var fCenter:Number = fStart + ( fEnd - fStart / 2 );
+			var fCenter:Number = smooth( fStart, fEnd, 1, 2 );
 			var fHalfLimit:Number = fLimit / 2;
-			if( fNow < fHalfLimit ){ return slowdown( fStart, fCenter, fNow, fHalfLimit ); }
-			else{ return accelerate( fCenter, fEnd, fNow - fHalfLimit, fHalfLimit ); }
+			return fNow < fHalfLimit ?
+				slowdown( fStart, fCenter, fNow, fHalfLimit ) :
+				accelerate( fCenter, fEnd, fNow - fHalfLimit, fHalfLimit );
 		}
 		
 		/**
@@ -98,10 +99,11 @@ package danmaq.nineball.misc{
 		public static function splineSFS( fStart:Number, fEnd:Number, fNow:Number, fLimit:Number ):Number{
 			if( fNow <= 0 ){ return fStart; }
 			if( fNow >= fLimit ){ return fEnd; }
-			var fCenter:Number = fStart + ( fEnd - fStart / 2 );
+			var fCenter:Number = smooth( fStart, fEnd, 1, 2 );
 			var fHalfLimit:Number = fLimit / 2;
-			if( fNow < fHalfLimit ){ return accelerate( fStart, fCenter, fNow, fHalfLimit ); }
-			else{ return slowdown( fCenter, fEnd, fNow - fHalfLimit, fHalfLimit ); }
+			return fNow < fHalfLimit ?
+				accelerate( fStart, fCenter, fNow, fHalfLimit ) :
+				slowdown( fCenter, fEnd, fNow - fHalfLimit, fHalfLimit );
 		}
 
 		/**
