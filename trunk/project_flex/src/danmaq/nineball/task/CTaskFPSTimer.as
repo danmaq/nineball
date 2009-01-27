@@ -165,5 +165,12 @@ package danmaq.nineball.task{
 			phaseManager.count++;
 			return true;
 		}
+		
+		/**
+		 * FPS補正をリセットします。
+		 * 急激な負荷の変化が予想される時に実行してください。
+		 * 注意：あまり頻繁に呼び出すと補正の効果が薄れます。
+		 */
+		public function resetCalibration():void{ m_uTimerValue = m_uTheoretical; }
 	}
 }
