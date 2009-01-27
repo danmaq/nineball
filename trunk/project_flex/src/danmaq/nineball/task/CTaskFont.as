@@ -33,13 +33,13 @@ package danmaq.nineball.task{
 		 * 水平位置情報が格納されます。
 		 * danmaq.nineball.struct.CAlignクラスの定数を使用してください。
 		 */
-		public var halign:int = 0;
+		public var halign:int = CAlign.CENTER;
 		
 		/**
 		 * 垂直位置情報が格納されます。
 		 * danmaq.nineball.struct.CAlignクラスの定数を使用してください。
 		 */
-		public var valign:int = 0;
+		public var valign:int = CAlign.CENTER;
 		
 		/**
 		 * 生存タイマが格納されます。
