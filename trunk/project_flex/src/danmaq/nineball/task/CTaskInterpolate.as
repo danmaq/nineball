@@ -152,7 +152,7 @@ package danmaq.nineball.task{
 			m_fValue = m_fnInterpolate( m_fStart, m_fEnd, m_uCount, m_uLimit );
 			if( setter != null ){ setter( m_fValue ); }
 			m_uCount++;
-			return true;
+			return m_uCount < m_uLimit;
 		}
 	}
 }
