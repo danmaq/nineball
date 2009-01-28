@@ -42,6 +42,9 @@ package danmaq.nineball.core{
 		/**	前フレームが動作中かどうかが格納されます。 */
 		private var m_bDoPrevLoop:Boolean = false;
 
+		/**	DNL起動時間が格納されます。 */
+		private var m_fStartTime:Number;
+
 		////////// PROPERTIES //////////
 		
 		/**
@@ -79,6 +82,13 @@ package danmaq.nineball.core{
 		 */
 		public function get stage():Stage{ return screenParent.screen.stage; }
 
+		/**
+		 * danmaq Nineball Libraryの起動からの経過時間を取得します。
+		 * 
+		 * @return danmaq Nineball Libraryの起動からの経過時間
+		 */
+		public function get startTime():Number{ return ( new Date() ).time - m_fStartTime; }
+
 		////////// METHODS //////////
 
 		/**
@@ -87,6 +97,7 @@ package danmaq.nineball.core{
 		 * @param ini 初期化データ
 		 */
 		public function CMainLoop( ini:CInitializeData ){
+			m_fStartTime = ( new Date() ).time;
 			m_instance = this;
 			CFontBit.fontHash = ini.fontHash;
 			var screen:CScreen = new CScreen( 0 );
