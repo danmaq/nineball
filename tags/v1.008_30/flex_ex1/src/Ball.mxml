@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	 creationComplete="main();" layout="absolute" frameRate="60"
+	 width="640" height="400" minWidth="640"
+	 pageTitle="赤い玉 青い玉 競走ゲーム" backgroundAlpha="0" backgroundColor="#FFFFFF">
+
+	<mx:Script>
+		<![CDATA[
+
+			import danmaq.nineball.struct.CInitializeData;
+
+			////////// METHODS //////////
+	
+			/**
+			 * ここからプログラムが開始します。
+			 */
+			private function main():void{
+				var ini:CInitializeData = new CInitializeData();
+				ini.fps = 60;
+				ini.fpsReflesh = 30;
+				ini.fpsLowLimit = 50;
+				ini.fpsLowCount = 5;
+				ini.seResolution = 3;
+				ini.main = this;
+				ini.run();
+			}
+
+		]]>
+	</mx:Script>
+
+</mx:Application>
