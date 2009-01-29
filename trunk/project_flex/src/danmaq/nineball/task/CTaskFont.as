@@ -62,9 +62,6 @@ package danmaq.nineball.task{
 		/** 回転角度が格納されます。 */
 		public var rotate:Number = 0;
 
-		/**	タスク管理クラスが格納されます。 */
-		private var m_taskManager:CTaskManager = null;
-
 		/**	レイヤ番号が格納されます。 */
 		private var m_uLayer:uint;
 
@@ -76,9 +73,6 @@ package danmaq.nineball.task{
 		
 		/**	表示するテキストが格納されます。 */
 		private var m_strText:String = "";
-
-		/**	テキスト生成を予約するかどうかが格納されます。 */
-		private var m_bReserveCreateText:Boolean = false;
 
 		/**	色が格納されます。 */
 		private var m_uColor:uint = 0xFFFFFF;
@@ -98,10 +92,11 @@ package danmaq.nineball.task{
 		
 		/**
 		 * タスク管理クラスを設定します。
+		 * このクラスでは特に必要ないので何も設定しません。
 		 * 
 		 * @param value タスク管理クラス
 		 */
-		public function set manager( value:CTaskManager ):void{ m_taskManager = value; }
+		public function set manager( value:CTaskManager ):void{}
 
 		/**
 		 * 解放したかどうかを取得します。
@@ -126,8 +121,7 @@ package danmaq.nineball.task{
 			if( value == null ){ throw new IllegalOperationError( "引数にnullを設定出来ません。" ); }
 			if( m_strText != value ){
 				m_strText = value;
-				m_bReserveCreateText = ( m_taskManager == null );
-				if( !m_bReserveCreateText ){ createChild(); }
+				createChild();
 			}
 		}
 
@@ -210,10 +204,6 @@ package danmaq.nineball.task{
 		 * @return 生存タイマが0でない限りtrue
 		 */
 		public function update():Boolean{
-			if( m_bReserveCreateText ){
-				createChild();
-				m_bReserveCreateText = false;
-			}
 			return ( timer < 0 || timer-- > 0 );
 		}
 
