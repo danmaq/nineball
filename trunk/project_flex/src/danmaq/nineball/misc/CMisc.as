@@ -1,6 +1,6 @@
 package danmaq.nineball.misc{
 	
-	import flash.display.DisplayObject;
+	import flash.display.*;
 	import flash.geom.*;
 	import flash.utils.*;
 	
@@ -88,6 +88,22 @@ package danmaq.nineball.misc{
 			var fRad:Number = Math.PI * fDeg / 180;
 			return new Point(
 				Math.sin( fRad ) * fSpeed, -Math.cos( fRad ) * fSpeed );
-		} 
+		}
+		
+		/**
+		 * ビットマップ画像をクリッピングします。
+		 * 
+		 * @param src ソースとなるビットマップ画像
+		 * @param rect クリッピング範囲
+		 * @return クリッピングされたビットマップ画像
+		 */
+		public static function clipBitmap( src:Bitmap, rect:Rectangle ):Bitmap{
+			var __rect:Rectangle = new Rectangle( 0, 0, rect.width, rect.height );
+			var dst:BitmapData = new BitmapData( rect.width, rect.height );
+			var matrix:Matrix = new Matrix();
+			matrix.translate( -rect.x, -rect.y );
+			dst.draw( src.bitmapData, matrix, new ColorTransform(), null, __rect );
+			return new Bitmap( dst );
+		}
 	}
 }
