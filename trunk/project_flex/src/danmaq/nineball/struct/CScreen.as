@@ -133,7 +133,7 @@ package danmaq.nineball.struct{
 		 * @param child 配置するオブジェクト
 		 * @param index 子を追加するインデックス位置
 		 */
-		public function addChildAtReverse( child:DisplayObject, index:int ):DisplayObject{
+		public function addChildAtReverse( child:DisplayObject, index:uint ):DisplayObject{
 			return m_screen.addChildAt( child, m_screen.numChildren - index );
 		}
 	}

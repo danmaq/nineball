@@ -2,7 +2,7 @@ package danmaq.nineball.misc{
 	
 	import flash.display.DisplayObject;
 	import flash.geom.*;
-	import flash.utils.describeType;
+	import flash.utils.*;
 	
 	/**
 	 * 汎用関数群クラスです。
@@ -65,6 +65,16 @@ package danmaq.nineball.misc{
 			}
 			catch( e:Error ){}
 			return strResult;
+		}
+		
+		/**
+		 * クラスのインスタンス オブジェクトのクラス オブジェクトを取得します。
+		 * 
+		 * @param obj クラスのインスタンス オブジェクト
+		 * @return クラス オブジェクト
+		 */
+		public static function getClassObject( obj:Object ):Class{
+			return getDefinitionByName( getQualifiedClassName( obj ) ) as Class;
 		}
 		
 		/**
