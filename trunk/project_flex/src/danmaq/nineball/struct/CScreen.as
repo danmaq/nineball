@@ -105,7 +105,7 @@ package danmaq.nineball.struct{
 				}
 			}
 			displayObjectList.push( struct );
-			m_screen.addChildAt( child, 0 );
+			screen.addChildAt( child, 0 );
 		}
 
 		/**
@@ -115,7 +115,7 @@ package danmaq.nineball.struct{
 		 * @param nLayer レイヤ番号
 		 */
 		public function remove( child:DisplayObject ):void{
-			m_screen.removeChild( child );
+			screen.removeChild( child );
 			var uLength:uint = displayObjectList.length;
 			for( var i:int = 0; i < uLength; i++ ){
 				if( displayObjectList[ i ].obj === child ){
@@ -134,9 +134,12 @@ package danmaq.nineball.struct{
 		 * @param index 子を追加するインデックス位置
 		 */
 		public function addChildAtReverse( child:DisplayObject, index:uint ):DisplayObject{
-			return m_screen.addChildAt( child, m_screen.numChildren - index );
+			return screen.addChildAt( child, screen.numChildren - index );
 		}
 	}
 }
 
+/**
+ * 親管理クラス作成に必要なクラスです。
+ */
 class CScreenParent{}
