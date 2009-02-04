@@ -119,6 +119,8 @@ package danmaq.nineball.struct{
 							"指定の文字は割り当てられていません。:" + value );
 					}
 					m_image = new imgByte();
+					try{ ( m_image as Bitmap ).smoothing = true; }
+					catch( e:Error ){}
 				}
 				m_size = new Point( m_image.width, m_image.height );
 				m_strText = value;
