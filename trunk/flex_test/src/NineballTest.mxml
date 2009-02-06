@@ -8,6 +8,9 @@
 
 			import danmaq.nineball.test.AllTests;
 			
+			/**
+			 * ユニットテストを開始します。
+			 */
 			private function creationCompleteHandler():void{ as3unit.run( AllTests ); }
 
 		]]>
