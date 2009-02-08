@@ -14,6 +14,8 @@ package danmaq.nineball.test.core{
 	 */
 	public final class CPhaseManagerTest{
 
+		////////// METHODS //////////
+
 		/**
 		 * コンストラクタのテストを開始します。
 		 */
@@ -51,9 +53,9 @@ package danmaq.nineball.test.core{
 			obj.count++;
 			assertSame( 1, obj.count );
 			obj.count += 5;
-			assertSame( 2, obj.count );
+			assertSame( 6, obj.count );
 			obj.count = 0;
-			assertSame( 3, obj.count );
+			assertSame( 0, obj.count );
 		}
 
 		/**
@@ -76,13 +78,13 @@ package danmaq.nineball.test.core{
 			obj.count++;
 			assertSame( 1, obj.phaseCount );
 			obj.count += 5;
-			assertSame( 2, obj.phaseCount );
-			obj.count = 0;
+			assertSame( 6, obj.phaseCount );
+			obj.count = 3;
 			assertSame( 3, obj.phaseCount );
 			obj.phase = 1;
 			assertSame( 0, obj.phaseCount );
 			obj.count += 5;
-			assertSame( 1, obj.phaseCount );
+			assertSame( 5, obj.phaseCount );
 		}
 
 		/**
