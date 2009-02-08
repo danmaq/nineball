@@ -51,7 +51,7 @@ package danmaq.nineball.misc.math{
 		 * セカントを計算します。
 		 *
 		 * @param nRadian ラジアン値
-		 * @return 角度に対応するセカント値
+		 * @return 対応するセカント値
 		 */
 		public static function sec( fRadian:Number ):Number{ return 1 / Math.cos( fRadian ); }
 		
@@ -59,7 +59,7 @@ package danmaq.nineball.misc.math{
 		 * コセカントを計算します。
 		 *
 		 * @param nRadian ラジアン値
-		 * @return 角度に対応するコセカント値
+		 * @return 対応するコセカント値
 		 */
 		public static function cosec( fRadian:Number ):Number{ return 1 / Math.sin( fRadian ); }
 		
@@ -67,7 +67,7 @@ package danmaq.nineball.misc.math{
 		 * コタンジェントを計算します。
 		 *
 		 * @param nRadian ラジアン値
-		 * @return 角度に対応するコタンジェント値
+		 * @return 対応するコタンジェント値
 		 */
 		public static function cotan( fRadian:Number ):Number{ return 1 / Math.tan( fRadian ); }
 		
@@ -75,7 +75,7 @@ package danmaq.nineball.misc.math{
 		 * アークセカントを計算します。
 		 *
 		 * @param nRadian ラジアン値
-		 * @return 角度に対応するアークセカント値
+		 * @return 対応するアークセカント値
 		 */
 		public static function asec( fRadian:Number ):Number{
 			return ( Math.PI / 2 ) * 
@@ -86,7 +86,7 @@ package danmaq.nineball.misc.math{
 		 * アークコセカントを計算します。
 		 *
 		 * @param nRadian ラジアン値
-		 * @return 角度に対応するアークコセカント値
+		 * @return 対応するアークコセカント値
 		 */
 		public static function acosec( fRadian:Number ):Number{
 			return ( Math.PI / 2 ) * 
@@ -97,7 +97,7 @@ package danmaq.nineball.misc.math{
 		 * アークコタンジェントを計算します。
 		 *
 		 * @param nRadian ラジアン値
-		 * @return 角度に対応するアークコタンジェント値
+		 * @return 対応するアークコタンジェント値
 		 */
 		public static function acotan( nRadian:Number ):Number{
 			return -Math.atan( nRadian ) + Math.PI / 2;

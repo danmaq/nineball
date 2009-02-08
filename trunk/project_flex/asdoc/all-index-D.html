@@ -53,7 +53,19 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 <td width="20"></td><td></td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/resource/class-list.html');" href="danmaq/nineball/resource/package-detail.html">danmaq.nineball.resource</a> &mdash; Package</td>
+</tr>
+<tr>
+<td width="20"></td><td></td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/package-detail.html">danmaq.nineball.struct</a> &mdash; Package</td>
+</tr>
+<tr>
+<td width="20"></td><td></td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/font/class-list.html');" href="danmaq/nineball/struct/font/package-detail.html">danmaq.nineball.struct.font</a> &mdash; Package</td>
 </tr>
 <tr>
 <td width="20"></td><td></td>
@@ -77,8 +89,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
-   登録されているすべてのタスクを抹消します。
+   登録されている全てのタスクを解放します。
+   
+   <p>
+   タスク管理を終了するときに必ず実行してください。
+   </p>
    </td>
 </tr>
 <tr>
@@ -86,8 +101,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
-   シーンの解放処理を記述します。
+   シーンの解放処理を記述してください。
+   
+   <p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
    </td>
 </tr>
 <tr>
@@ -95,16 +114,20 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
-   シーンの解放処理を記述します。
+   タスクの解放処理を記述してください。
+   
+   <p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CFontBit.html#dispose()">dispose</a>() &mdash; Method in class danmaq.nineball.struct.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CFontBit.html">CFontBit</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/font/class-list.html');" href="danmaq/nineball/struct/font/CFontBit.html#dispose()">dispose</a>() &mdash; Method in class danmaq.nineball.struct.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/font/class-list.html');" href="danmaq/nineball/struct/font/CFontBit.html">CFontBit</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出されます。
    </td>
 </tr>
 <tr>
@@ -112,7 +135,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -120,7 +143,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -128,7 +151,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -136,7 +159,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -144,7 +167,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -152,7 +175,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -160,7 +183,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -168,7 +191,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
 </tr>
 <tr>
 <td width="20"></td><td>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </td>
 </tr>
 <tr>
@@ -181,7 +204,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CFontBit.html#disposed">disposed</a> &mdash; Property in class danmaq.nineball.struct.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CFontBit.html">CFontBit</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/font/class-list.html');" href="danmaq/nineball/struct/font/CFontBit.html#disposed">disposed</a> &mdash; Property in class danmaq.nineball.struct.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/font/class-list.html');" href="danmaq/nineball/struct/font/CFontBit.html">CFontBit</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -233,6 +256,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("D�
    解放したかどうかを取得します。
    
    </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/resource/class-list.html');" href="danmaq/nineball/resource/CSentence.html#DNL_FAILED">DNL_FAILED</a> &mdash; Constant static property in class danmaq.nineball.resource.<a onclick="javascript:loadClassListFrame('danmaq/nineball/resource/class-list.html');" href="danmaq/nineball/resource/CSentence.html">CSentence</a></td>
+</tr>
+<tr>
+<td width="20"></td><td> 文章：一部データが不正のため、DNLを実行できませんでした。 </td>
 </tr>
 <tr>
 <td style="padding-bottom:20px" colspan="2"></td>

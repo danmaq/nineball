@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CTaskManager,danmaq.nineball.core.CTaskManager,num,add,dispose,eraseAll,eraseLayer,eraseLayer2,eraseTask,find,toString,update" name="keywords">
+<meta content="CTaskManager,danmaq.nineball.core.CTaskManager,num,add,dispose,eraseAll,eraseLayer,eraseLayerBand,eraseTask,find,toString,update" name="keywords">
 <title>danmaq.nineball.core.CTaskManager</title>
 </head>
 <body>
@@ -42,6 +42,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
   タスク管理クラスです。
   
   <p></p>
+<p>
+<span class="classHeaderTableLabel">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../core/ITask.html" target="">danmaq.nineball.core.ITask</a>
+</div>
 <br>
 <hr>
 </div>
@@ -83,8 +89,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#dispose()">dispose</a>():void</div>
 <div class="summaryTableDescription">
-   デストラクタ。
-   登録されているすべてのタスクを抹消します。
+   登録されている全てのタスクを解放します。
+   
+   <p>
+   タスク管理を終了するときに必ず実行してください。
+   </p>
    </div>
 </td><td class="summaryTableOwnerCol">CTaskManager</td>
 </tr>
@@ -112,7 +121,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#eraseLayer2()">eraseLayer2</a>(uLayerLimit1:uint, uLayerLimit2:uint):uint</div>
+<a class="signatureLink" href="#eraseLayerBand()">eraseLayerBand</a>(uLayerLimit1:uint, uLayerLimit2:uint):uint</div>
 <div class="summaryTableDescription">
    登録されているタスクのうち、指定の
    レイヤの範囲に属するものを抹消します。
@@ -156,8 +165,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#update()">update</a>():void</div>
 <div class="summaryTableDescription">
    登録されている全タスクに1フレーム分の更新処理をさせます。
+   
+   <p>
    その結果タスクよりfalseが返ってきた場合、
    そのタスクは終了・抹消されます。
+   </p>
    </div>
 </td><td class="summaryTableOwnerCol">CTaskManager</td>
 </tr>
@@ -220,9 +232,12 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function dispose():void</code><p>
-   デストラクタ。
-   登録されているすべてのタスクを抹消します。
-   </p></div>
+   登録されている全てのタスクを解放します。
+   
+   </p><p>
+   タスク管理を終了するときに必ず実行してください。
+   </p>
+   </div>
 <a name="eraseAll()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -269,14 +284,14 @@ showHideInherited();
 </tr>
 </table>
 </div>
-<a name="eraseLayer2()"></a>
+<a name="eraseLayerBand()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">eraseLayer2</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">eraseLayerBand</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public function eraseLayer2(uLayerLimit1:uint, uLayerLimit2:uint):uint</code><p>
+<code>public function eraseLayerBand(uLayerLimit1:uint, uLayerLimit2:uint):uint</code><p>
    登録されているタスクのうち、指定の
    レイヤの範囲に属するものを抹消します。
    
@@ -383,9 +398,12 @@ showHideInherited();
 <div class="detailBody">
 <code>public function update():void</code><p>
    登録されている全タスクに1フレーム分の更新処理をさせます。
+   
+   </p><p>
    その結果タスクよりfalseが返ってきた場合、
    そのタスクは終了・抹消されます。
-   </p></div>
+   </p>
+   </div>
 <br>
 <br>
 <hr>

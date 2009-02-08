@@ -7,8 +7,6 @@ package danmaq.nineball.struct{
 
 	/**
 	 * 画面オブジェクト管理クラスです。
-	 * 画面オブジェクトとして親の場合はCanvasクラス、
-	 * 子の場合はUIComponentクラスを内部的に使用します。
 	 * 
 	 * @author Mc(danmaq)
 	 */
@@ -22,15 +20,36 @@ package danmaq.nineball.struct{
 		////////// FIELDS //////////
 
 		/**	親管理クラスが格納されます。 */
-		private static var m_parent:CScreen = null;
+		private static var m_root:CScreen = null;
 
 		/**	画面オブジェクトが格納されます。 */
 		private var m_screen:UIComponent = null;
 		
 		/**	親管理クラスかどうかが格納されます。 */
-		private var m_bParent:Boolean = false;
+		private var m_bRoot:Boolean = false;
 		
 		////////// PROPERTIES //////////
+
+		/**
+		 * ルート管理クラスを取得します。
+		 * 
+		 * @return ルート管理クラス
+		 */
+		public static function get root():CScreen{
+			if( m_root == null ){
+				m_root = new CScreen( int.MIN_VALUE, null, true, new CScreenRoot() );
+			}
+			return m_root;
+		}
+
+		/**
+		 * メイン描画領域を取得します。
+		 * 
+		 * @return メイン描画領域
+		 */
+		public static function get stage():Stage{
+			return root.screen.stage;
+		}
 
 		/**
 		 * 画面オブジェクトを取得します。
@@ -48,43 +67,39 @@ package danmaq.nineball.struct{
 		public function get total():uint{ return displayObjectList.length; }
 
 		/**
-		 * 親管理クラスを取得します。
-		 * 
-		 * @return 親管理クラス
-		 */
-		public function get parent():CScreen{ return m_parent; }
-
-		/**
 		 * 親管理クラスであるかどうかを取得します。
 		 * 
 		 * @return 親管理クラスである場合、true
 		 */
-		public function get isParent():Boolean{ return m_bParent; }
+		public function get isRoot():Boolean{ return m_bRoot; }
 
 		////////// METHODS //////////
 
 		/**
 		 * コンストラクタ。
-		 * 通常時はSingletonな親管理クラスの子として生成されますが、
+		 * 
+		 * <p>
+		 * 通常時はSingletonなルート管理クラスの子として生成されますが、
 		 * parentObjectを指定した場合、そのオブジェクトの子となります。
+		 * mx.controlsオブジェクトを配置したい場合、bUseCanvasをtrueに設定します。
 		 * _parentは常時nullで構いません。
+		 * </p>
 		 * 
 		 * @param nLayer (省略可:負の最大値)レイヤ番号
-		 * @param parentObject (省略可:null)親コンテナ
+		 * @param parent (省略可:null)親コンテナ
+		 * @param bUseCanvas (省略可:false)子にmxコントロールを設置するかどうか
 		 * @param _parent (省略可:null)親管理クラス作成に必要な値
 		 */
 		public function CScreen(
-			nLayer:int = int.MIN_VALUE, parentScreen:CScreen = null, _parent:CScreenParent = null
+			nLayer:int = int.MIN_VALUE, parent:CScreen = null,
+			bUseCanvas:Boolean = false, _root:CScreenRoot = null
 		){
-			m_bParent = ( _parent != null );
-			if( isParent ){ m_screen = new Canvas(); }
+			m_bRoot = ( _root != null );
+			if( isRoot ){ m_screen = new Canvas(); }
 			else{
-				if( m_parent == null ){
-					m_parent = new CScreen( int.MIN_VALUE, null, new CScreenParent() );
-				}
-				m_screen = new UIComponent();
-				if( parentScreen == null ){ parent.add( m_screen, nLayer ); }
-				else{ parentScreen.add( m_screen, nLayer ); }
+				m_screen = bUseCanvas ? new Canvas() : new UIComponent();
+				if( parent == null ){ root.add( m_screen, nLayer ); }
+				else{ parent.add( m_screen, nLayer ); }
 			}
 		}
 
@@ -94,7 +109,7 @@ package danmaq.nineball.struct{
 		 * @param child 配置するオブジェクト
 		 * @param nLayer レイヤ番号
 		 */
-		public function add( child:DisplayObject, nLayer:int ):void{
+		public function add( child:DisplayObject, nLayer:int = int.MIN_VALUE ):void{
 			var struct:CDisplayObject = new CDisplayObject( child, nLayer );
 			var uLength:uint = displayObjectList.length;
 			for( var i:int = 0; i < uLength; i++ ){
@@ -142,4 +157,4 @@ package danmaq.nineball.struct{
 /**
  * 親管理クラス作成に必要なクラスです。
  */
-class CScreenParent{}
+class CScreenRoot{}

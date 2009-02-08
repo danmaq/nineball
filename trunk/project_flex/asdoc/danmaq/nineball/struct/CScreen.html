@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CScreen,danmaq.nineball.struct.CScreen,isParent,parent,screen,total,add,addChildAtReverse,remove" name="keywords">
+<meta content="CScreen,danmaq.nineball.struct.CScreen,isRoot,root,screen,stage,total,add,addChildAtReverse,remove" name="keywords">
 <title>danmaq.nineball.struct.CScreen</title>
 </head>
 <body>
@@ -40,8 +40,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </table>
 <p></p>
   画面オブジェクト管理クラスです。
-  画面オブジェクトとして親の場合はCanvasクラス、
-  子の場合はUIComponentクラスを内部的に使用します。
   
   <p></p>
 <br>
@@ -55,16 +53,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isParent">isParent</a> : Boolean<div class="summaryTableDescription">[read-only]
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isRoot">isRoot</a> : Boolean<div class="summaryTableDescription">[read-only]
    親管理クラスであるかどうかを取得します。
    
    </div>
 </td><td class="summaryTableOwnerCol">CScreen</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#parent">parent</a> : <a href="../struct/CScreen.html">CScreen</a>
-<div class="summaryTableDescription">[read-only]
-   親管理クラスを取得します。
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#root">root</a> : <a href="../struct/CScreen.html">CScreen</a>
+<div class="summaryTableDescription">[static][read-only]
+   ルート管理クラスを取得します。
    
    </div>
 </td><td class="summaryTableOwnerCol">CScreen</td>
@@ -72,6 +70,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#screen">screen</a> : UIComponent<div class="summaryTableDescription">[read-only]
    画面オブジェクトを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CScreen</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#stage">stage</a> : Stage<div class="summaryTableDescription">[static][read-only]
+   メイン描画領域を取得します。
    
    </div>
 </td><td class="summaryTableOwnerCol">CScreen</td>
@@ -96,12 +101,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CScreen()">CScreen</a>(nLayer:int, parentScreen:<a href="CScreen.html">CScreen</a> = null, _parent:CScreenParent = null)</div>
+<a class="signatureLink" href="#CScreen()">CScreen</a>(nLayer:int, parent:<a href="CScreen.html">CScreen</a> = null, bUseCanvas:Boolean = false, _root:CScreenRoot = null)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
-   通常時はSingletonな親管理クラスの子として生成されますが、
+   
+   <p>
+   通常時はSingletonなルート管理クラスの子として生成されますが、
    parentObjectを指定した場合、そのオブジェクトの子となります。
+   mx.controlsオブジェクトを配置したい場合、bUseCanvasをtrueに設定します。
    _parentは常時nullで構いません。
+   </p>
    
    </div>
 </td><td class="summaryTableOwnerCol">CScreen</td>
@@ -146,34 +155,34 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
-<a name="isParent"></a>
+<a name="isRoot"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">isParent</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">isRoot</td><td class="detailHeaderType">property</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>isParent:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+<code>isRoot:Boolean</code>&nbsp;&nbsp;[read-only]<p>
    親管理クラスであるかどうかを取得します。
    
    </p><span class="label">Implementation</span>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isParent():Boolean</code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isRoot():Boolean</code>
 <br>
 </div>
-<a name="parent"></a>
+<a name="root"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">parent</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">root</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>parent:<a href="../struct/CScreen.html">CScreen</a></code>&nbsp;&nbsp;[read-only]<p>
-   親管理クラスを取得します。
+<code>root:<a href="../struct/CScreen.html">CScreen</a></code>&nbsp;&nbsp;[read-only]<p>
+   ルート管理クラスを取得します。
    
    </p><span class="label">Implementation</span>
 <br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get parent():<a href="../struct/CScreen.html">CScreen</a></code>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get root():<a href="../struct/CScreen.html">CScreen</a></code>
 <br>
 </div>
 <a name="screen"></a>
@@ -189,6 +198,21 @@ showHideInherited();
    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get screen():UIComponent</code>
+<br>
+</div>
+<a name="stage"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stage</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>stage:Stage</code>&nbsp;&nbsp;[read-only]<p>
+   メイン描画領域を取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get stage():Stage</code>
 <br>
 </div>
 <a name="total"></a>
@@ -216,13 +240,17 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CScreen(nLayer:int, parentScreen:<a href="CScreen.html">CScreen</a> = null, _parent:CScreenParent = null)</code><p>
+<code>public function CScreen(nLayer:int, parent:<a href="CScreen.html">CScreen</a> = null, bUseCanvas:Boolean = false, _root:CScreenRoot = null)</code><p>
    コンストラクタ。
-   通常時はSingletonな親管理クラスの子として生成されますが、
-   parentObjectを指定した場合、そのオブジェクトの子となります。
-   _parentは常時nullで構いません。
    
-   </p><span class="label">Parameters</span>
+   </p><p>
+   通常時はSingletonなルート管理クラスの子として生成されますが、
+   parentObjectを指定した場合、そのオブジェクトの子となります。
+   mx.controlsオブジェクトを配置したい場合、bUseCanvasをtrueに設定します。
+   _parentは常時nullで構いません。
+   </p>
+   
+   <span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">nLayer</span>:int</code> &mdash; (省略可:負の最大値)レイヤ番号
@@ -232,14 +260,21 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">parentScreen</span>:<a href="CScreen.html">CScreen</a></code> (default = <code>null</code>)<code></code> &mdash; (省略可:null)親コンテナ
+<td width="20px"></td><td><code><span class="label">parent</span>:<a href="CScreen.html">CScreen</a></code> (default = <code>null</code>)<code></code> &mdash; (省略可:null)親コンテナ
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">_parent</span>:CScreenParent</code> (default = <code>null</code>)<code></code> &mdash; (省略可:null)親管理クラス作成に必要な値
+<td width="20px"></td><td><code><span class="label">bUseCanvas</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; (省略可:false)子にmxコントロールを設置するかどうか
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">_root</span>:CScreenRoot</code> (default = <code>null</code>)<code></code> &mdash; (省略可:null)親管理クラス作成に必要な値
    </td>
 </tr>
 </table>

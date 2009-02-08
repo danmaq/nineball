@@ -48,9 +48,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
 </tr>
 <tr>
 <td width="20"></td><td>
-   タスクが管理クラスに登録された直後に、1度だけ自動的に
-   呼ばれます。直前にmanagerプロパティが自動的に代入されるので、
+   タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。
+   
+   <p>
+   直前にmanagerプロパティが自動的に代入されるので、
    タスク管理クラスが必要な初期化処理などの用途に便利です。
+   </p>
    </td>
 </tr>
 <tr>
@@ -185,20 +188,25 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CScreen.html#isParent">isParent</a> &mdash; Property in class danmaq.nineball.struct.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CScreen.html">CScreen</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   親管理クラスであるかどうかを取得します。
-   
-   </td>
-</tr>
-<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskBGM.html#isPlay">isPlay</a> &mdash; Static property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskBGM.html">CTaskBGM</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
    現在再生中かどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/misc/class-list.html');" href="danmaq/nineball/misc/CMisc.html#isRelate()">isRelate</a>(cls, objInstance) &mdash; Static method in class danmaq.nineball.misc.<a onclick="javascript:loadClassListFrame('danmaq/nineball/misc/class-list.html');" href="danmaq/nineball/misc/CMisc.html">CMisc</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   インスタンスが指定クラスと関連性があるかどうかを取得します。
+   
+   <p>
+   インスタンスが指定クラスのインスタンスか、サブクラスの
+   インスタンスである場合、関連性があると見なされます。
+   </p>
    
    </td>
 </tr>
@@ -212,11 +220,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CAlign.html#isValid()">isValid</a>(nExpr) &mdash; Static method in class danmaq.nineball.struct.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CAlign.html">CAlign</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CScreen.html#isRoot">isRoot</a> &mdash; Property in class danmaq.nineball.struct.<a onclick="javascript:loadClassListFrame('danmaq/nineball/struct/class-list.html');" href="danmaq/nineball/struct/CScreen.html">CScreen</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
-   指定した値がクラス定義値であるかどうかを取得します。
+   親管理クラスであるかどうかを取得します。
    
    </td>
 </tr>

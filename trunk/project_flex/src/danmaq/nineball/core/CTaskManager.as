@@ -5,6 +5,7 @@ package danmaq.nineball.core{
 	/**
 	 * タスク管理クラスです。
 	 * 
+	 * @see danmaq.nineball.core.ITask
 	 * @author Mc(danmaq)
 	 */
 	public final class CTaskManager{
@@ -26,8 +27,11 @@ package danmaq.nineball.core{
 		////////// METHODS //////////
 		
 		/**
-		 * デストラクタ。
-		 * 登録されているすべてのタスクを抹消します。
+		 * 登録されている全てのタスクを解放します。
+		 * 
+		 * <p>
+		 * タスク管理を終了するときに必ず実行してください。
+		 * </p>
 		 */
 		public function dispose():void{ eraseAll(); }
 		
@@ -107,7 +111,7 @@ package danmaq.nineball.core{
 		 * @param uLayerLimit2 抹消させるレイヤ番号の範囲2
 		 * @return 抹消した数
 		 */
-		public function eraseLayer2( uLayerLimit1:uint, uLayerLimit2:uint ):uint{
+		public function eraseLayerBand( uLayerLimit1:uint, uLayerLimit2:uint ):uint{
 			var uResult:uint = 0;
 			var nEnd:int = Math.max( uLayerLimit1, uLayerLimit2 );
 			for( var i:int = Math.min( uLayerLimit1, uLayerLimit2 );
@@ -131,8 +135,11 @@ package danmaq.nineball.core{
 		
 		/**
 		 * 登録されている全タスクに1フレーム分の更新処理をさせます。
+		 * 
+		 * <p>
 		 * その結果タスクよりfalseが返ってきた場合、
 		 * そのタスクは終了・抹消されます。
+		 * </p>
 		 */
 		public function update():void{
 			var i:int = 0;

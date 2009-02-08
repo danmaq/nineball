@@ -7,7 +7,12 @@ package danmaq.nineball.struct{
 	import mx.utils.StringUtil;
 	
 	/**
-	 * 画面オブジェクト管理クラス用表示物体構造体
+	 * 画面オブジェクト管理クラス用表示物体構造体です。
+	 * 
+	 * <p>
+	 * danmaq Nineball-Library内部で自動的に使用します。
+	 * 通常ユーザが直接使用する必要はありません。
+	 * </p>
 	 * 
 	 * @author Mc(danmaq)
 	 */

@@ -4,10 +4,14 @@ package danmaq.nineball.core{
 
 	/**
 	 * シーン進行を管理するクラスです。
+	 * 
+	 * <p>
 	 * このクラスにシーンを登録し、そしてこのクラスを通じ実行させます。
 	 * 複数シーンのスタックを積むことも出来ます。
 	 * (この場合、一番若いシーンが実行されます)
+	 * </p>
 	 * 
+	 * @see danmaq.nineball.core.IScene
 	 * @author Mc(danmaq)
 	 */
 	public final class CSceneManager{

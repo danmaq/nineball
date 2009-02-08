@@ -136,7 +136,7 @@ package danmaq.nineball.task{
 		public function initialize():void{}
 
 		/**
-		 * デストラクタ。
+		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{
 			if( nextChain != null ){ m_taskManager.add( nextChain ); }

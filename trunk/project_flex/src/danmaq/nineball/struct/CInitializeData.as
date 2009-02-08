@@ -2,9 +2,9 @@ package danmaq.nineball.struct{
 
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CMisc;
+	import danmaq.nineball.resource.CSentence;
 	
-	import flash.display.DisplayObjectContainer;
-	import flash.events.Event;
+	import flash.errors.IllegalOperationError;
 	import flash.utils.Dictionary;
 	
 	import mx.utils.StringUtil;
@@ -48,12 +48,6 @@ package danmaq.nineball.struct{
 		/**	最初に実行されるシーンが格納されます。 */
 		public var sceneFirst:Class = null;
 		
-		/**	ビットマップフォントの定義リストが格納されます。 */
-		public var fontHash:Dictionary = new Dictionary();
-		
-		/**	画面コンテナクラスが格納されます。 */
-		public var main:DisplayObjectContainer = null;
-		
 		/**	メインループクラスが格納されます。 */
 		private var m_mainLoop:CMainLoop = null;
 
@@ -76,14 +70,12 @@ package danmaq.nineball.struct{
 		 */
 		public function get error():String{
 			var strErr:String = "";
-			if( fps == 0 ){ strErr += "内部FPS理論値は1以上でなければなりません。\n"; }
+			if( fps == 0 ){ strErr += CSentence.FPS_TOOLOW + "\n"; }
 			if( fps <= fpsLowLimit ){
-				strErr += StringUtil.substitute(
-					"FPS下限許容値は内部FPS理論値({0})未満でなければなりません。\n", fps );
+				strErr += StringUtil.substitute( CSentence.FPS_LOLIMIT + "\n", fps );
 			}
-			if( seResolution == 0 ){ strErr += "効果音再生フレーム解像度は1以上でなければなりません。\n"; }
-			if( main == null ){ strErr += "画面コンテナが定義されていません。\n"; }
-			if( sceneFirst == null ){ strErr += "初回実行シーンが定義されていません。\n"; }
+			if( seResolution == 0 ){ strErr += CSentence.SE_RESOLUTION + "\n"; }
+			if( sceneFirst == null ){ strErr += CSentence.FPS_FIRST_SCENE + "\n"; }
 			return strErr;
 		}
 
@@ -93,18 +85,18 @@ package danmaq.nineball.struct{
 		 * DNLを起動します。
 		 * 
 		 * @return 起動出来たかどうか。
+		 * @throws flash.errors.IllegalOperationError データが正当でない場合
 		 */
 		public function run():Boolean{
 			var strError:String = error;
 			var bResult:Boolean = ( strError.length == 0 );
 			if( bResult ){
-				if( main.stage == null ){ main.addEventListener( Event.ADDED_TO_STAGE, __run ); }
-				else{ __run( null ); }
+				if( !m_bStarted ){
+					m_bStarted = true;
+					m_mainLoop = new CMainLoop( this );
+				}
 			}
-			else{
-				trace( "一部データが不正のため、DNLを実行できませんでした。\n" );
-				trace( strError );
-			}
+			else{ throw new IllegalOperationError( CSentence.DNL_FAILED + "\n" + strError ); }
 			return bResult;
 		}
 		
@@ -122,25 +114,10 @@ package danmaq.nineball.struct{
 				"内部タスク予約レイヤ番号  : {4}\n" +
 				"効果音再生フレーム解像度  : {5}\n" +
 				"初回実行シーン            : {6}\n" +
-				"画面コンテナ              : {7}\n" +
 				"メインループ              : {8}\n" +
-				"フォント定義マップ        : {9}",
 				fpsReflesh, fps, fpsLowLimit, fpsLowCount, systemTaskLayer, seResolution,
-				CMisc.getClassName( sceneFirst ), main, mainLoop == null ? "未生成" : "生成",
-				fontHash
+				CMisc.getClassName( sceneFirst ), mainLoop == null ? "未生成" : "生成"
 			);
-		}
-		
-		/**
-		 * DNLを起動します。
-		 * 
-		 * @param e イベントデータ(nullになることもあります)
-		 */
-		private function __run( e:Event ):void{
-			if( !m_bStarted ){
-				m_bStarted = true;
-				m_mainLoop = new CMainLoop( this );
-			}
 		}
 	}
 }

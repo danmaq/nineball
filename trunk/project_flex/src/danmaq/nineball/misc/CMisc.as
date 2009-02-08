@@ -50,6 +50,19 @@ package danmaq.nineball.misc{
 		}
 		
 		/**
+		 * ベクトルを作成します。
+		 * 
+		 * @param fDeg 角度(度)
+		 * @param fSpeed 速度
+		 * @return ベクトル
+		 */
+		public static function createVector( fDeg:Number, fSpeed:Number ):Point{
+			var fRad:Number = Math.PI * fDeg / 180;
+			return new Point(
+				Math.sin( fRad ) * fSpeed, -Math.cos( fRad ) * fSpeed );
+		}
+
+		/**
 		 * オブジェクトのクラス名を取得します。
 		 * 
 		 * @param obj オブジェクト
@@ -78,32 +91,24 @@ package danmaq.nineball.misc{
 		}
 		
 		/**
-		 * ベクトルを作成します。
+		 * インスタンスが指定クラスと関連性があるかどうかを取得します。
 		 * 
-		 * @param fDeg 角度(度)
-		 * @param fSpeed 速度
-		 * @return ベクトル
-		 */
-		public static function createVector( fDeg:Number, fSpeed:Number ):Point{
-			var fRad:Number = Math.PI * fDeg / 180;
-			return new Point(
-				Math.sin( fRad ) * fSpeed, -Math.cos( fRad ) * fSpeed );
-		}
-		
-		/**
-		 * ビットマップ画像をクリッピングします。
+		 * <p>
+		 * インスタンスが指定クラスのインスタンスか、サブクラスの
+		 * インスタンスである場合、関連性があると見なされます。
+		 * </p>
 		 * 
-		 * @param src ソースとなるビットマップ画像
-		 * @param rect クリッピング範囲
-		 * @return クリッピングされたビットマップ画像
+		 * @param cls クラス オブジェクト
+		 * @param objInstance インスタンス オブジェクト
+		 * @return 関連性がある場合、true
 		 */
-		public static function clipBitmap( src:Bitmap, rect:Rectangle ):Bitmap{
-			var __rect:Rectangle = new Rectangle( 0, 0, rect.width, rect.height );
-			var dst:BitmapData = new BitmapData( rect.width, rect.height );
-			var matrix:Matrix = new Matrix();
-			matrix.translate( -rect.x, -rect.y );
-			dst.draw( src.bitmapData, matrix, new ColorTransform(), null, __rect );
-			return new Bitmap( dst );
+		public static function isRelate( cls:Class, objInstance:Object ):Boolean{
+			var bResult:Boolean = true;
+			try{
+				if( objInstance as cls == null ){ throw new Error(); }
+			}
+			catch( e:Error ){ bResult = false; }
+			return bResult;
 		}
 	}
 }

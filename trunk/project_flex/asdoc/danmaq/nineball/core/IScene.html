@@ -57,7 +57,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summaryTableDescription">[read-only]
    次のシーンを取得します。
    
-   </div>
+   <p>
+   このプロパティにnull以外を設定すると、
+   現在のシーンから次のシーンへGOSUBします。
+   設定直後にupdateメソッドでfalseを返すとGOTOします。
+   </p>
+   
+    </div>
 </td><td class="summaryTableOwnerCol">IScene</td>
 </tr>
 </table>
@@ -74,8 +80,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summarySignature">
 <a class="signatureLink" href="#dispose()">dispose</a>():void</div>
 <div class="summaryTableDescription">
-   デストラクタ。
-   シーンの解放処理を記述します。
+   シーンの解放処理を記述してください。
+   
+   <p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
    </div>
 </td><td class="summaryTableOwnerCol">IScene</td>
 </tr>
@@ -84,10 +94,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summarySignature">
 <a class="signatureLink" href="#update()">update</a>():Boolean</div>
 <div class="summaryTableDescription">
-   シーンの動作処理を記述します。<br />
+   シーンの動作処理を記述してください。
+   
+   <p>
    |next ＼戻値|true|false |<br />
    |nextScene有|call| goto |<br />
    |nextScene無|next|return|<br />
+   </p>
    
    </div>
 </td><td class="summaryTableOwnerCol">IScene</td>
@@ -111,10 +124,22 @@ showHideInherited();
 <code>nextScene:<a href="../core/IScene.html">IScene</a></code>&nbsp;&nbsp;[read-only]<p>
    次のシーンを取得します。
    
-   </p><span class="label">Implementation</span>
+   </p><p>
+   このプロパティにnull以外を設定すると、
+   現在のシーンから次のシーンへGOSUBします。
+   設定直後にupdateメソッドでfalseを返すとGOTOします。
+   </p>
+   
+    <span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get nextScene():<a href="../core/IScene.html">IScene</a></code>
 <br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../core/IScene.html#update()" target="">update()</a>
+</div>
 </div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
@@ -126,9 +151,13 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function dispose():void</code><p>
-   デストラクタ。
-   シーンの解放処理を記述します。
-   </p></div>
+   シーンの解放処理を記述してください。
+   
+   </p><p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
+   </div>
 <a name="update()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -137,16 +166,19 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function update():Boolean</code><p>
-   シーンの動作処理を記述します。<br />
+   シーンの動作処理を記述してください。
+   
+   </p><p>
    |next ＼戻値|true|false |<br />
    |nextScene有|call| goto |<br />
    |nextScene無|next|return|<br />
+   </p>
    
-   </p><p></p>
+   <p></p>
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; 次のフレームもシーンが存続する場合、true
+<td width="20"></td><td><code>Boolean</code> &mdash; 次のフレームもこのシーンが存続する場合、true
    </td>
 </tr>
 </table>

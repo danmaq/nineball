@@ -44,6 +44,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <p></p>
   フレームレート制御タスクです。
   
+  <p>
+  danmaq Nineball-Library内部で自動的に使用します。
+  通常ユーザが直接使用する必要はありません。
+  </p>
+  
   <p></p>
 <br>
 <hr>
@@ -104,7 +109,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CTaskFPSTimer()">CTaskFPSTimer</a>(stage:Stage, uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60, uSlowdownLimit:uint = 0, uSlowdownCount:uint = 0)</div>
+<a class="signatureLink" href="#CTaskFPSTimer()">CTaskFPSTimer</a>(uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60, uSlowdownLimit:uint = 0, uSlowdownCount:uint = 0)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
    
@@ -116,7 +121,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#dispose()">dispose</a>():void</div>
 <div class="summaryTableDescription">
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </div>
 </td><td class="summaryTableOwnerCol">CTaskFPSTimer</td>
 </tr>
@@ -136,8 +141,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#resetCalibration()">resetCalibration</a>():void</div>
 <div class="summaryTableDescription">
    FPS補正をリセットします。
+   
+   <p>
    急激な負荷の変化が予想される時に実行してください。
    注意：あまり頻繁に呼び出すと補正の効果が薄れます。
+   </p>
    </div>
 </td><td class="summaryTableOwnerCol">CTaskFPSTimer</td>
 </tr>
@@ -245,18 +253,11 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CTaskFPSTimer(stage:Stage, uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60, uSlowdownLimit:uint = 0, uSlowdownCount:uint = 0)</code><p>
+<code>public function CTaskFPSTimer(uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60, uSlowdownLimit:uint = 0, uSlowdownCount:uint = 0)</code><p>
    コンストラクタ。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td width="20px"></td><td><code><span class="label">stage</span>:Stage</code> &mdash; メイン描画領域オブジェクト
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">uLayer</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; レイヤ番号
    </td>
@@ -301,7 +302,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function dispose():void</code><p>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </p></div>
 <a name="initialize()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -323,9 +324,12 @@ showHideInherited();
 <div class="detailBody">
 <code>public function resetCalibration():void</code><p>
    FPS補正をリセットします。
+   
+   </p><p>
    急激な負荷の変化が予想される時に実行してください。
    注意：あまり頻繁に呼び出すと補正の効果が薄れます。
-   </p></div>
+   </p>
+   </div>
 <a name="update()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>

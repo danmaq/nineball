@@ -4,7 +4,10 @@ package danmaq.nineball.core{
 
 	/**
 	 * フェーズ進行・カウンタ進行の管理をするクラス。
+	 * 
+	 * <p>
 	 * 使用するためにはcount++を毎フレーム呼び出してください。
+	 * </p>
 	 * 
 	 * @author Mc(danmaq)
 	 */
@@ -56,12 +59,16 @@ package danmaq.nineball.core{
 
 		/**
 		 * 現在のカウント値を設定します。
-		 * 通常はcount++とインクリメントして使用します。
+		 * 
+		 * <p>
+		 * 次のフェーズへ行く予約が入っている場合、
+		 * ここで次のフェーズへと移行します。
+		 * </p>
 		 * 
 		 * @param value カウント値
 		 */
 		public function set count( value:uint ):void{
-			m_uCount++;
+			m_uCount = value;
 			if( isReserveNextPhase ){
 				phase = nextPhase;
 				isReserveNextPhase = false;
