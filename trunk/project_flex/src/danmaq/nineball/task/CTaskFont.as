@@ -1,8 +1,8 @@
 package danmaq.nineball.task{
 
 	import danmaq.nineball.core.*;
-	import danmaq.nineball.misc.math.CMathMisc;
-	import danmaq.nineball.struct.*;
+	import danmaq.nineball.struct.CScreen;
+	import danmaq.nineball.struct.font.*;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Point;
@@ -18,28 +18,10 @@ package danmaq.nineball.task{
 
 		////////// CONSTANTS //////////
 
-		/**	基準となる座標(現時点では左上固定)が格納されます。 */
-		public const pos:Point = new Point();
-
-		/**	拡大率が格納されます。 */
-		public const scale:Point = new Point( 1, 1 );
-		
 		/**	単文字フォントタスクが格納されます。 */
 		private const bitList:Vector.<CFontBit> = new Vector.<CFontBit>();
 
 		////////// FIELDS //////////
-		
-		/**
-		 * 水平位置情報が格納されます。
-		 * danmaq.nineball.struct.CAlignクラスの定数を使用してください。
-		 */
-		public var halign:int = CAlign.CENTER;
-		
-		/**
-		 * 垂直位置情報が格納されます。
-		 * danmaq.nineball.struct.CAlignクラスの定数を使用してください。
-		 */
-		public var valign:int = CAlign.CENTER;
 		
 		/**
 		 * 生存タイマが格納されます。
@@ -53,20 +35,14 @@ package danmaq.nineball.task{
 		/**	現在表示されているかどうかが格納されます。 */
 		public var view:Boolean = false;
 
-		/**
-		 * カーニングの度合が格納されます。
-		 * 0で-100%、1で0%です。
-		 */
-		public var kerning:Number = 1;
-
-		/** 回転角度が格納されます。 */
-		public var rotate:Number = 0;
-
 		/**	レイヤ番号が格納されます。 */
 		private var m_uLayer:uint;
 
-		/**	画面番号が格納されます。 */
-		private var m_uScreen:uint;
+		/**	文字画像を格納する画面管理クラスが格納されます。 */
+		private var m_screen:CScreen;
+
+		/**	フォントリソースが格納されます。 */
+		private var m_fontResource:CFontResource;
 
 		/**	解放されたかどうかが格納されます。 */
 		private var m_bDisposed:Boolean = false;
@@ -74,12 +50,8 @@ package danmaq.nineball.task{
 		/**	表示するテキストが格納されます。 */
 		private var m_strText:String = "";
 
-		/**	色が格納されます。 */
-		private var m_uColor:uint = 0xFFFFFF;
-
-		/**	透明度が格納されます。 */
-		private var m_fAlpha:Number = 1;
-
+		/**	最後に使用した描画調整情報が格納されます。 */
+		private var m_transform:CFontTransform = new CFontTransform();
 
 		////////// PROPERTIES //////////
 
@@ -133,42 +105,27 @@ package danmaq.nineball.task{
 		public function get size():Point{
 			var posResult:Point = new Point();
 			for each( var bit:CFontBit in bitList ){
-				posResult.x += bit.size.x * scale.x * kerning;
-				posResult.y = Math.max( posResult.y, bit.size.y * scale.y );
+				posResult.x += bit.size.x * m_transform.scale.x * m_transform.kerning;
+				posResult.y = Math.max( posResult.y, bit.size.y * m_transform.scale.y );
 			}
 			return posResult;
 		}
 
 		/**
-		 * 色を取得します。
-		 *
-		 * @return 色情報(赤8bit、緑8bit、青8bit)
+		 * 描画調整情報を取得します。
+		 * 
+		 * @return 描画調整情報
 		 */
-		public function get color():uint{ return m_uColor; }
+		public function get transform():CFontTransform{ return m_transform; }
 
 		/**
-		 * 色を設定します。
-		 * 範囲外の値を設定すると自動的に丸められます。
-		 *
-		 * @param value 色情報(赤8bit、緑8bit、青8bit)
+		 * 描画調整情報を設定します。
+		 * 
+		 * @param value 描画調整情報
 		 */
-		public function set color( value:uint ):void{ m_uColor = ( value & 0xFFFFFF ); }
-
-		/**
-		 * 透明度を取得します。
-		 *
-		 * @return 透明度(透明0～1不透明)
-		 */
-		public function get alpha():Number{ return m_fAlpha; }
-
-		/**
-		 * 透明度を設定します。
-		 * 範囲外の値を設定すると自動的に丸められます。
-		 *
-		 * @param value 透明度(透明0～1不透明)
-		 */
-		public function set alpha( value:Number ):void{
-			m_fAlpha = CMathMisc.clamp( value, 0, 1 );
+		public function set transform( value:CFontTransform ):void{
+			if( value == null ){ value = new CFontTransform(); }
+			m_transform = value;
 		}
 
 		////////// METHODS //////////
@@ -176,11 +133,13 @@ package danmaq.nineball.task{
 		/**
 		 * コンストラクタ。
 		 * 
-		 * @param uScreen 画面番号
+		 * @param fontResource フォントリソース
+		 * @param screen 格納する画面管理クラス
 		 * @param uLayer レイヤ番号
 		 */
-		public function CTaskFont( uScreen:uint = 0, uLayer:uint = 0 ){
-			m_uScreen = uScreen;
+		public function CTaskFont( fontResource:CFontResource, screen:CScreen, uLayer:uint = 0 ){
+			m_fontResource = fontResource;
+			m_screen = screen;
 			m_uLayer = uLayer;
 		}
 
@@ -191,7 +150,7 @@ package danmaq.nineball.task{
 		public function initialize():void{}
 
 		/**
-		 * デストラクタ。
+		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{
 			deleteChild();
@@ -209,34 +168,34 @@ package danmaq.nineball.task{
 
 		/**
 		 * 指定したパラメータどおりにレンダリングします。
+		 * 
+		 * @param info フォント描画調整情報
 		 */
-		public function render():void{
+		public function render( info:CFontTransform = null ):void{
+			if( info != null ){ transform = info; }
+			else{ info = transform; }
 			var posSize:Point = size;
 			var fX:Number;
 			var fY:Number;
-			switch( halign ){
-				case CAlign.TOP_LEFT:			fX = pos.x;					break;
-				case CAlign.BOTTOM_RIGHT:		fX = pos.x - posSize.x;		break;
-				case CAlign.CENTER:	default:	fX = pos.x - posSize.x / 2;	break;
+			switch( info.halign ){
+				case CFontTransform.TOP_LEFT:			fX = info.pos.x;					break;
+				case CFontTransform.BOTTOM_RIGHT:		fX = info.pos.x - posSize.x;		break;
+				case CFontTransform.CENTER:	default:	fX = info.pos.x - posSize.x / 2;	break;
 			}
-			switch( valign ){
-				case CAlign.TOP_LEFT:			fY = pos.y + posSize.y / 2;	break;
-				case CAlign.BOTTOM_RIGHT:		fY = pos.y - posSize.y / 2;	break;
-				case CAlign.CENTER:	default:	fY = pos.y;					break;
+			switch( info.valign ){
+				case CFontTransform.TOP_LEFT:			fY = info.pos.y + posSize.y / 2;	break;
+				case CFontTransform.BOTTOM_RIGHT:		fY = info.pos.y - posSize.y / 2;	break;
+				case CFontTransform.CENTER:	default:	fY = info.pos.y;					break;
 			}
 			for each( var bit:CFontBit in bitList ){
-				var fHWidth:Number = bit.size.x * scale.x / 2;
-				fX += fHWidth * kerning;
-				bit.rotate = rotate;
-				bit.pos.x = fX;
-				bit.pos.y = fY;
-				bit.scale.x = scale.x;
-				bit.scale.y = scale.y;
-				bit.color.color = color;
-				bit.render();
-				bit.alpha = alpha;
+				var fHWidth:Number = bit.size.x * info.scale.x / 2;
+				var infoBit:CFontTransformBit = info.clone;
+				fX += fHWidth * info.kerning;
+				infoBit.pos.x = fX;
+				infoBit.pos.y = fY;
+				bit.render( infoBit );
 				bit.view = view;
-				fX += fHWidth * kerning;
+				fX += fHWidth * info.kerning;
 			}
 		}
 
@@ -256,7 +215,7 @@ package danmaq.nineball.task{
 				var uLen:uint = m_strText.length;
 				for( var i:uint = 0; i < uLen; i++ ){
 					var bit:CFontBit =
-						new CFontBit( m_strText.charAt( i ), m_uScreen, layer );
+						new CFontBit( m_fontResource, m_strText.charAt( i ), m_screen, layer );
 					bitList.push( bit );
 				}
 				if( autoRender ){ render(); }

@@ -58,9 +58,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#layer">layer</a> : uint<div class="summaryTableDescription">[read-only]
    レイヤ値を取得します。
+   
+   <p>
    レイヤ値の若い方から順に処理されます。
    同一値が複数ある場合、登録された順に処理されます。
+   </p>
+   <p>
    !!注意!!：管理クラス登録後はレイヤ変更しないでください。
+   </p>
    
    </div>
 </td><td class="summaryTableOwnerCol">ITask</td>
@@ -69,6 +74,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#manager">manager</a> : <a href="../core/CTaskManager.html">CTaskManager</a>
 <div class="summaryTableDescription">[write-only]
    タスク管理クラスを設定します。
+   
+   <p>
+   このタスクを管理クラスに登録すると、
+   自動的にこのプロパティに代入されます。
+   </p>
    
    </div>
 </td><td class="summaryTableOwnerCol">ITask</td>
@@ -87,8 +97,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summarySignature">
 <a class="signatureLink" href="#dispose()">dispose</a>():void</div>
 <div class="summaryTableDescription">
-   デストラクタ。
-   シーンの解放処理を記述します。
+   タスクの解放処理を記述してください。
+   
+   <p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
    </div>
 </td><td class="summaryTableOwnerCol">ITask</td>
 </tr>
@@ -97,9 +111,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summarySignature">
 <a class="signatureLink" href="#initialize()">initialize</a>():void</div>
 <div class="summaryTableDescription">
-   タスクが管理クラスに登録された直後に、1度だけ自動的に
-   呼ばれます。直前にmanagerプロパティが自動的に代入されるので、
+   タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。
+   
+   <p>
+   直前にmanagerプロパティが自動的に代入されるので、
    タスク管理クラスが必要な初期化処理などの用途に便利です。
+   </p>
    </div>
 </td><td class="summaryTableOwnerCol">ITask</td>
 </tr>
@@ -108,7 +125,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <div class="summarySignature">
 <a class="signatureLink" href="#update()">update</a>():Boolean</div>
 <div class="summaryTableDescription">
-   シーンの動作処理を記述します。
+   シーンの動作処理を記述してください。
    
    </div>
 </td><td class="summaryTableOwnerCol">ITask</td>
@@ -131,11 +148,16 @@ showHideInherited();
 <div class="detailBody">
 <code>layer:uint</code>&nbsp;&nbsp;[read-only]<p>
    レイヤ値を取得します。
+   
+   </p><p>
    レイヤ値の若い方から順に処理されます。
    同一値が複数ある場合、登録された順に処理されます。
+   </p>
+   <p>
    !!注意!!：管理クラス登録後はレイヤ変更しないでください。
+   </p>
    
-   </p><span class="label">Implementation</span>
+   <span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get layer():uint</code>
 <br>
@@ -150,7 +172,12 @@ showHideInherited();
 <code>manager:<a href="../core/CTaskManager.html">CTaskManager</a></code>&nbsp;&nbsp;[write-only]<p>
    タスク管理クラスを設定します。
    
-   </p><span class="label">Implementation</span>
+   </p><p>
+   このタスクを管理クラスに登録すると、
+   自動的にこのプロパティに代入されます。
+   </p>
+   
+   <span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set manager(value:<a href="../core/CTaskManager.html">CTaskManager</a>):void</code>
 <br>
@@ -165,9 +192,13 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function dispose():void</code><p>
-   デストラクタ。
-   シーンの解放処理を記述します。
-   </p></div>
+   タスクの解放処理を記述してください。
+   
+   </p><p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
+   </div>
 <a name="initialize()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -176,10 +207,13 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function initialize():void</code><p>
-   タスクが管理クラスに登録された直後に、1度だけ自動的に
-   呼ばれます。直前にmanagerプロパティが自動的に代入されるので、
+   タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。
+   
+   </p><p>
+   直前にmanagerプロパティが自動的に代入されるので、
    タスク管理クラスが必要な初期化処理などの用途に便利です。
-   </p></div>
+   </p>
+   </div>
 <a name="update()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -188,13 +222,13 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function update():Boolean</code><p>
-   シーンの動作処理を記述します。
+   シーンの動作処理を記述してください。
    
    </p><p></p>
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code>Boolean</code> &mdash; 次のフレームもシーンが存続する場合、true
+<td width="20"></td><td><code>Boolean</code> &mdash; 次のフレームもこのタスクが存続する場合、true
    </td>
 </tr>
 </table>

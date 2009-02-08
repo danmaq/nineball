@@ -1,6 +1,6 @@
 package danmaq.nineball.core{
 
-	import danmaq.nineball.struct.*;
+	import danmaq.nineball.struct.CInitializeData;
 	import danmaq.nineball.task.*;
 	
 	import flash.display.*;
@@ -15,9 +15,6 @@ package danmaq.nineball.core{
 	public final class CMainLoop{
 
 		////////// CONSTANTS //////////
-
-		/**	画面オブジェクト管理クラスが格納されます。 */
-		public const screenList:Vector.<CScreen> = new Vector.<CScreen>();
 
 		/**	シーン管理クラスが格納されます。 */
 		public const sceneManager:CSceneManager = new CSceneManager();
@@ -59,7 +56,7 @@ package danmaq.nineball.core{
 		 * 
 		 * @return 排他制御付き効果音再生タスク
 		 */
-		public function get taskSE():CTaskExclusiveSE{ return m_taskSE; }
+		public function get se():CTaskExclusiveSE{ return m_taskSE; }
 		
 		/**
 		 * フレームレート制御タスクを取得します。
@@ -67,20 +64,6 @@ package danmaq.nineball.core{
 		 * @return フレームレート制御タスク
 		 */
 		public function get timer():CTaskFPSTimer{ return m_taskFPS; }
-
-		/**
-		 * 親画面オブジェクト管理クラスを取得します。
-		 * 
-		 * @return 親画面オブジェクト管理クラス
-		 */
-		public function get screenParent():CScreen{ return screenList[ 0 ].parent; }
-
-		/**
-		 * メイン描画領域(Stage)クラスを取得します。
-		 * 
-		 * @return メイン描画領域(Stage)クラス
-		 */
-		public function get stage():Stage{ return screenParent.screen.stage; }
 
 		/**
 		 * danmaq Nineball Libraryの起動からの経過時間を取得します。
@@ -99,15 +82,11 @@ package danmaq.nineball.core{
 		public function CMainLoop( ini:CInitializeData ){
 			m_fStartTime = ( new Date() ).time;
 			m_instance = this;
-			CFontBit.fontHash = ini.fontHash;
-			var screen:CScreen = new CScreen( 0 );
-			screenList.push( screen );
-			ini.main.addChild( screen.parent.screen );
-			m_taskFPS = new CTaskFPSTimer( ini.main.stage, ini.systemTaskLayer,
+			m_taskFPS = new CTaskFPSTimer( ini.systemTaskLayer,
 				ini.fpsReflesh, ini.fps, ini.fpsLowLimit, ini.fpsLowCount );
 			taskManager.add( timer );
 			m_taskSE = new CTaskExclusiveSE( ini.systemTaskLayer, ini.seResolution );
-			taskManager.add( taskSE );
+			taskManager.add( se );
 			sceneManager.add( new ini.sceneFirst() );
 			startLoop();
 		}
@@ -122,8 +101,12 @@ package danmaq.nineball.core{
 		}
 
 		/**
-		 * メインループ。
-		 * 毎秒およそ60回呼ばれます。
+		 * 定期的に呼び出されるメインループ。
+		 * 
+		 * <p>
+		 * 1秒ごとの呼び出し回数は負荷によって若干前後しますが、
+		 * FPSとほぼ同等になります。
+		 * </p>
 		 */
 		private function mainLoop( event:TimerEvent ):void{
 			if( !m_bDoPrevLoop ){

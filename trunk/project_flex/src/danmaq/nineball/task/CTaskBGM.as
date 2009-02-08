@@ -133,7 +133,7 @@ package danmaq.nineball.task{
 		public function initialize():void{ playLoop(); }
 
 		/**
-		 * デストラクタ。
+		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{
 			if( isDisposeCancel ){ isDisposeCancel = false; }

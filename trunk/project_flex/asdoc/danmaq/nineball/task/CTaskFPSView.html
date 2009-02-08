@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CTaskFPSView,danmaq.nineball.task.CTaskFPSView,interval,disposed,font,layer,prefix,suffix,manager,dispose,initialize,update" name="keywords">
+<meta content="CTaskFPSView,danmaq.nineball.task.CTaskFPSView,interval,disposed,layer,prefix,suffix,transform,manager,dispose,initialize,update" name="keywords">
 <title>danmaq.nineball.task.CTaskFPSView</title>
 </head>
 <body>
@@ -63,14 +63,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol">CTaskFPSView</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#font">font</a> : <a href="../task/CTaskFont.html">CTaskFont</a>
-<div class="summaryTableDescription">[read-only]
-   フォントタスクを取得します。
-   
-   </div>
-</td><td class="summaryTableOwnerCol">CTaskFPSView</td>
-</tr>
-<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#interval">interval</a> : uint = 60<div class="summaryTableDescription"> FPS更新のフレーム時間間隔が格納されます。 </div>
 </td><td class="summaryTableOwnerCol">CTaskFPSView</td>
 </tr>
@@ -103,6 +95,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    </div>
 </td><td class="summaryTableOwnerCol">CTaskFPSView</td>
 </tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#transform">transform</a> : <a href="../struct/font/CFontTransform.html">CFontTransform</a>
+<div class="summaryTableDescription">
+   描画調整情報を取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskFPSView</td>
+</tr>
 </table>
 </div>
 <a name="methodSummary"></a>
@@ -115,7 +115,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CTaskFPSView()">CTaskFPSView</a>(uScreen:uint = 0, uLayer:uint = 0)</div>
+<a class="signatureLink" href="#CTaskFPSView()">CTaskFPSView</a>(fontResource:<a href="../struct/font/CFontResource.html">CFontResource</a>, screen:<a href="../struct/CScreen.html">CScreen</a>, uLayer:uint = 0)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
    
@@ -127,7 +127,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#dispose()">dispose</a>():void</div>
 <div class="summaryTableDescription">
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </div>
 </td><td class="summaryTableOwnerCol">CTaskFPSView</td>
 </tr>
@@ -173,21 +173,6 @@ showHideInherited();
    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get disposed():Boolean</code>
-<br>
-</div>
-<a name="font"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">font</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>font:<a href="../task/CTaskFont.html">CTaskFont</a></code>&nbsp;&nbsp;[read-only]<p>
-   フォントタスクを取得します。
-   
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get font():<a href="../task/CTaskFont.html">CTaskFont</a></code>
 <br>
 </div>
 <a name="interval"></a>
@@ -262,6 +247,23 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set suffix(value:String):void</code>
 <br>
 </div>
+<a name="transform"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">transform</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>transform:<a href="../struct/font/CFontTransform.html">CFontTransform</a></code>&nbsp;&nbsp;[read-write]<p>
+   描画調整情報を取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get transform():<a href="../struct/font/CFontTransform.html">CFontTransform</a></code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set transform(value:<a href="../struct/font/CFontTransform.html">CFontTransform</a>):void</code>
+<br>
+</div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
 <a name="CTaskFPSView()"></a>
@@ -271,13 +273,20 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CTaskFPSView(uScreen:uint = 0, uLayer:uint = 0)</code><p>
+<code>public function CTaskFPSView(fontResource:<a href="../struct/font/CFontResource.html">CFontResource</a>, screen:<a href="../struct/CScreen.html">CScreen</a>, uLayer:uint = 0)</code><p>
    コンストラクタ。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">uScreen</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; 画面番号
+<td width="20px"></td><td><code><span class="label">fontResource</span>:<a href="../struct/font/CFontResource.html">CFontResource</a></code> &mdash; フォントリソース
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">screen</span>:<a href="../struct/CScreen.html">CScreen</a></code> &mdash; 格納する画面管理クラス
    </td>
 </tr>
 <tr>
@@ -299,7 +308,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function dispose():void</code><p>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </p></div>
 <a name="initialize()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">

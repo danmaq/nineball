@@ -1,12 +1,17 @@
 package danmaq.nineball.task{
 
 	import danmaq.nineball.core.*;
+	import danmaq.nineball.struct.CScreen;
 	
-	import flash.display.Stage;
 	import flash.utils.Timer;
 
 	/**
 	 * フレームレート制御タスクです。
+	 * 
+	 * <p>
+	 * danmaq Nineball-Library内部で自動的に使用します。
+	 * 通常ユーザが直接使用する必要はありません。
+	 * </p>
 	 * 
 	 * @author Mc(danmaq)
 	 */
@@ -48,9 +53,6 @@ package danmaq.nineball.task{
 
 		/**	低FPSにより描画FPSペナルティを加えた回数が格納されます。 */
 		private var m_uPenaltyCount:uint = 0;
-		
-		/**	メイン描画領域オブジェクトが格納されます。 */
-		private var m_stage:Stage = null;
 
 		////////// PROPERTIES //////////
 
@@ -97,7 +99,6 @@ package danmaq.nineball.task{
 		/**
 		 * コンストラクタ。
 		 * 
-		 * @param stage メイン描画領域オブジェクト
 		 * @param uLayer レイヤ番号
 		 * @param uReflesh FPS可変更新フレーム間隔
 		 * @param uTheoretical FPS理論値
@@ -105,10 +106,9 @@ package danmaq.nineball.task{
 		 * @param uLowCount 実測FPSの最低許容値を下回る許容回数
 		 */
 		public function CTaskFPSTimer(
-			stage:Stage, uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60,
+			uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60,
 			uSlowdownLimit:uint = 0, uSlowdownCount:uint = 0
 		){
-			m_stage = stage;
 			m_uLayer = uLayer;
 			m_uRefleshInterval = uReflesh;
 			m_uTheoretical = uTheoretical;
@@ -125,7 +125,7 @@ package danmaq.nineball.task{
 		public function initialize():void{}
 		
 		/**
-		 * デストラクタ。
+		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{}
 		
@@ -144,15 +144,15 @@ package danmaq.nineball.task{
 					m_uSlowdownCount++;	// あんまり重いようだと描画FPSを半分にする
 					if( m_uSlowdownCount == m_uSlowdownCountLimit ){
 						m_uPenaltyCount++;
-						if( CMainLoop.instance.screenParent.screen.stage != null ){
-							CMainLoop.instance.screenParent.screen.stage.frameRate =
+						if( CScreen.root.screen.stage != null ){
+							CScreen.root.screen.stage.frameRate =
 								Math.min( 60, m_uTheoretical ) / ( m_uPenaltyCount + 1 );
 						}
 					}
 				}
 				if( bFirst ){
-					if( CMainLoop.instance.screenParent.screen.stage != null ){
-						CMainLoop.instance.screenParent.screen.stage.frameRate =
+						if( CScreen.root.screen.stage != null ){
+							CScreen.root.screen.stage.frameRate =
 							Math.min( 60, m_uTheoretical );
 					}
 				}
@@ -168,8 +168,11 @@ package danmaq.nineball.task{
 		
 		/**
 		 * FPS補正をリセットします。
+		 * 
+		 * <p>
 		 * 急激な負荷の変化が予想される時に実行してください。
 		 * 注意：あまり頻繁に呼び出すと補正の効果が薄れます。
+		 * </p>
 		 */
 		public function resetCalibration():void{ m_uTimerValue = m_uTheoretical; }
 	}

@@ -1,6 +1,9 @@
 package danmaq.nineball.task{
 
 	import danmaq.nineball.core.*;
+	import danmaq.nineball.struct.CScreen;
+	import danmaq.nineball.struct.font.CFontResource;
+	import danmaq.nineball.struct.font.CFontTransform;
 
 	/**
 	 * FPS表示タスクです。
@@ -21,9 +24,6 @@ package danmaq.nineball.task{
 
 		/**	レイヤ番号が格納されます。 */
 		private var m_uLayer:uint;
-
-		/**	画面番号が格納されます。 */
-		private var m_uScreen:uint;
 
 		/**	フォントタスクが格納されます。 */
 		private var m_taskFont:CTaskFont = null;
@@ -68,11 +68,18 @@ package danmaq.nineball.task{
 		}
 
 		/**
-		 * フォントタスクを取得します。
+		 * 描画調整情報を取得します。
 		 * 
-		 * @return フォントタスク
+		 * @return 描画調整情報
 		 */
-		public function get font():CTaskFont{ return m_taskFont; }
+		public function get transform():CFontTransform{ return m_taskFont.transform; }
+
+		/**
+		 * 描画調整情報を設定します。
+		 * 
+		 * @param value 描画調整情報
+		 */
+		public function set transform( value:CFontTransform ):void{ m_taskFont.transform = value; }
 
 		/**
 		 * 接頭語を取得します。
@@ -111,13 +118,15 @@ package danmaq.nineball.task{
 		/**
 		 * コンストラクタ。
 		 * 
-		 * @param uScreen 画面番号
+		 * @param fontResource フォントリソース
+		 * @param screen 格納する画面管理クラス
 		 * @param uLayer レイヤ番号
 		 */
-		public function CTaskFPSView( uScreen:uint = 0, uLayer:uint = 0 ){
-			m_uScreen = uScreen;
+		public function CTaskFPSView(
+			fontResource:CFontResource, screen:CScreen, uLayer:uint = 0
+		){
 			m_uLayer = uLayer;
-			m_taskFont = new CTaskFont( uScreen, uLayer );
+			m_taskFont = new CTaskFont( fontResource, screen, uLayer );
 			m_taskFont.autoRender = true;
 		}
 
@@ -128,7 +137,7 @@ package danmaq.nineball.task{
 		public function initialize():void{}
 
 		/**
-		 * デストラクタ。
+		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{
 			if( m_bReady ){ m_taskManager.eraseTask( m_taskFont ); }
@@ -153,7 +162,7 @@ package danmaq.nineball.task{
 				m_bReady = true;
 				m_taskFont.view = true;
 			}
-			font.text = prefix + CMainLoop.instance.timer.realFPS + suffix;
+			m_taskFont.text = prefix + CMainLoop.instance.timer.realFPS + suffix;
 		}
 	}
 }

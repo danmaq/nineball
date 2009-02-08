@@ -98,7 +98,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CTaskFade()">CTaskFade</a>(rect:Rectangle, bIn:Boolean = true, bWhite:Boolean = false, uTime:uint = 50, uScreen:uint = 0, uLayer:uint = 0)</div>
+<a class="signatureLink" href="#CTaskFade()">CTaskFade</a>(screen:<a href="../struct/CScreen.html">CScreen</a>, rect:Rectangle, bIn:Boolean = true, bWhite:Boolean = false, uTime:uint = 50, uLayer:uint = 0)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
    
@@ -110,7 +110,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#dispose()">dispose</a>():void</div>
 <div class="summaryTableDescription">
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </div>
 </td><td class="summaryTableOwnerCol">CTaskFade</td>
 </tr>
@@ -213,11 +213,18 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CTaskFade(rect:Rectangle, bIn:Boolean = true, bWhite:Boolean = false, uTime:uint = 50, uScreen:uint = 0, uLayer:uint = 0)</code><p>
+<code>public function CTaskFade(screen:<a href="../struct/CScreen.html">CScreen</a>, rect:Rectangle, bIn:Boolean = true, bWhite:Boolean = false, uTime:uint = 50, uLayer:uint = 0)</code><p>
    コンストラクタ。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">screen</span>:<a href="../struct/CScreen.html">CScreen</a></code> &mdash; 格納する画面管理クラス
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">rect</span>:Rectangle</code> &mdash; フェード対象区域座標
    </td>
@@ -247,13 +254,6 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">uScreen</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; 画面番号
-   </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
 <td width="20px"></td><td><code><span class="label">uLayer</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; レイヤ番号
    </td>
 </tr>
@@ -269,7 +269,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public function dispose():void</code><p>
-   デストラクタ。
+   解放時に管理クラスから呼び出される処理です。
    </p></div>
 <a name="initialize()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">

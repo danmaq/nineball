@@ -2,9 +2,14 @@ package danmaq.nineball.task{
 	
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CInterpolate;
+	import danmaq.nineball.resource.CSentence;
+	import danmaq.nineball.struct.CScreen;
 	
 	import flash.display.*;
+	import flash.errors.IllegalOperationError;
 	import flash.geom.*;
+	
+	import mx.utils.StringUtil;
 
 	/**
 	 * フェードイン・アウトタスクです。
@@ -30,9 +35,6 @@ package danmaq.nineball.task{
 		/**	レイヤ番号が格納されます。 */
 		private var m_uLayer:uint;
 
-		/**	画面番号が格納されます。 */
-		private var m_uScreen:uint;
-
 		/**	フェードインかどうかが格納されます。 */
 		private var m_bIn:Boolean;
 
@@ -41,6 +43,9 @@ package danmaq.nineball.task{
 
 		/**	フェードの所要時間が格納されます。 */
 		private var m_uLimit:uint;
+		
+		/**	フェードエフェクトを格納する画面管理クラスが格納されます。 */
+		private var m_screen:CScreen;
 
 		////////// PROPERTIES //////////
 
@@ -78,21 +83,29 @@ package danmaq.nineball.task{
 		/**
 		 * コンストラクタ。
 		 * 
+		 * @param screen 格納する画面管理クラス
 		 * @param rect フェード対象区域座標
 		 * @param bIn フェードインかどうか
 		 * @param bWhite ホワイトフェードかどうか
 		 * @param uTime フェード時間
-		 * @param uScreen 画面番号
 		 * @param uLayer レイヤ番号
 		 */
 		public function CTaskFade(
-			rect:Rectangle, bIn:Boolean = true, bWhite:Boolean = false,
-			uTime:uint = 50, uScreen:uint = 0, uLayer:uint = 0
+			screen:CScreen, rect:Rectangle, bIn:Boolean = true, bWhite:Boolean = false,
+			uTime:uint = 50, uLayer:uint = 0
 		){
+			if( screen == null ){
+				throw new IllegalOperationError(
+					StringUtil.substitute( CSentence.NOT_NULL, "screen" ) );
+			}
+			if( rect == null ){
+				throw new IllegalOperationError(
+					StringUtil.substitute( CSentence.NOT_NULL, "rect" ) );
+			}
+			m_screen = screen;
 			m_bIn = bIn;
 			m_bWhite = bWhite;
 			m_uLimit = uTime;
-			m_uScreen = uScreen;
 			m_uLayer = uLayer;
 			fill.graphics.beginFill( 0xFFFFFF );
 			fill.graphics.drawRect( rect.x, rect.y, rect.width, rect.height );
@@ -100,7 +113,7 @@ package danmaq.nineball.task{
 			fill.blendMode = bWhite ? BlendMode.ADD : BlendMode.SUBTRACT;
 			var fDepth:Number = m_bIn ? 1 : 0;
 			fill.transform.colorTransform = new ColorTransform( fDepth, fDepth, fDepth );
-			CMainLoop.instance.screenList[ uScreen ].add( fill, uLayer );
+			screen.add( fill, uLayer );
 		}
 
 		/**
@@ -110,10 +123,10 @@ package danmaq.nineball.task{
 		public function initialize():void{}
 
 		/**
-		 * デストラクタ。
+		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{
-			CMainLoop.instance.screenList[ m_uScreen ].remove( fill );
+			m_screen.remove( fill );
 			m_bDisposed = true;
 		}
 		

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CInitializeData,danmaq.nineball.struct.CInitializeData,fontHash,fps,fpsLowCount,fpsLowLimit,fpsReflesh,main,sceneFirst,seResolution,systemTaskLayer,error,mainLoop,run,toString" name="keywords">
+<meta content="CInitializeData,danmaq.nineball.struct.CInitializeData,fps,fpsLowCount,fpsLowLimit,fpsReflesh,sceneFirst,seResolution,systemTaskLayer,error,mainLoop,run,toString" name="keywords">
 <title>danmaq.nineball.struct.CInitializeData</title>
 </head>
 <body>
@@ -60,10 +60,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol">CInitializeData</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fontHash">fontHash</a> : Dictionary<div class="summaryTableDescription"> ビットマップフォントの定義リストが格納されます。 </div>
-</td><td class="summaryTableOwnerCol">CInitializeData</td>
-</tr>
-<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fps">fps</a> : uint = 60<div class="summaryTableDescription"> 内部FPS理論値が格納されます。 </div>
 </td><td class="summaryTableOwnerCol">CInitializeData</td>
 </tr>
@@ -86,10 +82,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    近づけます。値を0にすると可変FPSは機能しません。低い値にするほど
    可変FPSは敏感になりますが、反面負荷も高まります。
    </div>
-</td><td class="summaryTableOwnerCol">CInitializeData</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#main">main</a> : DisplayObjectContainer = null<div class="summaryTableDescription"> 画面コンテナクラスが格納されます。 </div>
 </td><td class="summaryTableOwnerCol">CInitializeData</td>
 </tr>
 <tr class="">
@@ -165,14 +157,6 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get error():String</code>
 <br>
 </div>
-<a name="fontHash"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">fontHash</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public var fontHash:Dictionary</code><p> ビットマップフォントの定義リストが格納されます。 </p></div>
 <a name="fps"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -214,14 +198,6 @@ showHideInherited();
    近づけます。値を0にすると可変FPSは機能しません。低い値にするほど
    可変FPSは敏感になりますが、反面負荷も高まります。
    </p></div>
-<a name="main"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">main</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>public var main:DisplayObjectContainer = null</code><p> 画面コンテナクラスが格納されます。 </p></div>
 <a name="mainLoop"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -278,6 +254,14 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Boolean</code> &mdash; 起動出来たかどうか。
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; データが正当でない場合
    </td>
 </tr>
 </table>
