@@ -2,12 +2,34 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
 	 creationComplete="main();" layout="absolute" frameRate="60"
 	 width="640" height="400" minWidth="640"
-	 pageTitle="赤い玉 青い玉 競走ゲーム" backgroundAlpha="0" backgroundColor="#FFFFFF">
+	 pageTitle="赤い玉 青い玉 競走ゲーム" backgroundAlpha="0" backgroundColor="#000000">
 
 	<mx:Script>
 		<![CDATA[
 
+			import danmaq.ball.resource.*;
+			import danmaq.ball.scene.CSceneTitle;
+			import danmaq.ball.struct.CInitializer;
+
 			import danmaq.nineball.struct.CInitializeData;
+			import danmaq.nineball.struct.CScreen;
+
+			import mx.controls.Alert;
+			import mx.utils.StringUtil;
+
+			////////// FIELDS //////////
+			
+			/**	自分自身のインスタンスが格納されます。 */
+			private static var m_instance:Ball;
+
+			////////// PROPERTIES //////////
+
+			/**
+			 * このクラスのインスタンスを取得します。
+			 * 
+			 * @return このクラスのインスタンス
+			 */
+			public static function get instance():Ball{ return m_instance; }
 
 			////////// METHODS //////////
 	
@@ -15,14 +37,30 @@
 			 * ここからプログラムが開始します。
 			 */
 			private function main():void{
-				var ini:CInitializeData = new CInitializeData();
-				ini.fps = 60;
-				ini.fpsReflesh = 30;
-				ini.fpsLowLimit = 50;
-				ini.fpsLowCount = 5;
-				ini.seResolution = 3;
-				ini.main = this;
-				ini.run();
+				m_instance = this;
+				if( stage == null ){ addEventListener( Event.ADDED_TO_STAGE, run ); }
+				else{ run( null ); }
+			}
+			
+			/**
+			 * DNLを実行します。
+			 * stageが初期化されたときに自動的に呼ばれます。
+			 * 
+			 * @param e イベントパラメータ。(nullになることもあります)
+			 */
+			private function run( e:Event ):void{
+				try{
+					CInitializer.initializeBitmapFontList();
+					var ini:CInitializeData = CInitializer.dnl;
+					CResource.screen = new CScreen();
+					addChild( CScreen.root.screen );
+					ini.run();
+				}
+				catch( e:Error ){
+					var strText:String = StringUtil.substitute( "{0}\nErrorID:{1}", e, e.errorID );
+					trace( strText + "\n\n" + e.getStackTrace() );
+					Alert.show( strText, CONST.TITLE );
+				}
 			}
 
 		]]>

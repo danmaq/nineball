@@ -3,6 +3,7 @@
 	<name>Ball</name>
 	<comment></comment>
 	<projects>
+		<project>Nineball</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
