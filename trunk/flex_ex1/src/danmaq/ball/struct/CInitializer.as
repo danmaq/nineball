@@ -38,9 +38,9 @@ package danmaq.ball.struct{
 		 * フォントリソースを初期化します。
 		 */
 		public static function initializeBitmapFontList():void{
-			var strHalf:String = "()-/0123456789:CEFHIMOPRSacdmnq";
-			var strFull:String =
-				"０１２３４５６７８９。：！ー●いくけさしだちてをゲム競玉勝青赤選走択点得負";
+			var strHalf:String = "()-/.0123456789:ACEFHIMOPRSacdeghilmnqrstv";
+			var strFull:String = "０１２３４５６７８９。！ー●いくけ" + 
+				"さしだちてをゲスペム易競玉勝青赤選走打択点度得難負連";
 			var info:Vector.<CBitmapSplitter> = new Vector.<CBitmapSplitter>();
 			var uLength:uint = strHalf.length;
 			var i:uint;
@@ -51,7 +51,7 @@ package danmaq.ball.struct{
 			}
 			uLength = strFull.length;
 			for( i = 0; i < uLength; i++ ){
-				var uGap:uint = i + 16;
+				var uGap:uint = i + 21;
 				info.push( new CBitmapSplitter(
 					new Rectangle( ( uGap * 16 ) % 128, int( uGap / 8 ) * 16, 16, 16 ),
 					strFull.charAt( i ) ) );
