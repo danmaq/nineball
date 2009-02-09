@@ -28,7 +28,8 @@ package danmaq.nineball.struct.font{
 		public function CFontResource( dicImage:Dictionary, spaceSize:Point = null ){
 			if( dicImage[ " " ] == null ){
 				if( spaceSize == null ){ spaceSize = new Point( 1, 1 ); }
-				dicImage[ " " ] = new Bitmap( new BitmapData( spaceSize.x, spaceSize.y ) );
+				dicImage[ " " ] = new Bitmap(
+					new BitmapData( spaceSize.x, spaceSize.y, true, 0 ) );
 			}
 			m_dicImage = dicImage;
 		}
@@ -43,7 +44,9 @@ package danmaq.nineball.struct.font{
 			if( strByte == null || strByte.length == 0 || strByte.length >= 2 ){
 				throw new IllegalOperationError( "引数は1文字でなければなりません。" );
 			}
-			return new Bitmap( ( m_dicImage[ strByte ] as Bitmap ).bitmapData.clone() );
+			var bmp:Bitmap = m_dicImage[ strByte ];
+			if( bmp != null ){ bmp = new Bitmap( bmp.bitmapData.clone() ); }
+			return bmp;
 		}
 	}
 }
