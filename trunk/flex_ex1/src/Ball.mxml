@@ -49,18 +49,18 @@
 			 * @param e イベントパラメータ。(nullになることもあります)
 			 */
 			private function run( e:Event ):void{
-				try{
+//				try{
 					CInitializer.initializeBitmapFontList();
 					var ini:CInitializeData = CInitializer.dnl;
 					CResource.screen = new CScreen();
 					addChild( CScreen.root.screen );
 					ini.run();
-				}
-				catch( e:Error ){
-					var strText:String = StringUtil.substitute( "{0}\nErrorID:{1}", e, e.errorID );
-					trace( strText + "\n\n" + e.getStackTrace() );
-					Alert.show( strText, CONST.TITLE );
-				}
+//				}
+//				catch( e:Error ){
+//					var strText:String = StringUtil.substitute( "{0}\nErrorID:{1}", e, e.errorID );
+//					trace( strText + "\n\n" + e.getStackTrace() );
+//					Alert.show( strText, CONST.TITLE );
+//				}
 			}
 
 		]]>

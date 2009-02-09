@@ -6,6 +6,7 @@ package danmaq.ball.scene{
 	import danmaq.nineball.struct.CScreen;
 	import danmaq.nineball.struct.font.CFontTransform;
 	import danmaq.nineball.task.CTaskFPSView;
+	import danmaq.nineball.task.CTaskFont;
 	
 	import flash.display.StageQuality;
 	import flash.geom.Point;
@@ -70,8 +71,10 @@ package danmaq.ball.scene{
 		 * 事実上のデストラクタとして機能するメソッドです。
 		 */
 		public function dispose():void{
+			sceneTaskManager.dispose();
 			if( !CMisc.isRelate( CSceneBase, this ) ){
 				CScreen.root.remove( cbQuality );
+				commonTaskManager.dispose();
 				m_bInitialized = false;
 			}
 		}
@@ -86,6 +89,22 @@ package danmaq.ball.scene{
 			sceneTaskManager.update();
 			scenePhaseManager.count++;
 			return m_sceneNext == null;
+		}
+
+		/**
+		 * 文字を描画します。
+		 * 
+		 * @param strText 文字列
+		 * @param posLocate 文字単位座標
+		 * @param uColor カラーコード
+		 */
+		protected function print( strText:String, posLocate:Point, uColor:uint = 0xFFFFFF ):void{
+			var task:CTaskFont = new CTaskFont( CResource.font, CResource.screen );
+			sceneTaskManager.add( task );
+			task.text = strText;
+			task.view = true;
+			task.render( new CFontTransform( new Point( posLocate.x * 8, posLocate.y * 16 ), null,
+				0, 1, uColor, false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT ) );
 		}
 
 		/**
@@ -119,6 +138,6 @@ package danmaq.ball.scene{
 			cbQuality.addEventListener(FlexEvent.VALUE_COMMIT, onChangeQuality );
 			cbQuality.selectedIndex = 0;
 			CScreen.root.add( cbQuality );
-		}		
+		}
 	}
 }
