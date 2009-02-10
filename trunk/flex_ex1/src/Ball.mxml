@@ -4,6 +4,12 @@
 	 width="640" height="400" minWidth="640"
 	 pageTitle="赤い玉 青い玉 競走ゲーム" backgroundAlpha="0" backgroundColor="#000000">
 
+	<mx:Style>
+		Button.level{
+			focus-alpha: 0;
+		}
+	</mx:Style>
+
 	<mx:Script>
 		<![CDATA[
 
@@ -49,10 +55,11 @@
 			 * @param e イベントパラメータ。(nullになることもあります)
 			 */
 			private function run( e:Event ):void{
+				// 一時的に例外表示解除
 //				try{
 					CInitializer.initializeBitmapFontList();
 					var ini:CInitializeData = CInitializer.dnl;
-					CResource.screen = new CScreen();
+					CResource.screen = new CScreen( int.MAX_VALUE );
 					addChild( CScreen.root.screen );
 					ini.run();
 //				}

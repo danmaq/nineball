@@ -1,12 +1,11 @@
 package danmaq.ball.scene{
 
-	import danmaq.ball.resource.CResource;
+	import danmaq.ball.resource.*;
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CMisc;
 	import danmaq.nineball.struct.CScreen;
 	import danmaq.nineball.struct.font.CFontTransform;
-	import danmaq.nineball.task.CTaskFPSView;
-	import danmaq.nineball.task.CTaskFont;
+	import danmaq.nineball.task.*;
 	
 	import flash.display.StageQuality;
 	import flash.geom.Point;
@@ -99,7 +98,8 @@ package danmaq.ball.scene{
 		 * @param uColor カラーコード
 		 */
 		protected function print( strText:String, posLocate:Point, uColor:uint = 0xFFFFFF ):void{
-			var task:CTaskFont = new CTaskFont( CResource.font, CResource.screen );
+			var task:CTaskFont =
+				new CTaskFont( CResource.font, CResource.screen, CONST.LAYER_TEXT );
 			sceneTaskManager.add( task );
 			task.text = strText;
 			task.view = true;
@@ -125,18 +125,19 @@ package danmaq.ball.scene{
 			commonTaskManager.add( taskFps );
 			taskFps.prefix = "FPS:";
 			taskFps.transform = new CFontTransform(
-				 new Point( 400, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
+				 new Point( 440, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
 				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT );
 			cbQuality.dataProvider = new ArrayCollection( [
-				{ label: "Graphic Quality: Best",	data: StageQuality.BEST		},
-				{ label: "Graphic Quality: High",	data: StageQuality.HIGH		},
-				{ label: "Graphic Quality: Good",	data: StageQuality.MEDIUM	},
-				{ label: "Graphic Quality: Lite",	data: StageQuality.LOW		}
+				{ label: "Quality: Best",	data: StageQuality.BEST		},
+				{ label: "Quality: High",	data: StageQuality.HIGH		},
+				{ label: "Quality: Good",	data: StageQuality.MEDIUM	},
+				{ label: "Quality: Lite",	data: StageQuality.LOW		}
 			] );
-			cbQuality.width = 184;
+			cbQuality.width = 144;
 			cbQuality.x = CScreen.stage.width - cbQuality.width;
 			cbQuality.addEventListener(FlexEvent.VALUE_COMMIT, onChangeQuality );
 			cbQuality.selectedIndex = 0;
+			cbQuality.toolTip = "Graphic quality level"
 			CScreen.root.add( cbQuality );
 		}
 	}
