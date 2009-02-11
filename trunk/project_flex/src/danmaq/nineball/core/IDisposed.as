@@ -7,6 +7,8 @@ package danmaq.nineball.core{
 	 */
 	public interface IDisposed{
 
+		////////// PROPERTIES //////////
+
 		/**
 		 * 解放したかどうかを取得します。
 		 * 

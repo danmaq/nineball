@@ -134,6 +134,7 @@ package danmaq.nineball.struct.font{
 			var color:ColorTransform = new ColorTransform();
 			color.color = info.color;
 			m_image.transform.colorTransform = color;
+			m_image.alpha = info.alpha;
 			m_image.smoothing = info.smoothing;
 			CMisc.setMatrix( m_image, info.scale, info.rotate, info.pos );
 		}
