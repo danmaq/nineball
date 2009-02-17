@@ -140,9 +140,9 @@ package danmaq.nineball.task{
 		 * @param se 効果音
 		 */
 		public function play( se:Sound ):void{
-			var strClass:String = CMisc.getClassName( se );
-			if( dicSE[ strClass ] == null ){ dicSE[ strClass ] = [ se, null ]; }
-			if( QList.indexOf( strClass ) < 0 ){ QList.push( strClass ); }
+			var strKey:String = se.toString();
+			if( dicSE[ strKey ] == null ){ dicSE[ strKey ] = [ se, null ]; }
+			if( QList.indexOf( strKey ) < 0 ){ QList.push( strKey ); }
 		}
 	}
 }
