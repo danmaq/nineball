@@ -96,7 +96,7 @@ package danmaq.nineball.core{
 		 */
 		private function startLoop():void{
 			var t:Timer = timer.timer;
-			t.addEventListener( "timer", mainLoop );
+			t.addEventListener( TimerEvent.TIMER, mainLoop );
 			t.start();
 		}
 
