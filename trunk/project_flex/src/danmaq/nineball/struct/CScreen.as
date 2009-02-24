@@ -1,5 +1,7 @@
 package danmaq.nineball.struct{
 
+	import danmaq.nineball.core.IDisposed;
+	
 	import flash.display.*;
 	
 	import mx.containers.Canvas;
@@ -10,7 +12,7 @@ package danmaq.nineball.struct{
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public final class CScreen{
+	public final class CScreen implements IDisposed{
 
 		////////// CONSTANTS //////////
 
@@ -19,14 +21,20 @@ package danmaq.nineball.struct{
 
 		////////// FIELDS //////////
 
-		/**	親管理クラスが格納されます。 */
+		/**	ルート管理クラスが格納されます。 */
 		private static var m_root:CScreen = null;
+
+		/**	解放されたかどうかが格納されます。 */
+		private var m_bDisposed:Boolean = false;
 
 		/**	画面オブジェクトが格納されます。 */
 		private var m_screen:UIComponent = null;
 		
-		/**	親管理クラスかどうかが格納されます。 */
+		/**	ルート管理クラスかどうかが格納されます。 */
 		private var m_bRoot:Boolean = false;
+		
+		/**	親管理クラスが格納されます。 */
+		private var m_parent:CScreen = null;
 		
 		////////// PROPERTIES //////////
 
@@ -52,6 +60,13 @@ package danmaq.nineball.struct{
 		}
 
 		/**
+		 * 解放したかどうかを取得します。
+		 * 
+		 * @return 解放している場合、true
+		 */
+		public function get disposed():Boolean{ return m_bDisposed; }
+
+		/**
 		 * 画面オブジェクトを取得します。
 		 * 
 		 * @return 登録オブジェクト
@@ -72,6 +87,13 @@ package danmaq.nineball.struct{
 		 * @return 親管理クラスである場合、true
 		 */
 		public function get isRoot():Boolean{ return m_bRoot; }
+		
+		/**
+		 * 直属の親管理クラスを取得します。
+		 * 
+		 * @return 直属の親管理クラス インスタンス。rootである場合、自分自身のインスタンス。
+		 */
+		public function get parent():CScreen{ return m_parent == null ? root : m_parent; }
 
 		////////// METHODS //////////
 
@@ -97,9 +119,22 @@ package danmaq.nineball.struct{
 			m_bRoot = ( _root != null );
 			if( isRoot ){ m_screen = new Canvas(); }
 			else{
+				m_parent = parent;
 				m_screen = bUseCanvas ? new Canvas() : new UIComponent();
 				if( parent == null ){ root.add( m_screen, nLayer ); }
 				else{ parent.add( m_screen, nLayer ); }
+			}
+		}
+
+		/**
+		 * この管理クラスを解放します。
+		 * ルート管理クラスでこのメソッドを実行した場合無視されます。
+		 * (disposedプロパティがtrueになりません)
+		 */
+		public function dispose():void{
+			if( parent != this ){
+				parent.remove( screen );
+				m_bDisposed = true;
 			}
 		}
 
