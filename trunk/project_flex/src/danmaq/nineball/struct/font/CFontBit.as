@@ -27,7 +27,10 @@ package danmaq.nineball.struct.font{
 		private var m_uLayer:uint;
 
 		/**	画像を格納する画面管理クラスが格納されます。 */
-		private var m_screen:CScreen;
+		private var m_screen:CScreen = null;
+
+		/**	画像を格納する画面管理クラスが格納されます。 */
+		private var m_doc:DisplayObjectContainer = null;
 
 		/**	解放されたかどうかが格納されます。 */
 		private var m_bDisposed:Boolean = false;
@@ -71,8 +74,8 @@ package danmaq.nineball.struct.font{
 			}
 			if( m_bView != value ){
 				m_bView = value;
-				if( value ){ m_screen.add( m_image, m_uLayer ); }
-				else{ m_screen.remove( m_image ); }
+				if( value ){ add( m_image, m_uLayer ); }
+				else{ remove( m_image ); }
 			}
 		}
 
@@ -90,6 +93,44 @@ package danmaq.nineball.struct.font{
 		 */
 		public function get size():Point{ return m_size.clone(); }
 
+		/**
+		 * 画面管理クラスに画像を貼り付けるメソッドを取得します。
+		 * 
+		 * @return 画面管理クラスに画像を貼り付けるメソッド
+		 */
+		private function get add():Function{
+			return m_doc == null ? m_screen.add :
+				function( img:DisplayObject, layer:int ):void{ m_doc.addChild( img ); };
+		}
+
+		/**
+		 * 画面管理クラスから画像を除去するメソッドを取得します。
+		 * 
+		 * @return 画面管理クラスから画像を除去するメソッド
+		 */
+		private function get remove():Function{
+			return m_doc == null ? m_screen.remove : m_doc.removeChild;
+		}
+
+		/**
+		 * 現画面管理クラスを設定します。
+		 * 
+		 * @param value 画面管理クラス
+		 * @throws flash.errors.IllegalOperationError 画面管理クラスが
+		 * DisplayObjectContainerのサブクラスかCScreenクラスのインスタンスで無かった場合
+		 */
+		private function set screen( value:Object ):void{
+			if( CMisc.isRelate( CScreen, value ) ){ m_screen = value as CScreen; }
+			else if( CMisc.isRelate( DisplayObjectContainer, value ) ){
+				m_doc = value as DisplayObjectContainer;
+			}
+			else{
+				throw new IllegalOperationError(
+					"画面管理クラスはDisplayObjectContainerのサブクラス、または" + 
+					"CScreenクラスのインスタンスで無ければなりません。" );
+			}
+		}
+
 		////////// METHODS //////////
 
 		/**
@@ -101,9 +142,9 @@ package danmaq.nineball.struct.font{
 		 * @param uLayer レイヤ番号
 		 */
 		public function CFontBit(
-			fontResource:CFontResource, strByte:String, screen:CScreen, uLayer:uint = 0
+			fontResource:CFontResource, strByte:String, screen:Object, uLayer:uint = 0
 		){
-			m_screen = screen;
+			this.screen = screen;
 			m_uLayer = uLayer;
 			if( text != strByte ){
 				var imgByte:Bitmap = fontResource.getImage( strByte );
