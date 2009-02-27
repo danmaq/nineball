@@ -129,7 +129,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CTaskFont()">CTaskFont</a>(fontResource:<a href="../struct/font/CFontResource.html">CFontResource</a>, screen:<a href="../struct/CScreen.html">CScreen</a>, uLayer:uint = 0)</div>
+<a class="signatureLink" href="#CTaskFont()">CTaskFont</a>(fontResource:<a href="../struct/font/CFontResource.html">CFontResource</a>, screen:Object, uLayer:uint = 0)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
    
@@ -315,7 +315,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CTaskFont(fontResource:<a href="../struct/font/CFontResource.html">CFontResource</a>, screen:<a href="../struct/CScreen.html">CScreen</a>, uLayer:uint = 0)</code><p>
+<code>public function CTaskFont(fontResource:<a href="../struct/font/CFontResource.html">CFontResource</a>, screen:Object, uLayer:uint = 0)</code><p>
    コンストラクタ。
    
    </p><span class="label">Parameters</span>
@@ -328,7 +328,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">screen</span>:<a href="../struct/CScreen.html">CScreen</a></code> &mdash; 格納する画面管理クラス
+<td width="20px"></td><td><code><span class="label">screen</span>:Object</code> &mdash; 格納する画面管理クラス(DisplayObjectContainerのサブクラスかCScreenクラスのインスタンス)
    </td>
 </tr>
 <tr>

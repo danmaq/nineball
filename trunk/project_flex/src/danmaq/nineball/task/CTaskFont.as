@@ -39,7 +39,7 @@ package danmaq.nineball.task{
 		private var m_uLayer:uint;
 
 		/**	文字画像を格納する画面管理クラスが格納されます。 */
-		private var m_screen:CScreen;
+		private var m_screen:Object;
 
 		/**	フォントリソースが格納されます。 */
 		private var m_fontResource:CFontResource;
@@ -134,10 +134,10 @@ package danmaq.nineball.task{
 		 * コンストラクタ。
 		 * 
 		 * @param fontResource フォントリソース
-		 * @param screen 格納する画面管理クラス
+		 * @param screen 格納する画面管理クラス(DisplayObjectContainerのサブクラスかCScreenクラスのインスタンス)
 		 * @param uLayer レイヤ番号
 		 */
-		public function CTaskFont( fontResource:CFontResource, screen:CScreen, uLayer:uint = 0 ){
+		public function CTaskFont( fontResource:CFontResource, screen:Object, uLayer:uint = 0 ){
 			m_fontResource = fontResource;
 			m_screen = screen;
 			m_uLayer = uLayer;
