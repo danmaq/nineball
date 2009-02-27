@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="danmaq.nineball.core.CMainLoop"/>
+<classEntry path="danmaq.nineball.core.CPhaseManager"/>
+<classEntry path="danmaq.nineball.core.CSceneManager"/>
+<classEntry path="danmaq.nineball.core.CTaskManager"/>
+<classEntry path="danmaq.nineball.core.IDisposed"/>
+<classEntry path="danmaq.nineball.core.IScene"/>
+<classEntry path="danmaq.nineball.core.ITask"/>
+<classEntry path="danmaq.nineball.misc.CBitmapSplitter"/>
+<classEntry path="danmaq.nineball.misc.CInterpolate"/>
+<classEntry path="danmaq.nineball.misc.CMisc"/>
+<classEntry path="danmaq.nineball.misc.math.CMathHyperbolic"/>
+<classEntry path="danmaq.nineball.misc.math.CMathMisc"/>
+<classEntry path="danmaq.nineball.misc.math.CMathTrignometric"/>
+<classEntry path="danmaq.nineball.resource.CSentence"/>
+<classEntry path="danmaq.nineball.struct.CBGMPreset"/>
+<classEntry path="danmaq.nineball.struct.CDisplayObject"/>
+<classEntry path="danmaq.nineball.struct.CGradation"/>
+<classEntry path="danmaq.nineball.struct.CInitializeData"/>
+<classEntry path="danmaq.nineball.struct.CScreen"/>
+<classEntry path="danmaq.nineball.struct.font.CFontBit"/>
+<classEntry path="danmaq.nineball.struct.font.CFontResource"/>
+<classEntry path="danmaq.nineball.struct.font.CFontTransform"/>
+<classEntry path="danmaq.nineball.struct.font.CFontTransformBit"/>
+<classEntry path="danmaq.nineball.task.CTaskBGM"/>
+<classEntry path="danmaq.nineball.task.CTaskBPMCounter"/>
+<classEntry path="danmaq.nineball.task.CTaskExclusiveSE"/>
+<classEntry path="danmaq.nineball.task.CTaskFPSTimer"/>
+<classEntry path="danmaq.nineball.task.CTaskFPSView"/>
+<classEntry path="danmaq.nineball.task.CTaskFade"/>
+<classEntry path="danmaq.nineball.task.CTaskFont"/>
+<classEntry path="danmaq.nineball.task.CTaskInterpolate"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
