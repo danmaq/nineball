@@ -7,6 +7,9 @@ package danmaq.ball.resource{
 	 */
 	public final class CONST{
 		
+		/**	デバッグ中かどうかが格納されます。 */
+		public static const DEBUG:Boolean = true;
+		
 		/**	タイトル文字列が格納されます。 */
 		public static const TITLE:String = "赤い玉 青い玉 競走ゲーム Flash ver.";
 
