@@ -3,6 +3,8 @@ package danmaq.nineball.struct{
 	import danmaq.nineball.core.IDisposed;
 	
 	import flash.display.*;
+	import flash.events.Event;
+	import flash.geom.Point;
 	
 	import mx.containers.Canvas;
 	import mx.core.UIComponent;
@@ -18,6 +20,9 @@ package danmaq.nineball.struct{
 
 		/**	登録されている表示物体のレイヤ一覧が格納されます。 */
 		private const displayObjectList:Vector.<CDisplayObject> = new Vector.<CDisplayObject>();
+
+		/**	画面サイズが格納されます。 */
+		private static const posSize:Point = new Point();
 
 		////////// FIELDS //////////
 
@@ -55,9 +60,16 @@ package danmaq.nineball.struct{
 		 * 
 		 * @return メイン描画領域
 		 */
-		public static function get stage():Stage{
-			return root.screen.stage;
-		}
+		public static function get stage():Stage{ return root.screen.stage; }
+		
+		/**
+		 * 画面サイズを取得します。
+		 * 注意：CScreenクラスを初めて使用する際、既に画面上に何か描画していると
+		 * 正常に値が取得できない場合があります。
+		 * 
+		 * @return 画面サイズ
+		 */
+		public static function get size():Point{ return posSize.clone(); }
 
 		/**
 		 * 解放したかどうかを取得します。
@@ -117,7 +129,10 @@ package danmaq.nineball.struct{
 			bUseCanvas:Boolean = false, _root:CScreenRoot = null
 		){
 			m_bRoot = ( _root != null );
-			if( isRoot ){ m_screen = new Canvas(); }
+			if( isRoot ){
+				m_screen = new Canvas();
+				m_screen.addEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			}
 			else{
 				m_parent = parent;
 				m_screen = bUseCanvas ? new Canvas() : new UIComponent();
@@ -185,6 +200,17 @@ package danmaq.nineball.struct{
 		 */
 		public function addChildAtReverse( child:DisplayObject, index:uint ):DisplayObject{
 			return screen.addChildAt( child, screen.numChildren - index );
+		}
+
+		/**
+		 * ルート管理クラスがステージ上の表示リストに追加されたときに実行されます。
+		 * 
+		 * @param e イベントパラメータ
+		 */
+		private function onAddedToStage( e:Event ):void{
+			m_screen.removeEventListener( Event.ADDED_TO_STAGE, onAddedToStage );
+			posSize.x = stage.width;
+			posSize.y = stage.height;
 		}
 	}
 }
