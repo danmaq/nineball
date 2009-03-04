@@ -49,25 +49,33 @@
 			}
 			
 			/**
-			 * DNLを実行します。
+			 * nineball Libraryを実行します。
 			 * stageが初期化されたときに自動的に呼ばれます。
 			 * 
 			 * @param e イベントパラメータ。(nullになることもあります)
 			 */
 			private function run( e:Event ):void{
-				// 一時的に例外表示解除
-//				try{
-					CInitializer.initializeBitmapFontList();
-					var ini:CInitializeData = CInitializer.dnl;
-					CResource.screen = new CScreen( int.MAX_VALUE );
-					addChild( CScreen.root.screen );
-					ini.run();
-//				}
-//				catch( e:Error ){
-//					var strText:String = StringUtil.substitute( "{0}\nErrorID:{1}", e, e.errorID );
-//					trace( strText + "\n\n" + e.getStackTrace() );
-//					Alert.show( strText, CONST.TITLE );
-//				}
+				if( CONST.DEBUG ){ __run(); }
+				else{
+					try{ __run(); }
+					catch( e:Error ){
+						var strText:String =
+							StringUtil.substitute( "{0}\nErrorID:{1}", e, e.errorID );
+						trace( strText + "\n\n" + e.getStackTrace() );
+						Alert.show( strText, CONST.TITLE );
+					}
+				}
+			}
+
+			/**
+			 * nineball Libraryを実行します。
+			 */
+			private function __run():void{
+				CInitializer.initializeBitmapFontList();
+				var ini:CInitializeData = CInitializer.dnl;
+				CResource.screen = new CScreen( int.MAX_VALUE );
+				addChild( CScreen.root.screen );
+				ini.run();
 			}
 
 		]]>

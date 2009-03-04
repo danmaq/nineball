@@ -7,11 +7,12 @@ package danmaq.ball.scene{
 	import danmaq.nineball.struct.font.CFontTransform;
 	import danmaq.nineball.task.*;
 	
-	import flash.display.StageQuality;
-	import flash.geom.Point;
+	import flash.display.*;
+	import flash.events.*;
+	import flash.geom.*;
 	
 	import mx.collections.ArrayCollection;
-	import mx.controls.ComboBox;
+	import mx.controls.*;
 	import mx.events.FlexEvent;
 
 	/**
@@ -29,6 +30,9 @@ package danmaq.ball.scene{
 
 		/**	画質調整用コンボボックスが格納されます。 */
 		private static const cbQuality:ComboBox = new ComboBox();
+
+		/**	フルスクリーン切り替えボタンが格納されます。 */
+		private static const btnChangeScreenMode:Button = new Button();
 
 		/**	各シーンごとのタスク管理クラスが格納されます。 */
 		protected const sceneTaskManager:CTaskManager = new CTaskManager();
@@ -108,6 +112,54 @@ package danmaq.ball.scene{
 		}
 
 		/**
+		 * 初期化時に一度だけ実行されます。
+		 */
+		private static function initialize():void{
+			CScreen.stage.scaleMode = StageScaleMode.SHOW_ALL;
+			var taskFps:CTaskFPSView = new CTaskFPSView( CResource.font, CResource.screen );
+			commonTaskManager.add( taskFps );
+			taskFps.prefix = "FPS:";
+			taskFps.transform = new CFontTransform(
+				 new Point( 336, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
+				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT );
+			initializeQualityComboBox();
+			initializeChangeScreenButton();
+		}
+		
+		/**
+		 * 画質設定コンボボックスの初期化をします。
+		 */
+		private static function initializeQualityComboBox():void{
+			cbQuality.dataProvider = new ArrayCollection( [
+				{ label: "Quality: Best",	data: StageQuality.BEST		},
+				{ label: "Quality: High",	data: StageQuality.HIGH		},
+				{ label: "Quality: Good",	data: StageQuality.MEDIUM	},
+				{ label: "Quality: Lite",	data: StageQuality.LOW		}
+			] );
+			cbQuality.width = 144;
+			cbQuality.x = CScreen.stage.width - cbQuality.width;
+			cbQuality.addEventListener( FlexEvent.VALUE_COMMIT, onChangeQuality );
+			cbQuality.selectedIndex = 0;
+			cbQuality.toolTip = "Graphic quality level"
+			CScreen.root.add( cbQuality );
+		}
+		
+		/**
+		 * フルスクリーン切り替えボタンの初期化をします。
+		 */
+		private static function initializeChangeScreenButton():void{
+			btnChangeScreenMode.width = 96;
+			btnChangeScreenMode.x = cbQuality.x - btnChangeScreenMode.width;
+			btnChangeScreenMode.label = "FullScreen";
+			btnChangeScreenMode.toggle = true;
+			btnChangeScreenMode.addEventListener( Event.CHANGE, onToggleChangeScreen );
+			CScreen.stage.fullScreenSourceRect =
+				new Rectangle( 0, 0, CScreen.size.x, CScreen.size.y );
+			CScreen.stage.addEventListener( FullScreenEvent.FULL_SCREEN, onFullScreen );
+			CScreen.root.add( btnChangeScreenMode );
+		}
+
+		/**
 		 * 画質調整コンボボックスの値が変更された時に
 		 * 自動的にコールバックされるメソッドです。
 		 * 
@@ -118,27 +170,24 @@ package danmaq.ball.scene{
 		}
 
 		/**
-		 * 初期化時に一度だけ実行されます。
+		 * フルスクリーン切り替えボタンが押された時に
+		 * 自動的にコールバックされるメソッドです。
+		 * 
+		 * @param e イベントパラメータ
 		 */
-		private function initialize():void{
-			var taskFps:CTaskFPSView = new CTaskFPSView( CResource.font, CResource.screen );
-			commonTaskManager.add( taskFps );
-			taskFps.prefix = "FPS:";
-			taskFps.transform = new CFontTransform(
-				 new Point( 440, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
-				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT );
-			cbQuality.dataProvider = new ArrayCollection( [
-				{ label: "Quality: Best",	data: StageQuality.BEST		},
-				{ label: "Quality: High",	data: StageQuality.HIGH		},
-				{ label: "Quality: Good",	data: StageQuality.MEDIUM	},
-				{ label: "Quality: Lite",	data: StageQuality.LOW		}
-			] );
-			cbQuality.width = 144;
-			cbQuality.x = CScreen.stage.width - cbQuality.width;
-			cbQuality.addEventListener(FlexEvent.VALUE_COMMIT, onChangeQuality );
-			cbQuality.selectedIndex = 0;
-			cbQuality.toolTip = "Graphic quality level"
-			CScreen.root.add( cbQuality );
+		private static function onToggleChangeScreen( e:Event ):void{
+			CScreen.stage.displayState = btnChangeScreenMode.selected ?
+				StageDisplayState.FULL_SCREEN : StageDisplayState.NORMAL;
+		}
+
+		/**
+		 * 画面がフルスクリーンモードになった時に
+		 * 自動的にコールバックされるメソッドです。
+		 * 
+		 * @param e イベントパラメータ
+		 */
+		private static function onFullScreen( e:FullScreenEvent ):void{
+			btnChangeScreenMode.selected = e.fullScreen;
 		}
 	}
 }
