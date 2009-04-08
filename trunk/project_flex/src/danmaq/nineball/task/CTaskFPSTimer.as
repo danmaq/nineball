@@ -72,6 +72,13 @@ package danmaq.nineball.task{
 		public function set manager( value:CTaskManager ):void{}
 
 		/**
+		 * 一時停止に対応しているかどうかを取得します。
+		 * 
+		 * @return 無条件にfalse
+		 */
+		public function get isAvailablePause():Boolean{ return false; }
+
+		/**
 		 * FPS更新フレーム間隔を取得します。
 		 * 
 		 * @return FPS更新フレーム間隔

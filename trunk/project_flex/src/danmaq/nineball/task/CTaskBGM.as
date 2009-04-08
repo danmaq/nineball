@@ -64,11 +64,11 @@ package danmaq.nineball.task{
 		////////// PROPERTIES //////////
 
 		/**
-		 * 現在再生中かどうかを取得します。
+		 * 一時停止に対応しているかどうかを取得します。
 		 * 
-		 * @return 現在再生中である場合、true
+		 * @return 無条件にfalse
 		 */
-		public static function get isPlay():Boolean{ return s_bPlay; }
+		public function get isAvailablePause():Boolean{ return false; }
 
 		/**
 		 * レイヤ値を取得します。
@@ -91,6 +91,13 @@ package danmaq.nineball.task{
 		 * @return タスクが終了している場合、true
 		 */
 		public function get disposed():Boolean{ return m_bDisposed; }
+
+		/**
+		 * 現在再生中かどうかを取得します。
+		 * 
+		 * @return 現在再生中である場合、true
+		 */
+		public static function get isPlay():Boolean{ return s_bPlay; }
 
 		/**
 		 * ミュート中かどうかを取得します。

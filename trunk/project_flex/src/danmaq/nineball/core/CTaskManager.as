@@ -14,6 +14,9 @@ package danmaq.nineball.core{
 
 		/**	タスクのリストが格納されます。 */
 		private var m_list:Vector.<ITask> = new Vector.<ITask>();
+		
+		/**	一時停止中かどうかが格納されます。 */
+		public var pause:Boolean = false;
 
 		////////// PROPERTIES //////////
 		
@@ -146,7 +149,7 @@ package danmaq.nineball.core{
 			var task:ITask;
 			while( i < m_list.length ){
 				task = m_list[ i ];
-				if( task.update() ){ i++; }
+				if( ( pause && task.isAvailablePause ) || task.update() ){ i++; }
 				else{
 					task.dispose();
 					m_list.splice( i, 1 );

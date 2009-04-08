@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="ITask,danmaq.nineball.core.ITask,layer,manager,dispose,initialize,update" name="keywords">
+<meta content="ITask,danmaq.nineball.core.ITask,isAvailablePause,layer,manager,dispose,initialize,update" name="keywords">
 <title>danmaq.nineball.core.ITask</title>
 </head>
 <body>
@@ -38,11 +38,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <td class="classHeaderTableLabel">Interface</td><td class="classSignature">public interface ITask</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Implementors</td><td><a href="../task/CTaskBGM.html">CTaskBGM</a>, <a href="../task/CTaskBPMCounter.html">CTaskBPMCounter</a>, <a href="../task/CTaskExclusiveSE.html">CTaskExclusiveSE</a>, <a href="../task/CTaskFade.html">CTaskFade</a>, <a href="../task/CTaskFont.html">CTaskFont</a>, <a href="../task/CTaskFPSTimer.html">CTaskFPSTimer</a>, <a href="../task/CTaskFPSView.html">CTaskFPSView</a>, <a href="../task/CTaskInterpolate.html">CTaskInterpolate</a></td>
+<td class="classHeaderTableLabel">Implementors</td><td><a href="../core/CTaskBase.html">CTaskBase</a>, <a href="../task/CTaskBGM.html">CTaskBGM</a>, <a href="../task/CTaskBPMCounter.html">CTaskBPMCounter</a>, <a href="../task/CTaskExclusiveSE.html">CTaskExclusiveSE</a>, <a href="../task/CTaskFade.html">CTaskFade</a>, <a href="../task/CTaskFont.html">CTaskFont</a>, <a href="../task/CTaskFPSTimer.html">CTaskFPSTimer</a>, <a href="../task/CTaskInterpolate.html">CTaskInterpolate</a></td>
 </tr>
 </table>
 <p></p>
   タスクの基底となるインターフェイスです。
+  タスク管理クラスCTaskManagerに登録するタスクを作成するためには、
+  このクラスを実装するか、CTaskBaseを継承します。
   
   <p></p>
 <br>
@@ -54,6 +56,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isAvailablePause">isAvailablePause</a> : Boolean<div class="summaryTableDescription">[read-only]
+   一時停止に対応しているかどうかを取得します。
+   
+   <p>
+   一時停止に対応しているタスクは、登録されている管理クラスにおいて
+   pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+   </p>
+   
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#layer">layer</a> : uint<div class="summaryTableDescription">[read-only]
@@ -139,10 +153,30 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="isAvailablePause"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isAvailablePause</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>isAvailablePause:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   一時停止に対応しているかどうかを取得します。
+   
+   </p><p>
+   一時停止に対応しているタスクは、登録されている管理クラスにおいて
+   pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+   </p>
+   
+   <span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isAvailablePause():Boolean</code>
+<br>
+</div>
 <a name="layer"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">layer</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">layer</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">

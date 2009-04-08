@@ -44,6 +44,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
   </td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html#initialize()">initialize</a>() &mdash; Method in class danmaq.nineball.core.<a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html">CTaskBase</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   コンストラクタの後、タスクが管理クラスに登録された直後に、
+   1度だけ自動的に呼ばれます。
+   オーバーライドする際はメソッドの最初に継承元メソッドも呼び出してください。
+   </td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/ITask.html#initialize()">initialize</a>() &mdash; Method in interface danmaq.nineball.core.<a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/ITask.html">ITask</a></td>
 </tr>
 <tr>
@@ -120,15 +130,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFPSView.html#initialize()">initialize</a>() &mdash; Method in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFPSView.html">CTaskFPSView</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   コンストラクタの後、タスクが管理クラスに登録された直後に、
-   1度だけ自動的に呼ばれます。
-   </td>
-</tr>
-<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskInterpolate.html#initialize()">initialize</a>() &mdash; Method in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskInterpolate.html">CTaskInterpolate</a></td>
 </tr>
 <tr>
@@ -153,6 +154,103 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
 <td width="20"></td><td> FPS更新のフレーム時間間隔が格納されます。 </td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html#isAlive">isAlive</a> &mdash; Property in class danmaq.nineball.core.<a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html">CTaskBase</a></td>
+</tr>
+<tr>
+<td width="20"></td><td> 次フレームまで生存するかどうかが格納されます。 </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.core.<a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html">CTaskBase</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   <p>
+   一時停止に対応しているタスクは、登録されている管理クラスにおいて
+   pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+   </p>
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/ITask.html#isAvailablePause">isAvailablePause</a> &mdash; Property in interface danmaq.nineball.core.<a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/ITask.html">ITask</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   <p>
+   一時停止に対応しているタスクは、登録されている管理クラスにおいて
+   pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+   </p>
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskBGM.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskBGM.html">CTaskBGM</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskBPMCounter.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskBPMCounter.html">CTaskBPMCounter</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskExclusiveSE.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskExclusiveSE.html">CTaskExclusiveSE</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFade.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFade.html">CTaskFade</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFont.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFont.html">CTaskFont</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFPSTimer.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskFPSTimer.html">CTaskFPSTimer</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskInterpolate.html#isAvailablePause">isAvailablePause</a> &mdash; Property in class danmaq.nineball.task.<a onclick="javascript:loadClassListFrame('danmaq/nineball/task/class-list.html');" href="danmaq/nineball/task/CTaskInterpolate.html">CTaskInterpolate</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   一時停止に対応しているかどうかを取得します。
+   
+   </td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/IScene.html"><i>IScene</i></a> &mdash; Interface in package <a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/package-detail.html">danmaq.nineball.core</a></td>
 </tr>
 <tr>
@@ -168,6 +266,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
 <td width="20"></td><td>
    解放命令を無視するかどうかが格納されます。
    解除忘れ防止のため、一度無視するたびにオフになります。
+   </td>
+</tr>
+<tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html#isLockedLayer">isLockedLayer</a> &mdash; Property in class danmaq.nineball.core.<a onclick="javascript:loadClassListFrame('danmaq/nineball/core/class-list.html');" href="danmaq/nineball/core/CTaskBase.html">CTaskBase</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   レイヤ番号が固定済みかどうかを取得します。
+   
    </td>
 </tr>
 <tr>
@@ -234,6 +341,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("I�
 <tr>
 <td width="20"></td><td>
   タスクの基底となるインターフェイスです。
+  タスク管理クラスCTaskManagerに登録するタスクを作成するためには、
+  このクラスを実装するか、CTaskBaseを継承します。
   
   </td>
 </tr>

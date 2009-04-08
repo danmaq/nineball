@@ -61,6 +61,13 @@ package danmaq.nineball.task{
 		public function set manager( value:CTaskManager ):void{}
 
 		/**
+		 * 一時停止に対応しているかどうかを取得します。
+		 * 
+		 * @return 無条件にfalse
+		 */
+		public function get isAvailablePause():Boolean{ return false; }
+
+		/**
 		 * ミュート中かどうかを取得します。
 		 * 
 		 * @return ミュートしている場合、true
