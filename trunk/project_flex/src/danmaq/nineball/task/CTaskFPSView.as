@@ -2,34 +2,22 @@ package danmaq.nineball.task{
 
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.struct.CScreen;
-	import danmaq.nineball.struct.font.CFontResource;
-	import danmaq.nineball.struct.font.CFontTransform;
+	import danmaq.nineball.struct.font.*;
 
 	/**
 	 * FPS表示タスクです。
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public final class CTaskFPSView implements ITask, IDisposed{
-
-		////////// CONSTANTS //////////
-
-		/**	フェーズ管理クラスが格納されます。 */
-		private const phaseManager:CPhaseManager = new CPhaseManager();
+	public final class CTaskFPSView extends CTaskBase implements IDisposed{
 
 		////////// FIELDS //////////
 
 		/**	FPS更新のフレーム時間間隔が格納されます。 */
 		public var interval:uint = 60;
 
-		/**	レイヤ番号が格納されます。 */
-		private var m_uLayer:uint;
-
 		/**	フォントタスクが格納されます。 */
 		private var m_taskFont:CTaskFont = null;
-
-		/**	タスク管理クラスが格納されます。 */
-		private var m_taskManager:CTaskManager = null;
 
 		/**	接頭語が格納されます。 */
 		private var m_strPrefix:String = "";
@@ -41,22 +29,6 @@ package danmaq.nineball.task{
 		private var m_bReady:Boolean = false;
 		
 		////////// PROPERTIES //////////
-
-		/**
-		 * レイヤ値を取得します。
-		 * 
-		 * @return レイヤ値
-		 */
-		public function get layer():uint{ return m_uLayer; }
-		
-		/**
-		 * タスク管理クラスを設定します。
-		 * 
-		 * @param value タスク管理クラス
-		 */
-		public function set manager( value:CTaskManager ):void{
-			m_taskManager = value;
-		}
 
 		/**
 		 * 解放したかどうかを取得します。
@@ -125,22 +97,18 @@ package danmaq.nineball.task{
 		public function CTaskFPSView(
 			fontResource:CFontResource, screen:CScreen, uLayer:uint = 0
 		){
-			m_uLayer = uLayer;
+			layer = uLayer;
+			isAvailablePause = false;
 			m_taskFont = new CTaskFont( fontResource, screen, uLayer );
 			m_taskFont.autoRender = true;
 		}
 
 		/**
-		 * コンストラクタの後、タスクが管理クラスに登録された直後に、
-		 * 1度だけ自動的に呼ばれます。
-		 */
-		public function initialize():void{}
-
-		/**
 		 * 解放時に管理クラスから呼び出される処理です。
 		 */
-		public function dispose():void{
-			if( m_bReady ){ m_taskManager.eraseTask( m_taskFont ); }
+		public override function dispose():void{
+			if( m_bReady ){ manager.eraseTask( m_taskFont ); }
+			super.dispose();
 		}
 		
 		/**
@@ -148,17 +116,16 @@ package danmaq.nineball.task{
 		 * 
 		 * @return 無条件でtrue
 		 */
-		public function update():Boolean{
+		public override function update():Boolean{
 			var uPCount:uint = phaseManager.phaseCount;
 			if( uPCount == 0 ){ reflesh(); }
 			phaseManager.isReserveNextPhase = ( uPCount >= interval );
-			phaseManager.count++;
-			return true;
+			return super.update();
 		}
 		
 		private function reflesh():void{
 			if( !m_bReady ){
-				m_taskManager.add( m_taskFont );
+				manager.add( m_taskFont );
 				m_bReady = true;
 				m_taskFont.view = true;
 			}

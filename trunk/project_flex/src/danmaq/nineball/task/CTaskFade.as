@@ -47,6 +47,9 @@ package danmaq.nineball.task{
 		/**	フェードエフェクトを格納する画面管理クラスが格納されます。 */
 		private var m_screen:CScreen;
 
+		/**	一時停止に対応しているかどうかが格納されます。 */
+		private var m_bAvailablePause:Boolean = true;
+
 		////////// PROPERTIES //////////
 
 		/**
@@ -63,6 +66,20 @@ package danmaq.nineball.task{
 		 * @param value タスク管理クラス
 		 */
 		public function set manager( value:CTaskManager ):void{}
+
+		/**
+		 * 一時停止に対応しているかどうかを取得します。
+		 * 
+		 * @return 一時停止に対応している場合、true
+		 */
+		public function get isAvailablePause():Boolean{ return m_bAvailablePause; }
+
+		/**
+		 * 一時停止に対応しているかどうかを設定します。
+		 * 
+		 * @return 一時停止に対応しているかどうか
+		 */
+		public function set isAvailablePause( value:Boolean ):void{ m_bAvailablePause = value; }
 
 		/**
 		 * 解放したかどうかを取得します。

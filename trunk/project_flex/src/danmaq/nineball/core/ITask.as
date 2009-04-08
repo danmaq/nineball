@@ -2,6 +2,8 @@ package danmaq.nineball.core{
 
 	/**
 	 * タスクの基底となるインターフェイスです。
+	 * タスク管理クラスCTaskManagerに登録するタスクを作成するためには、
+	 * このクラスを実装するか、CTaskBaseを継承します。
 	 * 
 	 * @author Mc(danmaq)
 	 */
@@ -35,6 +37,18 @@ package danmaq.nineball.core{
 		 * @return レイヤ値
 		 */
 		function get layer():uint;
+
+		/**
+		 * 一時停止に対応しているかどうかを取得します。
+		 * 
+		 * <p>
+		 * 一時停止に対応しているタスクは、登録されている管理クラスにおいて
+		 * pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+		 * </p>
+		 * 
+		 * @return 一時停止に対応している場合、true
+		 */
+		function get isAvailablePause():Boolean;
 		
 		////////// METHODS //////////
 		

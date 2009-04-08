@@ -1,7 +1,6 @@
 package danmaq.nineball.task{
 
 	import danmaq.nineball.core.*;
-	import danmaq.nineball.struct.CScreen;
 	import danmaq.nineball.struct.font.*;
 	
 	import flash.errors.IllegalOperationError;
@@ -53,6 +52,9 @@ package danmaq.nineball.task{
 		/**	最後に使用した描画調整情報が格納されます。 */
 		private var m_transform:CFontTransform = new CFontTransform();
 
+		/**	一時停止に対応しているかどうかが格納されます。 */
+		private var m_bAvailablePause:Boolean = true;
+
 		////////// PROPERTIES //////////
 
 		/**
@@ -69,6 +71,20 @@ package danmaq.nineball.task{
 		 * @param value タスク管理クラス
 		 */
 		public function set manager( value:CTaskManager ):void{}
+
+		/**
+		 * 一時停止に対応しているかどうかを取得します。
+		 * 
+		 * @return 一時停止に対応している場合、true
+		 */
+		public function get isAvailablePause():Boolean{ return m_bAvailablePause; }
+
+		/**
+		 * 一時停止に対応しているかどうかを設定します。
+		 * 
+		 * @return 一時停止に対応しているかどうか
+		 */
+		public function set isAvailablePause( value:Boolean ):void{ m_bAvailablePause = value; }
 
 		/**
 		 * 解放したかどうかを取得します。

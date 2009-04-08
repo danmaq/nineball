@@ -37,5 +37,8 @@ package danmaq.nineball.resource{
 		
 		/**	文章：引数{0}にnullを設定出来ません。 */
 		public static const NOT_NULL:String = "引数{0}にnullを設定出来ません。";
+		
+		/**	文章：管理クラス登録後はレイヤ番号の変更は出来ません。 */
+		public static const LAYER_CHANGE:String = "管理クラス登録後はレイヤ番号の変更は出来ません。";
 	}
 }
