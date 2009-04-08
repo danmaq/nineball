@@ -48,6 +48,13 @@ package danmaq.ball.task{
 		public function set manager( value:CTaskManager ):void{}
 
 		/**
+		 * 一時停止に対応しているかどうかを取得します。
+		 * 
+		 * @return 無条件にfalse
+		 */
+		public function get isAvailablePause():Boolean{ return false; }
+
+		/**
 		 * 座標を取得します。
 		 * 
 		 * @return 座標
