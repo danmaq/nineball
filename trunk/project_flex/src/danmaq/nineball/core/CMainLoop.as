@@ -32,6 +32,9 @@ package danmaq.nineball.core{
 
 		/**	フレームレート制御タスクが格納されます。 */
 		private var m_taskFPS:CTaskFPSTimer = null;
+		
+		/**	仮想ボタン入力タスクが格納されます。 */
+		private var m_taskInput:CTaskVirtualInput = null;
 
 		/**	簡易カウンタが格納されます。 */
 		private var m_uCount:uint = 0;
@@ -66,6 +69,13 @@ package danmaq.nineball.core{
 		public function get timer():CTaskFPSTimer{ return m_taskFPS; }
 
 		/**
+		 * フ仮想ボタン入力タスクを取得します。
+		 * 
+		 * @return 仮想ボタン入力タスク
+		 */
+		public function get input():CTaskVirtualInput{ return m_taskInput; }
+
+		/**
 		 * danmaq Nineball Libraryの起動からの経過時間を取得します。
 		 * 
 		 * @return danmaq Nineball Libraryの起動からの経過時間
@@ -87,6 +97,8 @@ package danmaq.nineball.core{
 			taskManager.add( timer );
 			m_taskSE = new CTaskExclusiveSE( ini.systemTaskLayer, ini.seResolution );
 			taskManager.add( se );
+			m_taskInput = new CTaskVirtualInput( ini.systemTaskLayer );
+			taskManager.add( input );
 			sceneManager.add( new ini.sceneFirst() );
 			startLoop();
 		}
