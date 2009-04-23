@@ -2,7 +2,7 @@ package danmaq.nineball.task{
 	
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CInterpolate;
-	import danmaq.nineball.resource.CSentence;
+	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.struct.CScreen;
 	
 	import flash.display.*;

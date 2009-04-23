@@ -1,6 +1,6 @@
 package danmaq.nineball.misc{
 
-	import danmaq.nineball.resource.CSentence;
+	import danmaq.nineball.constant.CSentence;
 	
 	import flash.display.*;
 	import flash.errors.IllegalOperationError;

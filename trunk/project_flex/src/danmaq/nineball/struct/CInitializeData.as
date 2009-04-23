@@ -2,7 +2,7 @@ package danmaq.nineball.struct{
 
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CMisc;
-	import danmaq.nineball.resource.CSentence;
+	import danmaq.nineball.constant.CSentence;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.utils.Dictionary;

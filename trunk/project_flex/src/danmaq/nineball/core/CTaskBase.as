@@ -1,7 +1,7 @@
 package danmaq.nineball.core{
 
 	import danmaq.nineball.core.*;
-	import danmaq.nineball.resource.CSentence;
+	import danmaq.nineball.constant.CSentence;
 	
 	import flash.errors.IllegalOperationError;
 

@@ -1,4 +1,4 @@
-package danmaq.nineball.resource{
+package danmaq.nineball.constant{
 
 	/**
 	 * 文章定数定義クラスです。
