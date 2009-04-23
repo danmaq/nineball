@@ -24,6 +24,7 @@
 <classEntry path="danmaq.nineball.struct.font.CFontTransformBit"/>
 <classEntry path="danmaq.nineball.task.CTaskInterpolate"/>
 <classEntry path="danmaq.nineball.struct.CScreen"/>
+<classEntry path="danmaq.nineball.struct.CVirtualInput"/>
 <classEntry path="danmaq.nineball.resource.CSentence"/>
 <classEntry path="danmaq.nineball.core.CTaskManager"/>
 <classEntry path="danmaq.nineball.misc.math.CMathMisc"/>
@@ -32,6 +33,7 @@
 <classEntry path="danmaq.nineball.core.CMainLoop"/>
 <classEntry path="danmaq.nineball.struct.CGradation"/>
 <classEntry path="danmaq.nineball.task.CTaskFPSTimer"/>
+<classEntry path="danmaq.nineball.task.CTaskVirtualInput"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>
