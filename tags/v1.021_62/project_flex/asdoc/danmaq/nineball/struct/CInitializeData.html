@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="CInitializeData,danmaq.nineball.struct.CInitializeData,fps,fpsLowCount,fpsLowLimit,fpsReflesh,sceneFirst,seResolution,systemTaskLayer,error,mainLoop,run,toString" name="keywords">
+<title>danmaq.nineball.struct.CInitializeData</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'CInitializeData - danmaq Nineball Library';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">danmaq Nineball Library</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?danmaq/nineball/struct/CInitializeData.html&amp;danmaq/nineball/struct/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;CInitializeData</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class CInitializeData"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">danmaq.nineball.struct</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public final  class CInitializeData</td>
+</tr>
+</table>
+<p></p>
+  初期化データを格納する構造体です。
+  
+  <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#error">error</a> : String<div class="summaryTableDescription">[read-only]
+   データの正当性を判断し、エラーメッセージを出力します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fps">fps</a> : uint = 60<div class="summaryTableDescription"> 内部FPS理論値が格納されます。 </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fpsLowCount">fpsLowCount</a> : uint = 0<div class="summaryTableDescription">
+   実測内部FPSの最低許容値を下回る許容回数が格納されます。
+   これを超えると描画FPSが1/nに低下します。
+   値を0にするとFPS強制低下は機能しません。
+   </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fpsLowLimit">fpsLowLimit</a> : uint = 0<div class="summaryTableDescription"> 実測内部FPSの最低許容値が格納されます。 </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#fpsReflesh">fpsReflesh</a> : uint = 0<div class="summaryTableDescription">
+   内部FPS可変更新レートが格納されます。この値を設定すると
+   フレームレートが低下した際、一時的にFPSを嵩上げして理論値FPSに
+   近づけます。値を0にすると可変FPSは機能しません。低い値にするほど
+   可変FPSは敏感になりますが、反面負荷も高まります。
+   </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#mainLoop">mainLoop</a> : <a href="../core/CMainLoop.html">CMainLoop</a>
+<div class="summaryTableDescription">[read-only]
+   メインループクラスを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#sceneFirst">sceneFirst</a> : Class = null<div class="summaryTableDescription"> 最初に実行されるシーンが格納されます。 </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#seResolution">seResolution</a> : uint = 1<div class="summaryTableDescription"> 効果音再生フレームの解像度が格納されます。 </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#systemTaskLayer">systemTaskLayer</a> : uint = 0<div class="summaryTableDescription"> 内部タスクが使用するレイヤ番号が格納されます。 </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#run()">run</a>():Boolean</div>
+<div class="summaryTableDescription">
+   DNLを起動します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#toString()">toString</a>():String</div>
+<div class="summaryTableDescription">
+   このクラスの状態を文字列で取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CInitializeData</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="error"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">error</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>error:String</code>&nbsp;&nbsp;[read-only]<p>
+   データの正当性を判断し、エラーメッセージを出力します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get error():String</code>
+<br>
+</div>
+<a name="fps"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fps</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var fps:uint = 60</code><p> 内部FPS理論値が格納されます。 </p></div>
+<a name="fpsLowCount"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fpsLowCount</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var fpsLowCount:uint = 0</code><p>
+   実測内部FPSの最低許容値を下回る許容回数が格納されます。
+   これを超えると描画FPSが1/nに低下します。
+   値を0にするとFPS強制低下は機能しません。
+   </p></div>
+<a name="fpsLowLimit"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fpsLowLimit</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var fpsLowLimit:uint = 0</code><p> 実測内部FPSの最低許容値が格納されます。 </p></div>
+<a name="fpsReflesh"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fpsReflesh</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var fpsReflesh:uint = 0</code><p>
+   内部FPS可変更新レートが格納されます。この値を設定すると
+   フレームレートが低下した際、一時的にFPSを嵩上げして理論値FPSに
+   近づけます。値を0にすると可変FPSは機能しません。低い値にするほど
+   可変FPSは敏感になりますが、反面負荷も高まります。
+   </p></div>
+<a name="mainLoop"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">mainLoop</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>mainLoop:<a href="../core/CMainLoop.html">CMainLoop</a></code>&nbsp;&nbsp;[read-only]<p>
+   メインループクラスを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get mainLoop():<a href="../core/CMainLoop.html">CMainLoop</a></code>
+<br>
+</div>
+<a name="sceneFirst"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">sceneFirst</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var sceneFirst:Class = null</code><p> 最初に実行されるシーンが格納されます。 </p></div>
+<a name="seResolution"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">seResolution</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var seResolution:uint = 1</code><p> 効果音再生フレームの解像度が格納されます。 </p></div>
+<a name="systemTaskLayer"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">systemTaskLayer</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var systemTaskLayer:uint = 0</code><p> 内部タスクが使用するレイヤ番号が格納されます。 </p></div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="run()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">run</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function run():Boolean</code><p>
+   DNLを起動します。
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; 起動出来たかどうか。
+   </td>
+</tr>
+</table>
+<br>
+<span class="label">Throws</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code></code> &mdash; データが正当でない場合
+   </td>
+</tr>
+</table>
+</div>
+<a name="toString()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">toString</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function toString():String</code><p>
+   このクラスの状態を文字列で取得します。
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>String</code> &mdash; オブジェクトのストリング表現
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
