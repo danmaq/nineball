@@ -43,6 +43,11 @@ package danmaq.ball.scene{
 		/**	数字仮想ボタンのリストが格納されます。 */
 		private const vinputNumList:Vector.<CVirtualInput> = new Vector.<CVirtualInput>();
 		
+		////////// FIELDS //////////
+
+		/**	レベルが決定されたかどうかが格納されます。 */
+		private var m_bCommitLevel:Boolean = false;
+
 		////////// METHODS //////////
 		
 		/**
@@ -94,12 +99,48 @@ package danmaq.ball.scene{
 		 * @return 次のシーンが設定されるまでの間、true
 		 */
 		public override function update():Boolean{
-			if( vinputEnter.push ){ trace( "ENTER" ); }
-			if( vinputLeft.push ){ taskCursor.pos.x -= 8; }
-			if( vinputRight.push ){ taskCursor.pos.x += 8; }
+			if( vinputEnter.push ){ commitMenu( getMenuPosFromCursorX( taskCursor.pos.x ) ); }
+			if( vinputLeft.push ){
+				if( taskCursor.pos.x > 6 ){ taskCursor.pos.x -= 8; }
+				else{ taskCursor.pos.x = 70; }
+			}
+			if( vinputRight.push ){
+				if( taskCursor.pos.x < 70 ){ taskCursor.pos.x += 8; }
+				else{ taskCursor.pos.x = 6; }
+			}
 			return super.update();
 		}
 		
+		/**
+		 * メニュー位置からカーソルX座標を取得します。
+		 * 
+		 * @param nMenuPos メニュー位置
+		 * @return カーソルX座標
+		 */
+		private static function getCursorXFromMenuPos( nMenuPos:int ):int{
+			return 6 + nMenuPos * 8;
+		}
+
+		/**
+		 * カーソルX座標からメニュー位置を取得します。
+		 * 
+		 * @param nMenuPos カーソルX座標
+		 * @return メニュー位置
+		 */
+		private static function getMenuPosFromCursorX( nCursorX:int ):int{
+			return ( nCursorX - 6 ) / 8;
+		}
+
+		/**
+		 * メニューのボタンオブジェクトからメニュー位置を取得します。
+		 * 
+		 * @param objButton ボタンオブジェクト
+		 * @return メニュー位置
+		 */
+		private static function getMenuPosFromButton( objButton:Object ):int{
+			return parseInt( ( objButton as Button ).label );
+		}
+
 		/**
 		 * 仮想ボタンを割り当てます。
 		 */
@@ -116,14 +157,23 @@ package danmaq.ball.scene{
 			CMainLoop.instance.input.addVI( vinputRight );
 		}
 		
+		private function commitMenu( uMenuPos:uint ):void{
+			if( !m_bCommitLevel ){
+				m_bCommitLevel = true;
+				trace( "START", uMenuPos );
+			}
+		}
+		
 		/**
 		 * 難易度選択ボタンがクリックされた際に呼び出されるメソッドです。
 		 * 
 		 * @param e イベントパラメータ
 		 */
 		private function onClick( e:FlexEvent ):void{
-			trace( "CLICK", ( e.currentTarget as Button ).label );
-			
+			var nButtonCursorX:int = getCursorXFromMenuPos( getMenuPosFromButton( e.currentTarget ) );
+			if( taskCursor.pos.x == nButtonCursorX ){
+				commitMenu( getMenuPosFromCursorX( taskCursor.pos.x ) );
+			}
 		}
 
 		/**
@@ -132,8 +182,7 @@ package danmaq.ball.scene{
 		 * @param e イベントパラメータ
 		 */
 		private function onFocus( e:FocusEvent ):void{
-			trace( "FOCUS", ( e.currentTarget as Button ).label );
-			taskCursor.pos.x = 6 + parseInt( ( e.currentTarget as Button ).label ) * 8;
+			taskCursor.pos.x = getCursorXFromMenuPos( getMenuPosFromButton( e.currentTarget ) );
 		}
 	}
 }
