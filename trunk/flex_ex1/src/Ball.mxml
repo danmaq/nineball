@@ -62,7 +62,7 @@
 						var strText:String =
 							StringUtil.substitute( "{0}\nErrorID:{1}", e, e.errorID );
 						trace( strText + "\n\n" + e.getStackTrace() );
-						Alert.show( strText, CONST.TITLE );
+						Alert.show( strText, CONST.TEXT_TITLE );
 					}
 				}
 			}

@@ -52,19 +52,21 @@ package danmaq.ball.scene{
 		
 		/**
 		 * コンストラクタ。
+		 * 
+		 * @param uLevel 難易度
 		 */
-		public function CSceneTitle(){
+		public function CSceneTitle( uLevel:uint = 0 ){
 			super();
 			try{ IME.enabled = false; }
 			catch( e:Error ){}
-			print( CONST.TITLE, new Point( 21, 8 ), 0x00FFFF );
-			print( CONST.COPY, new Point( 17, 10 ), 0x00FFFF );
-			print( "難易度を選択してください。", new Point( 6, 14 ) );
+			print( CONST.TEXT_TITLE, new Point( 21, 8 ), 0x00FFFF );
+			print( CONST.TEXT_COPY, new Point( 17, 10 ), 0x00FFFF );
+			print( CONST.TEXT_SELECT_LEVEL, new Point( 6, 14 ) );
 			sceneTaskManager.add( taskCursor );
-			taskCursor.pos = new Point( 6, 16 );
+			taskCursor.pos = new Point( getCursorXFromMenuPos( uLevel ), 16 );
 			var uY:uint = 16;
 			initializeVirtualInput();
-			for( var i:int = 0; i < 9; i++ ){
+			for( var i:int = 0; i < CONST.LEVEL_MAX; i++ ){
 				var uX:uint = 6 + i * 8;
 				print( CMiscEx.ConvNumH2Z( i + 1 ), new Point( uX, uY ) );
 				var button:Button = new Button();
@@ -80,6 +82,7 @@ package danmaq.ball.scene{
 				CScreen.root.add( button );
 				button.addEventListener( FlexEvent.BUTTON_DOWN, onClick );
 				button.addEventListener( FocusEvent.FOCUS_IN, onFocus );
+				buttonList.push( button );
 			}
 		}
 		
@@ -88,7 +91,11 @@ package danmaq.ball.scene{
 		 * 事実上のデストラクタとして機能するメソッドです。
 		 */
 		public override function dispose():void{
-			for each( var button:Button in buttonList ){ CScreen.root.remove( button ); }
+			for each( var button:Button in buttonList ){
+				button.removeEventListener( FlexEvent.BUTTON_DOWN, onClick );
+				button.removeEventListener( FocusEvent.FOCUS_IN, onFocus );
+				CScreen.root.remove( button );
+			}
 			CMainLoop.instance.input.resetVI();
 			super.dispose();
 		}
@@ -157,10 +164,15 @@ package danmaq.ball.scene{
 			CMainLoop.instance.input.addVI( vinputRight );
 		}
 		
+		/**
+		 * メニュー選択(難易度)を確定します。
+		 * 
+		 * @param uMenuPos メニュー選択位置
+		 */
 		private function commitMenu( uMenuPos:uint ):void{
 			if( !m_bCommitLevel ){
 				m_bCommitLevel = true;
-				trace( "START", uMenuPos );
+				m_sceneNext = new CSceneGame( uMenuPos );
 			}
 		}
 		
