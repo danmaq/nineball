@@ -1,14 +1,11 @@
 package danmaq.ball.scene{
 
-	import danmaq.ball.resource.CONST;
-	import danmaq.ball.resource.CResource;
-	import danmaq.nineball.constant.CKeyboardEx;
-	import danmaq.nineball.core.CMainLoop;
-	import danmaq.nineball.struct.CVirtualInput;
+	import danmaq.ball.resource.*;
+	import danmaq.ball.task.*;
+	import danmaq.nineball.task.CTaskFont;
 	
 	import flash.display.Shape;
 	import flash.geom.Point;
-	import flash.ui.Keyboard;
 	
 	import mx.utils.StringUtil;
 	
@@ -21,16 +18,20 @@ package danmaq.ball.scene{
 		
 		////////// CONSTANTS //////////
 		
+		/**	カウントダウン表示のカラーテーブルが格納されます。 */
+		private static const COUNTDOWN_COLOR_TABLE:Vector.<uint> =
+			Vector.<uint>( [ 0xA0A0A0, 0x808080, 0, 0x800000 ] );
+		
 		/**	背景色の矩形が格納されます。 */
 		private const bgPattern:Shape = new Shape();
 		
-		/**	進行仮想ボタンが格納されます。 */
-		private const vinputEnter:CVirtualInput = new CVirtualInput();
+		/**	自機玉タスクが格納されます。 */
+		private const taskBall:CTaskBallPlayer = new CTaskBallPlayer();
 
 		////////// FIELDS //////////
 
-		/**	難易度が格納されます。 */
-		private var m_uLevel:uint;
+		/**	カウントダウンフォントタスクが格納されます。 */
+		private var m_taskCountDown:CTaskFont = null;
 
 		////////// METHODS //////////
 		
@@ -39,11 +40,9 @@ package danmaq.ball.scene{
 		 * 
 		 * @param uLevel 難易度
 		 */
-		public function CSceneGame( uLevel:uint ){
+		public function CSceneGame(){
 			super();
-			m_uLevel = uLevel;
 			initializeBackGround();
-			initializeVirtualInput();
 		}
 		
 		/**
@@ -52,10 +51,37 @@ package danmaq.ball.scene{
 		 */
 		public override function dispose():void{
 			CResource.screen.remove( bgPattern );
-			CMainLoop.instance.input.resetVI();
 			super.dispose();
 		}
 		
+		/**
+		 * シーンを1フレーム分動かします。
+		 * 
+		 * @return 次のシーンが設定されるまでの間、true
+		 */
+		public override function update():Boolean{
+			var uPhase:uint = scenePhaseManager.phase;
+			var uPCound:uint = scenePhaseManager.phaseCount;
+			if( uPCound == 0 ){
+				if( m_taskCountDown != null ){ sceneTaskManager.eraseTask( m_taskCountDown ); }
+				switch( uPhase ){
+				case 1:
+				case 2:
+				case 3:
+					m_taskCountDown = print( StringUtil.substitute( "{0}", 4 - uPhase ),
+						new Point( 39, 12 ), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ] );
+					break;
+				case 4:
+					sceneTaskManager.add( taskBall );
+					m_taskCountDown = print( CONST.TEXT_GO,
+						new Point( 37, 12 ), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ] );
+					break;
+				}
+			}
+			if( uPhase < 6 ){ scenePhaseManager.isReserveNextPhase = uPCound >= 60; }
+			return super.update();
+		}
+
 		/**
 		 * 背景を初期化します。
 		 */
@@ -67,16 +93,6 @@ package danmaq.ball.scene{
 			CResource.screen.add( bgPattern, int.MAX_VALUE );
 			print( CONST.TEXT_TITLE, new Point( 21, 23 ), 0x800000 );
 			print( StringUtil.substitute( CONST.TEXT_LEVEL, m_uLevel + 1 ), new Point( 0, 24 ), 0x80 );
-		}
-
-		/**
-		 * 仮想ボタンを初期化します。
-		 */
-		private function initializeVirtualInput():void{
-			vinputEnter.assignKeyCodeList.push( Keyboard.ENTER );
-			vinputEnter.assignKeyCodeList.push( Keyboard.SPACE );
-			vinputEnter.assignKeyCodeList.push( CKeyboardEx.Z );
-			CMainLoop.instance.input.addVI( vinputEnter );
 		}
 	}
 }

@@ -52,10 +52,8 @@ package danmaq.ball.scene{
 		
 		/**
 		 * コンストラクタ。
-		 * 
-		 * @param uLevel 難易度
 		 */
-		public function CSceneTitle( uLevel:uint = 0 ){
+		public function CSceneTitle(){
 			super();
 			try{ IME.enabled = false; }
 			catch( e:Error ){}
@@ -63,7 +61,7 @@ package danmaq.ball.scene{
 			print( CONST.TEXT_COPY, new Point( 17, 10 ), 0x00FFFF );
 			print( CONST.TEXT_SELECT_LEVEL, new Point( 6, 14 ) );
 			sceneTaskManager.add( taskCursor );
-			taskCursor.pos = new Point( getCursorXFromMenuPos( uLevel ), 16 );
+			taskCursor.pos = new Point( getCursorXFromMenuPos( m_uLevel ), 16 );
 			var uY:uint = 16;
 			initializeVirtualInput();
 			for( var i:int = 0; i < CONST.LEVEL_MAX; i++ ){
@@ -96,7 +94,6 @@ package danmaq.ball.scene{
 				button.removeEventListener( FocusEvent.FOCUS_IN, onFocus );
 				CScreen.root.remove( button );
 			}
-			CMainLoop.instance.input.resetVI();
 			super.dispose();
 		}
 		
@@ -172,7 +169,9 @@ package danmaq.ball.scene{
 		private function commitMenu( uMenuPos:uint ):void{
 			if( !m_bCommitLevel ){
 				m_bCommitLevel = true;
-				m_sceneNext = new CSceneGame( uMenuPos );
+				CMainLoop.instance.input.resetVI();
+				m_uLevel = uMenuPos;
+				m_sceneNext = new CSceneGame();
 			}
 		}
 		
