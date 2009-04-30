@@ -121,7 +121,10 @@ package danmaq.nineball.task{
 		/**
 		 * 仮想ボタンを初期状態に戻します。
 		 */
-		public function resetVI():void{ m_aVIData = new Vector.<CVirtualInput>(); }
+		public function resetVI():void{
+			m_aVIData = new Vector.<CVirtualInput>();
+			m_aBuffer = new Vector.<CVirtualInputBufferData>();
+		}
 		
 		/**
 		 * 仮想ボタンを追加します。
@@ -227,7 +230,7 @@ import flash.geom.Point;
  * 
  * @author Mc(danmaq)
  */
-class CVirtualInputBufferData{
+final class CVirtualInputBufferData{
 
 	/**	仮想ボタンIDが格納されます。 */
 	public var id:uint = 0;
