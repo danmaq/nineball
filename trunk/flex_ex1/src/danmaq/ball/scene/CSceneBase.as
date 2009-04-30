@@ -42,6 +42,9 @@ package danmaq.ball.scene{
 
 		////////// FIELDS //////////
 
+		/**	難易度が格納されます。 */
+		protected static var m_uLevel:uint = 0;
+
 		/**	次に進むシーンが格納されます。 */
 		protected var m_sceneNext:IScene = null;
 
@@ -100,8 +103,9 @@ package danmaq.ball.scene{
 		 * @param strText 文字列
 		 * @param posLocate 文字単位座標
 		 * @param uColor カラーコード
+		 * @return 文字列タスク
 		 */
-		protected function print( strText:String, posLocate:Point, uColor:uint = 0xFFFFFF ):void{
+		protected function print( strText:String, posLocate:Point, uColor:uint = 0xFFFFFF ):CTaskFont{
 			var task:CTaskFont =
 				new CTaskFont( CResource.font, CResource.screen, CONST.LAYER_TEXT );
 			sceneTaskManager.add( task );
@@ -109,6 +113,7 @@ package danmaq.ball.scene{
 			task.view = true;
 			task.render( new CFontTransform( new Point( posLocate.x * 8, posLocate.y * 16 ), null,
 				0, 1, uColor, false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT ) );
+			return task;
 		}
 
 		/**
