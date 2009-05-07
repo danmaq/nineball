@@ -44,9 +44,12 @@ package danmaq.ball.scene{
 
 		/**	難易度が格納されます。 */
 		protected static var m_uLevel:uint = 0;
-
+		
 		/**	次に進むシーンが格納されます。 */
 		protected var m_sceneNext:IScene = null;
+
+		/**	FPS描画タスクが格納されます。 */
+		private static var m_taskFps:CTaskFPSView = null;
 
 		/**	初期化済みかどうかが格納されます。 */
 		private static var m_bInitialized:Boolean = false;
@@ -59,6 +62,13 @@ package danmaq.ball.scene{
 		 * @return 次のシーン オブジェクト。存在しない場合、null
 		 */
 		public function get nextScene():IScene{ return m_sceneNext; }
+
+		/**
+		 * FPS描画タスクを取得します。
+		 * 
+		 * @return FPS描画タスク
+		 */
+		protected static function get taskFpsView():CTaskFPSView{ return m_taskFps; }
 
 		////////// METHODS //////////
 		
@@ -105,7 +115,9 @@ package danmaq.ball.scene{
 		 * @param uColor カラーコード
 		 * @return 文字列タスク
 		 */
-		protected function print( strText:String, posLocate:Point, uColor:uint = 0xFFFFFF ):CTaskFont{
+		protected function print(
+			strText:String, posLocate:Point, uColor:uint = 0xFFFFFF
+		):CTaskFont{
 			var task:CTaskFont =
 				new CTaskFont( CResource.font, CResource.screen, CONST.LAYER_TEXT );
 			sceneTaskManager.add( task );
@@ -121,10 +133,10 @@ package danmaq.ball.scene{
 		 */
 		private static function initialize():void{
 			CScreen.stage.scaleMode = StageScaleMode.SHOW_ALL;
-			var taskFps:CTaskFPSView = new CTaskFPSView( CResource.font, CResource.screen );
-			commonTaskManager.add( taskFps );
-			taskFps.prefix = "FPS:";
-			taskFps.transform = new CFontTransform(
+			m_taskFps = new CTaskFPSView( CResource.font, CResource.screen );
+			commonTaskManager.add( taskFpsView );
+			taskFpsView.prefix = "FPS:";
+			taskFpsView.transform = new CFontTransform(
 				 new Point( 336, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
 				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT );
 			initializeQualityComboBox();
