@@ -3,6 +3,7 @@ package danmaq.ball.task{
 	import danmaq.ball.resource.*;
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CInterpolate;
+	import danmaq.nineball.struct.CScreen;
 	
 	import flash.display.Shape;
 	
@@ -16,6 +17,9 @@ package danmaq.ball.task{
 	public class CTaskBall implements ITask, IDisposed{
 
 		////////// CONSTANTS //////////
+
+		/**	フェーズ・カウンタ管理クラスが格納されます。 */
+		protected const phaseManager:CPhaseManager = new CPhaseManager();
 
 		/**	玉グラフィックの大きさが格納されます。 */
 		private static const SIZE:uint = 32;
@@ -43,9 +47,6 @@ package danmaq.ball.task{
 		/**	タスクが終了したかどうかが格納されます。 */
 		private var m_bDisposed:Boolean = false;
 
-		/**	簡易フレームカウンタが格納されます。 */
-		private var m_uCount:uint = 0;
-		
 		/**	現在速度が格納されます。 */
 		private var m_fSpeed:Number = 0;
 
@@ -127,14 +128,14 @@ package danmaq.ball.task{
 			calcSpeed();
 			ball.y = y;
 			ball.x += m_fSpeed;
-			m_uCount++;
-			return true;
+			phaseManager.count++;
+			return ball.x < CScreen.size.x;
 		}
 		
 		/**
 		 * 玉を移動します。
 		 */
-		protected function move():void{ moveQueueList.push( m_uCount ); }
+		protected function move():void{ moveQueueList.push( phaseManager.count ); }
 		
 		/**
 		 * 描画情報の初期化をします。
@@ -184,7 +185,7 @@ package danmaq.ball.task{
 		private function calcSpeed():void{
 			var i:uint = 0;
 			while( i < moveQueueList.length ){
-				var c:uint = m_uCount - moveQueueList[ i ];
+				var c:uint = phaseManager.count - moveQueueList[ i ];
 				if( c >= m_afAccelerate.length ){ moveQueueList.splice( i, 1 ); }
 				else{
 					m_fSpeed += m_afAccelerate[ c ];
@@ -196,10 +197,29 @@ package danmaq.ball.task{
 	}
 }
 
+/**
+ * 玉の描画情報構造体です。
+ * 
+ * @author Mc(danmaq)
+ */
 final class CBallShapeInfo{
+
+	/**	輝度が格納されます。 */
 	public var brite:Number;
+
+	/**	半径が格納されます。 */
 	public var radius:Number;
+
+	/**	中心座標からの誤差が格納されます。 */
 	public var offset:Number;
+
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param _brite 輝度
+	 * @param _radius 半径
+	 * @param _offset 中心座標からの誤差
+	 */
 	public function CBallShapeInfo( _brite:Number, _radius:Number, _offset:Number ){
 		brite = _brite;
 		radius = _radius;

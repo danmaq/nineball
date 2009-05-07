@@ -25,13 +25,16 @@ package danmaq.ball.scene{
 		/**	背景色の矩形が格納されます。 */
 		private const bgPattern:Shape = new Shape();
 		
-		/**	自機玉タスクが格納されます。 */
-		private const taskBall:CTaskBallPlayer = new CTaskBallPlayer();
-
 		////////// FIELDS //////////
 
 		/**	カウントダウンフォントタスクが格納されます。 */
 		private var m_taskCountDown:CTaskFont = null;
+
+		/**	自機玉タスクが格納されます。 */
+		private var m_taskPlayer:CTaskBallPlayer = null;
+
+		/**	敵機玉タスクが格納されます。 */
+		private var m_taskEnemy:CTaskBallEnemy = null;
 
 		////////// METHODS //////////
 		
@@ -41,7 +44,6 @@ package danmaq.ball.scene{
 		 * @param uLevel 難易度
 		 */
 		public function CSceneGame(){
-			super();
 			initializeBackGround();
 		}
 		
@@ -72,7 +74,10 @@ package danmaq.ball.scene{
 						new Point( 39, 12 ), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ] );
 					break;
 				case 4:
-					sceneTaskManager.add( taskBall );
+					m_taskPlayer = new CTaskBallPlayer();
+					m_taskEnemy = new CTaskBallEnemy( m_uLevel );
+					sceneTaskManager.add( m_taskPlayer );
+					sceneTaskManager.add( m_taskEnemy );
 					m_taskCountDown = print( CONST.TEXT_GO,
 						new Point( 37, 12 ), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ] );
 					break;
@@ -86,11 +91,13 @@ package danmaq.ball.scene{
 		 * 背景を初期化します。
 		 */
 		private function initializeBackGround():void{
+			taskFpsView.transform.color = 0;
 			bgPattern.graphics.beginFill( 0xFFFFFF );
 			bgPattern.graphics.drawRect( 0, 0, 640, 400 );
 			bgPattern.graphics.endFill();
 			bgPattern.cacheAsBitmap = true;
 			CResource.screen.add( bgPattern, int.MAX_VALUE );
+			print( CONST.TEXT_DESC, new Point( 27, 3 ), 0xA00000 );
 			print( CONST.TEXT_TITLE, new Point( 21, 23 ), 0x800000 );
 			print( StringUtil.substitute( CONST.TEXT_LEVEL, m_uLevel + 1 ), new Point( 0, 24 ), 0x80 );
 		}

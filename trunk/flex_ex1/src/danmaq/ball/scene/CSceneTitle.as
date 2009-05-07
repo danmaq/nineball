@@ -54,7 +54,7 @@ package danmaq.ball.scene{
 		 * コンストラクタ。
 		 */
 		public function CSceneTitle(){
-			super();
+			taskFpsView.transform.color = 0xFFFFFF;
 			try{ IME.enabled = false; }
 			catch( e:Error ){}
 			print( CONST.TEXT_TITLE, new Point( 21, 8 ), 0x00FFFF );

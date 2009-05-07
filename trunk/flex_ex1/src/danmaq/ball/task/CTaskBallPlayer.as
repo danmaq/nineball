@@ -7,6 +7,11 @@ package danmaq.ball.task{
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
 
+	/**
+	 * 自機玉タスクです。
+	 * 
+	 * @author Mc(danmaq)
+	 */
 	public final class CTaskBallPlayer extends CTaskBall{
 
 		////////// CONSTANTS //////////
@@ -21,7 +26,7 @@ package danmaq.ball.task{
 		 */
 		public function CTaskBallPlayer(){
 			super( 0x0000C0 );
-			y = 100;
+			y = 120;
 			vinputEnter.assignKeyCodeList.push( Keyboard.ENTER );
 			vinputEnter.assignKeyCodeList.push( Keyboard.SPACE );
 			vinputEnter.assignKeyCodeList.push( CKeyboardEx.Z );
