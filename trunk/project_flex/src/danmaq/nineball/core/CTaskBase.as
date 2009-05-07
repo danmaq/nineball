@@ -25,7 +25,7 @@ package danmaq.nineball.core{
 		////////// FIELDS //////////
 
 		/**	次フレームまで生存するかどうかが格納されます。 */
-		protected var isAlive:Boolean = false;
+		protected var isAlive:Boolean = true;
 
 		/**	タスク管理クラスが格納されます。 */
 		private var m_taskManager:CTaskManager = null;
