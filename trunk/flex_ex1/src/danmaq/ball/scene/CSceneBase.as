@@ -10,6 +10,7 @@ package danmaq.ball.scene{
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
+	import flash.system.IME;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.*;
@@ -44,6 +45,9 @@ package danmaq.ball.scene{
 
 		/**	難易度が格納されます。 */
 		protected static var m_uLevel:uint = 0;
+		
+		/**	勝敗結果が格納されます。 */
+		protected static var m_nResult:int = 0;
 		
 		/**	次に進むシーンが格納されます。 */
 		protected var m_sceneNext:IScene = null;
@@ -132,6 +136,8 @@ package danmaq.ball.scene{
 		 * 初期化時に一度だけ実行されます。
 		 */
 		private static function initialize():void{
+			try{ IME.enabled = false; }
+			catch( e:Error ){}
 			CScreen.stage.scaleMode = StageScaleMode.SHOW_ALL;
 			m_taskFps = new CTaskFPSView( CResource.font, CResource.screen );
 			commonTaskManager.add( taskFpsView );

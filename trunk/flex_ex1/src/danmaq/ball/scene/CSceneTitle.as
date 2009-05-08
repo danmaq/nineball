@@ -9,7 +9,6 @@ package danmaq.ball.scene{
 	
 	import flash.events.FocusEvent;
 	import flash.geom.Point;
-	import flash.system.IME;
 	import flash.ui.Keyboard;
 	
 	import mx.controls.Button;
@@ -55,32 +54,10 @@ package danmaq.ball.scene{
 		 */
 		public function CSceneTitle(){
 			taskFpsView.transform.color = 0xFFFFFF;
-			try{ IME.enabled = false; }
-			catch( e:Error ){}
 			print( CONST.TEXT_TITLE, new Point( 21, 8 ), 0x00FFFF );
 			print( CONST.TEXT_COPY, new Point( 17, 10 ), 0x00FFFF );
-			print( CONST.TEXT_SELECT_LEVEL, new Point( 6, 14 ) );
-			sceneTaskManager.add( taskCursor );
-			taskCursor.pos = new Point( getCursorXFromMenuPos( m_uLevel ), 16 );
-			var uY:uint = 16;
-			initializeVirtualInput();
-			for( var i:int = 0; i < CONST.LEVEL_MAX; i++ ){
-				var uX:uint = 6 + i * 8;
-				print( CMiscEx.ConvNumH2Z( i + 1 ), new Point( uX, uY ) );
-				var button:Button = new Button();
-				button.styleName = "level";
-				button.toolTip = StringUtil.substitute( "Level {0}", i + 1 );
-				button.x = uX * 8;
-				button.y = uY * 16;
-				button.width = 16;
-				button.height = 16;
-				button.label = i.toString();
-				button.alpha = 0;
-				button.tabIndex = i + 1;
-				CScreen.root.add( button );
-				button.addEventListener( FlexEvent.BUTTON_DOWN, onClick );
-				button.addEventListener( FocusEvent.FOCUS_IN, onFocus );
-				buttonList.push( button );
+			if( m_nResult != 0 ){
+				print( m_nResult == 1 ? CONST.TEXT_WON : CONST.TEXT_LOSE, new Point( 0, 3 ) );
 			}
 		}
 		
@@ -103,14 +80,20 @@ package danmaq.ball.scene{
 		 * @return 次のシーンが設定されるまでの間、true
 		 */
 		public override function update():Boolean{
-			if( vinputEnter.push ){ commitMenu( getMenuPosFromCursorX( taskCursor.pos.x ) ); }
-			if( vinputLeft.push ){
-				if( taskCursor.pos.x > 6 ){ taskCursor.pos.x -= 8; }
-				else{ taskCursor.pos.x = 70; }
+			if( scenePhaseManager.phase == 1 ){
+				if( vinputEnter.push ){ commitMenu( getMenuPosFromCursorX( taskCursor.pos.x ) ); }
+				if( vinputLeft.push ){
+					if( taskCursor.pos.x > 6 ){ taskCursor.pos.x -= 8; }
+					else{ taskCursor.pos.x = 70; }
+				}
+				if( vinputRight.push ){
+					if( taskCursor.pos.x < 70 ){ taskCursor.pos.x += 8; }
+					else{ taskCursor.pos.x = 6; }
+				}
 			}
-			if( vinputRight.push ){
-				if( taskCursor.pos.x < 70 ){ taskCursor.pos.x += 8; }
-				else{ taskCursor.pos.x = 6; }
+			else if( scenePhaseManager.phaseCount == 90 ){
+				scenePhaseManager.isReserveNextPhase = true;
+				initialize();
 			}
 			return super.update();
 		}
@@ -143,6 +126,32 @@ package danmaq.ball.scene{
 		 */
 		private static function getMenuPosFromButton( objButton:Object ):int{
 			return parseInt( ( objButton as Button ).label );
+		}
+
+		private function initialize():void{
+			print( CONST.TEXT_SELECT_LEVEL, new Point( 6, 14 ) );
+			sceneTaskManager.add( taskCursor );
+			taskCursor.pos = new Point( getCursorXFromMenuPos( m_uLevel ), 16 );
+			var uY:uint = 16;
+			initializeVirtualInput();
+			for( var i:int = 0; i < CONST.LEVEL_MAX; i++ ){
+				var uX:uint = 6 + i * 8;
+				print( CMiscEx.ConvNumH2Z( i + 1 ), new Point( uX, uY ) );
+				var button:Button = new Button();
+				button.styleName = "level";
+				button.toolTip = StringUtil.substitute( "Level {0}", i + 1 );
+				button.x = uX * 8;
+				button.y = uY * 16;
+				button.width = 16;
+				button.height = 16;
+				button.label = i.toString();
+				button.alpha = 0;
+				button.tabIndex = i + 1;
+				CScreen.root.add( button );
+				button.addEventListener( FlexEvent.BUTTON_DOWN, onClick );
+				button.addEventListener( FocusEvent.FOCUS_IN, onFocus );
+				buttonList.push( button );
+			}
 		}
 
 		/**

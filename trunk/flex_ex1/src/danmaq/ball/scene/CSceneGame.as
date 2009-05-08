@@ -84,6 +84,11 @@ package danmaq.ball.scene{
 				}
 			}
 			if( uPhase < 6 ){ scenePhaseManager.isReserveNextPhase = uPCound >= 60; }
+			if( uPhase >= 4 && ( m_taskPlayer.disposed || m_taskEnemy.disposed ) ){
+				m_nResult = m_taskEnemy.disposed ? -1 : 1;
+				if( !m_taskPlayer.disposed ){ sceneTaskManager.eraseTask( m_taskPlayer ); }
+				m_sceneNext = new CSceneTitle();
+			}
 			return super.update();
 		}
 
