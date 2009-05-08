@@ -81,6 +81,13 @@ package danmaq.ball.task{
 		 */
 		public function get disposed():Boolean{ return m_bDisposed; }
 
+		/**
+		 * X座標を取得します。
+		 * 
+		 * @return X座標
+		 */
+		public function get x():Number{ return ball.x; }
+
 		////////// METHODS //////////
 
 		/**
@@ -129,7 +136,7 @@ package danmaq.ball.task{
 			ball.y = y;
 			ball.x += m_fSpeed;
 			phaseManager.count++;
-			return ball.x < CScreen.size.x;
+			return x < CScreen.size.x;
 		}
 		
 		/**

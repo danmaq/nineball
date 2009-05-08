@@ -1,6 +1,6 @@
 package danmaq.ball.task{
+
 	import danmaq.nineball.misc.CInterpolate;
-	
 
 	/**
 	 * 敵機玉タスクです。
@@ -31,6 +31,7 @@ package danmaq.ball.task{
 		 * @return ゴールにたどり着くまでの間、true
 		 */
 		public override function update():Boolean{
+			var uCount:uint = phaseManager.count;
 			switch( m_uLevel ){
 			case 0:
 			case 1:
@@ -39,15 +40,13 @@ package danmaq.ball.task{
 			case 4:
 			case 5:
 			case 6:
-				if(
-					phaseManager.count % uint( CInterpolate.slowdown( 40, 6, m_uLevel, 6 ) ) == 0
-				){ move(); }
+				if( uCount % uint( CInterpolate.slowdown( 40, 6, m_uLevel, 6 ) ) == 0 ){ move(); }
 				break;
 			case 7:
-				if( phaseManager.count > 200 ){ move(); }
+				if( uCount > 200 ){ move(); }
 				break;
 			case 8:
-				move();
+				if( uCount > 30 || ( uCount & 1 ) == 0 ){ move(); }
 				break;
 			}
 			return super.update();

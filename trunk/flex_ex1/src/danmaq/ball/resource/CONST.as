@@ -28,6 +28,12 @@ package danmaq.ball.resource{
 		/**	ゲーム説明文字列が格納されます。 */
 		public static const TEXT_DESC:String = "Enterを連打してください！";
 
+		/**	勝利時の文字列が格納されます。 */
+		public static const TEXT_WON:String = "勝ち";
+
+		/**	敗北時の文字列が格納されます。 */
+		public static const TEXT_LOSE:String = "負け";
+
 		/**	玉のレイヤ値が格納されます。 */
 		public static const LAYER_BALL:uint = 20;
 		
