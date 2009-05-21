@@ -10,17 +10,24 @@ package danmaq.nineball.core{
 		////////// PROPERTIES //////////
 
 		/**
-		 * 次のシーンを取得します。
+		 * 次のシーンを設定します。
 		 * 
 		 * <p>
-		 * このプロパティにnull以外を設定すると、
-		 * 現在のシーンから次のシーンへGOSUBします。
-		 * 設定直後にupdateメソッドでfalseを返すとGOTOします。
+		 * このプロパティにnull以外を設定すると、現在のシーンから次のシーンへ
+		 * GOSUBします。その際、このプロパティには管理クラスによって
+		 * nullが代入されます。(クリアしないとRETURN出来なくなるため)
 		 * </p>
 		 * 
  		 * @return 次のシーン。無い場合、null
  		 * 
  		 * @see #update()
+		 */
+		function set nextScene( value:IScene ):void;
+
+		/**
+		 * 次のシーンを取得します。
+		 * 
+ 		 * @return 次のシーン。無い場合、null
 		 */
 		function get nextScene():IScene;
 		

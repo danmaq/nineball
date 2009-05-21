@@ -77,7 +77,10 @@ package danmaq.nineball.core{
 				var bContinue:Boolean = _scene.update(); 
 				var next:IScene = _scene.nextScene;
 				if( !bContinue ){ erase(); }
-				if( next != null ){ add( next ); }
+				if( next != null ){
+					_scene.nextScene = null;
+					add( next );
+				}
 			}
 		}
 
