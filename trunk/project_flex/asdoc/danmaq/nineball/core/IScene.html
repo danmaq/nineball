@@ -54,14 +54,8 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#nextScene">nextScene</a> : <a href="../core/IScene.html">IScene</a>
-<div class="summaryTableDescription">[read-only]
+<div class="summaryTableDescription">
    次のシーンを取得します。
-   
-   <p>
-   このプロパティにnull以外を設定すると、
-   現在のシーンから次のシーンへGOSUBします。
-   設定直後にupdateメソッドでfalseを返すとGOTOします。
-   </p>
    
     </div>
 </td><td class="summaryTableOwnerCol">IScene</td>
@@ -121,25 +115,15 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>nextScene:<a href="../core/IScene.html">IScene</a></code>&nbsp;&nbsp;[read-only]<p>
+<code>nextScene:<a href="../core/IScene.html">IScene</a></code>&nbsp;&nbsp;[read-write]<p>
    次のシーンを取得します。
    
-   </p><p>
-   このプロパティにnull以外を設定すると、
-   現在のシーンから次のシーンへGOSUBします。
-   設定直後にupdateメソッドでfalseを返すとGOTOします。
-   </p>
-   
-    <span class="label">Implementation</span>
+    </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get nextScene():<a href="../core/IScene.html">IScene</a></code>
 <br>
-<p>
-<span class="label">See also</span>
-</p>
-<div class="seeAlso">
-<a href="../core/IScene.html#update()" target="">update()</a>
-</div>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set nextScene(value:<a href="../core/IScene.html">IScene</a>):void</code>
+<br>
 </div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
