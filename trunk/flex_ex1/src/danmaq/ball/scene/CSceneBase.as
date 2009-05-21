@@ -49,14 +49,14 @@ package danmaq.ball.scene{
 		/**	勝敗結果が格納されます。 */
 		protected static var m_nResult:int = 0;
 		
-		/**	次に進むシーンが格納されます。 */
-		protected var m_sceneNext:IScene = null;
-
 		/**	FPS描画タスクが格納されます。 */
 		private static var m_taskFps:CTaskFPSView = null;
 
 		/**	初期化済みかどうかが格納されます。 */
 		private static var m_bInitialized:Boolean = false;
+
+		/**	次に進むシーンが格納されます。 */
+		private var m_sceneNext:IScene = null;
 
 		////////// PROPERTIES //////////
 
@@ -66,6 +66,13 @@ package danmaq.ball.scene{
 		 * @return 次のシーン オブジェクト。存在しない場合、null
 		 */
 		public function get nextScene():IScene{ return m_sceneNext; }
+
+		/**
+		 * 次のシーンを設定します。
+		 * 
+		 * @param value 次のシーン オブジェクト。または、null
+		 */
+		public function set nextScene( value:IScene ):void{ m_sceneNext = value; }
 
 		/**
 		 * FPS描画タスクを取得します。

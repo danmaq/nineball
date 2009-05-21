@@ -180,7 +180,7 @@ package danmaq.ball.scene{
 				m_bCommitLevel = true;
 				CMainLoop.instance.input.resetVI();
 				m_uLevel = uMenuPos;
-				m_sceneNext = new CSceneGame();
+				nextScene = new CSceneGame();
 			}
 		}
 		
