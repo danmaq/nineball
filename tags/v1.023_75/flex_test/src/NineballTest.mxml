@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:as3unit="org.libspark.as3unit.components.*"
+	creationComplete="creationCompleteHandler()"
+	xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+
+	<mx:Script>
+		<![CDATA[
+
+			import danmaq.nineball.test.AllTests;
+			
+			////////// METHODS //////////
+
+			/**
+			 * ユニットテストを開始します。
+			 */
+			private function creationCompleteHandler():void{ as3unit.run( AllTests ); }
+
+		]]>
+	</mx:Script>
+
+	<as3unit:AS3Unit id="as3unit"/>
+</mx:Application>
