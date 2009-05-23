@@ -7,6 +7,8 @@ package danmaq.ball.resource{
 	 */
 	public final class CONST{
 		
+		////////// CONSTANTS //////////
+
 		/**	デバッグ中かどうかが格納されます。 */
 		public static const DEBUG:Boolean = true;
 		
@@ -26,7 +28,7 @@ package danmaq.ball.resource{
 		public static const TEXT_GO:String = "Start！";
 
 		/**	ゲーム説明文字列が格納されます。 */
-		public static const TEXT_DESC:String = "Enterを連打してください！";
+		public static const TEXT_DESC:String = "マウス左/Enterキーを連打！";
 
 		/**	勝利時の文字列が格納されます。 */
 		public static const TEXT_WON:String = "勝ち";
@@ -58,7 +60,7 @@ package danmaq.ball.resource{
 難易度を選択してください。
 難易度 :
 マウス左/Enterキーを連打！
-ＧＯ！
+Start！
 勝ち
 負け
 FPS SCORE HI-SCORE

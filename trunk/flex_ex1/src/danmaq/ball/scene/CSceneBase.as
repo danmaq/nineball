@@ -49,6 +49,12 @@ package danmaq.ball.scene{
 		/**	勝敗結果が格納されます。 */
 		protected static var m_nResult:int = 0;
 		
+		/**	ハイスコアが格納されます。 */
+		protected static var m_uHighScore:uint = 0;
+		
+		/**	最新のスコアが格納されます。 */
+		protected static var m_uScore:uint = 0;
+		
 		/**	FPS描画タスクが格納されます。 */
 		private static var m_taskFps:CTaskFPSView = null;
 

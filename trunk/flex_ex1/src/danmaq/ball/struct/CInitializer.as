@@ -34,13 +34,15 @@ package danmaq.ball.struct{
 			return ini;
 		}
 		
+		////////// METHODS //////////
+		
 		/**
 		 * フォントリソースを初期化します。
 		 */
 		public static function initializeBitmapFontList():void{
 			var strHalf:String = "()-/.0123456789:ACEFHIMOPRSacdeghilmnqrstv";
-			var strFull:String = "０１２３４５６７８９。！ー●いくけ" + 
-				"さしだちてをゲスペム易競玉勝青赤選走打択点度得難負連";
+			var strFull:String = "０１２３４５６７８９。！ーいくけ" + 
+				"さしだちてをウキゲスマム易競玉勝青赤左選走打択度難負連";
 			var info:Vector.<CBitmapSplitter> = new Vector.<CBitmapSplitter>();
 			var uLength:uint = strHalf.length;
 			var i:uint;
