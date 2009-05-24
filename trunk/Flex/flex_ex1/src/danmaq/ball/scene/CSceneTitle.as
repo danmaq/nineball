@@ -20,7 +20,7 @@ package danmaq.ball.scene{
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public final class CSceneTitle extends CSceneBase{
+	public final class CSceneTitle extends CSceneCommon{
 
 		////////// CONSTANTS //////////
 
