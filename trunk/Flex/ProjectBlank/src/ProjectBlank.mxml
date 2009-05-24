@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	creationComplete="main();" layout="absolute" backgroundColor="#000000">
+
+	<mx:Script>
+		<![CDATA[
+
+			import danmaq.nineball.struct.CScreen;
+			import danmaq.nineball.struct.CInitializeData;
+
+			import scene.SceneBlank;
+
+			////////// METHODS //////////
+	
+			/**
+			 * ここからプログラムが開始します。
+			 */
+			private function main():void{
+				if( stage == null ){ addEventListener( Event.ADDED_TO_STAGE, run ); }
+				else{ run( null ); }
+			}
+			
+			/**
+			 * nineball Libraryを実行します。
+			 * stageが初期化されたときに自動的に呼ばれます。
+			 * 
+			 * @param e イベントパラメータ。(nullになることもあります)
+			 */
+			private function run( e:Event ):void{
+				var ini:CInitializeData = new CInitializeData();
+				ini.sceneFirst = SceneBlank;
+				addChild( CScreen.root.screen );
+				ini.run();
+			}
+
+		]]>
+	</mx:Script>
+	
+</mx:Application>
