@@ -12,6 +12,9 @@ package danmaq.ball.resource{
 		/**	デバッグ中かどうかが格納されます。 */
 		public static const DEBUG:Boolean = true;
 		
+		/**	FPSの文字列が格納されます。 */
+		public static const TEXT_FPS:String = "FPS:";
+
 		/**	タイトル文字列が格納されます。 */
 		public static const TEXT_TITLE:String = "赤い玉 青い玉 競走ゲーム Flash ver.";
 

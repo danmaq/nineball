@@ -22,7 +22,7 @@ package danmaq.ball.scene{
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public class CSceneBase implements IScene{
+	public class CSceneCommon implements IScene{
 
 		////////// CONSTANTS //////////
 
@@ -92,7 +92,7 @@ package danmaq.ball.scene{
 		/**
 		 * コンストラクタ。
 		 */
-		public function CSceneBase(){
+		public function CSceneCommon(){
 			if( !m_bInitialized ){
 				initialize();
 				m_bInitialized = true;
@@ -105,7 +105,7 @@ package danmaq.ball.scene{
 		 */
 		public function dispose():void{
 			sceneTaskManager.dispose();
-			if( !CMisc.isRelate( CSceneBase, this ) ){
+			if( !CMisc.isRelate( CSceneCommon, this ) ){
 				CScreen.root.remove( cbQuality );
 				commonTaskManager.dispose();
 				m_bInitialized = false;
@@ -154,7 +154,7 @@ package danmaq.ball.scene{
 			CScreen.stage.scaleMode = StageScaleMode.SHOW_ALL;
 			m_taskFps = new CTaskFPSView( CResource.font, CResource.screen );
 			commonTaskManager.add( taskFpsView );
-			taskFpsView.prefix = "FPS:";
+			taskFpsView.prefix = CONST.TEXT_FPS;
 			taskFpsView.transform = new CFontTransform(
 				 new Point( 336, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
 				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT );
