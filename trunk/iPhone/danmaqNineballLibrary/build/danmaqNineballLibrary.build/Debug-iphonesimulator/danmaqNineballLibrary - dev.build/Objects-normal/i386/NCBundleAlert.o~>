@@ -1,0 +1,6 @@
+In file included from /Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCBundleAlert.m:9:
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCBundleAlert.h:12: error: cannot find interface declaration for 'NSObject', superclass of 'NCBundleAlert'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCBundleAlert.m: In function '-[NCBundleAlert init:ext:]':
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCBundleAlert.m:14: error: no super class declared in @interface for 'NCBundleAlert'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCBundleAlert.m: In function '-[NCBundleAlert dealloc]':
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCBundleAlert.m:28: error: no super class declared in @interface for 'NCBundleAlert'
