@@ -1,0 +1,176 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeTarget = E78021F90FE09B4600E07573 /* NineballLibrary - sim */;
+		codeSenseManager = E77F67190FDF95F0005DB8DD /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					301,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 266377985;
+			PBXWorkspaceStateSaveDate = 266377985;
+		};
+		perUserProjectItems = {
+			E77F67390FDF966F005DB8DD = E77F67390FDF966F005DB8DD /* PBXTextBookmark */;
+			E77F673A0FDF966F005DB8DD = E77F673A0FDF966F005DB8DD /* PBXTextBookmark */;
+			E77F673B0FDF966F005DB8DD = E77F673B0FDF966F005DB8DD /* PBXBookmark */;
+			E77F673C0FDF966F005DB8DD = E77F673C0FDF966F005DB8DD /* PBXTextBookmark */;
+			E77F673D0FDF966F005DB8DD = E77F673D0FDF966F005DB8DD /* PBXTextBookmark */;
+			E77F673E0FDF966F005DB8DD = E77F673E0FDF966F005DB8DD /* PlistBookmark */;
+			E77F67420FDF9B9B005DB8DD = E77F67420FDF9B9B005DB8DD /* PlistBookmark */;
+		};
+		sourceControlManager = E77F67180FDF95F0005DB8DD /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 253}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 361}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* NineballLibrary_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {624, 253}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 199}";
+		};
+	};
+	8D1107310486CEB800E47090 /* Info.plist */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = text.plist.xml;
+		name = Info.plist;
+		path = /Users/nomura/Documents/Projects/NineballLibrary/Info.plist;
+		sourceTree = "<absolute>";
+	};
+	E77F67180FDF95F0005DB8DD /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryName = "danmaq Nineball-Library";
+		};
+	};
+	E77F67190FDF95F0005DB8DD /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	E77F67390FDF966F005DB8DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* NineballLibrary_Prefix.pch */;
+		name = "NineballLibrary_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 199;
+		vrLoc = 0;
+	};
+	E77F673A0FDF966F005DB8DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 361;
+		vrLoc = 0;
+	};
+	E77F673B0FDF966F005DB8DD /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+	};
+	E77F673C0FDF966F005DB8DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* NineballLibrary_Prefix.pch */;
+		name = "NineballLibrary_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 199;
+		vrLoc = 0;
+	};
+	E77F673D0FDF966F005DB8DD /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29B97316FDCFA39411CA2CEA /* main.m */;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 361;
+		vrLoc = 0;
+	};
+	E77F673E0FDF966F005DB8DD /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/nomura/Documents/Projects/NineballLibrary/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E77F67420FDF9B9B005DB8DD /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			LSRequiresIPhoneOS,
+		);
+		name = /Users/nomura/Documents/Projects/NineballLibrary/Info.plist;
+		rLen = 0;
+		rLoc = 2147483647;
+	};
+	E78021F90FE09B4600E07573 /* NineballLibrary - sim */ = {
+		activeExec = 0;
+	};
+	E78022000FE09B5100E07573 /* NineballLibrary - dev */ = {
+		activeExec = 0;
+	};
+}
