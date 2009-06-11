@@ -1,0 +1,13 @@
+In file included from /Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.m:11:
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:10: error: cannot find interface declaration for 'NSObject', superclass of 'NCInterpolate'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:12: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:13: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:14: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:15: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:16: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:17: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:18: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:19: error: syntax error before 'BOOL'
+/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCInterpolate.h:21: fatal error: method definition not in @implementation context
+compilation terminated.
+{standard input}:32:FATAL:.abort  detected.  Assembly stopping.
