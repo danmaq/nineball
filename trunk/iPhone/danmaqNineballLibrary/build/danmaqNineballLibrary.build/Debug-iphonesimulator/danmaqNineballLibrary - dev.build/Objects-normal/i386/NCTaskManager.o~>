@@ -1,8 +1,0 @@
-In file included from /Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCTaskManager.h:10,
-                 from /Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NCTaskManager.m:10:
-/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NITask.h:23: error: syntax error before 'NSUInteger'
-/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NITask.h:27: error: syntax error before 'BOOL'
-/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NITask.h:42: error: syntax error before 'BOOL'
-/Users/nomura/Documents/Projects/danmaqNineballLibrary/Classes/NITask.h:46: fatal error: method definition not in @implementation context
-compilation terminated.
-{standard input}:32:FATAL:.abort  detected.  Assembly stopping.
