@@ -27,14 +27,14 @@ namespace danmaq.Nineball.misc{
 		/// <summary>クラス インスタンス</summary>
 		public static _T instance {
 			get {
-				if( !isCreated ) { m_instance = new _T(); }
+				if(!isCreated) { m_instance = new _T(); }
 				return m_instance;
 			}
 		}
 
 		/// <summary>インスタンスが作成されたかどうか。</summary>
 		public static bool isCreated {
-			get { return ( m_instance != null ); }
+			get { return (m_instance != null); }
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -46,7 +46,7 @@ namespace danmaq.Nineball.misc{
 		/// <returns>破壊出来た場合、true</returns>
 		public static bool crash() {
 			bool bResult = isCreated;
-			if( bResult ) { m_instance = null; }
+			if(bResult) { m_instance = null; }
 			return bResult;
 		}
 	}
