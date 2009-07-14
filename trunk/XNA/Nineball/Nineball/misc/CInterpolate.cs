@@ -27,10 +27,10 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float smooth(float fStart, float fEnd, float fNow, float fLimit) {
-			if(fNow <= 0.0f) { return fStart; }
-			if(fNow >= fLimit) { return fEnd; }
-			return MathHelper.Lerp(fStart, fEnd, fNow / fLimit);
+		public static float smooth( float fStart, float fEnd, float fNow, float fLimit ) {
+			if( fNow <= 0.0f ) { return fStart; }
+			if( fNow >= fLimit ) { return fEnd; }
+			return MathHelper.Lerp( fStart, fEnd, fNow / fLimit );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -44,10 +44,10 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float slowdown(float fStart, float fEnd, float fNow, float fLimit) {
-			if(fNow <= 0.0f) { return fStart; }
-			if(fNow >= fLimit) { return fEnd; }
-			return MathHelper.Lerp(fStart, fEnd, 1 - (float)Math.Pow(1 - fNow / fLimit, 2));
+		public static float slowdown( float fStart, float fEnd, float fNow, float fLimit ) {
+			if( fNow <= 0.0f ) { return fStart; }
+			if( fNow >= fLimit ) { return fEnd; }
+			return MathHelper.Lerp( fStart, fEnd, 1 - ( float )Math.Pow( 1 - fNow / fLimit, 2 ) );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -61,10 +61,10 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float accelerate(float fStart, float fEnd, float fNow, float fLimit) {
-			if(fNow <= 0.0f) { return fStart; }
-			if(fNow >= fLimit) { return fEnd; }
-			return MathHelper.Lerp(fStart, fEnd, (float)Math.Pow( fNow / fLimit, 2));
+		public static float accelerate( float fStart, float fEnd, float fNow, float fLimit ) {
+			if( fNow <= 0.0f ) { return fStart; }
+			if( fNow >= fLimit ) { return fEnd; }
+			return MathHelper.Lerp( fStart, fEnd, ( float )Math.Pow( fNow / fLimit, 2 ) );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -78,14 +78,14 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float splineFSF(float fStart, float fEnd, float fNow, float fLimit) {
-			if(fNow <= 0.0f) { return fStart; }
-			if(fNow >= fLimit) { return fEnd; }
-			float fCenter = MathHelper.Lerp(fStart, fEnd, 0.5f);
+		public static float splineFSF( float fStart, float fEnd, float fNow, float fLimit ) {
+			if( fNow <= 0.0f ) { return fStart; }
+			if( fNow >= fLimit ) { return fEnd; }
+			float fCenter = MathHelper.Lerp( fStart, fEnd, 0.5f );
 			float fHalfLimit = fLimit / 2;
 			return fNow < fHalfLimit ?
-				slowdown(fStart, fCenter, fNow, fHalfLimit) :
-				accelerate(fCenter, fEnd, fNow - fHalfLimit, fHalfLimit);
+				slowdown( fStart, fCenter, fNow, fHalfLimit ) :
+				accelerate( fCenter, fEnd, fNow - fHalfLimit, fHalfLimit );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -99,14 +99,58 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float splineSFS(float fStart, float fEnd, float fNow, float fLimit) {
-			if(fNow <= 0.0f) { return fStart; }
-			if(fNow >= fLimit) { return fEnd; }
-			float fCenter = MathHelper.Lerp(fStart, fEnd, 0.5f);
+		public static float splineSFS( float fStart, float fEnd, float fNow, float fLimit ) {
+			if( fNow <= 0.0f ) { return fStart; }
+			if( fNow >= fLimit ) { return fEnd; }
+			float fCenter = MathHelper.Lerp( fStart, fEnd, 0.5f );
 			float fHalfLimit = fLimit / 2;
 			return fNow < fHalfLimit ?
-				accelerate(fStart, fCenter, fNow, fHalfLimit) :
-				slowdown(fCenter, fEnd, fNow - fHalfLimit, fHalfLimit);
+				accelerate( fStart, fCenter, fNow, fHalfLimit ) :
+				slowdown( fCenter, fEnd, fNow - fHalfLimit, fHalfLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ネヴィル・スプラインのシミュレータです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fMiddle">制御点</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>～(<paramref name="fMiddle"/>)～<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float neville( float fStart, float fMiddle, float fEnd, float fNow, float fLimit ) {
+			if( fNow >= fLimit || fStart == fEnd || fLimit <= 0 ) { return fEnd; }
+			if( fNow <= 0 ) { return fStart; }
+			float fTimePoint = fNow / fLimit * 2;
+			fMiddle = fEnd + ( fEnd - fMiddle ) * ( fTimePoint - 2 );
+			return fMiddle + ( fMiddle - ( fMiddle + ( fMiddle - fStart ) * ( fTimePoint - 1 ) ) ) *
+				( fTimePoint - 2 ) * 0.5f;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベジェ・スプラインのシミュレータです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fMiddle">制御点</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>～(<paramref name="fMiddle"/>)～<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float bezier( float fStart, float fMiddle, float fEnd, float fNow, float fLimit ) {
+			if( fNow >= fLimit || fStart == fEnd || fLimit <= 0 ) { return fEnd; }
+			if( fNow <= 0 ) { return fStart; }
+			float fTimePoint = fNow / fLimit * 2;
+			float fResidual = 1 - fTimePoint;
+			return
+				( float )Math.Pow( fResidual, 2 ) * fStart +
+				( float )Math.Pow( fTimePoint, 2 ) * fEnd +
+				( 2 * fResidual * fTimePoint * fMiddle );
 		}
 	}
 }

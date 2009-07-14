@@ -41,7 +41,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>False</XnaCompressContent>
     <DocumentationFile>bin\x86\Debug\Nineball.XML</DocumentationFile>
-    <RegisterForComInterop>true</RegisterForComInterop>
+    <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -89,6 +89,8 @@
   <ItemGroup>
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CSingleton.cs" />
+    <Compile Include="misc\math\CHyperbolic.cs" />
+    <Compile Include="misc\math\CTrignometric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
