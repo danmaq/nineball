@@ -1,11 +1,25 @@
 package danmaq.ball.task{
 	
-	import danmaq.ball.resource.CONST;
+	import danmaq.ball.resource.*;
 	import danmaq.nineball.core.*;
+	import danmaq.nineball.struct.font.CFontTransform;
+	import danmaq.nineball.task.CTaskFont;
+	
+	import flash.geom.Point;
 	
 	import mx.utils.StringUtil;
 
 	public final class CTaskScore implements ITask{
+
+		////////// CONSTANTS //////////
+
+		/**	スコア表示用フォントタスクが格納されます。 */
+		private const taskFontScore:CTaskFont =
+			new CTaskFont(CResource.font, CResource.screen, CONST.LAYER_TEXT);
+
+		/**	ハイスコア表示用フォントタスクが格納されます。 */
+		private const taskFontHiScore:CTaskFont =
+			new CTaskFont(CResource.font, CResource.screen, CONST.LAYER_TEXT);
 
 		////////// FIELDS //////////
 
@@ -32,7 +46,7 @@ package danmaq.ball.task{
 		 * 
 		 * @param value タスク管理クラス
 		 */
-		public function set manager( value:CTaskManager ):void{ m_taskManager = value; }
+		public function set manager(value:CTaskManager):void{ m_taskManager = value; }
 		
 		/**
 		 * 一時停止に対応しているかどうかレイヤ値を設定します。
@@ -61,7 +75,7 @@ package danmaq.ball.task{
 		 * @return 最新のスコア文字列
 		 */
 		public function get scoreString():String{
-			return StringUtil.substitute( "SCORE : {0}", score );
+			return StringUtil.substitute("SCORE    : {0}", score);
 		}
 
 		/**
@@ -70,7 +84,7 @@ package danmaq.ball.task{
 		 * @return ハイスコア文字列
 		 */
 		public function get hiScoreString():String{
-			return StringUtil.substitute( "HI-SCORE : {0}", hiScore );
+			return StringUtil.substitute("HI-SCORE : {0}", hiScore);
 		}
 
 		////////// METHODS //////////
@@ -79,19 +93,32 @@ package danmaq.ball.task{
 		 * コンストラクタ。
 		 */
 		public function CTaskScore(){
+			taskFontScore.transform = new CFontTransform(
+				null, null, 0, 1, 0x808080, false, 1,
+				CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT);
+			taskFontHiScore.transform = new CFontTransform(
+				new Point(0, 16), null, 0, 1, 0x808080, false, 1,
+				CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT);
 		}
-
+		
 		/**
 		 * コンストラクタの後、タスクが管理クラスに登録された直後に、
 		 * 1度だけ自動的に呼ばれます。
 		 */
 		public function initialize():void{
+			m_taskManager.add(taskFontScore);
+			m_taskManager.add(taskFontHiScore);
+			flush();
 		}
 		
 		/**
 		 * 解放時に管理クラスから呼び出される処理です。
 		 */
 		public function dispose():void{
+			if(m_taskManager != null){
+				m_taskManager.eraseTask(taskFontScore);
+				m_taskManager.eraseTask(taskFontHiScore);
+			}
 		}
 		
 		/**
@@ -100,16 +127,43 @@ package danmaq.ball.task{
 		 * @return 無条件にtrue
 		 */
 		public function update():Boolean{
-			if( m_uHighScore < m_uScore ){ m_uHighScore = m_uScore; }
+			if(m_uHighScore < m_uScore){ m_uHighScore = m_uScore; }
 			return true;
 		}
 		
-		public function add( uScore:uint ):void{}
+		/**
+		 * スコアを加算します。
+		 * 
+		 * @param uScore スコア加算値
+		 */
+		public function add(uScore:uint):void{
+			if(uScore > 0){
+				m_uScore += uScore;
+				flush();
+			}
+		}
 		
-		public function flush():void{}
+		/**
+		 * フォントを強制的に更新します。
+		 */
+		public function flush():void{
+			if(m_taskManager != null){
+				taskFontScore.text = scoreString;
+				taskFontScore.view = true;
+				taskFontScore.render();
+				taskFontHiScore.text = hiScoreString;
+				taskFontHiScore.view = true;
+				taskFontHiScore.render();
+			}
+		}
 
+		/**
+		 * このクラスの状態を文字列で取得します。
+		 * 
+		 * @return オブジェクトのストリング表現
+		 */
 		public function toString():String{
-			return StringUtil.substitute( "{0}\n{1}", scoreString, hiScoreString );
+			return StringUtil.substitute("{0}\n{1}", scoreString, hiScoreString);
 		}
 
 	}
