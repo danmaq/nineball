@@ -1,6 +1,7 @@
 package danmaq.ball.scene{
 
 	import danmaq.ball.resource.*;
+	import danmaq.ball.task.CTaskScore;
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.misc.CMisc;
 	import danmaq.nineball.struct.CScreen;
@@ -49,12 +50,9 @@ package danmaq.ball.scene{
 		/**	勝敗結果が格納されます。 */
 		protected static var m_nResult:int = 0;
 		
-		/**	ハイスコアが格納されます。 */
-		protected static var m_uHighScore:uint = 0;
-		
-		/**	最新のスコアが格納されます。 */
-		protected static var m_uScore:uint = 0;
-		
+		/**	スコアタスクが格納されます。 */
+		private static var m_taskScore:CTaskScore = null;
+
 		/**	FPS描画タスクが格納されます。 */
 		private static var m_taskFps:CTaskFPSView = null;
 
@@ -65,6 +63,20 @@ package danmaq.ball.scene{
 		private var m_sceneNext:IScene = null;
 
 		////////// PROPERTIES //////////
+
+		/**
+		 * FPS描画タスクを取得します。
+		 * 
+		 * @return FPS描画タスク
+		 */
+		protected static function get taskFpsView():CTaskFPSView{ return m_taskFps; }
+		
+		/**
+		 * スコアタスクを取得します。
+		 * 
+		 * @return スコアタスク
+		 */
+		protected static function get taskScore():CTaskScore{ return m_taskScore; }
 
 		/**
 		 * 次のシーンを取得します。
@@ -78,14 +90,7 @@ package danmaq.ball.scene{
 		 * 
 		 * @param value 次のシーン オブジェクト。または、null
 		 */
-		public function set nextScene( value:IScene ):void{ m_sceneNext = value; }
-
-		/**
-		 * FPS描画タスクを取得します。
-		 * 
-		 * @return FPS描画タスク
-		 */
-		protected static function get taskFpsView():CTaskFPSView{ return m_taskFps; }
+		public function set nextScene(value:IScene):void{ m_sceneNext = value; }
 
 		////////// METHODS //////////
 		
@@ -93,7 +98,7 @@ package danmaq.ball.scene{
 		 * コンストラクタ。
 		 */
 		public function CSceneCommon(){
-			if( !m_bInitialized ){
+			if(!m_bInitialized){
 				initialize();
 				m_bInitialized = true;
 			}
@@ -105,8 +110,8 @@ package danmaq.ball.scene{
 		 */
 		public function dispose():void{
 			sceneTaskManager.dispose();
-			if( !CMisc.isRelate( CSceneCommon, this ) ){
-				CScreen.root.remove( cbQuality );
+			if(!CMisc.isRelate(CSceneCommon, this)){
+				CScreen.root.remove(cbQuality);
 				commonTaskManager.dispose();
 				m_bInitialized = false;
 			}
@@ -136,12 +141,12 @@ package danmaq.ball.scene{
 			strText:String, posLocate:Point, uColor:uint = 0xFFFFFF
 		):CTaskFont{
 			var task:CTaskFont =
-				new CTaskFont( CResource.font, CResource.screen, CONST.LAYER_TEXT );
-			sceneTaskManager.add( task );
+				new CTaskFont(CResource.font, CResource.screen, CONST.LAYER_TEXT);
+			sceneTaskManager.add(task);
 			task.text = strText;
 			task.view = true;
-			task.render( new CFontTransform( new Point( posLocate.x * 8, posLocate.y * 16 ), null,
-				0, 1, uColor, false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT ) );
+			task.render(new CFontTransform(new Point(posLocate.x * 8, posLocate.y * 16), null,
+				0, 1, uColor, false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT));
 			return task;
 		}
 
@@ -150,14 +155,16 @@ package danmaq.ball.scene{
 		 */
 		private static function initialize():void{
 			try{ IME.enabled = false; }
-			catch( e:Error ){}
+			catch(e:Error){}
 			CScreen.stage.scaleMode = StageScaleMode.SHOW_ALL;
-			m_taskFps = new CTaskFPSView( CResource.font, CResource.screen );
-			commonTaskManager.add( taskFpsView );
+			m_taskFps = new CTaskFPSView(CResource.font, CResource.screen);
+			m_taskScore = new CTaskScore();
+			commonTaskManager.add(m_taskScore);
+			commonTaskManager.add(taskFpsView);
 			taskFpsView.prefix = CONST.TEXT_FPS;
 			taskFpsView.transform = new CFontTransform(
-				 new Point( 336, 0 ), new Point( 1, 1 ), 0, 1, 0xFFFFFF,
-				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT );
+				new Point(336, 0), new Point(1, 1), 0, 1, 0xFFFFFF,
+				false, 1, CFontTransform.TOP_LEFT, CFontTransform.TOP_LEFT);
 			initializeQualityComboBox();
 			initializeChangeScreenButton();
 		}
@@ -166,18 +173,18 @@ package danmaq.ball.scene{
 		 * 画質設定コンボボックスの初期化をします。
 		 */
 		private static function initializeQualityComboBox():void{
-			cbQuality.dataProvider = new ArrayCollection( [
+			cbQuality.dataProvider = new ArrayCollection([
 				{ label: "Quality: Best",	data: StageQuality.BEST		},
 				{ label: "Quality: High",	data: StageQuality.HIGH		},
 				{ label: "Quality: Good",	data: StageQuality.MEDIUM	},
 				{ label: "Quality: Lite",	data: StageQuality.LOW		}
-			] );
+			]);
 			cbQuality.width = 144;
 			cbQuality.x = CScreen.stage.width - cbQuality.width;
-			cbQuality.addEventListener( FlexEvent.VALUE_COMMIT, onChangeQuality );
+			cbQuality.addEventListener(FlexEvent.VALUE_COMMIT, onChangeQuality);
 			cbQuality.selectedIndex = 0;
 			cbQuality.toolTip = "Graphic quality level"
-			CScreen.root.add( cbQuality );
+			CScreen.root.add(cbQuality);
 		}
 		
 		/**
@@ -188,11 +195,11 @@ package danmaq.ball.scene{
 			btnChangeScreenMode.x = cbQuality.x - btnChangeScreenMode.width;
 			btnChangeScreenMode.label = "FullScreen";
 			btnChangeScreenMode.toggle = true;
-			btnChangeScreenMode.addEventListener( Event.CHANGE, onToggleChangeScreen );
+			btnChangeScreenMode.addEventListener(Event.CHANGE, onToggleChangeScreen);
 			CScreen.stage.fullScreenSourceRect =
-				new Rectangle( 0, 0, CScreen.size.x, CScreen.size.y );
-			CScreen.stage.addEventListener( FullScreenEvent.FULL_SCREEN, onFullScreen );
-			CScreen.root.add( btnChangeScreenMode );
+				new Rectangle(0, 0, CScreen.size.x, CScreen.size.y);
+			CScreen.stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFullScreen);
+			CScreen.root.add(btnChangeScreenMode);
 		}
 
 		/**
@@ -201,7 +208,7 @@ package danmaq.ball.scene{
 		 * 
 		 * @param e イベントパラメータ
 		 */
-		private static function onChangeQuality( e:FlexEvent ):void{
+		private static function onChangeQuality(e:FlexEvent):void{
 			CScreen.stage.quality = cbQuality.value as String;
 		}
 
@@ -211,7 +218,7 @@ package danmaq.ball.scene{
 		 * 
 		 * @param e イベントパラメータ
 		 */
-		private static function onToggleChangeScreen( e:Event ):void{
+		private static function onToggleChangeScreen(e:Event):void{
 			CScreen.stage.displayState = btnChangeScreenMode.selected ?
 				StageDisplayState.FULL_SCREEN : StageDisplayState.NORMAL;
 		}
@@ -222,7 +229,7 @@ package danmaq.ball.scene{
 		 * 
 		 * @param e イベントパラメータ
 		 */
-		private static function onFullScreen( e:FullScreenEvent ):void{
+		private static function onFullScreen(e:FullScreenEvent):void{
 			btnChangeScreenMode.selected = e.fullScreen;
 		}
 	}
