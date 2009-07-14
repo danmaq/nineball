@@ -47,6 +47,7 @@ namespace danmaq.Nineball.misc{
 		public static bool crash() {
 			bool bResult = isCreated;
 			if(bResult) { m_instance = null; }
+			GC.Collect();
 			return bResult;
 		}
 	}
