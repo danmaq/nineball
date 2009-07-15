@@ -27,10 +27,6 @@
 		363006F6100D6F22007D0BDF /* NSPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NSPhaseManager.m */; };
 		363006F7100D6F22007D0BDF /* NSPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NSPhaseManager.h */; };
 		363006F8100D6F22007D0BDF /* NSPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NSPhaseManager.m */; };
-		3630071A100D705F007D0BDF /* libNineball-Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36300719100D705F007D0BDF /* libNineball-Debug.a */; };
-		3630071B100D705F007D0BDF /* libNineball-Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36300719100D705F007D0BDF /* libNineball-Debug.a */; };
-		3630071D100D707A007D0BDF /* libNineball-Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3630071C100D707A007D0BDF /* libNineball-Release.a */; };
-		3630071E100D707A007D0BDF /* libNineball-Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3630071C100D707A007D0BDF /* libNineball-Release.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +54,8 @@
 		363006EE100D6EE2007D0BDF /* libNineball - sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libNineball - sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		363006F3100D6F22007D0BDF /* NSPhaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPhaseManager.h; path = Classes/NSPhaseManager.h; sourceTree = "<group>"; };
 		363006F4100D6F22007D0BDF /* NSPhaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPhaseManager.m; sourceTree = "<group>"; };
-		36300719100D705F007D0BDF /* libNineball-Debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Debug.a"; path = "build/Debug-iphoneos/libNineball-Debug.a"; sourceTree = "<group>"; };
-		3630071C100D707A007D0BDF /* libNineball-Release.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Release.a"; path = "build/Release-iphoneos/libNineball-Release.a"; sourceTree = "<group>"; };
+		36300764100D7946007D0BDF /* libNineball-Debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Debug.a"; path = "build/Debug-iphoneos/libNineball-Debug.a"; sourceTree = "<group>"; };
+		36300766100D7976007D0BDF /* libNineball-Release.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Release.a"; path = "build/Release-iphoneos/libNineball-Release.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +63,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3630071B100D705F007D0BDF /* libNineball-Debug.a in Frameworks */,
-				3630071E100D707A007D0BDF /* libNineball-Release.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +70,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3630071A100D705F007D0BDF /* libNineball-Debug.a in Frameworks */,
-				3630071D100D707A007D0BDF /* libNineball-Release.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +142,8 @@
 		363006FE100D6F35007D0BDF /* Dist */ = {
 			isa = PBXGroup;
 			children = (
-				3630071C100D707A007D0BDF /* libNineball-Release.a */,
-				36300719100D705F007D0BDF /* libNineball-Debug.a */,
+				36300766100D7976007D0BDF /* libNineball-Release.a */,
+				36300764100D7946007D0BDF /* libNineball-Debug.a */,
 			);
 			name = Dist;
 			sourceTree = "<group>";
