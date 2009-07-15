@@ -6,36 +6,78 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		36300703100D6F79007D0BDF /* Build All */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 36300715100D6F8E007D0BDF /* Build configuration list for PBXAggregateTarget "Build All" */;
+			buildPhases = (
+				36300702100D6F79007D0BDF /* ShellScript */,
+			);
+			dependencies = (
+				36300709100D6F85007D0BDF /* PBXTargetDependency */,
+				36300707100D6F85007D0BDF /* PBXTargetDependency */,
+			);
+			name = "Build All";
+			productName = "Build All";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* NineballAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* NineballAppDelegate.m */; };
-		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		363006F5100D6F22007D0BDF /* NSPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NSPhaseManager.h */; };
+		363006F6100D6F22007D0BDF /* NSPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NSPhaseManager.m */; };
+		363006F7100D6F22007D0BDF /* NSPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NSPhaseManager.h */; };
+		363006F8100D6F22007D0BDF /* NSPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NSPhaseManager.m */; };
+		3630071A100D705F007D0BDF /* libNineball-Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36300719100D705F007D0BDF /* libNineball-Debug.a */; };
+		3630071B100D705F007D0BDF /* libNineball-Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36300719100D705F007D0BDF /* libNineball-Debug.a */; };
+		3630071D100D707A007D0BDF /* libNineball-Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3630071C100D707A007D0BDF /* libNineball-Release.a */; };
+		3630071E100D707A007D0BDF /* libNineball-Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3630071C100D707A007D0BDF /* libNineball-Release.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		36300706100D6F85007D0BDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 363006ED100D6EE2007D0BDF /* Nineball - sim */;
+			remoteInfo = "Nineball - sim";
+		};
+		36300708100D6F85007D0BDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 363006E0100D6D0F007D0BDF /* Nineball - dev */;
+			remoteInfo = "Nineball - dev";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* NineballAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NineballAppDelegate.h"; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* NineballAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NineballAppDelegate.m"; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Nineball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nineball.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* Nineball_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Nineball_Prefix.pch"; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Nineball-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Nineball-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* Nineball_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nineball_Prefix.pch; sourceTree = "<group>"; };
+		363006E1100D6D0F007D0BDF /* libNineball - dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libNineball - dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		363006EE100D6EE2007D0BDF /* libNineball - sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libNineball - sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		363006F3100D6F22007D0BDF /* NSPhaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPhaseManager.h; path = Classes/NSPhaseManager.h; sourceTree = "<group>"; };
+		363006F4100D6F22007D0BDF /* NSPhaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPhaseManager.m; sourceTree = "<group>"; };
+		36300719100D705F007D0BDF /* libNineball-Debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Debug.a"; path = "build/Debug-iphoneos/libNineball-Debug.a"; sourceTree = "<group>"; };
+		3630071C100D707A007D0BDF /* libNineball-Release.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Release.a"; path = "build/Release-iphoneos/libNineball-Release.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+		363006DF100D6D0F007D0BDF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				3630071B100D705F007D0BDF /* libNineball-Debug.a in Frameworks */,
+				3630071E100D707A007D0BDF /* libNineball-Release.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		363006EC100D6EE2007D0BDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3630071A100D705F007D0BDF /* libNineball-Debug.a in Frameworks */,
+				3630071D100D707A007D0BDF /* libNineball-Release.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,8 +87,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1D3623240D0F684500981E51 /* NineballAppDelegate.h */,
-				1D3623250D0F684500981E51 /* NineballAppDelegate.m */,
+				363006F4100D6F22007D0BDF /* NSPhaseManager.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -54,7 +95,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Nineball.app */,
+				363006E1100D6D0F007D0BDF /* libNineball - dev.a */,
+				363006EE100D6EE2007D0BDF /* libNineball - sim.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,6 +104,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				363006FD100D6F29007D0BDF /* [Nineball] */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -75,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				32CA4F630368D1EE00C91783 /* Nineball_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -83,8 +125,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
-				8D1107310486CEB800E47090 /* Nineball-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -94,30 +134,91 @@
 			children = (
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		363006FD100D6F29007D0BDF /* [Nineball] */ = {
+			isa = PBXGroup;
+			children = (
+				363006FF100D6F3B007D0BDF /* Header */,
+				363006FE100D6F35007D0BDF /* Dist */,
+			);
+			name = "[Nineball]";
+			sourceTree = "<group>";
+		};
+		363006FE100D6F35007D0BDF /* Dist */ = {
+			isa = PBXGroup;
+			children = (
+				3630071C100D707A007D0BDF /* libNineball-Release.a */,
+				36300719100D705F007D0BDF /* libNineball-Debug.a */,
+			);
+			name = Dist;
+			sourceTree = "<group>";
+		};
+		363006FF100D6F3B007D0BDF /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				363006F3100D6F22007D0BDF /* NSPhaseManager.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		363006DD100D6D0F007D0BDF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				363006F7100D6F22007D0BDF /* NSPhaseManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		363006EA100D6EE2007D0BDF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				363006F5100D6F22007D0BDF /* NSPhaseManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* Nineball */ = {
+		363006E0100D6D0F007D0BDF /* Nineball - dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Nineball" */;
+			buildConfigurationList = 363006E4100D6D4B007D0BDF /* Build configuration list for PBXNativeTarget "Nineball - dev" */;
 			buildPhases = (
-				1D60588D0D05DD3D006BFB54 /* Resources */,
-				1D60588E0D05DD3D006BFB54 /* Sources */,
-				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				363006DD100D6D0F007D0BDF /* Headers */,
+				363006DE100D6D0F007D0BDF /* Sources */,
+				363006DF100D6D0F007D0BDF /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Nineball";
-			productName = "Nineball";
-			productReference = 1D6058910D05DD3D006BFB54 /* Nineball.app */;
-			productType = "com.apple.product-type.application";
+			name = "Nineball - dev";
+			productName = "Nineball - dev";
+			productReference = 363006E1100D6D0F007D0BDF /* libNineball - dev.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		363006ED100D6EE2007D0BDF /* Nineball - sim */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 363006F2100D6F19007D0BDF /* Build configuration list for PBXNativeTarget "Nineball - sim" */;
+			buildPhases = (
+				363006EA100D6EE2007D0BDF /* Headers */,
+				363006EB100D6EE2007D0BDF /* Sources */,
+				363006EC100D6EE2007D0BDF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Nineball - sim";
+			productName = "Nineball - sim";
+			productReference = 363006EE100D6EE2007D0BDF /* libNineball - sim.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -131,58 +232,154 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* Nineball */,
+				363006E0100D6D0F007D0BDF /* Nineball - dev */,
+				363006ED100D6EE2007D0BDF /* Nineball - sim */,
+				36300703100D6F79007D0BDF /* Build All */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		1D60588D0D05DD3D006BFB54 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		36300702100D6F79007D0BDF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+			);
+			inputPaths = (
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# remove existing product lib file, just in case\nrm -rf build/${BUILD_STYLE}-iphoneos/libNineball-${BUILD_STYLE}.a\n\n# combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libNineball - dev.a\" \\\n  \"build/${BUILD_STYLE}-iphonesimulator/libNineball - sim.a\" \\\n  -output \"build/${BUILD_STYLE}-iphoneos/libNineball-${BUILD_STYLE}.a\"";
 		};
-/* End PBXResourcesBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+		363006DE100D6D0F007D0BDF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* NineballAppDelegate.m in Sources */,
+				363006F8100D6F22007D0BDF /* NSPhaseManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		363006EB100D6EE2007D0BDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				363006F6100D6F22007D0BDF /* NSPhaseManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		36300707100D6F85007D0BDF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 363006ED100D6EE2007D0BDF /* Nineball - sim */;
+			targetProxy = 36300706100D6F85007D0BDF /* PBXContainerItemProxy */;
+		};
+		36300709100D6F85007D0BDF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 363006E0100D6D0F007D0BDF /* Nineball - dev */;
+			targetProxy = 36300708100D6F85007D0BDF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		1D6058940D05DD3E006BFB54 /* Debug */ = {
+		363006E2100D6D0F007D0BDF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Nineball_Prefix.pch";
-				INFOPLIST_FILE = "Nineball-Info.plist";
-				PRODUCT_NAME = "Nineball";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/build/Release-iphoneos\"",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = "Nineball - dev";
 			};
 			name = Debug;
 		};
-		1D6058950D05DD3E006BFB54 /* Release */ = {
+		363006E3100D6D0F007D0BDF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Nineball_Prefix.pch";
-				INFOPLIST_FILE = "Nineball-Info.plist";
-				PRODUCT_NAME = "Nineball";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/build/Release-iphoneos\"",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = "Nineball - dev";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		363006EF100D6EE2007D0BDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/build/Release-iphoneos\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Nineball - sim";
+				SDKROOT = iphonesimulator3.0;
+			};
+			name = Debug;
+		};
+		363006F0100D6EE2007D0BDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/build/Release-iphoneos\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Nineball - sim";
+				SDKROOT = iphonesimulator3.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		36300704100D6F79007D0BDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Build All";
+			};
+			name = Debug;
+		};
+		36300705100D6F79007D0BDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Build All";
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -192,6 +389,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -205,6 +403,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -215,11 +414,29 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Nineball" */ = {
+		363006E4100D6D4B007D0BDF /* Build configuration list for PBXNativeTarget "Nineball - dev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1D6058940D05DD3E006BFB54 /* Debug */,
-				1D6058950D05DD3E006BFB54 /* Release */,
+				363006E2100D6D0F007D0BDF /* Debug */,
+				363006E3100D6D0F007D0BDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		363006F2100D6F19007D0BDF /* Build configuration list for PBXNativeTarget "Nineball - sim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				363006EF100D6EE2007D0BDF /* Debug */,
+				363006F0100D6EE2007D0BDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36300715100D6F8E007D0BDF /* Build configuration list for PBXAggregateTarget "Build All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36300704100D6F79007D0BDF /* Debug */,
+				36300705100D6F79007D0BDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
