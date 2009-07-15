@@ -68,7 +68,33 @@ namespace danmaq.Nineball.misc.math {
 		public static double atanH( double dRadian ) {
 			return Math.Log( ( 1 + dRadian ) / ( 1 - dRadian ) ) / 2;
 		}
-		
-		// ! TODO : asecH, acosecH, acotanH 実装する
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定された角度のハイパーボリック アークセカントを返します。</summary>
+		/// 
+		/// <param name="dRadian">ラジアンで計測した角度</param>
+		/// <returns><paramref name="dRadian"/>のハイパーボリック アークセカント</returns>
+		public static double asecH( double dRadian ) {
+			return Math.Log( ( Math.Sqrt( -dRadian * dRadian + 1 ) + 1 ) / dRadian );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定された角度のハイパーボリック アークコセカントを返します。</summary>
+		/// 
+		/// <param name="dRadian">ラジアンで計測した角度</param>
+		/// <returns><paramref name="dRadian"/>のハイパーボリック アークコセカント</returns>
+		public static double acosecH( double dRadian ) {
+			return Math.Log( Math.Sign( dRadian ) *
+				( Math.Sqrt( Math.Pow( dRadian, 2 ) + 1 ) + 1 ) / dRadian );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定された角度のハイパーボリック アークコタンジェントを返します。</summary>
+		/// 
+		/// <param name="dRadian">ラジアンで計測した角度</param>
+		/// <returns><paramref name="dRadian"/>のハイパーボリック アークコタンジェント</returns>
+		public static double acotanH( double dRadian ) {
+			return Math.Log( ( dRadian + 1 ) / ( dRadian - 1 ) ) / 2;
+		}
 	}
 }
