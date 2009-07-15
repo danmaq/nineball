@@ -23,10 +23,22 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		363006F5100D6F22007D0BDF /* NSPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NSPhaseManager.h */; };
-		363006F6100D6F22007D0BDF /* NSPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NSPhaseManager.m */; };
-		363006F7100D6F22007D0BDF /* NSPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NSPhaseManager.h */; };
-		363006F8100D6F22007D0BDF /* NSPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NSPhaseManager.m */; };
+		363006F5100D6F22007D0BDF /* NCPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NCPhaseManager.h */; };
+		363006F6100D6F22007D0BDF /* NCPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NCPhaseManager.m */; };
+		363006F7100D6F22007D0BDF /* NCPhaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363006F3100D6F22007D0BDF /* NCPhaseManager.h */; };
+		363006F8100D6F22007D0BDF /* NCPhaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363006F4100D6F22007D0BDF /* NCPhaseManager.m */; };
+		36300785100D7F5C007D0BDF /* Nineball.h in Headers */ = {isa = PBXBuildFile; fileRef = 36300784100D7F5C007D0BDF /* Nineball.h */; };
+		36300786100D7F5C007D0BDF /* Nineball.h in Headers */ = {isa = PBXBuildFile; fileRef = 36300784100D7F5C007D0BDF /* Nineball.h */; };
+		3630089D100D8118007D0BDF /* NITask.h in Headers */ = {isa = PBXBuildFile; fileRef = 3630089C100D8118007D0BDF /* NITask.h */; };
+		3630089E100D8118007D0BDF /* NITask.h in Headers */ = {isa = PBXBuildFile; fileRef = 3630089C100D8118007D0BDF /* NITask.h */; };
+		363008A2100D815F007D0BDF /* NCTaskManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008A0100D815F007D0BDF /* NCTaskManager.h */; };
+		363008A3100D815F007D0BDF /* NCTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008A1100D815F007D0BDF /* NCTaskManager.m */; };
+		363008A4100D815F007D0BDF /* NCTaskManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008A0100D815F007D0BDF /* NCTaskManager.h */; };
+		363008A5100D815F007D0BDF /* NCTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008A1100D815F007D0BDF /* NCTaskManager.m */; };
+		363008BC100D8201007D0BDF /* NCInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008BA100D8201007D0BDF /* NCInterpolate.h */; };
+		363008BD100D8201007D0BDF /* NCInterpolate.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008BB100D8201007D0BDF /* NCInterpolate.m */; };
+		363008BE100D8201007D0BDF /* NCInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008BA100D8201007D0BDF /* NCInterpolate.h */; };
+		363008BF100D8201007D0BDF /* NCInterpolate.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008BB100D8201007D0BDF /* NCInterpolate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +46,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 363006ED100D6EE2007D0BDF /* Nineball - sim */;
+			remoteGlobalIDString = 363006ED100D6EE2007D0BDF;
 			remoteInfo = "Nineball - sim";
 		};
 		36300708100D6F85007D0BDF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 363006E0100D6D0F007D0BDF /* Nineball - dev */;
+			remoteGlobalIDString = 363006E0100D6D0F007D0BDF;
 			remoteInfo = "Nineball - dev";
 		};
 /* End PBXContainerItemProxy section */
@@ -52,10 +64,16 @@
 		32CA4F630368D1EE00C91783 /* Nineball_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nineball_Prefix.pch; sourceTree = "<group>"; };
 		363006E1100D6D0F007D0BDF /* libNineball - dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libNineball - dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		363006EE100D6EE2007D0BDF /* libNineball - sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libNineball - sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		363006F3100D6F22007D0BDF /* NSPhaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPhaseManager.h; path = Classes/NSPhaseManager.h; sourceTree = "<group>"; };
-		363006F4100D6F22007D0BDF /* NSPhaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSPhaseManager.m; sourceTree = "<group>"; };
+		363006F3100D6F22007D0BDF /* NCPhaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCPhaseManager.h; path = Classes/NCPhaseManager.h; sourceTree = "<group>"; };
+		363006F4100D6F22007D0BDF /* NCPhaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCPhaseManager.m; sourceTree = "<group>"; };
 		36300764100D7946007D0BDF /* libNineball-Debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Debug.a"; path = "build/Debug-iphoneos/libNineball-Debug.a"; sourceTree = "<group>"; };
 		36300766100D7976007D0BDF /* libNineball-Release.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libNineball-Release.a"; path = "build/Release-iphoneos/libNineball-Release.a"; sourceTree = "<group>"; };
+		36300784100D7F5C007D0BDF /* Nineball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nineball.h; sourceTree = "<group>"; };
+		3630089C100D8118007D0BDF /* NITask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITask.h; sourceTree = "<group>"; };
+		363008A0100D815F007D0BDF /* NCTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCTaskManager.h; path = Classes/NCTaskManager.h; sourceTree = "<group>"; };
+		363008A1100D815F007D0BDF /* NCTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCTaskManager.m; sourceTree = "<group>"; };
+		363008BA100D8201007D0BDF /* NCInterpolate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCInterpolate.h; path = Classes/NCInterpolate.h; sourceTree = "<group>"; };
+		363008BB100D8201007D0BDF /* NCInterpolate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCInterpolate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +97,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				363006F4100D6F22007D0BDF /* NSPhaseManager.m */,
+				363008B8100D81E3007D0BDF /* Misc */,
+				3630089A100D80F9007D0BDF /* Core */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -151,9 +170,46 @@
 		363006FF100D6F3B007D0BDF /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				363006F3100D6F22007D0BDF /* NSPhaseManager.h */,
+				363008B7100D81D6007D0BDF /* Misc */,
+				36300899100D80EC007D0BDF /* Core */,
+				36300784100D7F5C007D0BDF /* Nineball.h */,
 			);
 			name = Header;
+			sourceTree = "<group>";
+		};
+		36300899100D80EC007D0BDF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				363008A0100D815F007D0BDF /* NCTaskManager.h */,
+				363006F3100D6F22007D0BDF /* NCPhaseManager.h */,
+				3630089C100D8118007D0BDF /* NITask.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		3630089A100D80F9007D0BDF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				363006F4100D6F22007D0BDF /* NCPhaseManager.m */,
+				363008A1100D815F007D0BDF /* NCTaskManager.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		363008B7100D81D6007D0BDF /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				363008BA100D8201007D0BDF /* NCInterpolate.h */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		363008B8100D81E3007D0BDF /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				363008BB100D8201007D0BDF /* NCInterpolate.m */,
+			);
+			name = Misc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +219,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				363006F7100D6F22007D0BDF /* NSPhaseManager.h in Headers */,
+				363006F7100D6F22007D0BDF /* NCPhaseManager.h in Headers */,
+				36300785100D7F5C007D0BDF /* Nineball.h in Headers */,
+				3630089D100D8118007D0BDF /* NITask.h in Headers */,
+				363008A2100D815F007D0BDF /* NCTaskManager.h in Headers */,
+				363008BC100D8201007D0BDF /* NCInterpolate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +231,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				363006F5100D6F22007D0BDF /* NSPhaseManager.h in Headers */,
+				363006F5100D6F22007D0BDF /* NCPhaseManager.h in Headers */,
+				36300786100D7F5C007D0BDF /* Nineball.h in Headers */,
+				3630089E100D8118007D0BDF /* NITask.h in Headers */,
+				363008A4100D815F007D0BDF /* NCTaskManager.h in Headers */,
+				363008BE100D8201007D0BDF /* NCInterpolate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +316,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				363006F8100D6F22007D0BDF /* NSPhaseManager.m in Sources */,
+				363006F8100D6F22007D0BDF /* NCPhaseManager.m in Sources */,
+				363008A3100D815F007D0BDF /* NCTaskManager.m in Sources */,
+				363008BD100D8201007D0BDF /* NCInterpolate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +326,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				363006F6100D6F22007D0BDF /* NSPhaseManager.m in Sources */,
+				363006F6100D6F22007D0BDF /* NCPhaseManager.m in Sources */,
+				363008A5100D815F007D0BDF /* NCTaskManager.m in Sources */,
+				363008BF100D8201007D0BDF /* NCInterpolate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
