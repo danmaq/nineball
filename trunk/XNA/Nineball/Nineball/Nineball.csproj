@@ -87,12 +87,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\data\CResolution.cs" />
     <Compile Include="core\data\EAlign.cs" />
+    <Compile Include="core\data\EResolution.cs" />
     <Compile Include="core\manager\CCoRoutineManager.cs" />
     <Compile Include="core\manager\CPhaseManager.cs" />
     <Compile Include="core\manager\CTaskManager.cs" />
     <Compile Include="core\manager\ITask.cs" />
     <Compile Include="core\raw\CLogger.cs" />
+    <Compile Include="core\raw\CSprite.cs" />
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CSingleton.cs" />
     <Compile Include="misc\math\CHyperbolic.cs" />
