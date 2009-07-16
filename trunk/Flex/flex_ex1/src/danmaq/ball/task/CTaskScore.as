@@ -9,6 +9,11 @@ package danmaq.ball.task{
 	
 	import mx.utils.StringUtil;
 
+	/**
+	 * スコアタスクです。
+	 * 
+	 * @author Mc(danmaq)
+	 */
 	public final class CTaskScore implements ITask{
 
 		////////// CONSTANTS //////////
@@ -139,6 +144,17 @@ package danmaq.ball.task{
 		public function add(uScore:uint):void{
 			if(uScore > 0){
 				m_uScore += uScore;
+				flush();
+			}
+		}
+		
+		/**
+		 * スコアをリセットします。
+		 * ハイスコアは残ります。
+		 */
+		public function reset():void{
+			if(uScore > 0){
+				m_uScore = 0;
 				flush();
 			}
 		}
