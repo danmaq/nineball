@@ -12,6 +12,10 @@
 #import "NCTaskManager.h"
 #import "NCPhaseManager.h"
 
+//*-----------------------------------------------------------------*
+// シーンの基底となるクラスです。
+// シーン管理クラスに登録するためには、このクラスを継承するか、NISceneを実装します。
+//*-----------------------------------------------------------------*
 @interface NCSceneBase : NSObject<NIScene> {
 	NSObject<NIScene> *_nextScene;
 	NCPhaseManager *_mgrPhase;
