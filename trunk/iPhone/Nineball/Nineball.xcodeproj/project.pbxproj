@@ -39,6 +39,20 @@
 		363008BD100D8201007D0BDF /* NCInterpolate.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008BB100D8201007D0BDF /* NCInterpolate.m */; };
 		363008BE100D8201007D0BDF /* NCInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008BA100D8201007D0BDF /* NCInterpolate.h */; };
 		363008BF100D8201007D0BDF /* NCInterpolate.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008BB100D8201007D0BDF /* NCInterpolate.m */; };
+		363008F5100F1626007D0BDF /* NCTaskBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008F3100F1626007D0BDF /* NCTaskBase.h */; };
+		363008F6100F1626007D0BDF /* NCTaskBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008F4100F1626007D0BDF /* NCTaskBase.m */; };
+		363008F7100F1626007D0BDF /* NCTaskBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 363008F3100F1626007D0BDF /* NCTaskBase.h */; };
+		363008F8100F1626007D0BDF /* NCTaskBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 363008F4100F1626007D0BDF /* NCTaskBase.m */; };
+		3637AF68100F16C600027E12 /* NIScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF67100F16C600027E12 /* NIScene.h */; };
+		3637AF69100F16C600027E12 /* NIScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF67100F16C600027E12 /* NIScene.h */; };
+		3637AF74100F195300027E12 /* NCSceneManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF72100F195300027E12 /* NCSceneManager.h */; };
+		3637AF75100F195300027E12 /* NCSceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF73100F195300027E12 /* NCSceneManager.m */; };
+		3637AF76100F195300027E12 /* NCSceneManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF72100F195300027E12 /* NCSceneManager.h */; };
+		3637AF77100F195300027E12 /* NCSceneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF73100F195300027E12 /* NCSceneManager.m */; };
+		3637AF88100F19A500027E12 /* NCSceneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF86100F19A500027E12 /* NCSceneBase.h */; };
+		3637AF89100F19A500027E12 /* NCSceneBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF87100F19A500027E12 /* NCSceneBase.m */; };
+		3637AF8A100F19A500027E12 /* NCSceneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF86100F19A500027E12 /* NCSceneBase.h */; };
+		3637AF8B100F19A500027E12 /* NCSceneBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF87100F19A500027E12 /* NCSceneBase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +88,13 @@
 		363008A1100D815F007D0BDF /* NCTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCTaskManager.m; sourceTree = "<group>"; };
 		363008BA100D8201007D0BDF /* NCInterpolate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCInterpolate.h; path = Classes/NCInterpolate.h; sourceTree = "<group>"; };
 		363008BB100D8201007D0BDF /* NCInterpolate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCInterpolate.m; sourceTree = "<group>"; };
+		363008F3100F1626007D0BDF /* NCTaskBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCTaskBase.h; path = Classes/NCTaskBase.h; sourceTree = "<group>"; };
+		363008F4100F1626007D0BDF /* NCTaskBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCTaskBase.m; sourceTree = "<group>"; };
+		3637AF67100F16C600027E12 /* NIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIScene.h; sourceTree = "<group>"; };
+		3637AF72100F195300027E12 /* NCSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCSceneManager.h; path = Classes/NCSceneManager.h; sourceTree = "<group>"; };
+		3637AF73100F195300027E12 /* NCSceneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCSceneManager.m; sourceTree = "<group>"; };
+		3637AF86100F19A500027E12 /* NCSceneBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCSceneBase.h; path = Classes/NCSceneBase.h; sourceTree = "<group>"; };
+		3637AF87100F19A500027E12 /* NCSceneBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCSceneBase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,9 +201,13 @@
 		36300899100D80EC007D0BDF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				3637AF86100F19A500027E12 /* NCSceneBase.h */,
+				3637AF72100F195300027E12 /* NCSceneManager.h */,
+				363008F3100F1626007D0BDF /* NCTaskBase.h */,
 				363008A0100D815F007D0BDF /* NCTaskManager.h */,
 				363006F3100D6F22007D0BDF /* NCPhaseManager.h */,
 				3630089C100D8118007D0BDF /* NITask.h */,
+				3637AF67100F16C600027E12 /* NIScene.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -192,6 +217,9 @@
 			children = (
 				363006F4100D6F22007D0BDF /* NCPhaseManager.m */,
 				363008A1100D815F007D0BDF /* NCTaskManager.m */,
+				363008F4100F1626007D0BDF /* NCTaskBase.m */,
+				3637AF73100F195300027E12 /* NCSceneManager.m */,
+				3637AF87100F19A500027E12 /* NCSceneBase.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -224,6 +252,10 @@
 				3630089D100D8118007D0BDF /* NITask.h in Headers */,
 				363008A2100D815F007D0BDF /* NCTaskManager.h in Headers */,
 				363008BC100D8201007D0BDF /* NCInterpolate.h in Headers */,
+				363008F5100F1626007D0BDF /* NCTaskBase.h in Headers */,
+				3637AF68100F16C600027E12 /* NIScene.h in Headers */,
+				3637AF74100F195300027E12 /* NCSceneManager.h in Headers */,
+				3637AF88100F19A500027E12 /* NCSceneBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +268,10 @@
 				3630089E100D8118007D0BDF /* NITask.h in Headers */,
 				363008A4100D815F007D0BDF /* NCTaskManager.h in Headers */,
 				363008BE100D8201007D0BDF /* NCInterpolate.h in Headers */,
+				363008F7100F1626007D0BDF /* NCTaskBase.h in Headers */,
+				3637AF69100F16C600027E12 /* NIScene.h in Headers */,
+				3637AF76100F195300027E12 /* NCSceneManager.h in Headers */,
+				3637AF8A100F19A500027E12 /* NCSceneBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +355,9 @@
 				363006F8100D6F22007D0BDF /* NCPhaseManager.m in Sources */,
 				363008A3100D815F007D0BDF /* NCTaskManager.m in Sources */,
 				363008BD100D8201007D0BDF /* NCInterpolate.m in Sources */,
+				363008F6100F1626007D0BDF /* NCTaskBase.m in Sources */,
+				3637AF75100F195300027E12 /* NCSceneManager.m in Sources */,
+				3637AF89100F19A500027E12 /* NCSceneBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +368,9 @@
 				363006F6100D6F22007D0BDF /* NCPhaseManager.m in Sources */,
 				363008A5100D815F007D0BDF /* NCTaskManager.m in Sources */,
 				363008BF100D8201007D0BDF /* NCInterpolate.m in Sources */,
+				363008F8100F1626007D0BDF /* NCTaskBase.m in Sources */,
+				3637AF77100F195300027E12 /* NCSceneManager.m in Sources */,
+				3637AF8B100F19A500027E12 /* NCSceneBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
