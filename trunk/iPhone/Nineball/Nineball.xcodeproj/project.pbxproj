@@ -53,6 +53,14 @@
 		3637AF89100F19A500027E12 /* NCSceneBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF87100F19A500027E12 /* NCSceneBase.m */; };
 		3637AF8A100F19A500027E12 /* NCSceneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF86100F19A500027E12 /* NCSceneBase.h */; };
 		3637AF8B100F19A500027E12 /* NCSceneBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF87100F19A500027E12 /* NCSceneBase.m */; };
+		3637AFBE100F28E800027E12 /* CTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AFBC100F28E800027E12 /* CTexture.h */; };
+		3637AFBF100F28E800027E12 /* CTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AFBD100F28E800027E12 /* CTexture.m */; };
+		3637AFC0100F28E800027E12 /* CTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AFBC100F28E800027E12 /* CTexture.h */; };
+		3637AFC1100F28E800027E12 /* CTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AFBD100F28E800027E12 /* CTexture.m */; };
+		3637AFC7100F2B3A00027E12 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFC6100F2B3A00027E12 /* QuartzCore.framework */; };
+		3637AFC8100F2B3A00027E12 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFC6100F2B3A00027E12 /* QuartzCore.framework */; };
+		3637AFCD100F2BAC00027E12 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFCC100F2BAC00027E12 /* OpenGLES.framework */; };
+		3637AFCE100F2BAC00027E12 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFCC100F2BAC00027E12 /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +103,10 @@
 		3637AF73100F195300027E12 /* NCSceneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCSceneManager.m; sourceTree = "<group>"; };
 		3637AF86100F19A500027E12 /* NCSceneBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCSceneBase.h; path = Classes/NCSceneBase.h; sourceTree = "<group>"; };
 		3637AF87100F19A500027E12 /* NCSceneBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCSceneBase.m; sourceTree = "<group>"; };
+		3637AFBC100F28E800027E12 /* CTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTexture.h; path = Classes/CTexture.h; sourceTree = "<group>"; };
+		3637AFBD100F28E800027E12 /* CTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTexture.m; sourceTree = "<group>"; };
+		3637AFC6100F2B3A00027E12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3637AFCC100F2BAC00027E12 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3637AFC7100F2B3A00027E12 /* QuartzCore.framework in Frameworks */,
+				3637AFCD100F2BAC00027E12 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +123,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3637AFC8100F2B3A00027E12 /* QuartzCore.framework in Frameworks */,
+				3637AFCE100F2BAC00027E12 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +180,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3637AFCC100F2BAC00027E12 /* OpenGLES.framework */,
+				3637AFC6100F2B3A00027E12 /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 			);
@@ -201,13 +219,8 @@
 		36300899100D80EC007D0BDF /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				3637AF86100F19A500027E12 /* NCSceneBase.h */,
-				3637AF72100F195300027E12 /* NCSceneManager.h */,
-				363008F3100F1626007D0BDF /* NCTaskBase.h */,
-				363008A0100D815F007D0BDF /* NCTaskManager.h */,
-				363006F3100D6F22007D0BDF /* NCPhaseManager.h */,
-				3630089C100D8118007D0BDF /* NITask.h */,
-				3637AF67100F16C600027E12 /* NIScene.h */,
+				3637AFA1100F203500027E12 /* Raw */,
+				3637AFA0100F202B00027E12 /* Manager */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -215,11 +228,8 @@
 		3630089A100D80F9007D0BDF /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				363006F4100D6F22007D0BDF /* NCPhaseManager.m */,
-				363008A1100D815F007D0BDF /* NCTaskManager.m */,
-				363008F4100F1626007D0BDF /* NCTaskBase.m */,
-				3637AF73100F195300027E12 /* NCSceneManager.m */,
-				3637AF87100F19A500027E12 /* NCSceneBase.m */,
+				3637AFA2100F203B00027E12 /* Raw */,
+				3637AF9F100F201D00027E12 /* Manager */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -240,6 +250,48 @@
 			name = Misc;
 			sourceTree = "<group>";
 		};
+		3637AF9F100F201D00027E12 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				363006F4100D6F22007D0BDF /* NCPhaseManager.m */,
+				363008A1100D815F007D0BDF /* NCTaskManager.m */,
+				363008F4100F1626007D0BDF /* NCTaskBase.m */,
+				3637AF73100F195300027E12 /* NCSceneManager.m */,
+				3637AF87100F19A500027E12 /* NCSceneBase.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		3637AFA0100F202B00027E12 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				3637AF86100F19A500027E12 /* NCSceneBase.h */,
+				3637AF72100F195300027E12 /* NCSceneManager.h */,
+				363008F3100F1626007D0BDF /* NCTaskBase.h */,
+				363008A0100D815F007D0BDF /* NCTaskManager.h */,
+				363006F3100D6F22007D0BDF /* NCPhaseManager.h */,
+				3630089C100D8118007D0BDF /* NITask.h */,
+				3637AF67100F16C600027E12 /* NIScene.h */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		3637AFA1100F203500027E12 /* Raw */ = {
+			isa = PBXGroup;
+			children = (
+				3637AFBC100F28E800027E12 /* CTexture.h */,
+			);
+			name = Raw;
+			sourceTree = "<group>";
+		};
+		3637AFA2100F203B00027E12 /* Raw */ = {
+			isa = PBXGroup;
+			children = (
+				3637AFBD100F28E800027E12 /* CTexture.m */,
+			);
+			name = Raw;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -256,6 +308,7 @@
 				3637AF68100F16C600027E12 /* NIScene.h in Headers */,
 				3637AF74100F195300027E12 /* NCSceneManager.h in Headers */,
 				3637AF88100F19A500027E12 /* NCSceneBase.h in Headers */,
+				3637AFBE100F28E800027E12 /* CTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +325,7 @@
 				3637AF69100F16C600027E12 /* NIScene.h in Headers */,
 				3637AF76100F195300027E12 /* NCSceneManager.h in Headers */,
 				3637AF8A100F19A500027E12 /* NCSceneBase.h in Headers */,
+				3637AFC0100F28E800027E12 /* CTexture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +412,7 @@
 				363008F6100F1626007D0BDF /* NCTaskBase.m in Sources */,
 				3637AF75100F195300027E12 /* NCSceneManager.m in Sources */,
 				3637AF89100F19A500027E12 /* NCSceneBase.m in Sources */,
+				3637AFBF100F28E800027E12 /* CTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +426,7 @@
 				363008F8100F1626007D0BDF /* NCTaskBase.m in Sources */,
 				3637AF77100F195300027E12 /* NCSceneManager.m in Sources */,
 				3637AF8B100F19A500027E12 /* NCSceneBase.m in Sources */,
+				3637AFC1100F28E800027E12 /* CTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
