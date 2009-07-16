@@ -87,7 +87,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\data\EAlign.cs" />
+    <Compile Include="core\manager\CCoRoutineManager.cs" />
     <Compile Include="core\manager\CPhaseManager.cs" />
+    <Compile Include="core\manager\CTaskManager.cs" />
+    <Compile Include="core\manager\ITask.cs" />
+    <Compile Include="core\raw\CLogger.cs" />
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CSingleton.cs" />
     <Compile Include="misc\math\CHyperbolic.cs" />
@@ -145,6 +150,7 @@
     <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="core\inner\" />
     <Folder Include="task\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
