@@ -16,6 +16,9 @@ namespace danmaq.Nineball.misc {
 	/// <summary>内分カウンタ機能の関数集クラス。</summary>
 	public static class CInterpolate {
 
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
 		//* -----------------------------------------------------------------------*
 		/// <summary>等速変化する内分カウンタです。</summary>
 		/// 
@@ -121,7 +124,9 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>～(<paramref name="fMiddle"/>)～<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float neville( float fStart, float fMiddle, float fEnd, float fNow, float fLimit ) {
+		public static float neville(
+			float fStart, float fMiddle, float fEnd, float fNow, float fLimit
+		) {
 			if( fNow >= fLimit || fStart == fEnd || fLimit <= 0 ) { return fEnd; }
 			if( fNow <= 0 ) { return fStart; }
 			float fTimePoint = fNow / fLimit * 2;
@@ -142,7 +147,9 @@ namespace danmaq.Nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>～(<paramref name="fMiddle"/>)～<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float bezier( float fStart, float fMiddle, float fEnd, float fNow, float fLimit ) {
+		public static float bezier(
+			float fStart, float fMiddle, float fEnd, float fNow, float fLimit
+		) {
 			if( fNow >= fLimit || fStart == fEnd || fLimit <= 0 ) { return fEnd; }
 			if( fNow <= 0 ) { return fStart; }
 			float fTimePoint = fNow / fLimit * 2;

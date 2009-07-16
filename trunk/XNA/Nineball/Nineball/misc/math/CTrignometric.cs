@@ -15,6 +15,9 @@ namespace danmaq.Nineball.misc.math {
 	/// <summary>三角関数系の演算関数集クラス。</summary>
 	public static class CTrignometric {
 
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
 		//* -----------------------------------------------------------------------*
 		/// <summary>周回軌道の角速度を計算します。</summary>
 		/// 
@@ -61,7 +64,8 @@ namespace danmaq.Nineball.misc.math {
 		/// <returns><paramref name="dRadian"/>のアークコセカント</returns>
 		public static double acosec( double dRadian ) {
 			return ( Math.PI / 2 ) *
-				Math.Atan( 1.0 / Math.Sqrt( Math.Pow( dRadian, 2 ) - 1 ) ) + Math.Sign( dRadian ) - 1;
+				Math.Atan( 1.0 / Math.Sqrt( Math.Pow( dRadian, 2 ) - 1 ) ) +
+				Math.Sign( dRadian ) - 1;
 		}
 
 		//* -----------------------------------------------------------------------*
