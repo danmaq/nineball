@@ -16,7 +16,7 @@
 // テクスチャクラスです。
 // NOTE : 一部"ん・ぱか工房"のプログラムコードを使用しています。
 //*-----------------------------------------------------------------*
-@interface CTexture : NSObject {
+@interface NCTexture : NSObject {
 	u_char	*data;
 	GLuint	name;
 	GLsizei	width;
@@ -28,7 +28,7 @@
 @property GLsizei	width;
 @property GLsizei	height;
 
-+ (CTexture*)loadTexture:(NSString*)fileName;
-+ (CTexture*)makeTexture:(NSString*)text font:(UIFont*)font color:(UIColor*)color;
-+ (CTexture*)makeTexture:(UIImage*)image;
++ (NCTexture *)loadTexture:(NSString *)fileName;
++ (NCTexture *)makeTexture:(NSString *)text font:(UIFont *)font color:(UIColor *)color;
++ (NCTexture *)makeTexture:(UIImage *)image;
 @end
