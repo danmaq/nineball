@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #import <QuartzCore/QuartzCore.h>
-#import "CTexture.h"
+#import "NCTexture.h"
 
-@interface CTexture (TexturePrivate)
+@interface NCTexture (TexturePrivate)
 
 + (BOOL)makeTexture:(UIImage *)image
 	toOutput:(u_char **)textureData andTextureSize:(int *)lpTextureSize 
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation CTexture
+@implementation NCTexture
 
 @synthesize data;
 @synthesize name;
@@ -33,14 +33,14 @@
 }
 
 //テクスチャの読み込み
-+ (CTexture *)loadTexture:(NSString *)fileName {
++ (NCTexture *)loadTexture:(NSString *)fileName {
 	NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
 	UIImage *image = [[[UIImage alloc] initWithContentsOfFile:path] autorelease];
-	return [CTexture makeTexture:image];
+	return [NCTexture makeTexture:image];
 }
 
 //テクスチャの生成
-+ (CTexture *)makeTexture:(NSString *)text font:(UIFont *)font color:(UIColor *)color {
++ (NCTexture *)makeTexture:(NSString *)text font:(UIFont *)font color:(UIColor *)color {
 	//テキストサイズの計算
 	NSArray *textArray = [text componentsSeparatedByString:@"\n"];
 	CGSize textSize = CGSizeMake(0,0);
@@ -66,19 +66,19 @@
 	[label.layer renderInContext:UIGraphicsGetCurrentContext()];
 	UIImage *image=UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
-	return [CTexture makeTexture:image];
+	return [NCTexture makeTexture:image];
 }
 
 //テクスチャの生成
-+ (CTexture *)makeTexture:(UIImage *)image {
++ (NCTexture *)makeTexture:(UIImage *)image {
 	u_char	*textureData;
 	GLuint	textureName;
 	GLsizei	textureSize;
 	GLsizei	textureWidth;
 	GLsizei	textureHeight;
-	CTexture *lpTexture = nil;
+	NCTexture *lpTexture = nil;
 	//テクスチャの生成
-	if ([CTexture makeTexture:image toOutput:(u_char **)&textureData andTextureSize:&textureSize 
+	if ([NCTexture makeTexture:image toOutput:(u_char **)&textureData andTextureSize:&textureSize 
 			andTextureWidth:&textureWidth andTextureHeight:&textureHeight]){
 		//テクスチャの設定
 		glGenTextures(1, &textureName);
@@ -91,7 +91,7 @@
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
 		
 		//テクスチャオブジェクトの生成
-		CTexture *texture=[[[CTexture alloc] init] autorelease];
+		NCTexture *texture=[[[NCTexture alloc] init] autorelease];
 		texture.data = textureData;
 		texture.name = textureName;
 		texture.width = textureWidth;

@@ -53,14 +53,22 @@
 		3637AF89100F19A500027E12 /* NCSceneBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF87100F19A500027E12 /* NCSceneBase.m */; };
 		3637AF8A100F19A500027E12 /* NCSceneBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AF86100F19A500027E12 /* NCSceneBase.h */; };
 		3637AF8B100F19A500027E12 /* NCSceneBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AF87100F19A500027E12 /* NCSceneBase.m */; };
-		3637AFBE100F28E800027E12 /* CTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AFBC100F28E800027E12 /* CTexture.h */; };
-		3637AFBF100F28E800027E12 /* CTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AFBD100F28E800027E12 /* CTexture.m */; };
-		3637AFC0100F28E800027E12 /* CTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AFBC100F28E800027E12 /* CTexture.h */; };
-		3637AFC1100F28E800027E12 /* CTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AFBD100F28E800027E12 /* CTexture.m */; };
+		3637AFBE100F28E800027E12 /* NCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AFBC100F28E800027E12 /* NCTexture.h */; };
+		3637AFBF100F28E800027E12 /* NCTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AFBD100F28E800027E12 /* NCTexture.m */; };
+		3637AFC0100F28E800027E12 /* NCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 3637AFBC100F28E800027E12 /* NCTexture.h */; };
+		3637AFC1100F28E800027E12 /* NCTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 3637AFBD100F28E800027E12 /* NCTexture.m */; };
 		3637AFC7100F2B3A00027E12 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFC6100F2B3A00027E12 /* QuartzCore.framework */; };
 		3637AFC8100F2B3A00027E12 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFC6100F2B3A00027E12 /* QuartzCore.framework */; };
 		3637AFCD100F2BAC00027E12 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFCC100F2BAC00027E12 /* OpenGLES.framework */; };
 		3637AFCE100F2BAC00027E12 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3637AFCC100F2BAC00027E12 /* OpenGLES.framework */; };
+		363B125710101EDA0050DC9E /* NCGraphics2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 363B125510101EDA0050DC9E /* NCGraphics2D.h */; };
+		363B125810101EDA0050DC9E /* NCGraphics2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 363B125610101EDA0050DC9E /* NCGraphics2D.m */; };
+		363B125910101EDA0050DC9E /* NCGraphics2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 363B125510101EDA0050DC9E /* NCGraphics2D.h */; };
+		363B125A10101EDA0050DC9E /* NCGraphics2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 363B125610101EDA0050DC9E /* NCGraphics2D.m */; };
+		363B129F1010259A0050DC9E /* NCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 363B129D1010259A0050DC9E /* NCGLView.h */; };
+		363B12A01010259A0050DC9E /* NCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 363B129E1010259A0050DC9E /* NCGLView.m */; };
+		363B12A11010259A0050DC9E /* NCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 363B129D1010259A0050DC9E /* NCGLView.h */; };
+		363B12A21010259A0050DC9E /* NCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 363B129E1010259A0050DC9E /* NCGLView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,10 +111,14 @@
 		3637AF73100F195300027E12 /* NCSceneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCSceneManager.m; sourceTree = "<group>"; };
 		3637AF86100F19A500027E12 /* NCSceneBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCSceneBase.h; path = Classes/NCSceneBase.h; sourceTree = "<group>"; };
 		3637AF87100F19A500027E12 /* NCSceneBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCSceneBase.m; sourceTree = "<group>"; };
-		3637AFBC100F28E800027E12 /* CTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTexture.h; path = Classes/CTexture.h; sourceTree = "<group>"; };
-		3637AFBD100F28E800027E12 /* CTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTexture.m; sourceTree = "<group>"; };
+		3637AFBC100F28E800027E12 /* NCTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCTexture.h; path = Classes/NCTexture.h; sourceTree = "<group>"; };
+		3637AFBD100F28E800027E12 /* NCTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCTexture.m; sourceTree = "<group>"; };
 		3637AFC6100F2B3A00027E12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3637AFCC100F2BAC00027E12 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		363B125510101EDA0050DC9E /* NCGraphics2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCGraphics2D.h; path = Classes/NCGraphics2D.h; sourceTree = "<group>"; };
+		363B125610101EDA0050DC9E /* NCGraphics2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCGraphics2D.m; sourceTree = "<group>"; };
+		363B129D1010259A0050DC9E /* NCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCGLView.h; path = Classes/NCGLView.h; sourceTree = "<group>"; };
+		363B129E1010259A0050DC9E /* NCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NCGLView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,7 +291,9 @@
 		3637AFA1100F203500027E12 /* Raw */ = {
 			isa = PBXGroup;
 			children = (
-				3637AFBC100F28E800027E12 /* CTexture.h */,
+				363B129D1010259A0050DC9E /* NCGLView.h */,
+				363B125510101EDA0050DC9E /* NCGraphics2D.h */,
+				3637AFBC100F28E800027E12 /* NCTexture.h */,
 			);
 			name = Raw;
 			sourceTree = "<group>";
@@ -287,7 +301,9 @@
 		3637AFA2100F203B00027E12 /* Raw */ = {
 			isa = PBXGroup;
 			children = (
-				3637AFBD100F28E800027E12 /* CTexture.m */,
+				3637AFBD100F28E800027E12 /* NCTexture.m */,
+				363B125610101EDA0050DC9E /* NCGraphics2D.m */,
+				363B129E1010259A0050DC9E /* NCGLView.m */,
 			);
 			name = Raw;
 			sourceTree = "<group>";
@@ -308,7 +324,9 @@
 				3637AF68100F16C600027E12 /* NIScene.h in Headers */,
 				3637AF74100F195300027E12 /* NCSceneManager.h in Headers */,
 				3637AF88100F19A500027E12 /* NCSceneBase.h in Headers */,
-				3637AFBE100F28E800027E12 /* CTexture.h in Headers */,
+				3637AFBE100F28E800027E12 /* NCTexture.h in Headers */,
+				363B125910101EDA0050DC9E /* NCGraphics2D.h in Headers */,
+				363B12A11010259A0050DC9E /* NCGLView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +343,9 @@
 				3637AF69100F16C600027E12 /* NIScene.h in Headers */,
 				3637AF76100F195300027E12 /* NCSceneManager.h in Headers */,
 				3637AF8A100F19A500027E12 /* NCSceneBase.h in Headers */,
-				3637AFC0100F28E800027E12 /* CTexture.h in Headers */,
+				3637AFC0100F28E800027E12 /* NCTexture.h in Headers */,
+				363B125710101EDA0050DC9E /* NCGraphics2D.h in Headers */,
+				363B129F1010259A0050DC9E /* NCGLView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +432,9 @@
 				363008F6100F1626007D0BDF /* NCTaskBase.m in Sources */,
 				3637AF75100F195300027E12 /* NCSceneManager.m in Sources */,
 				3637AF89100F19A500027E12 /* NCSceneBase.m in Sources */,
-				3637AFBF100F28E800027E12 /* CTexture.m in Sources */,
+				3637AFBF100F28E800027E12 /* NCTexture.m in Sources */,
+				363B125A10101EDA0050DC9E /* NCGraphics2D.m in Sources */,
+				363B12A21010259A0050DC9E /* NCGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +448,9 @@
 				363008F8100F1626007D0BDF /* NCTaskBase.m in Sources */,
 				3637AF77100F195300027E12 /* NCSceneManager.m in Sources */,
 				3637AF8B100F19A500027E12 /* NCSceneBase.m in Sources */,
-				3637AFC1100F28E800027E12 /* CTexture.m in Sources */,
+				3637AFC1100F28E800027E12 /* NCTexture.m in Sources */,
+				363B125810101EDA0050DC9E /* NCGraphics2D.m in Sources */,
+				363B12A01010259A0050DC9E /* NCGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
