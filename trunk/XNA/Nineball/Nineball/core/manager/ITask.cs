@@ -7,17 +7,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.Nineball.core.raw;
+using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace danmaq.Nineball.core.manager {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
-	/// <para>タスク本体のインターフェイス。</para>
-	/// <para>これを実装してタスククラスを形成します。</para>
+	/// <para>タスク本体のインターフェイスです。</para>
+	/// <para>
+	/// タスク管理クラスCTaskManagerに登録するタスクを作成するためには、
+	/// このクラスを実装するか、CTaskBaseを継承します。
+	/// </para>
 	/// </summary>
 	public interface ITask : IDisposable{
 
@@ -25,29 +27,52 @@ namespace danmaq.Nineball.core.manager {
 		//* properties ──────────────────────────────*
 
 		/// <summary>タスク管理クラス オブジェクト。</summary>
-		CTaskManager manager { get; }
+		/// <remarks>
+		/// このタスクを管理クラスに登録すると、
+		/// 自動的にこのプロパティに代入されます。
+		/// </remarks>
+		CTaskManager manager { set; }
 
 		/// <summary>所属レイヤ番号。</summary>
 		/// <remarks>
-		/// ロックされていない場合、代入することで変更出来ます。
-		/// (ロックされている場合、無視されます)
+		/// レイヤ値の若い方から順に処理されます。
+		/// 同一値が複数ある場合、登録された順に処理されます。
+		/// </remarks>
+		/// <remarks>
+		/// !!注意!!：管理クラス登録後(initialize呼出後)はレイヤ変更しないでください。
 		/// </remarks>
 		byte layer { get; }
 
 		/// <summary>一時停止に対応しているかどうか。</summary>
-		bool isAvaliablePause { get; }
+		/// <remarks>
+		/// 一時停止に対応しているタスクは、登録されている管理クラスにおいて
+		/// pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+		/// </remarks>
+		bool isAvailablePause { get; }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。</summary>
+		/// <remarks>
+		/// 直前にmanagerプロパティが自動的に代入されるので、
+		/// タスク管理クラスが必要な初期化処理などの用途に便利です。
+		/// </remarks>
+		void initialize();
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を記述します。</summary>
 		/// 
+		/// <param name="gameTime">前フレームからの経過時間</param>
 		/// <returns>次フレームも存続し続ける場合、<c>true</c></returns>
-		bool update();
+		bool update( GameTime gameTime );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を記述します。</summary>
-		void draw();
+		/// 
+		/// <param name="gameTime">前フレームからの経過時間</param>
+		/// <param name="sprite">スプライト描画管理クラス</param>
+		void draw( GameTime gameTime, CSprite sprite );
 	}
 }
