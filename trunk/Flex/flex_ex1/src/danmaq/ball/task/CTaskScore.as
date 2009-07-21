@@ -153,7 +153,7 @@ package danmaq.ball.task{
 		 * ハイスコアは残ります。
 		 */
 		public function reset():void{
-			if(uScore > 0){
+			if(m_uScore > 0){
 				m_uScore = 0;
 				flush();
 			}
