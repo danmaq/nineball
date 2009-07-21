@@ -359,7 +359,6 @@ const GLfloat panelUVs[]={
 	glPushMatrix();
 	GLsizei halfWidth = texture.width / 2;
 	GLsizei halfHeight = texture.height / 2;
-	NSLog(@"%d, %d", texture.width, texture.height);
 	glTranslatef(x, -(y), 0);
 	glTranslatef(halfWidth, -halfHeight, 0);
 	[self commitMatrix];
