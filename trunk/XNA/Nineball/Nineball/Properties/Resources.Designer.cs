@@ -59,5 +59,50 @@ namespace danmaq.Nineball.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   danmaq Nineball-Library に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NAME {
+            get {
+                return ResourceManager.GetString("NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Microsoft DirectX 9.0c update(June 2008) 以降 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string REQ_DIRECTX {
+            get {
+                return ResourceManager.GetString("REQ_DIRECTX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Microsoft .NET Framework 2.0以降 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string REQ_DOTNET {
+            get {
+                return ResourceManager.GetString("REQ_DOTNET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Microsoft Windows XP SP3以降 または Microsoft WindowsVista SP1以降 または Microsoft XBOX360 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string REQ_OS {
+            get {
+                return ResourceManager.GetString("REQ_OS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Microsoft XNA Framework 3.0 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string REQ_XNA {
+            get {
+                return ResourceManager.GetString("REQ_XNA", resourceCulture);
+            }
+        }
     }
 }

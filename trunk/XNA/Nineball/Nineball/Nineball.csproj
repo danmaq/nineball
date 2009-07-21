@@ -93,6 +93,7 @@
     <Compile Include="core\manager\CCoRoutineManager.cs" />
     <Compile Include="core\manager\CPhaseManager.cs" />
     <Compile Include="core\manager\CTaskManager.cs" />
+    <Compile Include="core\manager\IScene.cs" />
     <Compile Include="core\manager\ITask.cs" />
     <Compile Include="core\raw\CLogger.cs" />
     <Compile Include="core\raw\CSprite.cs" />
