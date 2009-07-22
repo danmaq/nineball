@@ -7,10 +7,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using danmaq.Nineball.core.raw;
 using System;
+using System.Collections.Generic;
+using danmaq.Nineball.core.raw;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.Nineball.core.manager {
 
@@ -26,7 +26,7 @@ namespace danmaq.Nineball.core.manager {
 		//* constants ──────────────────────────────-*
 
 		/// <summary>タスク本体のリスト</summary>
-		public readonly LinkedList<ITask> TASKS = new LinkedList<ITask>();
+		public readonly LinkedList<ITask> tasks = new LinkedList<ITask>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -48,20 +48,20 @@ namespace danmaq.Nineball.core.manager {
 		public void add( ITask task ) {
 			task.manager = this;
 			task.initialize();
-			for( LinkedListNode<ITask> n = TASKS.First; n != null; n = n.Next ) {
+			for( LinkedListNode<ITask> n = tasks.First; n != null; n = n.Next ) {
 				if( n.Value.layer < task.layer ) {
-					TASKS.AddBefore( n, task );
+					tasks.AddBefore( n, task );
 					return;
 				}
 			}
-			TASKS.AddLast( task );
+			tasks.AddLast( task );
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>登録されているタスクを全て抹消します。</summary>
 		public void erase() {
-			foreach( ITask task in TASKS ) { task.Dispose(); }
-			TASKS.Clear();
+			foreach( ITask task in tasks ) { task.Dispose(); }
+			tasks.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -71,7 +71,7 @@ namespace danmaq.Nineball.core.manager {
 		/// <returns>正常に抹消できた場合、<c>true</c></returns>
 		public bool erase( ITask task ) {
 			task.Dispose();
-			return TASKS.Remove( task );
+			return tasks.Remove( task );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -82,7 +82,7 @@ namespace danmaq.Nineball.core.manager {
 		/// <param name="byLayer">抹消させるレイヤ番号</param>
 		public void erase( byte byLayer ) {
 			LinkedListNode<ITask> nNext;
-			for( LinkedListNode<ITask> n = TASKS.First; n != null; n = nNext ) {
+			for( LinkedListNode<ITask> n = tasks.First; n != null; n = nNext ) {
 				// ! TODO : 指定レイヤを通過したら脱出するようにする
 				nNext = n.Next;
 				if( byLayer == n.Value.layer ) { erase( n.Value ); }
@@ -111,7 +111,7 @@ namespace danmaq.Nineball.core.manager {
 		/// <returns>指定のレイヤに属するタスクの件数</returns>
 		public LinkedList<ITask> find( byte byLayer ) {
 			LinkedList<ITask> result = new LinkedList<ITask>();
-			foreach( ITask task in TASKS ) {
+			foreach( ITask task in tasks ) {
 				if( task.layer == byLayer ) { result.AddLast( task ); }
 			}
 			return result;
@@ -129,7 +129,7 @@ namespace danmaq.Nineball.core.manager {
 		/// <param name="gameTime">前フレームからの経過時間</param>
 		public void update( GameTime gameTime ) {
 			LinkedListNode<ITask> nNext;
-			for( LinkedListNode<ITask> n = TASKS.First; n != null; n = nNext ) {
+			for( LinkedListNode<ITask> n = tasks.First; n != null; n = nNext ) {
 				nNext = n.Next;
 				if( !( ( pause && n.Value.isAvailablePause ) || n.Value.update( gameTime ) ) ) {
 					erase( n.Value );
@@ -145,7 +145,7 @@ namespace danmaq.Nineball.core.manager {
 		/// <param name="gameTime">前フレームからの経過時間</param>
 		/// <param name="sprite">スプライト描画管理クラス</param>
 		public void draw( GameTime gameTime, CSprite sprite ) {
-			foreach( ITask task in TASKS ) { task.draw( gameTime, sprite ); }
+			foreach( ITask task in tasks ) { task.draw( gameTime, sprite ); }
 		}
 	}
 }

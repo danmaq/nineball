@@ -19,7 +19,7 @@ namespace danmaq.Nineball.core.manager {
 		//* constants ──────────────────────────────-*
 
 		/// <summary>コルーチンを動かすためのイテレータ。</summary>
-		private readonly LinkedList<IEnumerator<object>> LIST =
+		private readonly LinkedList<IEnumerator<object>> coRoutines =
 			new LinkedList<IEnumerator<object>>();
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -30,7 +30,7 @@ namespace danmaq.Nineball.core.manager {
 		/// 
 		/// <param name="m">コルーチン管理クラス</param>
 		/// <returns>スレッドの件数</returns>
-		public static implicit operator int( CCoRoutineManager m ) { return m.LIST.Count; }
+		public static implicit operator int( CCoRoutineManager m ) { return m.coRoutines.Count; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>無限ループ用スレッドです。</summary>
@@ -47,24 +47,24 @@ namespace danmaq.Nineball.core.manager {
 		public bool update() {
 			LinkedListNode<IEnumerator<object>> nodeNext;
 			for(
-				LinkedListNode<IEnumerator<object>> node = LIST.First; node != null; node = nodeNext
+				LinkedListNode<IEnumerator<object>> node = coRoutines.First; node != null; node = nodeNext
 			){
 				nodeNext = node.Next;
-				if( node.Value == null || !node.Value.MoveNext() ) { LIST.Remove( node ); }
+				if( node.Value == null || !node.Value.MoveNext() ) { coRoutines.Remove( node ); }
 			}
-			return ( LIST.Count > 0 );
+			return ( coRoutines.Count > 0 );
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを全て削除します。</summary>
-		public void remove() { LIST.Clear(); }
+		public void remove() { coRoutines.Clear(); }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを削除します。</summary>
 		/// 
 		/// <param name="thread">コルーチン</param>
 		/// <returns>コルーチンを削除できた場合、<c>true</c></returns>
-		public bool remove( IEnumerator<object> thread ) { return LIST.Remove( thread ); }
+		public bool remove( IEnumerator<object> thread ) { return coRoutines.Remove( thread ); }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを登録します。</summary>
@@ -72,8 +72,8 @@ namespace danmaq.Nineball.core.manager {
 		/// <param name="thread">コルーチン</param>
 		/// <returns>コルーチンを登録できた場合、<c>true</c></returns>
 		public bool add( IEnumerator<object> thread ) {
-			bool bResult = ( thread != null && LIST.Find( thread ) == null );
-			if( bResult ) { LIST.AddLast( thread ); }
+			bool bResult = ( thread != null && coRoutines.Find( thread ) == null );
+			if( bResult ) { coRoutines.AddLast( thread ); }
 			return bResult;
 		}
 	}
