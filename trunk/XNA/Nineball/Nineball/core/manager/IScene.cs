@@ -8,8 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using Microsoft.Xna.Framework;
 using danmaq.Nineball.core.raw;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.Nineball.core.manager {
 

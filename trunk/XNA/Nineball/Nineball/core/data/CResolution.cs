@@ -7,10 +7,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.Nineball.core.data {
 
@@ -22,7 +22,7 @@ namespace danmaq.Nineball.core.data {
 		//* constants ──────────────────────────────-*
 
 		/// <summary>対応している解像度一覧。</summary>
-		private readonly List<EResolution> SUPPORTS = new List<EResolution>();
+		private readonly List<EResolution> supports = new List<EResolution>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -45,14 +45,14 @@ namespace danmaq.Nineball.core.data {
 			foreach( DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes ) {
 				for( EResolution i = EResolution.VGA; i < EResolution.__reserved; i++ ) {
 					Rectangle rect = toRect( i );
-					if( mode.Width == rect.Width && mode.Height == rect.Height && !SUPPORTS.Contains( i ) ) {
-						SUPPORTS.Add( i );
+					if( mode.Width == rect.Width && mode.Height == rect.Height && !supports.Contains( i ) ) {
+						supports.Add( i );
 						break;
 					}
 				}
 			}
-			SUPPORTS.Sort();
-			now = SUPPORTS[ 0 ];
+			supports.Sort();
+			now = supports[ 0 ];
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -80,7 +80,7 @@ namespace danmaq.Nineball.core.data {
 		private EResolution now {
 			get { return m_now; }
 			set {
-				if( SUPPORTS.Contains( value ) ) {
+				if( supports.Contains( value ) ) {
 					m_now = value;
 					rect = toRect( value );
 					scaleGapFromVGA = getScaleGap( value, EResolution.VGA );
@@ -215,7 +215,7 @@ namespace danmaq.Nineball.core.data {
 		/// <returns>より上位の解像度列挙体</returns>
 		public EResolution getNext( EResolution resolusion ) {
 			for( EResolution __res = resolusion + 1; __res < EResolution.__reserved; __res++ ) {
-				if( SUPPORTS.Contains( __res ) ) { return __res; }
+				if( supports.Contains( __res ) ) { return __res; }
 			}
 			return EResolution.VGA;
 		}

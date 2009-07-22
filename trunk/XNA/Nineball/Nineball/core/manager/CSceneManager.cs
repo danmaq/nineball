@@ -9,8 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using danmaq.Nineball.core.raw;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.Nineball.core.manager {
 
@@ -29,7 +29,7 @@ namespace danmaq.Nineball.core.manager {
 		//* fields ────────────────────────────────*
 
 		/// <summary>シーンのスタック オブジェクト</summary>
-		private readonly Stack<IScene> STACK_SCENE;
+		private readonly Stack<IScene> scenes;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -57,7 +57,7 @@ namespace danmaq.Nineball.core.manager {
 		/// </summary>
 		/// 
 		/// <param name="__stackScene">シーンのスタック</param>
-		public CSceneManager( Stack<IScene> __stackScene ) { STACK_SCENE = __stackScene; }
+		public CSceneManager( Stack<IScene> __stackScene ) { scenes = __stackScene; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
@@ -71,12 +71,12 @@ namespace danmaq.Nineball.core.manager {
 		/// <para>nullを代入すると現在のシーンを終了し、スタックを掘り起こします。</para>
 		/// </summary>
 		public IScene nowScene {
-			get { return ( STACK_SCENE.Count == 0 ? null : STACK_SCENE.Peek() ); }
+			get { return ( scenes.Count == 0 ? null : scenes.Peek() ); }
 			set {
 				if( value == null ) {
-					if( STACK_SCENE.Count > 0 ) { STACK_SCENE.Pop().Dispose(); }
+					if( scenes.Count > 0 ) { scenes.Pop().Dispose(); }
 				}
-				else { STACK_SCENE.Push( value ); }
+				else { scenes.Push( value ); }
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace danmaq.Nineball.core.manager {
 		//* -----------------------------------------------------------------------*
 		/// <summary>登録されているすべてのシーンを終了・抹消します。</summary>
 		public void reset() {
-			while( STACK_SCENE.Count > 0 ) { nowScene = null; }
+			while( scenes.Count > 0 ) { nowScene = null; }
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -111,7 +111,7 @@ namespace danmaq.Nineball.core.manager {
 					nowScene = nextScene;
 					bChangeScene = true;
 				}
-				bResult = STACK_SCENE.Count > 0;
+				bResult = scenes.Count > 0;
 				if( bChangeScene ) { GC.Collect(); }
 			}
 			return bResult;

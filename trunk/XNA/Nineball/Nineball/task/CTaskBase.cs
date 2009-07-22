@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library / Copyright (c) 2008 danmaq all rights reserved.
-//		──シーン本体の基底クラス
+//		──タスク本体の基底クラス
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -11,17 +11,17 @@ using danmaq.Nineball.core.manager;
 using danmaq.Nineball.core.raw;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.Nineball.scene {
+namespace danmaq.Nineball.task {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
-	/// <para>シーン本体の基底クラスです。</para>
+	/// <para>タスク本体のインターフェイスです。</para>
 	/// <para>
-	/// シーン管理クラスCSceneManagerに登録するタスクを作成するためには、
-	/// このクラスを継承するか、ISceneを実装します。
+	/// タスク管理クラスCTaskManagerに登録するタスクを作成するためには、
+	/// このクラスを継承するか、ITaskを実装します。
 	/// </para>
 	/// </summary>
-	public abstract class CSceneBase : IScene {
+	public abstract class CTaskBase : ITask {
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -29,21 +29,23 @@ namespace danmaq.Nineball.scene {
 		/// <summary>フェーズ・カウンタ管理クラス オブジェクト。</summary>
 		public readonly CPhaseManager phaseManager = new CPhaseManager();
 
-		/// <summary>タスク管理クラス オブジェクト。</summary>
-		protected readonly CTaskManager taskManager = new CTaskManager();
-
 		/// <summary>コルーチン管理クラス オブジェクト。</summary>
 		protected readonly CCoRoutineManager coRoutineManager = new CCoRoutineManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>次に移行するシーン オブジェクト。</summary>
-		/// <remarks>
-		/// ここに次のシーン オブジェクトを代入することで
-		/// 次のフレームからそのシーンが呼ばれるようになります。
-		/// </remarks>
-		private IScene m_nextScene = null;
+		/// <summary>タスク管理クラス オブジェクト。</summary>
+		private CTaskManager m_manager = null;
+
+		/// <summary>所属レイヤ番号。</summary>
+		private byte m_byLayer = 0;
+
+		/// <summary>所属レイヤが変更可能かどうか。</summary>
+		private bool m_bLockLayer = false;
+
+		/// <summary>一時停止に対応しているかどうか。</summary>
+		private bool m_bAvailablePause = true;
 
 		/// <summary>前フレームからの経過時間。</summary>
 		private GameTime m_gameTime = null;
@@ -51,14 +53,36 @@ namespace danmaq.Nineball.scene {
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
-		/// <summary>次に移行するシーン オブジェクト</summary>
+		/// <summary>タスク管理クラス オブジェクト。</summary>
+		public CTaskManager manager {
+			protected get { return m_manager; }
+			set { m_manager = value; }
+		}
+
+		/// <summary>所属レイヤ番号。</summary>
 		/// <remarks>
-		/// ここに次のシーン オブジェクトを代入することで
-		/// 次のフレームからそのシーンが呼ばれるようになります。
+		/// ロックされていない場合、代入することで変更出来ます。
+		/// (ロックされている場合、無視されます)
 		/// </remarks>
-		public IScene nextScene {
-			get { return m_nextScene; }
-			set { m_nextScene = value; }
+		public byte layer {
+			get { return m_byLayer; }
+			set {
+				// ! TODO : 例外吐くようにしてもいいかも
+				if( !lockLayer ) { m_byLayer = value; }
+			}
+		}
+
+		/// <summary>所属レイヤが変更可能かどうか。</summary>
+		/// <remarks>一度レイヤをロックしてしまうと、二度と解除できません。</remarks>
+		public bool lockLayer {
+			get { return m_bLockLayer; }
+			set { m_bLockLayer = ( m_bLockLayer || value ); }
+		}
+
+		/// <summary>一時停止に対応しているかどうか。</summary>
+		public bool isAvailablePause {
+			get { return m_bAvailablePause; }
+			protected set { m_bAvailablePause = value; }
 		}
 
 		/// <summary>前フレームからの経過時間。</summary>
@@ -71,20 +95,24 @@ namespace danmaq.Nineball.scene {
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>継承先でシーン終了時の処理を記述します。</summary>
-		public abstract void Dispose();
+		/// <summary>所属レイヤ番号を取得します。</summary>
+		/// 
+		/// <param name="t">タスク オブジェクト</param>
+		/// <returns>レイヤ番号</returns>
+		public static implicit operator int( CTaskBase t ) { return t.layer; }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。</summary>
+		public void initialize() { lockLayer = true; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理をします。</summary>
 		/// 
 		/// <param name="gameTime">前フレームからの経過時間</param>
-		/// <returns>
-		/// 現在のフレームでこのシーンが終了しない場合、<c>true</c>
-		/// </returns>
+		/// <returns>次フレームも存続し続ける場合、<c>true</c></returns>
 		public bool update( GameTime gameTime ) {
 			this.gameTime = gameTime;
 			bool bContinue = coRoutineManager.update();
-			taskManager.update( gameTime );
 			phaseManager.count++;
 			return bContinue;
 		}
@@ -94,6 +122,10 @@ namespace danmaq.Nineball.scene {
 		/// 
 		/// <param name="gameTime">前フレームからの経過時間</param>
 		/// <param name="sprite">スプライト描画管理クラス</param>
-		public abstract void draw( GameTime gameTime, CSprite sprite );
+		public virtual void draw( GameTime gameTime, CSprite sprite ) { }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>継承先でタスク終了時の処理を記述します。</summary>
+		public abstract void Dispose();
 	}
 }
