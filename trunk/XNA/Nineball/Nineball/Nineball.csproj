@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\data\CDataIOManager.cs" />
     <Compile Include="core\data\CResolution.cs" />
     <Compile Include="core\data\EAlign.cs" />
     <Compile Include="core\data\EResolution.cs" />
