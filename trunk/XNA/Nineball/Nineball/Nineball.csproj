@@ -92,6 +92,7 @@
     <Compile Include="core\data\EResolution.cs" />
     <Compile Include="core\manager\CCoRoutineManager.cs" />
     <Compile Include="core\manager\CPhaseManager.cs" />
+    <Compile Include="core\manager\CSceneManager.cs" />
     <Compile Include="core\manager\CTaskManager.cs" />
     <Compile Include="core\manager\IScene.cs" />
     <Compile Include="core\manager\ITask.cs" />
@@ -108,6 +109,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="scene\CSceneBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
