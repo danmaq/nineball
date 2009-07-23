@@ -1,7 +1,9 @@
 ﻿////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //
-//	danmaq Nineball-Library / Copyright (c) 2008-2009 danmaq all rights reserved.
+//	danmaq Nineball-Library
+//		Copyright (c) 2008-2009 danmaq all rights reserved.
+//
 //		──永続データ管理クラス
 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -12,6 +14,12 @@ using System.IO;
 using System.IO.Compression;
 using System.Xml.Serialization;
 using danmaq.Nineball.core.raw;
+
+#if XBOX360
+using danmaq.Nineball.core.inner;
+using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.GamerServices;
+#endif
 
 namespace danmaq.Nineball.core.data {
 
@@ -49,7 +57,6 @@ namespace danmaq.Nineball.core.data {
 
 		/// <summary>ストレージ ファイルの論理コレクション。</summary>
 		private static StorageContainer container = null;
-
 #endif
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
