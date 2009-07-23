@@ -37,6 +37,9 @@ package danmaq.ball.task{
 		/**	最新のスコアが格納されます。 */
 		private var m_uScore:uint = 0;
 		
+		/**	スコア表示の更新が予約されているかどうかが格納されます。 */
+		private var m_bReservedFlush:Boolean = false;
+		
 		////////// PROPERTIES //////////
 
 		/**
@@ -72,7 +75,7 @@ package danmaq.ball.task{
 		 * 
 		 * @return ハイスコア値
 		 */
-		public function get hiScore():uint{ return m_uScore; }
+		public function get hiScore():uint{ return m_uHighScore; }
 
 		/**
 		 * 最新のスコア文字列を取得します。
@@ -113,7 +116,7 @@ package danmaq.ball.task{
 		public function initialize():void{
 			m_taskManager.add(taskFontScore);
 			m_taskManager.add(taskFontHiScore);
-			flush();
+			m_bReservedFlush = true;
 		}
 		
 		/**
@@ -132,7 +135,14 @@ package danmaq.ball.task{
 		 * @return 無条件にtrue
 		 */
 		public function update():Boolean{
-			if(m_uHighScore < m_uScore){ m_uHighScore = m_uScore; }
+			if(m_uHighScore < m_uScore){
+				m_uHighScore = m_uScore;
+				m_bReservedFlush = true;
+			}
+			if(m_bReservedFlush){
+				m_bReservedFlush = false;
+				flush();
+			}
 			return true;
 		}
 		
@@ -144,7 +154,7 @@ package danmaq.ball.task{
 		public function add(uScore:uint):void{
 			if(uScore > 0){
 				m_uScore += uScore;
-				flush();
+				m_bReservedFlush = true;
 			}
 		}
 		
@@ -155,7 +165,7 @@ package danmaq.ball.task{
 		public function reset():void{
 			if(m_uScore > 0){
 				m_uScore = 0;
-				flush();
+				m_bReservedFlush = true;
 			}
 		}
 		

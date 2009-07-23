@@ -20,7 +20,7 @@ package danmaq.ball.scene{
 		
 		/**	カウントダウン表示のカラーテーブルが格納されます。 */
 		private static const COUNTDOWN_COLOR_TABLE:Vector.<uint> =
-			Vector.<uint>( [ 0xA0A0A0, 0x808080, 0, 0x800000 ] );
+			Vector.<uint>([ 0xA0A0A0, 0x808080, 0, 0x800000 ]);
 		
 		/**	背景色の矩形が格納されます。 */
 		private const bgPattern:Shape = new Shape();
@@ -45,6 +45,7 @@ package danmaq.ball.scene{
 		 */
 		public function CSceneGame(){
 			initializeBackGround();
+			taskScore.reset();
 		}
 		
 		/**
@@ -52,7 +53,7 @@ package danmaq.ball.scene{
 		 * 事実上のデストラクタとして機能するメソッドです。
 		 */
 		public override function dispose():void{
-			CResource.screen.remove( bgPattern );
+			CResource.screen.remove(bgPattern);
 			super.dispose();
 		}
 		
@@ -64,30 +65,33 @@ package danmaq.ball.scene{
 		public override function update():Boolean{
 			var uPhase:uint = scenePhaseManager.phase;
 			var uPCound:uint = scenePhaseManager.phaseCount;
-			if( uPCound == 0 ){
-				if( m_taskCountDown != null ){ sceneTaskManager.eraseTask( m_taskCountDown ); }
-				switch( uPhase ){
+			if(uPCound == 0){
+				if(m_taskCountDown != null){ sceneTaskManager.eraseTask(m_taskCountDown); }
+				switch(uPhase){
 				case 1:
 				case 2:
 				case 3:
-					m_taskCountDown = print( StringUtil.substitute( "{0}", 4 - uPhase ),
-						new Point( 39, 12 ), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ] );
+					m_taskCountDown = print(StringUtil.substitute("{0}", 4 - uPhase),
+						new Point(39, 12), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ]);
 					break;
 				case 4:
 					m_taskPlayer = new CTaskBallPlayer();
-					m_taskEnemy = new CTaskBallEnemy( m_uLevel );
-					sceneTaskManager.add( m_taskPlayer );
-					sceneTaskManager.add( m_taskEnemy );
-					m_taskCountDown = print( CONST.TEXT_GO,
-						new Point( 37, 12 ), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ] );
+					m_taskEnemy = new CTaskBallEnemy(m_uLevel);
+					sceneTaskManager.add(m_taskPlayer);
+					sceneTaskManager.add(m_taskEnemy);
+					m_taskCountDown = print(CONST.TEXT_GO,
+						new Point(37, 12), COUNTDOWN_COLOR_TABLE[ uPhase - 1 ]);
 					break;
 				}
 			}
-			if( uPhase < 6 ){ scenePhaseManager.isReserveNextPhase = uPCound >= 60; }
-			if( uPhase >= 4 && ( m_taskPlayer.disposed || m_taskEnemy.disposed ) ){
-				m_nResult = m_taskEnemy.disposed ? -1 : 1;
-				if( !m_taskPlayer.disposed ){ sceneTaskManager.eraseTask( m_taskPlayer ); }
-				nextScene = new CSceneTitle();
+			if(uPhase < 6){ scenePhaseManager.isReserveNextPhase = uPCound >= 60; }
+			if(uPhase >= 4){
+				taskScore.add(1);
+				if(m_taskPlayer.disposed || m_taskEnemy.disposed){
+					m_nResult = m_taskEnemy.disposed ? -1 : 1;
+					if(!m_taskPlayer.disposed){ sceneTaskManager.eraseTask(m_taskPlayer); }
+					nextScene = new CSceneTitle();
+				}
 			}
 			return super.update();
 		}
@@ -97,14 +101,14 @@ package danmaq.ball.scene{
 		 */
 		private function initializeBackGround():void{
 			taskFpsView.transform.color = 0;
-			bgPattern.graphics.beginFill( 0xFFFFFF );
-			bgPattern.graphics.drawRect( 0, 0, 640, 400 );
+			bgPattern.graphics.beginFill(0xFFFFFF);
+			bgPattern.graphics.drawRect(0, 0, 640, 400);
 			bgPattern.graphics.endFill();
 			bgPattern.cacheAsBitmap = true;
-			CResource.screen.add( bgPattern, int.MAX_VALUE );
-			print( CONST.TEXT_DESC, new Point( 27, 3 ), 0xA00000 );
-			print( CONST.TEXT_TITLE, new Point( 21, 23 ), 0x800000 );
-			print( StringUtil.substitute( CONST.TEXT_LEVEL, m_uLevel + 1 ), new Point( 0, 24 ), 0x80 );
+			CResource.screen.add(bgPattern, int.MAX_VALUE);
+			print(CONST.TEXT_DESC, new Point(27, 3), 0xA00000);
+			print(CONST.TEXT_TITLE, new Point(21, 23), 0x800000);
+			print(StringUtil.substitute(CONST.TEXT_LEVEL, m_uLevel + 1), new Point(0, 24), 0x80);
 		}
 	}
 }
