@@ -59,6 +59,8 @@
     <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.Xna.Framework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
       <Private>False</Private>
       <SpecificVersion>True</SpecificVersion>
@@ -74,6 +76,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -90,17 +93,27 @@
     <Compile Include="core\data\CDataIOManager.cs" />
     <Compile Include="core\data\CResolution.cs" />
     <Compile Include="core\data\EAlign.cs" />
+    <Compile Include="core\data\EDirType.cs" />
+    <Compile Include="core\data\EForcePreset.cs" />
+    <Compile Include="core\data\EInputDevice.cs" />
     <Compile Include="core\data\EResolution.cs" />
+    <Compile Include="core\data\SGradation.cs" />
+    <Compile Include="core\inner\CGuideManager.cs" />
     <Compile Include="core\manager\CCoRoutineManager.cs" />
     <Compile Include="core\manager\CPhaseManager.cs" />
     <Compile Include="core\manager\CSceneManager.cs" />
     <Compile Include="core\manager\CTaskManager.cs" />
     <Compile Include="core\manager\IScene.cs" />
     <Compile Include="core\manager\ITask.cs" />
+    <Compile Include="core\raw\CInput.cs" />
+    <Compile Include="core\raw\CLegacyInput.cs" />
+    <Compile Include="core\raw\CLegacyInputManager.cs" />
     <Compile Include="core\raw\CLogger.cs" />
+    <Compile Include="core\raw\CMessageBox.cs" />
     <Compile Include="core\raw\CSprite.cs" />
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CSingleton.cs" />
+    <Compile Include="misc\CToStringExtention.cs" />
     <Compile Include="misc\math\CHyperbolic.cs" />
     <Compile Include="misc\math\CMisc.cs" />
     <Compile Include="misc\math\CTrignometric.cs" />
@@ -156,9 +169,6 @@
   <ItemGroup>
     <Content Include="HISTORY.txt" />
     <Content Include="README.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="core\inner\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
