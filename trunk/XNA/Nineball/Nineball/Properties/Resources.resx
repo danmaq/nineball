@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DESC_FAILED" xml:space="preserve">
+    <value>取得出来ませんでした。</value>
+    <comment>環境設定の取得に失敗した場合の解説</comment>
+  </data>
+  <data name="DESC_NULL" xml:space="preserve">
+    <value>設定されていません。</value>
+    <comment>データが設定されていない場合の解説</comment>
+  </data>
   <data name="NAME" xml:space="preserve">
     <value>danmaq Nineball-Library</value>
     <comment>製品名</comment>

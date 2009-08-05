@@ -61,6 +61,24 @@ namespace danmaq.Nineball.Properties {
         }
         
         /// <summary>
+        ///   取得出来ませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DESC_FAILED {
+            get {
+                return ResourceManager.GetString("DESC_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   設定されていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DESC_NULL {
+            get {
+                return ResourceManager.GetString("DESC_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   danmaq Nineball-Library に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NAME {
