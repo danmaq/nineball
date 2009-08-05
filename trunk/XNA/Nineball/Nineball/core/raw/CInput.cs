@@ -15,6 +15,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using danmaq.Nineball.core.data;
 using System.Collections.Generic;
+using System.IO;
+using danmaq.Nineball.misc;
 
 namespace danmaq.Nineball.core.raw {
 
@@ -148,31 +150,28 @@ namespace danmaq.Nineball.core.raw {
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
-/*
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="hWnd">ウィンドウハンドル</param>
-		/// <param name="inputData">入力関係初期設定用構造体</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// 引数にnullを指定した場合。
-		/// </exception>
-		public CInput( IntPtr hWnd, SInputInitializeData inputData )
+		/// <param name="buttons">十字キーを除くボタンの数。</param>
+		/// <param name="keyLoopStart">連続入力となるまでのフレーム時間間隔。</param>
+		/// <param name="keyLoopInterval">押しっぱなしで連続入力となるフレーム時間間隔。</param>
+		public CInput( IntPtr hWnd, byte buttons, ushort keyLoopStart, ushort keyLoopInterval )
 			:
-			this( hWnd, inputData, detectConnected() ) { }
+			this( hWnd, buttons, keyLoopStart, keyLoopInterval, detectConnected() ) { }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="hWnd">ウィンドウハンドル</param>
-		/// <param name="inputData">入力関係初期設定用構造体</param>
+		/// <param name="buttons">十字キーを除くボタンの数。</param>
+		/// <param name="keyLoopStart">連続入力となるまでのフレーム時間間隔。</param>
+		/// <param name="keyLoopInterval">押しっぱなしで連続入力となるフレーム時間間隔。</param>
 		/// <param name="connected">接続されているXBOX360コントローラ一覧</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// 引数にnullを指定した場合。
-		/// </exception>
-		public CInput( IntPtr hWnd, SInputInitializeData inputData, PlayerIndex[] connected ) {
+		public CInput( IntPtr hWnd, byte buttons, ushort keyLoopStart, ushort keyLoopInterval, PlayerIndex[] connected ) {
 			CLogger.add( "入力処理・XBOX360コントローラの初期化をしています..." );
-			int nButtons = inputData.buttons;
+			int nButtons = buttons;
 			int nFullButtons = nButtons + 4;
 			CONNECTED = CMisc.getUnique<PlayerIndex>( connected );
 			if( !isUseXBOX360GamePad ) { CLogger.add( "XBOX360コントローラを使用しません。" ); }
@@ -191,12 +190,11 @@ namespace danmaq.Nineball.core.raw {
 			assignKeyboard = new Keys[ nFullButtons ];
 			BUTTON_STATE = new SButtonState[ nFullButtons ];
 			for( int i = 0; i < nFullButtons; i++ ) {
-				BUTTON_STATE[ i ] = new SButtonState( inputData.keyLoopStart, inputData.keyLoopInterval );
+				BUTTON_STATE[ i ] = new SButtonState( keyLoopStart, keyLoopInterval );
 			}
 			MICROTHREAD_MANAGER.add( threadStateReflesh() );
 			CLogger.add( "入力処理・XBOX360コントローラの初期化完了。" );
 		}
-*/
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
