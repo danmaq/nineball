@@ -76,7 +76,7 @@ package danmaq.ball.scene{
 		 * 
 		 * @return スコアタスク
 		 */
-		protected static function get taskScore():CTaskScore{ return m_taskScore; }
+		public static function get taskScore():CTaskScore{ return m_taskScore; }
 
 		/**
 		 * 次のシーンを取得します。

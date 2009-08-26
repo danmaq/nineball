@@ -1,5 +1,6 @@
 package danmaq.ball.task{
 
+	import danmaq.ball.scene.CSceneCommon;
 	import danmaq.nineball.constant.CKeyboardEx;
 	import danmaq.nineball.core.CMainLoop;
 	import danmaq.nineball.struct.*;
@@ -25,14 +26,14 @@ package danmaq.ball.task{
 		 * コンストラクタ。
 		 */
 		public function CTaskBallPlayer(){
-			super( 0x0000C0 );
+			super(0x0000C0);
 			y = 120;
-			vinputEnter.assignKeyCodeList.push( Keyboard.ENTER );
-			vinputEnter.assignKeyCodeList.push( Keyboard.SPACE );
-			vinputEnter.assignKeyCodeList.push( CKeyboardEx.Z );
+			vinputEnter.assignKeyCodeList.push(Keyboard.ENTER);
+			vinputEnter.assignKeyCodeList.push(Keyboard.SPACE);
+			vinputEnter.assignKeyCodeList.push(CKeyboardEx.Z);
 			vinputEnter.assignMouseAreaList.push(
-				new Rectangle( 0, 0, CScreen.size.x, CScreen.size.y ) );
-			CMainLoop.instance.input.addVI( vinputEnter );
+				new Rectangle(0, 0, CScreen.size.x, CScreen.size.y));
+			CMainLoop.instance.input.addVI(vinputEnter);
 		}
 
 		/**
@@ -49,7 +50,10 @@ package danmaq.ball.task{
 		 * @return ゴールにたどり着くまでの間、true
 		 */
 		public override function update():Boolean{
-			if( vinputEnter.push ){ move(); }
+			if(vinputEnter.push){
+				CSceneCommon.taskScore.add(100);
+				move();
+			}
 			return super.update();
 		}
 	}

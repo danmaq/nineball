@@ -64,8 +64,8 @@ package danmaq.ball.scene{
 		 */
 		public override function update():Boolean{
 			var uPhase:uint = scenePhaseManager.phase;
-			var uPCound:uint = scenePhaseManager.phaseCount;
-			if(uPCound == 0){
+			var uPCount:uint = scenePhaseManager.phaseCount;
+			if(uPCount == 0){
 				if(m_taskCountDown != null){ sceneTaskManager.eraseTask(m_taskCountDown); }
 				switch(uPhase){
 				case 1:
@@ -76,7 +76,7 @@ package danmaq.ball.scene{
 					break;
 				case 4:
 					m_taskPlayer = new CTaskBallPlayer();
-					m_taskEnemy = new CTaskBallEnemy(m_uLevel);
+					m_taskEnemy = new CTaskBallEnemy(m_uLevel, m_taskPlayer);
 					sceneTaskManager.add(m_taskPlayer);
 					sceneTaskManager.add(m_taskEnemy);
 					m_taskCountDown = print(CONST.TEXT_GO,
@@ -84,10 +84,12 @@ package danmaq.ball.scene{
 					break;
 				}
 			}
-			if(uPhase < 6){ scenePhaseManager.isReserveNextPhase = uPCound >= 60; }
+			if(uPhase < 6){ scenePhaseManager.isReserveNextPhase = uPCount >= 60; }
 			if(uPhase >= 4){
-				taskScore.add(1);
+				var nXGap:int = m_taskPlayer.x - m_taskEnemy.x;
+				if(uPCount % 5 == 0){ taskScore.add((nXGap + 640) / 100); }
 				if(m_taskPlayer.disposed || m_taskEnemy.disposed){
+					if(!m_taskEnemy.disposed){ taskScore.add(6400 + nXGap * 10); }
 					m_nResult = m_taskEnemy.disposed ? -1 : 1;
 					if(!m_taskPlayer.disposed){ sceneTaskManager.eraseTask(m_taskPlayer); }
 					nextScene = new CSceneTitle();
