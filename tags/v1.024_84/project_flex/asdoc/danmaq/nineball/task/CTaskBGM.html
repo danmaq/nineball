@@ -1,0 +1,375 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="CTaskBGM,danmaq.nineball.task.CTaskBGM,isDisposeCancel,disposed,isAvailablePause,isPlay,layer,mute,manager,dispose,fadeAndStop,initialize,update" name="keywords">
+<title>danmaq.nineball.task.CTaskBGM</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'CTaskBGM - danmaq Nineball Library';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">danmaq Nineball Library</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?danmaq/nineball/task/CTaskBGM.html&amp;danmaq/nineball/task/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;CTaskBGM</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class CTaskBGM"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">danmaq.nineball.task</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public final  class CTaskBGM</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implements</td><td><a href="../core/IDisposed.html">IDisposed</a>, <a href="../core/ITask.html">ITask</a></td>
+</tr>
+</table>
+<p></p>
+  部分ループポイント対応BGMタスクです。
+  
+  <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#disposed">disposed</a> : Boolean<div class="summaryTableDescription">[read-only]
+   タスクが終了したかどうかを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isAvailablePause">isAvailablePause</a> : Boolean<div class="summaryTableDescription">[read-only]
+   一時停止に対応しているかどうかを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isDisposeCancel">isDisposeCancel</a> : Boolean = false<div class="summaryTableDescription">
+   解放命令を無視するかどうかが格納されます。
+   解除忘れ防止のため、一度無視するたびにオフになります。
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isPlay">isPlay</a> : Boolean<div class="summaryTableDescription">[static][read-only]
+   現在再生中かどうかを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#layer">layer</a> : uint<div class="summaryTableDescription">[read-only]
+   レイヤ値を取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#manager">manager</a> : <a href="../core/CTaskManager.html">CTaskManager</a>
+<div class="summaryTableDescription">[write-only]
+   タスク管理クラスを設定します。
+   このクラスでは特に必要ないので何も設定しません。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#mute">mute</a> : Boolean<div class="summaryTableDescription">
+   ミュート中かどうかを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#CTaskBGM()">CTaskBGM</a>(preset:<a href="../struct/CBGMPreset.html">CBGMPreset</a>, uFadeTime:uint, uLayer:uint = 0)</div>
+<div class="summaryTableDescription">
+   コンストラクタ。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispose()">dispose</a>():void</div>
+<div class="summaryTableDescription">
+   解放時に管理クラスから呼び出される処理です。
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#fadeAndStop()">fadeAndStop</a>():void</div>
+<div class="summaryTableDescription">
+   フェードアウトを開始します。
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#initialize()">initialize</a>():void</div>
+<div class="summaryTableDescription">
+   コンストラクタの後、タスクが管理クラスに登録された直後に、
+   1度だけ自動的に呼ばれます。
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>():Boolean</div>
+<div class="summaryTableDescription">
+   タスクを1フレーム分動かします。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CTaskBGM</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="disposed"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">disposed</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>disposed:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   タスクが終了したかどうかを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get disposed():Boolean</code>
+<br>
+</div>
+<a name="isAvailablePause"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isAvailablePause</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>isAvailablePause:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   一時停止に対応しているかどうかを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isAvailablePause():Boolean</code>
+<br>
+</div>
+<a name="isDisposeCancel"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isDisposeCancel</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public var isDisposeCancel:Boolean = false</code><p>
+   解放命令を無視するかどうかが格納されます。
+   解除忘れ防止のため、一度無視するたびにオフになります。
+   </p></div>
+<a name="isPlay"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isPlay</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>isPlay:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   現在再生中かどうかを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get isPlay():Boolean</code>
+<br>
+</div>
+<a name="layer"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">layer</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>layer:uint</code>&nbsp;&nbsp;[read-only]<p>
+   レイヤ値を取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get layer():uint</code>
+<br>
+</div>
+<a name="manager"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">manager</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>manager:<a href="../core/CTaskManager.html">CTaskManager</a></code>&nbsp;&nbsp;[write-only]<p>
+   タスク管理クラスを設定します。
+   このクラスでは特に必要ないので何も設定しません。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set manager(value:<a href="../core/CTaskManager.html">CTaskManager</a>):void</code>
+<br>
+</div>
+<a name="mute"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">mute</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>mute:Boolean</code>&nbsp;&nbsp;[read-write]<p>
+   ミュート中かどうかを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get mute():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set mute(value:Boolean):void</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="CTaskBGM()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">CTaskBGM</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function CTaskBGM(preset:<a href="../struct/CBGMPreset.html">CBGMPreset</a>, uFadeTime:uint, uLayer:uint = 0)</code><p>
+   コンストラクタ。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">preset</span>:<a href="../struct/CBGMPreset.html">CBGMPreset</a></code> &mdash; BGMプリセット
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">uFadeTime</span>:uint</code> &mdash; フェード時間
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">uLayer</span>:uint</code> (default = <code>0</code>)<code></code> &mdash; レイヤ番号
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="dispose()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dispose():void</code><p>
+   解放時に管理クラスから呼び出される処理です。
+   </p></div>
+<a name="fadeAndStop()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">fadeAndStop</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function fadeAndStop():void</code><p>
+   フェードアウトを開始します。
+   </p></div>
+<a name="initialize()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">initialize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function initialize():void</code><p>
+   コンストラクタの後、タスクが管理クラスに登録された直後に、
+   1度だけ自動的に呼ばれます。
+   </p></div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function update():Boolean</code><p>
+   タスクを1フレーム分動かします。
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; フェードするまでの間、true
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
