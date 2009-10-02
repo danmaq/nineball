@@ -21,7 +21,7 @@
 //*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*
 - (id)init{
 	self = [super init];
-	if(self != nil){ _aSceneStack = [[NSMutableArray array] retain]; }
+	if(self != nil){ _aSceneStack = [[NSMutableArray alloc] init]; }
 	return self;
 }
 

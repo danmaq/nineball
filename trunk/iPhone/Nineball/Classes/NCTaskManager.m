@@ -135,7 +135,7 @@
 - (void)reset{
 	self.pause = NO;
 	[self releaseArray];
-	_aTasks = [[NSMutableArray array] retain];
+	_aTasks = [[NSMutableArray alloc] init];
 }
 
 ///////////////////////////////////////////////////////////////////
