@@ -333,8 +333,10 @@ namespace danmaq.Nineball.core.raw {
 		/// アプリケーション定義のタスクを実行します。
 		/// </summary>
 		public void Dispose() {
+#if WINDOWS
 			legacyManager.Dispose();
 			legacyManager = null;
+#endif
 		}
 
 		//* -----------------------------------------------------------------------*

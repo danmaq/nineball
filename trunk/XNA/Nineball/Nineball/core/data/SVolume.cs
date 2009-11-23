@@ -51,16 +51,11 @@ namespace danmaq.Nineball.core.data {
 		/// <summary>音量(dB単位)。</summary>
 		/// <remarks>減速線形補完を使用した非常に雑な変換です。</remarks>
 		private float dB {
-			// ! TODO : もうちょっとまともな変換方法検討する
+			// TODO : もうちょっとまともな変換方法検討する
 			get {
 				return ( volume > 1 ?
 					CInterpolate.smooth( 0, 6, volume - 1, 1 ) :
 					CInterpolate.slowdown( -96, 0, volume, 1 ) );
-			}
-			set {
-				volume = ( value > 0 ?
-					CInterpolate.smooth( 1, 2, value, 6 ) :
-					CInterpolate.slowdown( 0, 1, value + 96, 96 ) );
 			}
 		}
 
@@ -86,14 +81,20 @@ namespace danmaq.Nineball.core.data {
 		/// 
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static SVolume operator ++( SVolume v ) { return v + 0.1f; }
+		public static SVolume operator ++( SVolume v ) {
+			v.volume += 0.1f;
+			return v;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>音量クラス オブジェクトを0.1減算します。</summary>
 		/// 
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static SVolume operator --( SVolume v ) { return v - 0.1f; }
+		public static SVolume operator --( SVolume v ) {
+			v.volume -= 0.1f;
+			return v;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>音量クラス オブジェクトを指定値加算します。</summary>

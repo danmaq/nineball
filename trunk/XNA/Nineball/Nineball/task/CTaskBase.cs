@@ -9,8 +9,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.Nineball.core.manager;
 using danmaq.Nineball.core.raw;
+using danmaq.Nineball.Properties;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.Nineball.task {
@@ -69,8 +71,10 @@ namespace danmaq.Nineball.task {
 		public byte layer {
 			get { return m_byLayer; }
 			set {
-				// ! TODO : 例外吐くようにしてもいいかも
-				if( !lockLayer ) { m_byLayer = value; }
+				if( lockLayer ) {
+					throw new InvalidOperationException( Resources.ERR_LOCKED_LAYER );
+				}
+				m_byLayer = value;
 			}
 		}
 

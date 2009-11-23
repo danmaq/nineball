@@ -248,7 +248,7 @@ namespace danmaq.Nineball.core.raw {
 					effect.EffectType = EffectType.ConstantForce;
 					effect.Constant = new ConstantForce();
 					effect.Constant.Magnitude = nMagnitude;
-					// !!! XXX !!! : ここで例外もなしにコケることがある。なんでだ？
+					// HACK : ここで例外もなしにコケることがある。なんでだ？
 					return new EffectObject( ei.EffectGuid, effect, device );
 				}
 			}

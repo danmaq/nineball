@@ -155,7 +155,7 @@ namespace danmaq.Nineball.core.raw {
 					result[ i ].pos = new Vector2( gapX.smooth( i, nSize ) + fNowX, gapY.smooth( i, nSize ) );
 					result[ i ].scale = new Vector2( scaleX.smooth( i, nSize ), scaleY.smooth( i, nSize ) );
 					//					if( isHighQuality ) { result[ i ].scale /= 4; }
-					// ! TODO : 描画時に計算する
+					// TODO : 描画時に計算する
 					result[ i ].rotate = rotate.smooth( i, nSize );
 					result[ i ].strByte = szText[ i ].ToString();
 					result[ i ].charSize = font.resource.MeasureString( result[ i ].strByte );

@@ -85,7 +85,7 @@ namespace danmaq.Nineball.core.manager {
 		public void erase( byte byLayer ) {
 			LinkedListNode<ITask> nNext;
 			for( LinkedListNode<ITask> n = tasks.First; n != null; n = nNext ) {
-				// ! TODO : 指定レイヤを通過したら脱出するようにする
+				// TODO : 指定レイヤを通過したら脱出するようにする
 				nNext = n.Next;
 				if( byLayer == n.Value.layer ) { erase( n.Value ); }
 			}
