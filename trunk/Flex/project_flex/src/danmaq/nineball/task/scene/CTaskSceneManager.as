@@ -1,6 +1,7 @@
-package danmaq.nineball.core{
+package danmaq.nineball.task.scene{
 
 	import mx.utils.StringUtil;
+	import danmaq.nineball.task.CTaskBase;
 
 	/**
 	 * シーン進行を管理するクラスです。
@@ -14,7 +15,7 @@ package danmaq.nineball.core{
 	 * @see danmaq.nineball.core.IScene
 	 * @author Mc(danmaq)
 	 */
-	public final class CSceneManager{
+	public final class CTaskSceneManager extends CTaskBase{
 
 		////////// CONSTANTS //////////
 
@@ -44,10 +45,18 @@ package danmaq.nineball.core{
 		////////// METHODS //////////
 
 		/**
+		 * コンストラクタ。
+		 * 
+		 * @param uLayer レイヤ番号
+		 */
+		public function CTaskSceneManager( uLayer:uint = 0 ){ layer = uLayer; }
+		
+		/**
 		 * デストラクタ。
 		 */
-		public function dispose():void{
+		public override function dispose():void{
 			while( stack.length > 0 ){ erase(); }
+			super.dispose();
 		}
 
 		/**
@@ -70,8 +79,10 @@ package danmaq.nineball.core{
 		
 		/**
 		 * シーンを1フレーム分動かします。
+		 * 
+		 * @return 次フレームまでの間生存し続ける場合、true
 		 */
-		public function update():void{
+		public override function update():Boolean{
 			var _scene:IScene = scene;
 			if( _scene != null ){
 				var bContinue:Boolean = _scene.update(); 
@@ -82,6 +93,7 @@ package danmaq.nineball.core{
 					add( next );
 				}
 			}
+			return super.update();
 		}
 
 		/**
