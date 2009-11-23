@@ -1,6 +1,6 @@
 package scene{
 
-	import danmaq.nineball.core.CSceneBase;
+	import danmaq.nineball.task.scene.CSceneBase;
 
 	/**
 	 * ブランクなシーンです。
