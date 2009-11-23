@@ -30,7 +30,7 @@ namespace danmaq.Nineball.core.data {
 		//* fields ────────────────────────────────*
 
 		/// <summary>現在の解像度の矩形情報。</summary>
-		private Rectangle rect;
+		private Rectangle m_rect;
 
 		/// <summary>現在の解像度。</summary>
 		private EResolution m_now = EResolution.VGA;
@@ -72,7 +72,7 @@ namespace danmaq.Nineball.core.data {
 
 		/// <summary>アスペクト比。</summary>
 		private float aspect {
-			get { return ( float )( rect.Width ) / ( float )( rect.Height ); }
+			get { return ( float )( m_rect.Width ) / ( float )( m_rect.Height ); }
 		}
 
 		/// <summary>現在の解像度。</summary>
@@ -84,7 +84,7 @@ namespace danmaq.Nineball.core.data {
 			set {
 				if( supports.Contains( value ) ) {
 					m_now = value;
-					rect = toRect( value );
+					m_rect = toRect( value );
 					scaleGapFromVGA = getScaleGap( value, EResolution.VGA );
 				}
 			}
@@ -114,7 +114,7 @@ namespace danmaq.Nineball.core.data {
 		/// 
 		/// <param name="r">解像度 オブジェクト</param>
 		/// <returns>解像度</returns>
-		public static implicit operator Rectangle( CResolution r ) { return r.rect; }
+		public static implicit operator Rectangle( CResolution r ) { return r.m_rect; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アスペクト比を取得します。</summary>

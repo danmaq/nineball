@@ -16,9 +16,9 @@ using System.Xml.Serialization;
 using danmaq.Nineball.core.raw;
 
 #if XBOX360
-using danmaq.Nineball.core.inner;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Storage;
+using danmaq.Nineball.core.inner;
 #endif
 
 namespace danmaq.Nineball.core.data {
@@ -33,8 +33,8 @@ namespace danmaq.Nineball.core.data {
 		/// <summary>データファイル名。</summary>
 		public readonly string FILE;
 
-		/// <summary>開発コードネーム(半角英数)</summary>
-		public readonly string CODENAME;
+		/// <summary>XNA Framework タイトル名(半角英数)。</summary>
+		public readonly string TITLENAME;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* events ────────────────────────────────*
@@ -64,14 +64,14 @@ namespace danmaq.Nineball.core.data {
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="strCodename">開発コードネーム(半角英数)</param>
+		/// <param name="strTitleName">XNA Framework タイトル名(半角英数)</param>
 		/// <param name="strFile">設定ファイル名</param>
 		/// <exception cref="System.ArgumentNullException">
 		/// 引数にnullが渡された場合。
 		/// </exception>
-		public CDataIOManager( string strCodename, string strFile ) {
+		public CDataIOManager( string strTitleName, string strFile ) {
 			if( strFile == null ) { throw new ArgumentNullException( "strFile" ); }
-			CODENAME = strCodename;
+			TITLENAME = strTitleName;
 			FILE = strFile;
 		}
 

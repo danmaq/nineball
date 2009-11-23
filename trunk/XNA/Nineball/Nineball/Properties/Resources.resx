@@ -125,6 +125,9 @@
     <value>設定されていません。</value>
     <comment>データが設定されていない場合の解説</comment>
   </data>
+  <data name="ERR_LOCKED_LAYER" xml:space="preserve">
+    <value>ロックされたレイヤを変更することはできません。</value>
+  </data>
   <data name="NAME" xml:space="preserve">
     <value>danmaq Nineball-Library</value>
     <comment>製品名</comment>

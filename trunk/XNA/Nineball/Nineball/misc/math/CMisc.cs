@@ -43,7 +43,7 @@ namespace danmaq.Nineball.misc.math {
 				if( fExpr < fMax ) { fExpr = fMax - Math.Abs( fExpr - fMin ); }
 			}
 			return Math.Min( fMax, Math.Max( fMin, fExpr ) );
-			// ! TODO : clampのラッパにできないかな？
+			// TODO : clampのラッパにできないかな？
 		}
 	}
 }

@@ -17,6 +17,7 @@ using danmaq.Nineball.Properties;
 using System.Windows.Forms;
 #else
 using Microsoft.Xna.Framework.GamerServices;
+using danmaq.Nineball.core.inner;
 #endif
 
 namespace danmaq.Nineball.core.raw {

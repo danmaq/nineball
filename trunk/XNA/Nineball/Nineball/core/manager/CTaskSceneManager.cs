@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using danmaq.Nineball.core.raw;
+using danmaq.Nineball.task;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.Nineball.core.manager {
@@ -25,7 +26,7 @@ namespace danmaq.Nineball.core.manager {
 	/// 複数シーンのスタックを積むことも出来ます。
 	/// (この場合、一番若いシーンが実行されます)
 	/// </remarks>
-	public sealed class CSceneManager {
+	public sealed class CTaskSceneManager : CTaskBase {
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -41,7 +42,7 @@ namespace danmaq.Nineball.core.manager {
 		/// <para>コンストラクタ。</para>
 		/// <para>空のシーンスタックで初期化されます。</para>
 		/// </summary>
-		public CSceneManager() : this( new Stack<IScene>() ) { }
+		public CTaskSceneManager() : this( new Stack<IScene>() ) { }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -50,7 +51,7 @@ namespace danmaq.Nineball.core.manager {
 		/// </summary>
 		/// 
 		/// <param name="sceneFirst">最初のシーン オブジェクト</param>
-		public CSceneManager( IScene sceneFirst ) : this() { nowScene = sceneFirst; }
+		public CTaskSceneManager( IScene sceneFirst ) : this() { nowScene = sceneFirst; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -58,12 +59,15 @@ namespace danmaq.Nineball.core.manager {
 		/// <para>指定のシーン スタックで初期化します。</para>
 		/// </summary>
 		/// 
-		/// <param name="__stackScene">シーンのスタック</param>
-		public CSceneManager( Stack<IScene> __stackScene ) { scenes = __stackScene; }
+		/// <param name="stackScene">シーンのスタック</param>
+		public CTaskSceneManager( Stack<IScene> stackScene ) {
+			scenes = stackScene;
+			coRoutineManager.add( thread() );
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
-		~CSceneManager() { reset(); }
+		~CTaskSceneManager() { reset(); }
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -86,37 +90,41 @@ namespace danmaq.Nineball.core.manager {
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>タスク終了時の処理です。</summary>
+		public override void Dispose() { reset(); }
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>登録されているすべてのシーンを終了・抹消します。</summary>
 		public void reset() {
 			while( scenes.Count > 0 ) { nowScene = null; }
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の現在のシーンの更新処理をします。</summary>
+		/// <summary>現在のシーンの更新処理をします。</summary>
 		/// <remarks>
 		/// 複数シーンを積んである場合は、一番若いシーンのみが実行されます。
 		/// (ハノイの塔で一番上のブロックが実行されるイメージ)
 		/// </remarks>
 		/// 
-		/// <param name="gameTime">前フレームからの経過時間</param>
-		/// <returns>まだアクティブなシーンが残っている場合、<c>true</c></returns>
-		public bool update( GameTime gameTime ) {
-			IScene scene = nowScene;
-			bool bResult = false;
-			if( nowScene != null ) {
-				bool bContinue = scene.update( gameTime );
-				bool bChangeScene = !bContinue;
-				IScene nextScene = scene.nextScene;
-				if( !bContinue ) { nowScene = null; }
-				if( nextScene != null ) {
-					scene.nextScene = null;
-					nowScene = nextScene;
-					bChangeScene = true;
+		/// <returns>スレッドが実行される間、<c>null</c></returns>
+		private IEnumerator<object> thread() {
+			do {
+				yield return null;
+				IScene scene = nowScene;
+				if( nowScene != null ) {
+					bool bContinue = scene.update( gameTime );
+					bool bChangeScene = !bContinue;
+					IScene nextScene = scene.nextScene;
+					if( !bContinue ) { nowScene = null; }
+					if( nextScene != null ) {
+						scene.nextScene = null;
+						nowScene = nextScene;
+						bChangeScene = true;
+					}
+					if( bChangeScene ) { GC.Collect(); }
 				}
-				bResult = scenes.Count > 0;
-				if( bChangeScene ) { GC.Collect(); }
 			}
-			return bResult;
+			while( scenes.Count > 0 );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -128,7 +136,7 @@ namespace danmaq.Nineball.core.manager {
 		/// 
 		/// <param name="gameTime">前フレームからの経過時間</param>
 		/// <param name="sprite">スプライト描画管理クラス</param>
-		public void draw( GameTime gameTime, CSprite sprite ) {
+		public override void draw( GameTime gameTime, CSprite sprite ) {
 			IScene scene = nowScene;
 			if( nowScene != null ) { nowScene.draw( gameTime, sprite ); }
 		}

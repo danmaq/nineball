@@ -24,6 +24,13 @@ namespace danmaq.Nineball.core.manager {
 		private readonly LinkedList<IEnumerator<object>> coRoutines =
 			new LinkedList<IEnumerator<object>>();
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>次回update()呼び出し時にコルーチンをすべて破壊するかどうかを設定します。</summary>
+		/// <remarks>update()を呼びだすたびにfalseに書き換えられます。</remarks>
+		public bool reserveAllRemove = false;
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -53,6 +60,10 @@ namespace danmaq.Nineball.core.manager {
 			){
 				nodeNext = node.Next;
 				if( node.Value == null || !node.Value.MoveNext() ) { coRoutines.Remove( node ); }
+			}
+			if( reserveAllRemove ) {
+				remove();
+				reserveAllRemove = false;
 			}
 			return ( coRoutines.Count > 0 );
 		}

@@ -62,7 +62,7 @@ namespace danmaq.Nineball {
 		public int count {
 			get { return m_nCount; }
 			set {
-				m_nCount++; // !!! XXX : m_nCount += valueできないか検証する
+				m_nCount++; // UNDONE : m_nCount += valueできないか検証する
 				if( reserveNextPhase ) {
 					phase = nextPhase;
 					reserveNextPhase = false;

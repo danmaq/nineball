@@ -17,6 +17,7 @@ using System;
 
 #if XBOX360
 using Microsoft.Xna.Framework.GamerServices;
+using danmaq.Nineball.core.inner;
 #endif
 
 namespace danmaq.Nineball.core.manager {
@@ -28,22 +29,22 @@ namespace danmaq.Nineball.core.manager {
 		//* constants ──────────────────────────────-*
 
 		/// <summary>DNL動作初期設定用構造体。</summary>
-		public readonly SStarter<_T> INITIALIZE_DATA;
+		public readonly SStarter<_T> initializeData;
 
 		/// <summary>グラフィックデバイス管理クラス。</summary>
-		public readonly GraphicsDeviceManager GRAPHICS_DEVICE_MANAGER;
+		public readonly GraphicsDeviceManager graphicsDeviceManager;
 
 		/// <summary>テクスチャキャッシュ。</summary>
-		public readonly CResourceManager<Texture2D> RESOURCE_MANAGER_TEXTURE = new CResourceManager<Texture2D>();
+		public readonly CResourceManager<Texture2D> textureResourceManager = new CResourceManager<Texture2D>();
 
 		/// <summary>モデルキャッシュ。</summary>
-		public readonly CResourceManager<Model> RESOURCE_MANAGER_MODEL = new CResourceManager<Model>();
+		public readonly CResourceManager<Model> modelResourceManager = new CResourceManager<Model>();
 
 		/// <summary>フォントキャッシュ。</summary>
-		public readonly CResourceManager<SpriteFont> RESOURCE_MANAGER_FONT = new CResourceManager<SpriteFont>();
+		public readonly CResourceManager<SpriteFont> fontResourceManager = new CResourceManager<SpriteFont>();
 
 		/// <summary>シーン管理クラス。</summary>
-		public readonly CSceneManager SCENE_MANAGER = new CSceneManager();
+		public readonly CTaskSceneManager sceneManager = new CTaskSceneManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -74,10 +75,10 @@ namespace danmaq.Nineball.core.manager {
 		/// 
 		/// <param name="initializeData">DNL動作初期設定用構造体</param>
 		public CMainLoop( SStarter<_T> initializeData ) {
-			INITIALIZE_DATA = initializeData;
-			GRAPHICS_DEVICE_MANAGER = new GraphicsDeviceManager( this );
-			GRAPHICS_DEVICE_MANAGER.PreferredBackBufferWidth = 640;
-			GRAPHICS_DEVICE_MANAGER.PreferredBackBufferHeight = 480;
+			this.initializeData = initializeData;
+			graphicsDeviceManager = new GraphicsDeviceManager( this );
+			graphicsDeviceManager.PreferredBackBufferWidth = 640;
+			graphicsDeviceManager.PreferredBackBufferHeight = 480;
 			base.Content.RootDirectory = initializeData.fileIOConfigure.dirContent;
 #if XBOX360
 			Components.Add( new GamerServicesComponent( this ) );
@@ -118,12 +119,12 @@ namespace danmaq.Nineball.core.manager {
 		/// <summary>初期化処理</summary>
 		protected override void Initialize() {
 			base.Initialize();
-			TargetElapsedTime = TimeSpan.FromSeconds( 1.0 / ( double )( INITIALIZE_DATA.fps ) );
+			TargetElapsedTime = TimeSpan.FromSeconds( 1.0 / ( double )( initializeData.fps ) );
 			IsFixedTimeStep = true;
-			SCENE_MANAGER.nowScene = INITIALIZE_DATA.sceneFirst;
+			sceneManager.nowScene = initializeData.sceneFirst;
 			gamedata = new CDataIOManager<_T>(
-				INITIALIZE_DATA.codename, INITIALIZE_DATA.fileIOConfigure.fileConfigure );
-			SStarter<_T>.SInputInitializeData iniInput = INITIALIZE_DATA.inputConfigure;
+				initializeData.codename, initializeData.fileIOConfigure.fileConfigure );
+			SStarter<_T>.SInputInitializeData iniInput = initializeData.inputConfigure;
 			input = new CInput( Window.Handle, iniInput.buttons, iniInput.keyLoopStart, iniInput.keyLoopInterval );
 		}
 
@@ -131,13 +132,13 @@ namespace danmaq.Nineball.core.manager {
 		/// <summary>ロード処理</summary>
 		protected override void LoadContent() {
 			CLogger.add( "ゲームリソースを読込しています..." );
-			SStarter<_T>.SXACTInitializeData xact = INITIALIZE_DATA.XACTConfigure;
+			SStarter<_T>.SXACTInitializeData xact = initializeData.XACTConfigure;
 			if( xact ) {
 				audio = new CAudio( xact.index2assert, xact.loopSEInterval,
 					xact.fileXGS, xact.fileXSB, xact.fileXWBSE, xact.fileXWBBGM );
 			}
-			RESOURCE_MANAGER_TEXTURE.reload( true, Content );
-			RESOURCE_MANAGER_FONT.reload( true, Content );
+			textureResourceManager.reload( true, Content );
+			fontResourceManager.reload( true, Content );
 			if( spriteDraw != null ) { spriteDraw.Dispose(); }
 			spriteDraw = new CSprite( GraphicsDevice );
 			GC.Collect();
@@ -166,7 +167,7 @@ namespace danmaq.Nineball.core.manager {
 #endif
 			if( bUpdate ) {
 				if( input != null ) { input.update(); }
-				if( !SCENE_MANAGER.update( gameTime ) ) {
+				if( !sceneManager.update( gameTime ) ) {
 					CLogger.add( "ゲームの終了処理を開始します。" );
 					isExit = true;
 					Content.Unload();
@@ -198,7 +199,7 @@ namespace danmaq.Nineball.core.manager {
 				GraphicsDevice.Clear( colorBack );
 				GraphicsDevice.RenderState.DepthBufferEnable = true;
 				GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
-				SCENE_MANAGER.draw( gameTime, spriteDraw );
+				sceneManager.draw( gameTime, spriteDraw );
 				spriteDraw.update();
 			}
 			base.Draw( gameTime );
