@@ -1,4 +1,4 @@
-package danmaq.nineball.core{
+package danmaq.nineball.task{
 
 	import danmaq.nineball.core.*;
 	import danmaq.nineball.constant.CSentence;

@@ -1,4 +1,4 @@
-package danmaq.nineball.core{
+package danmaq.nineball.task.scene{
 
 	/**
 	 * シーンの基底となるインターフェイスです。

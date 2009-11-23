@@ -2,6 +2,7 @@ package danmaq.nineball.core{
 
 	import danmaq.nineball.struct.CInitializeData;
 	import danmaq.nineball.task.*;
+	import danmaq.nineball.task.scene.CTaskSceneManager;
 	
 	import flash.display.*;
 	import flash.events.TimerEvent;
@@ -16,9 +17,6 @@ package danmaq.nineball.core{
 
 		////////// CONSTANTS //////////
 
-		/**	シーン管理クラスが格納されます。 */
-		public const sceneManager:CSceneManager = new CSceneManager();
-
 		/**	タスク管理クラスが格納されます。 */
 		public const taskManager:CTaskManager = new CTaskManager();
 
@@ -26,6 +24,9 @@ package danmaq.nineball.core{
 
 		/**	このクラスのインスタンスが格納されます。 */
 		private static var m_instance:CMainLoop = null;
+
+		/**	シーン管理クラスが格納されます。 */
+		private var m_taskScene:CTaskSceneManager = new CTaskSceneManager();
 
 		/**	排他制御付き効果音再生タスクが格納されます。 */
 		private var m_taskSE:CTaskExclusiveSE = null;
@@ -54,6 +55,13 @@ package danmaq.nineball.core{
 		 */
 		public static function get instance():CMainLoop{ return m_instance; }
 
+		/**
+		 * シーン管理タスクを取得します。
+		 * 
+		 * @return シーン管理タスク
+		 */
+		public function get sceneManager():CTaskSceneManager{ return m_taskScene; }
+		
 		/**
 		 * 排他制御付き効果音再生タスクを取得します。
 		 * 
@@ -94,11 +102,13 @@ package danmaq.nineball.core{
 			m_instance = this;
 			m_taskFPS = new CTaskFPSTimer( ini.systemTaskLayer,
 				ini.fpsReflesh, ini.fps, ini.fpsLowLimit, ini.fpsLowCount );
-			taskManager.add( timer );
 			m_taskSE = new CTaskExclusiveSE( ini.systemTaskLayer, ini.seResolution );
-			taskManager.add( se );
 			m_taskInput = new CTaskVirtualInput( ini.systemTaskLayer );
+			m_taskScene = new CTaskSceneManager( ini.systemTaskLayer );
+			taskManager.add( timer );
+			taskManager.add( se );
 			taskManager.add( input );
+			taskManager.add( sceneManager );
 			sceneManager.add( new ini.sceneFirst() );
 			startLoop();
 		}
@@ -124,7 +134,6 @@ package danmaq.nineball.core{
 			if( !m_bDoPrevLoop ){
 				m_bDoPrevLoop = true;
 				taskManager.update();
-				sceneManager.update();
 				m_uCount++;
 				if( m_uCount % timer.refleshInterval == 0 ){ startLoop(); }
 				m_bDoPrevLoop = false;
