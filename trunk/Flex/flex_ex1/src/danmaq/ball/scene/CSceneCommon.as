@@ -7,6 +7,7 @@ package danmaq.ball.scene{
 	import danmaq.nineball.struct.CScreen;
 	import danmaq.nineball.struct.font.CFontTransform;
 	import danmaq.nineball.task.*;
+	import danmaq.nineball.task.scene.IScene;
 	
 	import flash.display.*;
 	import flash.events.*;
