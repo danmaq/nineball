@@ -9,7 +9,8 @@
 
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.component;
-using danmaq.nineball.state;
+using danmaq.nineball.entity.manager;
+using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball {
@@ -30,6 +31,17 @@ namespace danmaq.nineball {
 			public CGame() { this.startNineball(); }
 		}
 
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>シーン オブジェクトを取得します。</summary>
+		/// 
+		/// <value>シーン オブジェクト。</value>
+		public static CEntity scene {
+			get { return CStateMainLoopDefault.instance.scene; }
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -38,7 +50,7 @@ namespace danmaq.nineball {
 		/// 
 		/// <returns>グラフィック デバイスの構成・管理クラス。</returns>
 		public static void startNineball() {
-			using( Game game = new CGame() ) { game.Run(); }
+			using( CGame game = new CGame() ) { game.Run(); }
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -64,8 +76,8 @@ namespace danmaq.nineball {
 		public static void startNineball(
 			this Game game, GraphicsDeviceManager graphicsDeviceManager
 		) {
+			CStateMainLoopDefault.instance.graphicsDeviceManager = graphicsDeviceManager;
 			new CDrawableGameComponent<CMainLoop>( game, new CMainLoop( game ) );
-			CMainLoopDefaultState.instance.graphicsDeviceManager = graphicsDeviceManager;
 		}
 
 		//* -----------------------------------------------------------------------*

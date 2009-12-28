@@ -4,7 +4,7 @@
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>danmaq.nineball</RootNamespace>
     <AssemblyName>Nineball</AssemblyName>
@@ -27,7 +27,10 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <StartupObject>danmaq.nineball.CStarter</StartupObject>
+    <StartupObject>
+    </StartupObject>
+    <Thumbnail>_resources\nineball.png</Thumbnail>
+    <ApplicationIcon>_resources\nineball.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,6 +76,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -88,14 +92,19 @@
   <ItemGroup>
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
+    <Compile Include="data\CVolume.cs" />
+    <Compile Include="data\EAlign.cs" />
+    <Compile Include="data\SFontGradationInfo.cs" />
+    <Compile Include="data\SGradation.cs" />
     <Compile Include="entity\component\CGuideManager.cs" />
-    <Compile Include="entity\CMainLoop.cs" />
+    <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
     <Compile Include="entity\component\CDrawableGameComponent.cs" />
     <Compile Include="entity\CEntity.cs" />
     <Compile Include="entity\component\CGameComponent.cs" />
     <Compile Include="entity\IEntity.cs" />
+    <Compile Include="entity\manager\CCoRoutineManager.cs" />
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CMath.cs" />
     <Compile Include="misc\CMisc.cs" />
@@ -107,10 +116,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="state\CMainLoopDefaultState.cs" />
+    <Compile Include="state\manager\CStateMainLoopDefault.cs" />
     <Compile Include="state\CState.cs" />
     <Compile Include="state\CStateGenerics.cs" />
     <Compile Include="state\IState.cs" />
+    <Compile Include="state\manager\CStateGuideHelper.cs" />
+    <Compile Include="state\manager\CStateFPSCalculator.cs" />
+    <Compile Include="util\CLogger.cs" />
+    <Compile Include="util\CMessageBox.cs" />
+    <Compile Include="util\CSprite.cs" />
+    <Compile Include="util\resolution\CResolution.cs" />
+    <Compile Include="util\resolution\CResolutionAspectFix.cs" />
+    <Compile Include="util\resolution\EResolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
@@ -155,10 +172,11 @@
   <ItemGroup>
     <Content Include="HISTORY.txt" />
     <Content Include="README.txt" />
+    <Content Include="_resources\nineball.ico" />
+    <Content Include="_resources\nineball.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="entity\manager\" />
-    <Folder Include="state\manager\" />
+    <Folder Include="example\ball\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

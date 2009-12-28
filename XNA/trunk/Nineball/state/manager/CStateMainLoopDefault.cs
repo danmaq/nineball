@@ -7,21 +7,40 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.nineball.data;
 using danmaq.nineball.entity;
+using danmaq.nineball.entity.component;
+using danmaq.nineball.entity.manager;
+using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
-namespace danmaq.nineball.state {
+#if XBOX360
+using Microsoft.Xna.Framework.GamerServices;
+#endif
+
+namespace danmaq.nineball.state.manager {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>メインループクラス用の既定の状態です。</summary>
-	public sealed class CMainLoopDefaultState : CState<CMainLoop, Game> {
+	public sealed class CStateMainLoopDefault : CState<CMainLoop, Game> {
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CMainLoopDefaultState instance = new CMainLoopDefaultState();
+		public static readonly CStateMainLoopDefault instance = new CStateMainLoopDefault();
+
+		/// <summary>フェーズ・カウンタ進行管理クラス。</summary>
+		public readonly CPhase phase = new CPhase();
+
+		/// <summary>シーン オブジェクト。</summary>
+		public readonly CEntity scene = new CEntity();
+
+		/// <summary>登録されているゲーム コンポーネント一覧。</summary>
+		private readonly Queue<GameComponent> registedGameComponentList =
+			new Queue<GameComponent>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -34,7 +53,7 @@ namespace danmaq.nineball.state {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CMainLoopDefaultState() { }
+		private CStateMainLoopDefault() { }
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -44,6 +63,12 @@ namespace danmaq.nineball.state {
 		/// 
 		/// <value>グラフィック デバイスの構成・管理クラス。</value>
 		public GraphicsDeviceManager graphicsDeviceManager { get; set; }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スプライト描画管理クラスを取得します。</summary>
+		/// 
+		/// <value>スプライト描画管理クラス。</value>
+		public CSprite sprite { get; private set; }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -57,6 +82,17 @@ namespace danmaq.nineball.state {
 		/// <param name="entity">この状態を適用されたオブジェクト。</param>
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		public override void setup( CMainLoop entity, Game game ) {
+			
+#if XBOX360
+			registedGameComponentList.Enqueue(
+				new CGameComponent<CEntity>( game, new CEntity( CStateGuideHelper.instance ) ) );
+			game.Components.Add( new GamerServicesComponent( game ) );
+#endif
+			registedGameComponentList.Enqueue( new CDrawableGameComponent<CEntity>(
+				game, new CEntity( CStateFPSCalculator.instance ) ) );
+			sprite = new CSprite( new SpriteBatch( game.GraphicsDevice ) );
+			game.Content.RootDirectory = "Content";
+			scene.initialize();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -66,6 +102,8 @@ namespace danmaq.nineball.state {
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update( CMainLoop entity, Game game, GameTime gameTime ) {
+			scene.update( gameTime );
+			phase.count++;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -75,10 +113,12 @@ namespace danmaq.nineball.state {
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw( CMainLoop entity, Game game, GameTime gameTime ) {
+			scene.draw( gameTime );
 			GraphicsDevice device = game.GraphicsDevice;
 			device.Clear( colorBack );
 			device.RenderState.DepthBufferEnable = true;
 			device.RenderState.DepthBufferWriteEnable = true;
+			sprite.update();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -92,7 +132,7 @@ namespace danmaq.nineball.state {
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
 			CMainLoop entity, Game game, CState<CMainLoop, Game> nextState
-		) { }
+		) { teardown( game ); }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -105,8 +145,22 @@ namespace danmaq.nineball.state {
 		/// 
 		/// <param name="entity">この状態を終了したオブジェクト。</param>
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( CMainLoop entity, Game game, CState nextState ) {
+		public override void teardown( CMainLoop entity, Game game ) {
+			teardown( game );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>オブジェクトが別の状態へ移行する時に呼び出されます。</summary>
+		/// 
+		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
+		private void teardown( Game game ) {
+			scene.Dispose();
+			sprite.Dispose();
+			while( registedGameComponentList.Count > 0 ) {
+				GameComponent component = registedGameComponentList.Dequeue();
+				component.Dispose();
+				game.Components.Remove( component );
+			}
 		}
 	}
 }

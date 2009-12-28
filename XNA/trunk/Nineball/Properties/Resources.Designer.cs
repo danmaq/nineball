@@ -61,11 +61,29 @@ namespace danmaq.nineball.Properties {
         }
         
         /// <summary>
+        ///   予期しない不具合が発生した為、ゲームを強制終了します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ERR_EXCEPTION {
+            get {
+                return ResourceManager.GetString("ERR_EXCEPTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0}オブジェクトを、2つ以上作ることはできません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ERR_SINGLETON {
             get {
                 return ResourceManager.GetString("ERR_SINGLETON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   danmaq Nineball Library に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NAME {
+            get {
+                return ResourceManager.GetString("NAME", resourceCulture);
             }
         }
     }

@@ -87,8 +87,7 @@ namespace danmaq.nineball.state {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public abstract void teardown( _E entity, _M privateMembers, CState nextState );
+		public abstract void teardown( _E entity, _M privateMembers );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -141,7 +140,7 @@ namespace danmaq.nineball.state {
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public void teardown( IEntity entity, object privateMembers, IState nextState ) {
 			if( nextState == CState.empty ) {
-				teardown( ( _E )entity, ( _M )privateMembers, CState.empty );
+				teardown( ( _E )entity, ( _M )privateMembers );
 			}
 			else{ teardown( ( _E )entity, ( _M )privateMembers, ( CState<_E, _M> )nextState ); }
 		}
