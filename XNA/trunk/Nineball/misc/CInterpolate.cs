@@ -11,7 +11,7 @@ using System;
 using danmaq.nineball.misc;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.data {
+namespace danmaq.nineball.misc {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>内分カウンタ機能の関数集クラス。</summary>

@@ -8,13 +8,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using danmaq.nineball.state;
+using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity {
+namespace danmaq.nineball.entity.manager {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>メインループのゲームコンポーネント クラス。</summary>
 	public sealed class CMainLoop : CEntity {
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>Nineball終了時にアプリケーションも終了するかどうか。</summary>
+		public bool exitOnDispose = true;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -41,10 +48,7 @@ namespace danmaq.nineball.entity {
 		/// 
 		/// <value>次に変化する状態。</value>
 		/// <exception cref="System.ArgumentNullException">
-		/// <para>状態として、nullを設定しようとした場合。</para>
-		/// <para>
-		/// 何もしない状態を設定したい場合、<c>CState.empty</c>を使用します。
-		/// </para>
+		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
 		public new CState<CMainLoop, Game> nextState {
 			set { base.nextState = value; }
@@ -63,8 +67,15 @@ namespace danmaq.nineball.entity {
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
 		public override void initialize() {
-			nextState = danmaq.nineball.state.CMainLoopDefaultState.instance;
+			nextState = CStateMainLoopDefault.instance;
 			base.initialize();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose() {
+			base.Dispose();
+			if( exitOnDispose ) { game.Exit(); }
 		}
 	}
 }

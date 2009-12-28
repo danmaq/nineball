@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ERR_EXCEPTION" xml:space="preserve">
+    <value>予期しない不具合が発生した為、ゲームを強制終了します。</value>
+    <comment>例外発生時</comment>
+  </data>
   <data name="ERR_SINGLETON" xml:space="preserve">
     <value>{0}オブジェクトを、2つ以上作ることはできません。</value>
     <comment>シングルトンクラスを複数個生成しようとした場合</comment>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>danmaq Nineball Library</value>
+    <comment>ライブラリ名</comment>
   </data>
 </root>

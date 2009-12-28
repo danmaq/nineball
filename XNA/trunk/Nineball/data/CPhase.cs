@@ -16,7 +16,7 @@ namespace danmaq.nineball.data {
 	/// <remarks>
 	/// <c>count++</c>を毎フレーム呼ぶことでフレームカウンタとして使うと便利です。
 	/// </remarks>
-	class CPhase : ICloneable {
+	public sealed class CPhase : ICloneable {
 
 		// TODO : phaseのスタック積みできないかなぁ
 
@@ -54,7 +54,6 @@ namespace danmaq.nineball.data {
 		}
 
 		/// <summary>現在のカウント値</summary>
-		/// <remarks>代入すると値の如何に問わずインクリメントします。</remarks>
 		public int count {
 			get { return m_nCount; }
 			set {
