@@ -4,7 +4,7 @@
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>danmaq.nineball</RootNamespace>
     <AssemblyName>Nineball</AssemblyName>
@@ -27,6 +27,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <StartupObject>danmaq.nineball.CStarter</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,15 +86,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="core\CMain.cs" />
+    <Compile Include="data\CValue.cs" />
+    <Compile Include="CStarter.cs" />
+    <Compile Include="entity\component\CGuideManager.cs" />
+    <Compile Include="entity\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
+    <Compile Include="entity\component\CDrawableGameComponent.cs" />
     <Compile Include="entity\CEntity.cs" />
+    <Compile Include="entity\component\CGameComponent.cs" />
     <Compile Include="entity\IEntity.cs" />
-    <Compile Include="entity\manager\CTaskManager.cs" />
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CMath.cs" />
     <Compile Include="misc\CMisc.cs" />
+    <Compile Include="data\CPhase.cs" />
     <Compile Include="misc\CSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -101,7 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\CMainLoopDefaultState.cs" />
     <Compile Include="state\CState.cs" />
+    <Compile Include="state\CStateGenerics.cs" />
     <Compile Include="state\IState.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +157,7 @@
     <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="entity\manager\" />
     <Folder Include="state\manager\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
