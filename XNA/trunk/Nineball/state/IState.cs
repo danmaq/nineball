@@ -31,21 +31,30 @@ namespace danmaq.nineball.state {
 		/// </summary>
 		/// 
 		/// <param name="entity">この状態を適用されたオブジェクト。</param>
-		void setup( CEntity entity );
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		void setup( IEntity entity, object privateMembers );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void update( CEntity entity, GameTime gameTime );
+		void update( IEntity entity, object privateMembers, GameTime gameTime );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void draw( CEntity entity, GameTime gameTime );
+		void draw( IEntity entity, object privateMembers, GameTime gameTime );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -54,7 +63,10 @@ namespace danmaq.nineball.state {
 		/// </summary>
 		/// 
 		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		void teardown( CEntity entity, IState nextState );
+		void teardown( IEntity entity, object privateMembers, IState nextState );
 	}
 }
