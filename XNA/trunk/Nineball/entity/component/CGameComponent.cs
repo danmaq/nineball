@@ -16,7 +16,9 @@ namespace danmaq.nineball.entity.component {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲームコンポーネントと状態を持つオブジェクトとのアダプタ クラス。</summary>
-	public class CGameComponent<_T> : GameComponent, IEntity where _T : IEntity {
+	public class CGameComponent<_T> :
+		GameComponent, IGameComponentWithEntity<_T> where _T : IEntity
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
