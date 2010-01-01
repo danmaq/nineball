@@ -18,7 +18,9 @@ namespace danmaq.nineball.entity.component {
 	/// <summary>
 	/// 描画機能付きゲームコンポーネントと状態を持つオブジェクトとのアダプタ クラス。
 	/// </summary>
-	public class CDrawableGameComponent<_T> : DrawableGameComponent, IEntity where _T : IEntity {
+	public class CDrawableGameComponent<_T> :
+		DrawableGameComponent, IDrawableGameComponentWithEntity<_T> where _T : IEntity
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*

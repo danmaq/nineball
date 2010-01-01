@@ -13,11 +13,48 @@ using danmaq.nineball.entity.manager;
 using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
 
+#if WINDOWS
+using System.Threading;
+using danmaq.nineball.Properties;
+using System;
+#endif
+
 namespace danmaq.nineball {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>Nineballスターター クラス。</summary>
 	public static class CStarter {
+
+#if WINDOWS
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>ミューテックスオブジェクトのラッパー クラス。</summary>
+		private class CMutexObject {
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>ミューテックスオブジェクト。</summary>
+			private readonly Mutex mutex = new Mutex( false, Resources.NAME );
+
+			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* constructor & destructor ───────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>コンストラクタ。</summary>
+			/// 
+			/// <exception cref="System.ApplicationException">多重起動した場合。</exception>
+			public CMutexObject() {
+				if ( !mutex.WaitOne( 0, false ) ) {
+					throw new ApplicationException( "多重起動されました。" + Environment.NewLine +
+						"このアプリケーションは多重起動に対応しておりません。" );
+				}
+			}
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>デストラクタ。</summary>
+			~CMutexObject() { mutex.Close(); }
+		}
+#endif
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>既定のゲーム クラス。</summary>
@@ -30,6 +67,14 @@ namespace danmaq.nineball {
 			/// <summary>コンストラクタ。</summary>
 			public CGame() { this.startNineball(); }
 		}
+
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+#if WINDOWS
+		/// <summary>ミューテックスオブジェクト。</summary>
+		private static readonly CMutexObject mutex = new CMutexObject();
+#endif
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*

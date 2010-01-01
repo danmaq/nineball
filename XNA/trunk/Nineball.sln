@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nineball", "Nineball\Nineball.csproj", "{B61980C5-7B01-4BEA-A1B5-629A25F72661}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample_Ball", "Sample_Ball\Sample_Ball.csproj", "{DAE952F8-000F-487A-9F5B-942D6B26B3E2}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -19,6 +21,12 @@ Global
 		{B61980C5-7B01-4BEA-A1B5-629A25F72661}.Release|x86.Build.0 = Release|x86
 		{904F470F-4DEC-4DF1-B51F-41CF84A41ECC}.Debug|x86.ActiveCfg = Debug|x86
 		{904F470F-4DEC-4DF1-B51F-41CF84A41ECC}.Release|x86.ActiveCfg = Release|x86
+		{DAE952F8-000F-487A-9F5B-942D6B26B3E2}.Debug|x86.ActiveCfg = Debug|x86
+		{DAE952F8-000F-487A-9F5B-942D6B26B3E2}.Debug|x86.Build.0 = Debug|x86
+		{DAE952F8-000F-487A-9F5B-942D6B26B3E2}.Release|x86.ActiveCfg = Release|x86
+		{DAE952F8-000F-487A-9F5B-942D6B26B3E2}.Release|x86.Build.0 = Release|x86
+		{FDAE9B85-A2ED-4295-BBEC-E5E5F864BCAB}.Debug|x86.ActiveCfg = Debug|x86
+		{FDAE9B85-A2ED-4295-BBEC-E5E5F864BCAB}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
