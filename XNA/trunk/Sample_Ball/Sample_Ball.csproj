@@ -103,6 +103,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\scene\CStateCredit.cs" />
+    <Compile Include="state\scene\CStateGame.cs" />
+    <Compile Include="state\scene\CStateInitialize.cs" />
+    <Compile Include="state\scene\CStateTitle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -154,9 +158,6 @@
       <Project>{B61980C5-7B01-4BEA-A1B5-629A25F72661}</Project>
       <Name>Nineball</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="state\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
