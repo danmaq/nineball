@@ -127,8 +127,9 @@ namespace danmaq.nineball {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ここからプログラムが開始されます。</summary>
+		/// <remarks>通常ここが実行されることがありません。</remarks>
 		/// 
-		/// <param name="args">プログラムへ渡される引数</param>
+		/// <param name="args">プログラムへ渡される引数。</param>
 		private static void Main( string[] args ) { startNineball(); }
 	}
 }
