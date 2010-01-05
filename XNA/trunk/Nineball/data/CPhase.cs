@@ -43,7 +43,10 @@ namespace danmaq.nineball.data {
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
-		/// <summary>現在のフェーズ値</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在のフェーズ値を設定/取得します。</summary>
+		/// 
+		/// <value>現在のフェーズ値。</value>
 		public int phase {
 			get { return m_nPhase; }
 			set {
@@ -53,7 +56,10 @@ namespace danmaq.nineball.data {
 			}
 		}
 
-		/// <summary>現在のカウント値</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在のカウント値を設定/取得します。</summary>
+		/// 
+		/// <value>現在のカウント値。</value>
 		public int count {
 			get { return m_nCount; }
 			set {
@@ -65,21 +71,33 @@ namespace danmaq.nineball.data {
 			}
 		}
 
-		/// <summary>現在のフェーズが開始された時のカウント値</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在のフェーズが開始された時のカウント値を取得します。</summary>
+		/// 
+		/// <value>現在のフェーズが開始された時のカウント値。</value>
 		public int phaseStartTime { get; private set; }
 
-		/// <summary>現在のフェーズ内のカウント値</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在のフェーズ内のカウント値を取得します。</summary>
+		/// 
+		/// <value>現在のフェーズ内のカウント値。</value>
 		public int countPhase {
 			get { return count - phaseStartTime; }
 		}
 
-		/// <summary>カウント変化時にフェーズを進めるかどうか</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>カウント変化時にフェーズを進めるかどうかを設定/取得します。</summary>
+		/// 
+		/// <value>カウント変化時にフェーズを進める場合、<c>true</c>。</value>
 		public bool reserveNextPhase {
 			get { return ( nextPhase >= 0 ); }
 			set { nextPhase = ( value ? phase + 1 : -1 ); }
 		}
 
-		/// <summary>前回のフェーズ値</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>前回のフェーズ値を取得します。</summary>
+		/// 
+		/// <value>前回のフェーズ値。</value>
 		public int prevPhase { get; private set; }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

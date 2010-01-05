@@ -33,7 +33,12 @@ namespace danmaq.nineball.util {
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
-		/// <summary>タイトルバーに表示するアプリケーション タイトル。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// タイトルバーに表示するアプリケーション タイトルを設定/取得します。
+		/// </summary>
+		/// 
+		/// <value>アプリケーション タイトル文字列。</value>
 		public static string titleBar {
 			get { return m_strTitleBar; }
 			set {

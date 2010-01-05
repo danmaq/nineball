@@ -44,7 +44,10 @@ namespace danmaq.nineball.util {
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
-		/// <summary>現在時間文字列。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在時間文字列を取得します。</summary>
+		/// 
+		/// <value>現在時間文字列。</value>
 		public static string now {
 			get {
 				DateTime time = DateTime.Now;
@@ -53,13 +56,16 @@ namespace danmaq.nineball.util {
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
 		/// <summary>
-		/// <para>出力先ファイル名。</para>
+		/// <para>出力先ファイル名を設定/取得します。</para>
 		/// <para>空文字やNULLを設定するとデフォルトの標準出力先に戻ります。</para>
 		/// </summary>
 		/// <remarks>
 		/// 現在のバージョンではXBOX360は標準出力以外は無視されます。
 		/// </remarks>
+		/// 
+		/// <value>出力先ファイル名。</value>
 		public static string outFile {
 			get { return m_strOutFile; }
 			set {
