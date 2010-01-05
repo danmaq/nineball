@@ -16,6 +16,8 @@ namespace danmaq.nineball.entity.component {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲームコンポーネントと状態を持つオブジェクトとのアダプタ クラス。</summary>
+	/// 
+	/// <typeparam name="_T">状態を持つオブジェクト型。</typeparam>
 	public class CGameComponent<_T> :
 		GameComponent, IGameComponentWithEntity<_T> where _T : IEntity
 	{
@@ -34,9 +36,10 @@ namespace danmaq.nineball.entity.component {
 		/// 
 		/// <param name="game">ゲーム コンポーネントをアタッチするゲーム。</param>
 		/// <param name="entity">状態を持つオブジェクト。</param>
-		public CGameComponent( Game game, _T entity ) : base( game ) {
+		/// <param name="bDirectRegist">ゲーム コンポーネントを直接登録するかどうか。</param>
+		public CGameComponent( Game game, _T entity, bool bDirectRegist ) : base( game ) {
 			this.entity = entity;
-			game.Components.Add( this );
+			if( bDirectRegist ) { game.Components.Add( this ); }
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

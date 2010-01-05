@@ -59,6 +59,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
+    <DocumentationFile>bin\x86\Release\Nineball.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
@@ -94,7 +95,8 @@
     <Compile Include="CStarter.cs" />
     <Compile Include="data\CVolume.cs" />
     <Compile Include="data\EAlign.cs" />
-    <Compile Include="data\SFontGradationInfo.cs" />
+    <Compile Include="entity\fonts\CFont.cs" />
+    <Compile Include="entity\fonts\SFontGradationInfo.cs" />
     <Compile Include="data\SGradation.cs" />
     <Compile Include="entity\component\CGuideManager.cs" />
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
@@ -117,7 +119,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\fonts\CStateFont.cs" />
+    <Compile Include="state\fonts\CStateFontGradation.cs" />
     <Compile Include="state\IStateGenerics.cs" />
+    <Compile Include="state\manager\CStateLoadManager.cs" />
     <Compile Include="state\manager\CStateMainLoopDefault.cs" />
     <Compile Include="state\CState.cs" />
     <Compile Include="state\CStateGenerics.cs" />
@@ -125,9 +130,11 @@
     <Compile Include="state\manager\CStateGuideHelper.cs" />
     <Compile Include="state\manager\CStateFPSCalculator.cs" />
     <Compile Include="state\misc\CStateCapsXNA.cs" />
+    <Compile Include="util\collection\CDisposablePartialCollection.cs" />
     <Compile Include="util\CLogger.cs" />
     <Compile Include="util\CMessageBox.cs" />
     <Compile Include="util\CSprite.cs" />
+    <Compile Include="util\collection\CPartialCollection.cs" />
     <Compile Include="util\resolution\CResolution.cs" />
     <Compile Include="util\resolution\CResolutionAspectFix.cs" />
     <Compile Include="util\resolution\EResolution.cs" />

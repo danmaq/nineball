@@ -58,6 +58,7 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		public void setup( IEntity entity, object privateMembers ) {
 			CLogger.add( "クレジット画面シーンを開始します。" );
+			coRoutineManager.initialize();
 			coRoutineManager.add( coAlpha() );
 		}
 

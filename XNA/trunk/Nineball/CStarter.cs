@@ -122,7 +122,7 @@ namespace danmaq.nineball {
 			this Game game, GraphicsDeviceManager graphicsDeviceManager
 		) {
 			CStateMainLoopDefault.instance.graphicsDeviceManager = graphicsDeviceManager;
-			new CDrawableGameComponent<CMainLoop>( game, new CMainLoop( game ) );
+			new CDrawableGameComponent<CMainLoop>( game, new CMainLoop( game ), true );
 		}
 
 		//* -----------------------------------------------------------------------*

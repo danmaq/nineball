@@ -15,6 +15,8 @@ using danmaq.nineball.entity.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using danmaq.nineball.util.collection;
+using System;
 
 #if XBOX360
 using Microsoft.Xna.Framework.GamerServices;
@@ -37,10 +39,6 @@ namespace danmaq.nineball.state.manager {
 
 		/// <summary>シーン オブジェクト。</summary>
 		public readonly CEntity scene = new CEntity();
-
-		/// <summary>登録されているゲーム コンポーネント一覧。</summary>
-		private readonly Queue<GameComponent> registedGameComponentList =
-			new Queue<GameComponent>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -70,6 +68,20 @@ namespace danmaq.nineball.state.manager {
 		/// <value>スプライト描画管理クラス。</value>
 		public CSprite sprite { get; private set; }
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>オブジェクトにアタッチされたゲームを取得します。</summary>
+		/// 
+		/// <value>オブジェクトにアタッチされたゲーム。</value>
+		public Game game { get; private set; }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>登録されているゲーム コンポーネント一覧を取得します。</summary>
+		/// 
+		/// <value>登録されているゲーム コンポーネント一覧。</value>
+		public CDisposablePartialCollection<IGameComponent, GameComponent> registedGameComponentList {
+			get; private set;
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -82,15 +94,17 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="entity">この状態を適用されたオブジェクト。</param>
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		public override void setup( CMainLoop entity, Game game ) {
-			
+			registedGameComponentList =
+				new CDisposablePartialCollection<IGameComponent, GameComponent>( game.Components );
 #if XBOX360
-			registedGameComponentList.Enqueue(
-				new CGameComponent<CEntity>( game, new CEntity( CStateGuideHelper.instance ) ) );
-			game.Components.Add( new GamerServicesComponent( game ) );
+			registedGameComponentList.Add( new GamerServicesComponent( game ) );
+			registedGameComponentList.Add(
+				new CGameComponent<CEntity>( game, new CEntity( CStateGuideHelper.instance ), false ) );
 #endif
-			registedGameComponentList.Enqueue( new CDrawableGameComponent<CEntity>(
-				game, new CEntity( CStateFPSCalculator.instance ) ) );
+			registedGameComponentList.Add( new CDrawableGameComponent<CEntity>(
+				game, new CEntity( CStateFPSCalculator.instance ), false ) );
 			sprite = new CSprite( new SpriteBatch( game.GraphicsDevice ) );
+			this.game = game;
 			game.Content.RootDirectory = "Content";
 			scene.initialize();
 			base.setup( entity, game );
@@ -163,11 +177,7 @@ namespace danmaq.nineball.state.manager {
 		private void teardown( Game game ) {
 			scene.Dispose();
 			sprite.Dispose();
-			while( registedGameComponentList.Count > 0 ) {
-				GameComponent component = registedGameComponentList.Dequeue();
-				component.Dispose();
-				game.Components.Remove( component );
-			}
+			registedGameComponentList.Dispose();
 		}
 	}
 }

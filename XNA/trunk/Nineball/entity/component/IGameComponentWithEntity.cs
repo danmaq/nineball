@@ -19,6 +19,8 @@ namespace danmaq.nineball.entity.component {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲームコンポーネントと状態を持つオブジェクトのインターフェイス。</summary>
+	/// 
+	/// <typeparam name="_T">状態を持つオブジェクト型。</typeparam>
 	public interface IGameComponentWithEntity<_T> : IGameComponentWithEntity where _T : IEntity {
 	}
 
@@ -29,6 +31,8 @@ namespace danmaq.nineball.entity.component {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲームコンポーネントと状態を持つオブジェクトのインターフェイス。</summary>
+	/// 
+	/// <typeparam name="_T">状態を持つオブジェクト型。</typeparam>
 	public interface IDrawableGameComponentWithEntity<_T> :
 		IGameComponentWithEntity<_T>, IDrawableGameComponentWithEntity where _T : IEntity
 	{ }

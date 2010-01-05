@@ -19,13 +19,53 @@ namespace danmaq.ball.state.scene {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>初期化シーン。</summary>
-	public sealed class CStateInitialize : CState {
+	public sealed class CStateInitialize : IState {
+
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>ローダ クラス。</summary>
+		private sealed class CStateLoader : CStateLoadManager {
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>クラス オブジェクト。</summary>
+			public static readonly CStateLoader instance = new CStateLoader();
+
+			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* constructor & destructor ───────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>コンストラクタ。</summary>
+			private CStateLoader() : base( CStateMainLoopDefault.instance.game.Content ) {
+				// TODO : 読み込むファイルを指定する
+			}
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>アセットを読み込み終えた場合に呼び出されるメソッドです。</summary>
+			/// 
+			/// <param name="entity">この状態を適用されているオブジェクト。</param>
+			/// <param name="privateMembers">
+			/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+			/// </param>
+			protected override void onLoaded( IEntity entity, object privateMembers ) {
+				entity.nextState = empty;
+			}
+		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateInitialize instance = new CStateInitialize();
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>ローダ オブジェクト。</summary>
+		private readonly CEntity loader = new CEntity();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -47,10 +87,11 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( IEntity entity, object privateMembers ) {
-			base.setup( entity, privateMembers );
+		public void setup( IEntity entity, object privateMembers ) {
 			CLogger.add( "初期化シーンを開始します。" );
 			CStateMainLoopDefault.instance.colorBack = Color.Black;
+			loader.initialize();
+			loader.nextState = CStateLoader.instance;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -61,9 +102,21 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.update( entity, privateMembers, gameTime );
-			entity.nextState = CStateCredit.instance;
+		public void update( IEntity entity, object privateMembers, GameTime gameTime ) {
+			loader.update( gameTime );
+			if( loader.currentState == CState.empty ) { entity.nextState = CStateCredit.instance; }
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
+			loader.draw( gameTime );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -77,9 +130,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( IEntity entity, object privateMembers, IState nextState ) {
-			base.teardown( entity, privateMembers, nextState );
+		public void teardown( IEntity entity, object privateMembers, IState nextState ) {
 			CLogger.add( "初期化シーンを終了します。" );
+			loader.Dispose();
 		}
 	}
 }
