@@ -78,6 +78,16 @@ namespace danmaq.nineball.entity.manager {
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>無限ループ用コルーチンです。</summary>
+		/// 
+		/// <returns>null</returns>
+		public static IEnumerator coEternalWait {
+			get {
+				while( true ) { yield return null; }
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンの件数を取得します。</summary>
 		/// 
 		/// <value>コルーチンの件数</value>
@@ -104,13 +114,11 @@ namespace danmaq.nineball.entity.manager {
 		public static implicit operator int( CCoRoutineManager m ) { return m.count; }
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>無限ループ用コルーチンです。</summary>
-		/// 
-		/// <returns>null</returns>
-		public static IEnumerator coEternalWait {
-			get {
-				while( true ) { yield return null; }
-			}
+		/// <summary>コルーチンの全削除を予約します。</summary>
+		public override void Dispose() {
+			remove();
+			commitQueue();
+			base.Dispose();
 		}
 
 		//* -----------------------------------------------------------------------*

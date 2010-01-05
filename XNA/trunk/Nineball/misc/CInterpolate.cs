@@ -21,90 +21,232 @@ namespace danmaq.nineball.misc {
 		//* constants ──────────────────────────────-*
 
 		/// <summary>等速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> amountSmooth = ( fNow, fLimit ) =>
-			fNow / fLimit;
+		public static readonly Func<float, float, float> _amountSmooth = ( fTarget, fLimit ) =>
+			fTarget / fLimit;
 
 		/// <summary>加速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> amountSlowdown = ( fNow, fLimit ) =>
-			1 - ( float )Math.Pow( 1 - fNow / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountSlowdown = ( fTarget, fLimit ) =>
+			1 - ( float )Math.Pow( 1 - fTarget / fLimit, 2 );
 
 		/// <summary>減速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> amountAccelerate = ( fNow, fLimit ) =>
-			( float )Math.Pow( fNow / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountAccelerate = ( fTarget, fLimit ) =>
+			( float )Math.Pow( fTarget / fLimit, 2 );
 
 		/// <summary>等速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> amountLoopSmooth = ( fNow, fLimit ) =>
-			CMisc.clampLoop( fNow, 0, fLimit ) / fLimit;
+		public static readonly Func<float, float, float> _amountLoopSmooth = ( fTarget, fLimit ) =>
+			CMisc.clampLoop( fTarget, 0, fLimit ) / fLimit;
 
 		/// <summary>加速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> amountLoopSlowdown = ( fNow, fLimit ) =>
-			1 - ( float )Math.Pow( 1 - CMisc.clampLoop( fNow, 0, fLimit ) / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountLoopSlowdown = ( fTarget, fLimit ) =>
+			1 - ( float )Math.Pow( 1 - CMisc.clampLoop( fTarget, 0, fLimit ) / fLimit, 2 );
 
 		/// <summary>減速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> amountLoopAccelerate = ( fNow, fLimit ) =>
-			( float )Math.Pow( CMisc.clampLoop( fNow, 0, fLimit ) / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountLoopAccelerate = ( fTarget, fLimit ) =>
+			( float )Math.Pow( CMisc.clampLoop( fTarget, 0, fLimit ) / fLimit, 2 );
 
 		/// <summary>範囲丸め込み付きの線形補完。</summary>
-		public static readonly Func<float, float, float, float> clampLerp =
+		public static readonly Func<float, float, float, float> _clampLerp =
 			( fStart, fEnd, fAmount ) =>
 				MathHelper.Clamp( MathHelper.Lerp( fStart, fEnd, fAmount ), fStart, fEnd );
 
 		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> clampSmooth =
+		public static readonly Func<float, float, float, float, float> _clampSmooth =
 			( fStart, fEnd, fNow, fLimit ) =>
-				clampLerp( fStart, fEnd, amountSmooth( fNow, fLimit ) );
+				_clampLerp( fStart, fEnd, _amountSmooth( fNow, fLimit ) );
 
 		/// <summary>範囲丸め込み付きの減速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> clampSlowdown =
+		public static readonly Func<float, float, float, float, float> _clampSlowdown =
 			( fStart, fEnd, fNow, fLimit ) =>
-				clampLerp( fStart, fEnd, amountSlowdown( fNow, fLimit ) );
+				_clampLerp( fStart, fEnd, _amountSlowdown( fNow, fLimit ) );
 
 		/// <summary>範囲丸め込み付きの加速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> clampAccelerate =
+		public static readonly Func<float, float, float, float, float> _clampAccelerate =
 			( fStart, fEnd, fNow, fLimit ) =>
-				clampLerp( fStart, fEnd, amountAccelerate( fNow, fLimit ) );
+				_clampLerp( fStart, fEnd, _amountAccelerate( fNow, fLimit ) );
 
 		/// <summary>範囲丸め込み付きの加速→減速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> clampSlowFastSlow =
+		public static readonly Func<float, float, float, float, float> _clampSlowFastSlow =
 			( fStart, fEnd, fNow, fLimit ) => {
 				if( fNow <= 0.0f ) { return fStart; }
 				if( fNow >= fLimit ) { return fEnd; }
 				float fCenter = MathHelper.Lerp( fStart, fEnd, 0.5f );
 				float fHalfLimit = fLimit * 0.5f;
 				return fNow < fHalfLimit ?
-					MathHelper.Lerp( fStart, fCenter, amountAccelerate( fNow, fHalfLimit ) ) :
-					MathHelper.Lerp( fCenter, fEnd, amountSlowdown( fNow - fHalfLimit, fHalfLimit ) );
+					MathHelper.Lerp( fStart, fCenter, _amountAccelerate( fNow, fHalfLimit ) ) :
+					MathHelper.Lerp( fCenter, fEnd, _amountSlowdown( fNow - fHalfLimit, fHalfLimit ) );
 			};
 
 		/// <summary>範囲丸め込み付きの減速→加速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> clampFastSlowFast =
+		public static readonly Func<float, float, float, float, float> _clampFastSlowFast =
 			( fStart, fEnd, fNow, fLimit ) => {
 				if( fNow <= 0.0f ) { return fStart; }
 				if( fNow >= fLimit ) { return fEnd; }
 				float fCenter = MathHelper.Lerp( fStart, fEnd, 0.5f );
 				float fHalfLimit = fLimit * 0.5f;
 				return fNow < fHalfLimit ?
-					MathHelper.Lerp( fStart, fCenter, amountSlowdown( fNow, fHalfLimit ) ) :
-					MathHelper.Lerp( fCenter, fEnd, amountAccelerate( fNow - fHalfLimit, fHalfLimit ) );
+					MathHelper.Lerp( fStart, fCenter, _amountSlowdown( fNow, fHalfLimit ) ) :
+					MathHelper.Lerp( fCenter, fEnd, _amountAccelerate( fNow - fHalfLimit, fHalfLimit ) );
 			};
 
 		/// <summary>範囲ループ付きの等速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> loopSmooth =
+		public static readonly Func<float, float, float, float, float> _loopSmooth =
 			( fStart, fEnd, fNow, fLimit ) =>
-				MathHelper.Lerp( fStart, fEnd, amountLoopSmooth( fNow, fLimit ) );
+				MathHelper.Lerp( fStart, fEnd, _amountLoopSmooth( fNow, fLimit ) );
 
 		/// <summary>範囲ループ付きの減速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> loopSlowdown =
+		public static readonly Func<float, float, float, float, float> _loopSlowdown =
 			( fStart, fEnd, fNow, fLimit ) =>
-				MathHelper.Lerp( fStart, fEnd, amountLoopSlowdown( fNow, fLimit ) );
+				MathHelper.Lerp( fStart, fEnd, _amountLoopSlowdown( fNow, fLimit ) );
 
 		/// <summary>範囲ループ付きの加速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> loopAccelerate =
+		public static readonly Func<float, float, float, float, float> _loopAccelerate =
 			( fStart, fEnd, fNow, fLimit ) =>
-				MathHelper.Lerp( fStart, fEnd, amountLoopAccelerate( fNow, fLimit ) );
+				MathHelper.Lerp( fStart, fEnd, _amountLoopAccelerate( fNow, fLimit ) );
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ等分で置換します。
+		/// </summary>
+		/// 
+		/// <param name="fTarget">対象の値。</param>
+		/// <param name="fLimit">
+		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountSmooth( float fTarget, float fLimit ) {
+			return _amountSmooth( fTarget, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>1.0</c>にやや重みを置いて置換します。
+		/// </summary>
+		/// 
+		/// <param name="fTarget">対象の値。</param>
+		/// <param name="fLimit">
+		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountSlowdown( float fTarget, float fLimit ) {
+			return _amountSlowdown( fTarget, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>0.0</c>にやや重みを置いて置換します。
+		/// </summary>
+		/// 
+		/// <param name="fTarget">対象の値。</param>
+		/// <param name="fLimit">
+		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountAccelerate( float fTarget, float fLimit ) {
+			return _amountAccelerate( fTarget, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ等分で置換します。
+		/// </para>
+		/// <para>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの範囲を超過した場合、ループします。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="fTarget">対象の値。</param>
+		/// <param name="fLimit">
+		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountLoopSmooth( float fTarget, float fLimit ) {
+			return _amountLoopSmooth( fTarget, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>1.0</c>にやや重みを置いて置換します。
+		/// </para>
+		/// <para>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの範囲を超過した場合、ループします。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="fTarget">対象の値。</param>
+		/// <param name="fLimit">
+		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountLoopSlowdown( float fTarget, float fLimit ) {
+			return _amountLoopSlowdown( fTarget, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>0.0</c>にやや重みを置いて置換します。
+		/// </para>
+		/// <para>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの範囲を超過した場合、ループします。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="fTarget">対象の値。</param>
+		/// <param name="fLimit">
+		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountLoopAccelerate( float fTarget, float fLimit ) {
+			return _amountLoopAccelerate( fTarget, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="fAmount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="fValue1">ソース値。</param>
+		/// <param name="fValue2">ソース値。</param>
+		/// <param name="fAmount">
+		/// <paramref name="fValue2"/>の重みを示す<c>0.0</c>から<c>1.0</c>までの値。
+		/// </param>
+		/// <returns>補完された値。</returns>
+		public static float clampLerp( float fValue1, float fValue2, float fAmount ) {
+			return _clampLerp( fValue1, fValue2, fAmount );
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ネヴィル曲線を計算します。</summary>

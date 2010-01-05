@@ -75,6 +75,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
@@ -116,6 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="state\manager\CStateMainLoopDefault.cs" />
     <Compile Include="state\CState.cs" />
     <Compile Include="state\CStateGenerics.cs" />

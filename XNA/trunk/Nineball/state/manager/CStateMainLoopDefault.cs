@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.component;
@@ -14,7 +15,6 @@ using danmaq.nineball.entity.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 #if XBOX360
 using Microsoft.Xna.Framework.GamerServices;
@@ -93,6 +93,7 @@ namespace danmaq.nineball.state.manager {
 			sprite = new CSprite( new SpriteBatch( game.GraphicsDevice ) );
 			game.Content.RootDirectory = "Content";
 			scene.initialize();
+			base.setup( entity, game );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -104,6 +105,7 @@ namespace danmaq.nineball.state.manager {
 		public override void update( CMainLoop entity, Game game, GameTime gameTime ) {
 			scene.update( gameTime );
 			phase.count++;
+			base.update( entity, game, gameTime );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -119,6 +121,7 @@ namespace danmaq.nineball.state.manager {
 			device.RenderState.DepthBufferEnable = true;
 			device.RenderState.DepthBufferWriteEnable = true;
 			sprite.update();
+			base.draw( entity, game, gameTime );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -131,8 +134,11 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CMainLoop entity, Game game, CState<CMainLoop, Game> nextState
-		) { teardown( game ); }
+			CMainLoop entity, Game game, IState<CMainLoop, Game> nextState
+		) {
+			teardown( game );
+			base.teardown( entity, game, nextState );
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -147,6 +153,7 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		public override void teardown( CMainLoop entity, Game game ) {
 			teardown( game );
+			base.teardown( entity, game );
 		}
 
 		//* -----------------------------------------------------------------------*

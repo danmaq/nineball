@@ -12,8 +12,8 @@
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>cd7336c2-d66e-4075-bcbe-ad6814b995b9</XnaCrossPlatformGroupID>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>_resources\ball.ico</ApplicationIcon>
+    <Thumbnail>_resources\ball.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -109,9 +109,9 @@
     <Compile Include="state\scene\CStateTitle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
     <Content Include="HISTORY.txt" />
+    <Content Include="_resources\ball.ico" />
+    <Content Include="_resources\ball.png" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

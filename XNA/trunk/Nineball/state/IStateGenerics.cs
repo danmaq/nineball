@@ -1,36 +1,30 @@
 ﻿////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //
-//	danmaq Nineball-Library SAMPLE PROGRAM #1
-//	赤い玉 青い玉 競走ゲーム
-//		Copyright (c) 1994-2010 danmaq all rights reserved.
+//	danmaq Nineball-Library
+//		Copyright (c) 2008-2010 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 using danmaq.nineball.entity;
-using danmaq.nineball.state;
-using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.state.scene {
+namespace danmaq.nineball.state {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>ゲーム画面シーン。</summary>
-	public sealed class CStateGame : IState {
-
-		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* constants ──────────────────────────────-*
-
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateGame instance = new CStateGame();
-
-		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* constructor & destructor ───────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
-		private CStateGame() { }
+	/// <summary>
+	/// <para>状態表現のための空の基底クラス。</para>
+	/// <para>
+	/// これを継承するか、<c>IState</c>を実装することで、状態を表現することが出来ます。
+	/// </para>
+	/// </summary>
+	/// 
+	/// <typeparam name="_E">この状態を設定できる対象オブジェクト。</typeparam>
+	/// <typeparam name="_M">
+	/// オブジェクトと状態クラスのみがアクセス可能なフィールドの型。
+	/// </typeparam>
+	public interface IState<_E, _M> : IState where _E : IEntity {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -42,9 +36,7 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public void setup( IEntity entity, object privateMembers ) {
-			CLogger.add( "ゲーム画面シーンを開始します。" );
-		}
+		void setup( _E entity, _M privateMembers );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
@@ -54,9 +46,7 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			entity.nextState = CStateTitle.instance;
-		}
+		void update( _E entity, _M privateMembers, GameTime gameTime );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
@@ -66,8 +56,7 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
-		}
+		void draw( _E entity, _M privateMembers, GameTime gameTime );
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -80,8 +69,22 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public void teardown( IEntity entity, object privateMembers, IState nextState ) {
-			CLogger.add( "ゲーム画面シーンを終了します。" );
-		}
+		void teardown( _E entity, _M privateMembers, IState<_E, _M> nextState );
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>オブジェクトが<c>CState.empty</c>へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// <remarks>
+		/// このメソッドが呼び出された時は、通常オブジェクトが終了したことを意味します。
+		/// </remarks>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		void teardown( _E entity, _M privateMembers );
+
 	}
 }

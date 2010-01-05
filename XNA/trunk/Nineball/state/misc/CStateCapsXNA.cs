@@ -30,6 +30,18 @@ namespace danmaq.nineball.state.misc {
 		private readonly List<PlayerIndex> connectedXBOX360ControllersList =
 			new List<PlayerIndex>( 4 );
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>
+		/// <para>次に移行する状態。</para>
+		/// <para>
+		/// 呼び出し時にリセットされますので、この状態を
+		/// 適用する際に毎回設定し直す必要があります。
+		/// </para>
+		/// </summary>
+		public IState nextState = empty;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -73,6 +85,7 @@ namespace danmaq.nineball.state.misc {
 		/// </param>
 		public override void setup( IEntity entity, object privateMembers ) {
 			report = createReport();
+			base.setup( entity, privateMembers );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -84,7 +97,8 @@ namespace danmaq.nineball.state.misc {
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			entity.nextState = empty;
+			entity.nextState = nextState;
+			nextState = empty;
 			base.update( entity, privateMembers, gameTime );
 		}
 
@@ -93,11 +107,14 @@ namespace danmaq.nineball.state.misc {
 		private string createReport() {
 			string strResult = "◆◆◆ DirectX環境情報" + Environment.NewLine;
 			foreach ( GraphicsAdapter adapter in GraphicsAdapter.Adapters ) {
+				bool bCurrentDevice;
 				ShaderProfile ps;
 				ShaderProfile vs;
-				strResult += adapter.createCapsReport( out ps, out vs ) + Environment.NewLine;
-				if ( ps >= PixelShaderProfile ) { PixelShaderProfile = ps; }
-				if ( vs >= VertexShaderProfile ) { VertexShaderProfile = vs; }
+				strResult += adapter.createCapsReport( out bCurrentDevice, out ps, out vs ) + Environment.NewLine;
+				if( bCurrentDevice ) {
+					PixelShaderProfile = ps;
+					VertexShaderProfile = vs;
+				}
 			}
 			try {
 				PlayerIndex[] all = {
@@ -129,10 +146,12 @@ namespace danmaq.nineball.state.misc {
 		/// <summary>グラフィック アダプタの環境レポートを作成します。</summary>
 		/// 
 		/// <param name="adapter">グラフィック アダプタ オブジェクト</param>
+		/// <param name="bCurrentDevice">既定のデバイスかどうか</param>
 		/// <param name="ps">ピクセル シェーダの対応バージョン</param>
 		/// <param name="vs">頂点シェーダの対応バージョン</param>
 		/// <returns>グラフィック アダプタの環境レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsAdapter adapter, out ShaderProfile ps, out ShaderProfile vs ) {
+		public static string createCapsReport( this GraphicsAdapter adapter, out bool bCurrentDevice, out ShaderProfile ps, out ShaderProfile vs ) {
+			bCurrentDevice = adapter.IsDefaultAdapter;
 			string strResult = "◎◎ グラフィック デバイス " + adapter.DeviceName + Environment.NewLine;
 			strResult += "▽ グラフィック デバイス環境情報一覧" + Environment.NewLine;
 			strResult += "  現在の画面モード     : " + adapter.CurrentDisplayMode.ToString() + Environment.NewLine;
@@ -144,7 +163,7 @@ namespace danmaq.nineball.state.misc {
 			strResult += "  サブシステム 識別ID  : " + adapter.SubSystemId + Environment.NewLine;
 			strResult += "  ドライバ ファイル名  : " + adapter.DriverDll + Environment.NewLine;
 			strResult += "  ドライバ バージョン  : " + adapter.DriverVersion.ToString() + Environment.NewLine;
-			strResult += "  デフォルト デバイス  : " + adapter.IsDefaultAdapter.ToStringOX() + Environment.NewLine;
+			strResult += "  デフォルト デバイス  : " + bCurrentDevice.ToStringOX() + Environment.NewLine;
 			strResult += "  ワイド画面 サポート  : " + adapter.IsWideScreen.ToStringOX() + Environment.NewLine;
 			strResult += "  対応画面モード一覧   : " + Environment.NewLine;
 			foreach ( DisplayMode mode in adapter.SupportedDisplayModes ) {
