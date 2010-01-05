@@ -50,7 +50,7 @@ namespace danmaq.nineball.entity.manager {
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
-		public new CState<CMainLoop, Game> nextState {
+		public new IState<CMainLoop, Game> nextState {
 			set { base.nextState = value; }
 		}
 

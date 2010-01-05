@@ -166,7 +166,7 @@ namespace danmaq.nineball.data {
 		/// <returns>補完値</returns>
 		public float smooth( int nNow, int nSize ) {
 			if( limit1 == limit2 ) { return limit1; }
-			return MathHelper.Clamp( CInterpolate.clampSmooth( start, end, nNow, nSize ),
+			return MathHelper.Clamp( CInterpolate._clampSmooth( start, end, nNow, nSize ),
 				MathHelper.Min( limit1, limit2 ), MathHelper.Max( limit1, limit2 ) );
 		}
 

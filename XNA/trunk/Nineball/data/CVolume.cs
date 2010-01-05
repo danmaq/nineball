@@ -65,8 +65,8 @@ namespace danmaq.nineball.data {
 		public float dB {
 			get {
 				return ( volume > 1 ?
-					CInterpolate.clampSmooth( 0, 6, volume - 1, 1 ) :
-					CInterpolate.clampSlowdown( -96, 0, volume, 1 ) );
+					CInterpolate._clampSmooth( 0, 6, volume - 1, 1 ) :
+					CInterpolate._clampSlowdown( -96, 0, volume, 1 ) );
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace danmaq.nineball.data {
 			string strDB = String.Format( "{0:+0.0;-0.0;0}dB", dB );
 			if( bSlider ) {
 				char[] szVolume = new string( '・', 10 ).ToCharArray();
-				szVolume[( int )MathHelper.Min( CInterpolate.clampSmooth( 0, 10, volume, 2 ), 9 )] = '◆';
+				szVolume[( int )MathHelper.Min( CInterpolate._clampSmooth( 0, 10, volume, 2 ), 9 )] = '◆';
 				strResult += new string( szVolume ) + Environment.NewLine;
 				strDB = string.Format( "({0})", strDB );
 			}
