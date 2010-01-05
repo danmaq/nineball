@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.nineball.misc;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.misc {
@@ -246,6 +245,138 @@ namespace danmaq.nineball.misc {
 		/// <returns>補完された値。</returns>
 		public static float clampLerp( float fValue1, float fValue2, float fAmount ) {
 			return _clampLerp( fValue1, fValue2, fAmount );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>等速変化する内分カウンタです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float clampSmooth( float fStart, float fEnd, float fNow, float fLimit ) {
+			return _clampSmooth( fStart, fEnd, fNow, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>減速変化する内分カウンタです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float clampSlowdown( float fStart, float fEnd, float fNow, float fLimit ) {
+			return _clampSlowdown( fStart, fEnd, fNow, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>加速変化する内分カウンタです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float clampAccelerate( float fStart, float fEnd, float fNow, float fLimit ) {
+			return _clampAccelerate( fStart, fEnd, fNow, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>
+		/// 加速変化→減速変化を組み合わせ、スプラインの
+		/// ような動きを模する内分カウンタです。
+		/// </para>
+		/// <para>低速→高速→低速と変化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float clampSlowFastSlow(
+			float fStart, float fEnd, float fNow, float fLimit
+		) { return _clampSlowFastSlow( fStart, fEnd, fNow, fLimit ); }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>
+		/// 減速変化→加速変化を組み合わせ、スプラインの
+		/// ような動きを模する内分カウンタです。
+		/// </para>
+		/// <para>高速→低速→高速と変化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float clampFastSlowFast(
+			float fStart, float fEnd, float fNow, float fLimit
+		) { return _clampFastSlowFast( fStart, fEnd, fNow, fLimit ); }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>等速変化でループする内分カウンタです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float loopSmooth( float fStart, float fEnd, float fNow, float fLimit ) {
+			return _loopSmooth( fStart, fEnd, fNow, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>減速変化でループする内分カウンタです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float loopSlowdown( float fStart, float fEnd, float fNow, float fLimit ) {
+			return _loopSlowdown( fStart, fEnd, fNow, fLimit );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>加速変化でループする内分カウンタです。</summary>
+		/// 
+		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
+		/// <param name="fNow">現在時間</param>
+		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
+		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// </returns>
+		public static float loopAccelerate( float fStart, float fEnd, float fNow, float fLimit ) {
+			return _loopAccelerate( fStart, fEnd, fNow, fLimit );
 		}
 
 		//* -----------------------------------------------------------------------*

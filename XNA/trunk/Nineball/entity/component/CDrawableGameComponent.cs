@@ -18,6 +18,8 @@ namespace danmaq.nineball.entity.component {
 	/// <summary>
 	/// 描画機能付きゲームコンポーネントと状態を持つオブジェクトとのアダプタ クラス。
 	/// </summary>
+	/// 
+	/// <typeparam name="_T">状態を持つオブジェクト型。</typeparam>
 	public class CDrawableGameComponent<_T> :
 		DrawableGameComponent, IDrawableGameComponentWithEntity<_T> where _T : IEntity
 	{
@@ -36,10 +38,11 @@ namespace danmaq.nineball.entity.component {
 		/// 
 		/// <param name="game">ゲーム コンポーネントをアタッチするゲーム。</param>
 		/// <param name="entity">状態を持つオブジェクト。</param>
-		public CDrawableGameComponent( Game game, _T entity )
+		/// <param name="bDirectRegist">ゲーム コンポーネントを直接登録するかどうか。</param>
+		public CDrawableGameComponent( Game game, _T entity, bool bDirectRegist )
 			: base( game ) {
 			this.entity = entity;
-			game.Components.Add( this );
+			if( bDirectRegist ) { game.Components.Add( this ); }
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

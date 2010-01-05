@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace danmaq.nineball.entity.component {
 
+	// TODO : どのように使うかの仕様が作りかけ
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360ガイド 補助クラス。</summary>
 	public sealed class CGuideManager : CGameComponent<CEntity> {
@@ -134,10 +136,23 @@ namespace danmaq.nineball.entity.component {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="game">ゲーム コンポーネントをアタッチするゲーム。</param>
-		public CGuideManager( Game game ) : base( game, new CEntity() ) { }
+		/// <param name="bDirectRegist">ゲーム コンポーネントを直接登録するかどうか。</param>
+		public CGuideManager( Game game, bool bDirectRegist ) :
+			base( game, new CEntity(), bDirectRegist ) { }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>予約されているガイドの表示を試みます。</summary>
+		public override void Update( GameTime gameTime ) {
+			if( QUEUE_CALLBACK.Count > 0 && !Guide.IsVisible ) {
+				if( QUEUE_CALLBACK.Peek().start() ) {
+					QUEUE_CALLBACK.Dequeue();
+				}
+			}
+			base.Update( gameTime );
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>補助記憶装置選択ガイド表示を予約します。</summary>
@@ -167,16 +182,6 @@ namespace danmaq.nineball.entity.component {
 			if( callback == null ) { throw new ArgumentNullException( "callback" ); }
 			else if( strText == null ) { throw new ArgumentNullException( "strText" ); }
 			else { QUEUE_CALLBACK.Enqueue( new CGuideInfoMessageBox( callback, strText ) ); }
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>予約されているガイドの表示を試みます。</summary>
-		public void update() {
-			if( QUEUE_CALLBACK.Count > 0 && !Guide.IsVisible ) {
-				if( QUEUE_CALLBACK.Peek().start() ) {
-					QUEUE_CALLBACK.Dequeue();
-				}
-			}
 		}
 	}
 }
