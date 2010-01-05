@@ -23,6 +23,9 @@ namespace danmaq.nineball.entity.fonts {
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
+		/// <summary>生存タイマー。</summary>
+		public int timer = int.MinValue;
+
 		/// <summary>影のずれの大きさ。</summary>
 		public Vector2 gapShadow = new Vector2( 2 );
 
@@ -123,19 +126,28 @@ namespace danmaq.nineball.entity.fonts {
 			set { base.nextState = value; }
 		}
 
-		/// <summary>表示対象文字列。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>表示対象文字列を設定/取得します。</summary>
+		/// 
+		/// <value>表示対象文字列。</value>
 		public string text {
 			get { return m_strText; }
 			set { m_strText = ( value == null ? "" : value ); }
 		}
 
-		/// <summary>描画レイヤ。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>描画レイヤを設定/取得します。</summary>
+		/// 
+		/// <value>描画レイヤ(<c>0.0</c>～<c>1.0</c>)。</value>
 		public float layer {
 			get { return m_flayer; }
 			set { m_flayer = MathHelper.Clamp( value, 0, 1 ); }
 		}
 
-		/// <summary>座標誤差。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>座標誤差を設定/取得します。</summary>
+		/// 
+		/// <value>座標誤差。</value>
 		public Vector2 gap {
 			get { return new Vector2( gapX, gapY ); }
 			set {
@@ -144,7 +156,10 @@ namespace danmaq.nineball.entity.fonts {
 			}
 		}
 
-		/// <summary>拡大倍率。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>拡大倍率を設定/取得します。</summary>
+		/// 
+		/// <value>拡大倍率。</value>
 		public Vector2 scale {
 			get { return new Vector2( scaleX, scaleY ); }
 			set {
@@ -153,7 +168,10 @@ namespace danmaq.nineball.entity.fonts {
 			}
 		}
 
-		/// <summary>色輝度。</summary>
+		//* -----------------------------------------------------------------------*
+		/// <summary>色輝度を設定/取得します。</summary>
+		/// 
+		/// <value>色輝度。</value>
 		public Color color {
 			get {
 				return new Color(
@@ -184,6 +202,15 @@ namespace danmaq.nineball.entity.fonts {
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update( GameTime gameTime ) {
+			if( timer >= 0 && --timer == 0 ) { Dispose(); }
+			base.update( gameTime );
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>影のレイヤ番号を算出します。</summary>

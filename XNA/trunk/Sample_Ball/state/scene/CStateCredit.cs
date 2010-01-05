@@ -14,6 +14,7 @@ using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
+using danmaq.nineball.misc;
 
 namespace danmaq.ball.state.scene {
 
@@ -35,6 +36,9 @@ namespace danmaq.ball.state.scene {
 
 		/// <summary>透明度。</summary>
 		private float m_fAlpha = 0;
+
+		/// <summary>終了したかどうか。</summary>
+		private bool m_bExit = false;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -71,7 +75,7 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			entity.nextState = CStateTitle.instance;
+			if( m_bExit ) { entity.nextState = CStateTitle.instance; }
 			coRoutineManager.update( gameTime );
 		}
 
@@ -84,6 +88,7 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
+
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -101,13 +106,23 @@ namespace danmaq.ball.state.scene {
 			CLogger.add( "クレジット画面シーンを終了します。" );
 			coRoutineManager.Dispose();
 			m_fAlpha = 0;
+			m_bExit = false;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		private IEnumerator coAlpha() {
-			m_fAlpha = 0;
-			yield return null;
+			const int FADETIME = 60;
+			for(
+				int i = 0; i < FADETIME;
+				m_fAlpha = CInterpolate._clampAccelerate( 0, 1, ++i, FADETIME )
+			) { yield return null; }
+			for( int i = 0; i < 120; i++ ) { yield return null; }
+			for(
+				int i = 0; i < FADETIME;
+				m_fAlpha = CInterpolate._clampAccelerate( 1, 0, ++i, FADETIME )
+			) { yield return null; }
+			m_bExit = true;
 		}
 	}
 }

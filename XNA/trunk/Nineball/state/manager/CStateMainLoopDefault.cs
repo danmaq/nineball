@@ -7,16 +7,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.component;
 using danmaq.nineball.entity.manager;
 using danmaq.nineball.util;
+using danmaq.nineball.util.collection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using danmaq.nineball.util.collection;
-using System;
 
 #if XBOX360
 using Microsoft.Xna.Framework.GamerServices;
@@ -78,7 +76,7 @@ namespace danmaq.nineball.state.manager {
 		/// <summary>登録されているゲーム コンポーネント一覧を取得します。</summary>
 		/// 
 		/// <value>登録されているゲーム コンポーネント一覧。</value>
-		public CDisposablePartialCollection<IGameComponent, GameComponent> registedGameComponentList {
+		public CGameComponentManager registedGameComponentList {
 			get; private set;
 		}
 
@@ -95,7 +93,7 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="game">オブジェクトにアタッチされたゲーム。</param>
 		public override void setup( CMainLoop entity, Game game ) {
 			registedGameComponentList =
-				new CDisposablePartialCollection<IGameComponent, GameComponent>( game.Components );
+				new CGameComponentManager( game.Components );
 #if XBOX360
 			registedGameComponentList.Add( new GamerServicesComponent( game ) );
 			registedGameComponentList.Add(
