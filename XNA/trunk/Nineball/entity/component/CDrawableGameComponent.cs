@@ -127,6 +127,10 @@ namespace danmaq.nineball.entity.component {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		/// 
+		/// <param name="disposing">
+		/// マネージ リソースとアンマネージ リソースの両方を解放するかどうか。
+		/// </param>
 		protected override void Dispose( bool disposing ) {
 			entity.Dispose();
 			base.Dispose( disposing );

@@ -88,7 +88,7 @@ namespace danmaq.nineball.entity.fonts {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CFont() { nextState = CStateFont.instance; }
+		public CFont() { nextState = CStateDefault.instance; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
@@ -191,11 +191,11 @@ namespace danmaq.nineball.entity.fonts {
 		/// 
 		/// <value>グラデーションが有効である場合、<c>true</c>。</value>
 		public bool gradationMode {
-			get { return currentState == CStateFont.instance; }
+			get { return currentState == CStateDefault.instance; }
 			set {
 				IState<CFont, object> next = value ?
-					( IState<CFont, object> )CStateFontGradation.instance :
-					( IState<CFont, object> )CStateFont.instance;
+					( IState<CFont, object> )CStateGradation.instance :
+					( IState<CFont, object> )CStateDefault.instance;
 				if( currentState != next ) { nextState = next; }
 			}
 		}

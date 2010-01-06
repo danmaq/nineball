@@ -100,6 +100,9 @@
     <Compile Include="data\SGradation.cs" />
     <Compile Include="entity\component\CGuideManager.cs" />
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
+    <Compile Include="entity\input\CInput.cs" />
+    <Compile Include="entity\input\EInputDevice.cs" />
+    <Compile Include="entity\input\SInputState.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
@@ -120,8 +123,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="state\fonts\CStateFont.cs" />
-    <Compile Include="state\fonts\CStateFontGradation.cs" />
+    <Compile Include="state\fonts\CStateDefault.cs" />
+    <Compile Include="state\fonts\CStateGradation.cs" />
+    <Compile Include="state\input\CStateDefault.cs" />
+    <Compile Include="state\input\CStateKeyboard.cs" />
+    <Compile Include="state\input\CStateLegacyController.cs" />
+    <Compile Include="state\input\CStateXBOX360Controller.cs" />
     <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="state\manager\CStateLoadManager.cs" />
     <Compile Include="state\manager\CStateMainLoopDefault.cs" />
@@ -186,9 +193,6 @@
     <Content Include="README.txt" />
     <Content Include="_resources\nineball.ico" />
     <Content Include="_resources\nineball.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="entity\input\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
