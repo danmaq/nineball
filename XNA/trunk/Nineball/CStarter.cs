@@ -76,6 +76,12 @@ namespace danmaq.nineball {
 		private static readonly CMutexObject mutex = new CMutexObject();
 #endif
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>メインループのゲーム コンポーネント。</summary>
+		private static CDrawableGameComponent<CMainLoop> mainLoop = null;
+
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
@@ -121,8 +127,23 @@ namespace danmaq.nineball {
 		public static void startNineball(
 			this Game game, GraphicsDeviceManager graphicsDeviceManager
 		) {
-			CStateMainLoopDefault.instance.graphicsDeviceManager = graphicsDeviceManager;
-			new CDrawableGameComponent<CMainLoop>( game, new CMainLoop( game ), true );
+			mainLoop = new CDrawableGameComponent<CMainLoop>( game,
+				new CMainLoop( game, graphicsDeviceManager ), true );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>Nineballを終了します。</summary>
+		/// 
+		/// <param name="game">Nineballを実行するゲームクラス。</param>
+		/// <returns>正しく終了できた場合、<c>true</c>。</returns>
+		public static bool endNineball( this Game game ) {
+			bool bResult = false;
+			if( mainLoop != null ) {
+				bResult = game.Components.Remove( mainLoop );
+				mainLoop.Dispose();
+				mainLoop = null;
+			}
+			return bResult;
 		}
 
 		//* -----------------------------------------------------------------------*

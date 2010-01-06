@@ -16,6 +16,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.nineball.util {
 
+	// TODO : Entityにしようかな
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>スプライト描画管理 クラス。</summary>
 	public sealed class CSprite : IDisposable {
@@ -191,10 +193,7 @@ namespace danmaq.nineball.util {
 		/// アンマネージ リソースの解放およびリセットに関連付けられている
 		/// アプリケーション定義のタスクを実行します。
 		/// </summary>
-		public void Dispose() {
-			drawList.Clear();
-			GC.SuppressFinalize( this );
-		}
+		public void Dispose() { drawList.Clear(); }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>描画処理を予約します。</summary>
@@ -351,13 +350,13 @@ namespace danmaq.nineball.util {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>予約された描画処理を実行します。</summary>
-		public void update() { update( Vector2.Zero ); }
+		public void draw() { draw( Vector2.Zero ); }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>予約された描画処理を実行します。</summary>
 		/// 
 		/// <param name="gap">描画座標誤差</param>
-		public void update( Vector2 gap ) {
+		public void draw( Vector2 gap ) {
 			drawList.Sort();
 			for( int i=0; i < drawList.Count; i++ ) {
 				CDrawInfoBase __info = drawList[i];

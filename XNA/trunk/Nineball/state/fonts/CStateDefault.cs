@@ -15,20 +15,20 @@ namespace danmaq.nineball.state.fonts {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>通常のフォント状態。</summary>
-	public sealed class CStateFont : CState<CFont, object> {
+	public sealed class CStateDefault : CState<CFont, object> {
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateFont instance = new CStateFont();
+		public static readonly CStateDefault instance = new CStateDefault();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFont() { }
+		private CStateDefault() { }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -50,7 +50,7 @@ namespace danmaq.nineball.state.fonts {
 				if( entity.isDrawShadow ) {
 					entity.sprite.add( entity.font, entity.text,
 						entity.pos - origin + entity.gapShadow,
-						new Color( 0, 0, 0, ( byte )( entity.colorAlpha / 1.5f ) ),
+						new Color( Color.Black, ( byte )( entity.colorAlpha / 1.5f ) ),
 						0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fShadowLayer );
 				}
 				entity.sprite.add( entity.font, entity.text, entity.pos - origin,
