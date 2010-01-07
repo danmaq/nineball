@@ -31,7 +31,7 @@ namespace danmaq.nineball.entity.input {
 		public static ushort loopInterval = 5;
 
 		/// <summary>アナログ入力を認識する閾値。</summary>
-		public static float analogThreshold = 0.5f;
+		public static float analogThreshold = 0.12f;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -148,13 +148,13 @@ namespace danmaq.nineball.entity.input {
 		public static void setAnalogThreshold( ControllerSensitivity cs ) {
 			switch( cs ) {
 				case ControllerSensitivity.High:
-					analogThreshold = 0.2f;
+					analogThreshold = 0.06f;
 					break;
 				case ControllerSensitivity.Medium:
-					analogThreshold = 0.5f;
+					analogThreshold = 0.12f;
 					break;
 				case ControllerSensitivity.Low:
-					analogThreshold = 0.7f;
+					analogThreshold = 0.2f;
 					break;
 			}
 		}

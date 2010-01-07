@@ -11,8 +11,12 @@
 
 using System.Collections.Generic;
 using danmaq.nineball.entity.input;
+using Microsoft.DirectX.DirectInput;
 
 namespace danmaq.nineball.state.input {
+
+	// TODO : 作りかけ
+	// 実質マルチプレイヤー実装が先に必要
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ専用の入力状態。</summary>

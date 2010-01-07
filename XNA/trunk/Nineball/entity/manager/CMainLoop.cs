@@ -46,6 +46,9 @@ namespace danmaq.nineball.entity.manager {
 			/// <summary>登録されているゲーム コンポーネント一覧。</summary>
 			public CGameComponentManager registedGameComponentList = null;
 
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
 			//* -----------------------------------------------------------------------*
 			/// <summary>フィールドのオブジェクトを解放します。</summary>
 			public void Dispose() {
@@ -110,6 +113,9 @@ namespace danmaq.nineball.entity.manager {
 		protected override object privateMembers {
 			get { return _private; }
 		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
