@@ -91,11 +91,11 @@ namespace danmaq.nineball.state.input {
 		/// </summary>
 		/// 
 		/// <param name="entity">この状態を適用されたオブジェクト。</param>
-		/// <param name="privateMembers">
+		/// <param name="buttonsState">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( CInput entity, List<SInputState> privateMembers ) {
-			base.setup( entity, privateMembers );
+		public override void setup( CInput entity, List<SInputState> buttonsState ) {
+			base.setup( entity, buttonsState );
 			inputDevice = EInputDevice.Keyboard;
 		}
 
@@ -103,14 +103,14 @@ namespace danmaq.nineball.state.input {
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
+		/// <param name="buttonsState">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CInput entity, List<SInputState> privateMembers, GameTime gameTime
+			CInput entity, List<SInputState> buttonsState, GameTime gameTime
 		) {
-			base.update( entity, privateMembers, gameTime );
+			base.update( entity, buttonsState, gameTime );
 			while( removeQueue.Count > 0 ) {	// デバイス削除の予約を実行
 				CInput input = removeQueue.Dequeue();
 				entity.changedButtonsNum -= input.onChangedButtonsNum;
@@ -121,11 +121,11 @@ namespace danmaq.nineball.state.input {
 				entity.changedButtonsNum += input.onChangedButtonsNum;
 				inputList.Add( input );
 			}
-			int nLength = privateMembers.Count;
+			int nLength = buttonsState.Count;
 			foreach( CInput input in inputList ) {
 				input.update( gameTime );
 				for( int i = nLength - 1; i >= 0; i-- ) {
-					privateMembers[i] |= input.buttonStateList[i];
+					buttonsState[i] |= input.buttonStateList[i];
 				}
 			}
 		}
@@ -134,14 +134,14 @@ namespace danmaq.nineball.state.input {
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
+		/// <param name="buttonsState">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
-			CInput entity, List<SInputState> privateMembers, GameTime gameTime
+			CInput entity, List<SInputState> buttonsState, GameTime gameTime
 		) {
-			base.draw( entity, privateMembers, gameTime );
+			base.draw( entity, buttonsState, gameTime );
 			inputList.ForEach( input => input.draw( gameTime ) );
 		}
 
@@ -152,14 +152,14 @@ namespace danmaq.nineball.state.input {
 		/// </summary>
 		/// 
 		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
+		/// <param name="buttonsState">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( IEntity entity, object privateMembers, IState nextState ) {
+		public override void teardown( IEntity entity, object buttonsState, IState nextState ) {
 			inputList.ForEach( input => input.Dispose() );
 			inputList.Clear();
-			base.teardown( entity, privateMembers, nextState );
+			base.teardown( entity, buttonsState, nextState );
 		}
 	}
 }

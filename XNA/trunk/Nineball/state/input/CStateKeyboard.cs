@@ -41,7 +41,7 @@ namespace danmaq.nineball.state.input {
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
+		/// <param name="buttonsState">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
@@ -49,12 +49,12 @@ namespace danmaq.nineball.state.input {
 		/// キー割り当てがボタンの数よりも少ない場合。
 		/// </exception>
 		public override void update(
-			CInput entity, List<SInputState> privateMembers, GameTime gameTime
+			CInput entity, List<SInputState> buttonsState, GameTime gameTime
 		) {
 			KeyboardState state = Keyboard.GetState();
-			while( privateMembers.Count > assignList.Count ) { assignList.Add( Keys.None ); }
-			for( int i = privateMembers.Count - 1; i >= 0; i-- ) {
-				privateMembers[i].refresh( state.IsKeyDown( assignList[i] ) );
+			while( buttonsState.Count > assignList.Count ) { assignList.Add( Keys.None ); }
+			for( int i = buttonsState.Count - 1; i >= 0; i-- ) {
+				buttonsState[i].refresh( state.IsKeyDown( assignList[i] ) );
 			}
 		}
 
