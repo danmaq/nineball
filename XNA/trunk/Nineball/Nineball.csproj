@@ -100,6 +100,7 @@
     <Compile Include="data\SGradation.cs" />
     <Compile Include="entity\component\CGuideManager.cs" />
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
+    <Compile Include="entity\input\ButtonsExtension.cs" />
     <Compile Include="entity\input\CInput.cs" />
     <Compile Include="entity\input\EInputDevice.cs" />
     <Compile Include="entity\input\SInputState.cs" />

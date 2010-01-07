@@ -63,7 +63,13 @@ namespace danmaq.nineball.entity.input {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CInput() { nextState = CStateDefault.instance; }
+		public CInput() : this( CStateDefault.instance ) { }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="firstState">初期状態。</param>
+		public CInput( IState<CInput, List<SInputState>> firstState ) { nextState = firstState; }
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -95,6 +101,7 @@ namespace danmaq.nineball.entity.input {
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose() {
+			changedButtonsNum = null;
 			_buttonStateList.Clear();
 			_buttonStateList.TrimExcess();
 			base.Dispose();
