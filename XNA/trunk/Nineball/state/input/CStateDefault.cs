@@ -130,6 +130,14 @@ namespace danmaq.nineball.state.input {
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
 			CInput entity, List<SInputState> privateMembers, GameTime gameTime
 		) {

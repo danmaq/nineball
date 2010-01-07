@@ -120,7 +120,7 @@ namespace danmaq.nineball.state.manager {
 			sprite = new CSprite( new SpriteBatch( game.GraphicsDevice ) );
 			game.Content.RootDirectory = "Content";
 			scene.initialize();
-			base.setup( entity, game );
+			base.setup( entity, privateMembers );
 		}
 
 		//* -----------------------------------------------------------------------*
