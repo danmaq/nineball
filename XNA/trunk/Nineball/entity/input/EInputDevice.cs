@@ -64,7 +64,7 @@ namespace danmaq.nineball.entity.input {
 					result = CStateKeyboard.instance;
 					break;
 				case EInputDevice.XBOX360:
-					result = CStateXBOX360Controller.instance;
+					result = CStateXBOX360ControllerManager.instance;
 					break;
 #if WINDOWS
 				case EInputDevice.Legacy:

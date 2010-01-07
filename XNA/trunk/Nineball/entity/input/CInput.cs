@@ -20,13 +20,13 @@ namespace danmaq.nineball.entity.input {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>コントローラ 入力制御・管理クラス。</summary>
-	public sealed class CInput : CEntity {
+	public class CInput : CEntity {
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>ボタンの入力状態一覧。</summary>
-		private readonly List<SInputState> _buttonStateList = new List<SInputState>( 1 );
+		protected readonly List<SInputState> _buttonStateList = new List<SInputState>( 1 );
 
 		/// <summary>ボタンの数が変更されたときに発生するイベント。</summary>
 		public event EventHandler<CEventMonoValue<ushort>> changedButtonsNum;
@@ -82,6 +82,17 @@ namespace danmaq.nineball.entity.input {
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
 		public new IState<CInput, List<SInputState>> nextState {
+			set { nextStateBase = value; }
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>次に変化する状態を設定します。</summary>
+		/// 
+		/// <value>次に変化する状態。</value>
+		/// <exception cref="System.ArgumentNullException">
+		/// 状態として、nullを設定しようとした場合。
+		/// </exception>
+		protected IState nextStateBase {
 			set { base.nextState = value; }
 		}
 
