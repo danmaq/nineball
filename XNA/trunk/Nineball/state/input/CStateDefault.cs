@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System.Collections.Generic;
+using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
 
@@ -65,9 +66,7 @@ namespace danmaq.nineball.state.input {
 					value.getState( out enabled, out disabled );
 					foreach( IState<CInput, List<SInputState>> state in enabled ) {
 						if( inputList.Find( input => input.currentState == state ) == null ) {
-							CInput input = new CInput();
-							input.nextState = state;
-							addQueue.Enqueue( input );
+							addQueue.Enqueue( new CInput( state ) );
 						}
 					}
 					foreach( IState<CInput, List<SInputState>> state in disabled ) {
@@ -124,10 +123,35 @@ namespace danmaq.nineball.state.input {
 			}
 			int nLength = privateMembers.Count;
 			foreach( CInput input in inputList ) {
+				input.update( gameTime );
 				for( int i = nLength - 1; i >= 0; i-- ) {
 					privateMembers[i] |= input.buttonStateList[i];
 				}
 			}
+		}
+
+		public override void draw(
+			CInput entity, List<SInputState> privateMembers, GameTime gameTime
+		) {
+			base.draw( entity, privateMembers, gameTime );
+			inputList.ForEach( input => input.draw( gameTime ) );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public override void teardown( IEntity entity, object privateMembers, IState nextState ) {
+			inputList.ForEach( input => input.Dispose() );
+			inputList.Clear();
+			base.teardown( entity, privateMembers, nextState );
 		}
 	}
 }

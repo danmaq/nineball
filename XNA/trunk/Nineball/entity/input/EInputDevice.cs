@@ -8,8 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.nineball.state;
 using System.Collections.Generic;
+using danmaq.nineball.state;
 using danmaq.nineball.state.input;
 
 namespace danmaq.nineball.entity.input {
@@ -17,7 +17,7 @@ namespace danmaq.nineball.entity.input {
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイス列挙体。</summary>
 	[Flags]
-	public enum EInputDevice : ushort {
+	public enum EInputDevice : byte {
 
 		/// <summary>入力デバイスなし。</summary>
 		None = 0,
@@ -28,11 +28,18 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>XBOX360コントローラ。</summary>
 		XBOX360 = 1 << 1,
 
+#if WINDOWS
 		/// <summary>レガシ コントローラ。</summary>
 		Legacy = 1 << 2,
+#endif
 
 		/// <summary>対応する全てのコントローラ。</summary>
-		All = Keyboard | XBOX360 | Legacy,
+		All = 
+#if WINDOWS
+			Keyboard | XBOX360 | Legacy,
+#else
+			Keyboard | XBOX360,
+#endif
 
 	}
 
@@ -59,9 +66,11 @@ namespace danmaq.nineball.entity.input {
 				case EInputDevice.XBOX360:
 					result = CStateXBOX360Controller.instance;
 					break;
+#if WINDOWS
 				case EInputDevice.Legacy:
 					result = CStateLegacyController.instance;
 					break;
+#endif
 				default:
 					throw new ArgumentOutOfRangeException( "device" );
 			}
@@ -80,7 +89,10 @@ namespace danmaq.nineball.entity.input {
 			out List<IState<CInput, List<SInputState>>> disabled
 		) {
 			EInputDevice[] list = {
-				EInputDevice.Keyboard, EInputDevice.XBOX360, EInputDevice.Legacy
+				EInputDevice.Keyboard, EInputDevice.XBOX360,
+#if WINDOWS
+				EInputDevice.Legacy
+#endif
 			};
 			EInputDevice _device = ( device & EInputDevice.All );
 			enabled = new List<IState<CInput,List<SInputState>>>();

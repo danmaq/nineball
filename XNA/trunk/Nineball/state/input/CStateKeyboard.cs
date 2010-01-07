@@ -24,11 +24,8 @@ namespace danmaq.nineball.state.input {
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateKeyboard instance = new CStateKeyboard();
 
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
 		/// <summary>キー割り当て値の一覧。</summary>
-		private IList<Keys> m_assignList = new Keys[0];
+		private readonly List<Keys> assignList = new List<Keys>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -36,15 +33,6 @@ namespace danmaq.nineball.state.input {
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		private CStateKeyboard() { }
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>キー割り当て値の一覧を設定/取得します。</summary>
-		/// 
-		/// <value>キー割り当て値の一覧。</value>
-		public IList<Keys> assignList {
-			get { return m_assignList; }
-			set { m_assignList = value; }
-		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -57,11 +45,28 @@ namespace danmaq.nineball.state.input {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// キー割り当てがボタンの数よりも少ない場合。
+		/// </exception>
 		public override void update(
 			CInput entity, List<SInputState> privateMembers, GameTime gameTime
 		) {
 			KeyboardState state = Keyboard.GetState();
+			while( privateMembers.Count > assignList.Count ) { assignList.Add( Keys.None ); }
+			for( int i = privateMembers.Count - 1; i >= 0; i-- ) {
+				privateMembers[i].refresh( state.IsKeyDown( assignList[i] ) );
+			}
+		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 現在のキー割り当て一覧を破棄して、新しい割り当てを設定します。
+		/// </summary>
+		/// 
+		/// <param name="collection">キー割り当て一覧。</param>
+		public void setAssignList( IEnumerable<Keys> collection ) {
+			assignList.Clear();
+			assignList.AddRange( collection );
 		}
 	}
 }
