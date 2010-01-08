@@ -25,7 +25,7 @@ namespace danmaq.nineball.state.input {
 		public static readonly CStateKeyboard instance = new CStateKeyboard();
 
 		/// <summary>キー割り当て値の一覧。</summary>
-		private readonly List<Keys> assignList = new List<Keys>();
+		public readonly List<Keys> assignList = new List<Keys>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*

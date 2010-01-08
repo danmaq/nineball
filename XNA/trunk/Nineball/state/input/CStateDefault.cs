@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
+using danmaq.nineball.data;
 
 namespace danmaq.nineball.state.input {
 
@@ -57,27 +58,29 @@ namespace danmaq.nineball.state.input {
 			get { return m_inputDevice; }
 			set {
 				value &= EInputDevice.All;
-				if( value == EInputDevice.None ) {	// ないなら全部消してしまう
-					inputList.ForEach( item => item.Dispose() );
-					inputList.Clear();
-				}
-				else {	// 一部だけある場合はちょっとややこしい
-					List<IState<CInput, List<SInputState>>> enabled, disabled;
-					value.getState( out enabled, out disabled );
-					foreach( IState<CInput, List<SInputState>> state in enabled ) {
-						if( inputList.Find( input => input.currentState == state ) == null ) {
-							addQueue.Enqueue( new CInput( state ) );
+				if( value != m_inputDevice ) {
+					if( value == EInputDevice.None ) {	// ないなら全部消してしまう
+						inputList.ForEach( item => item.Dispose() );
+						inputList.Clear();
+					}
+					else {	// 一部だけある場合はちょっとややこしい
+						List<IState<CInput, List<SInputState>>> enabled, disabled;
+						value.getState( out enabled, out disabled );
+						foreach( IState<CInput, List<SInputState>> state in enabled ) {
+							if( inputList.Find( input => input.currentState == state ) == null ) {
+								addQueue.Enqueue( new CInput( state ) );
+							}
+						}
+						foreach( IState<CInput, List<SInputState>> state in disabled ) {
+							CInput input = inputList.Find( i => i.currentState == state );
+							if( input != null ) {
+								input.Dispose();
+								removeQueue.Enqueue( input );
+							}
 						}
 					}
-					foreach( IState<CInput, List<SInputState>> state in disabled ) {
-						CInput input = inputList.Find( i => i.currentState == state );
-						if( input != null ) {
-							input.Dispose();
-							removeQueue.Enqueue( input );
-						}
-					}
+					m_inputDevice = value;
 				}
-				m_inputDevice = value;
 			}
 		}
 
@@ -96,7 +99,7 @@ namespace danmaq.nineball.state.input {
 		/// </param>
 		public override void setup( CInput entity, List<SInputState> buttonsState ) {
 			base.setup( entity, buttonsState );
-			inputDevice = EInputDevice.Keyboard;
+			inputDevice |= EInputDevice.Keyboard;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -119,6 +122,7 @@ namespace danmaq.nineball.state.input {
 			while( addQueue.Count > 0 ) {	// デバイス追加の予約を実行
 				CInput input = addQueue.Dequeue();
 				entity.changedButtonsNum += input.onChangedButtonsNum;
+				input.changedState += onChangeState;
 				inputList.Add( input );
 			}
 			int nLength = buttonsState.Count;
@@ -160,6 +164,19 @@ namespace danmaq.nineball.state.input {
 			inputList.ForEach( input => input.Dispose() );
 			inputList.Clear();
 			base.teardown( entity, buttonsState, nextState );
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>状態が変化した際に呼び出されるメソッドです。</summary>
+		/// 
+		/// <param name="sender">送信元のオブジェクト。</param>
+		/// <param name="e">変化後の状態。</param>
+		private void onChangeState( object sender, CEventChangedState e ) {
+			CInput input = ( CInput )sender;
+			if( input.currentState == CState.empty ) {
+				input.changedState -= onChangeState;
+				removeQueue.Enqueue( ( CInput )sender );
+			}
 		}
 	}
 }

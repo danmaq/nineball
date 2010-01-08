@@ -7,12 +7,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.ObjectModel;
-using danmaq.nineball.state.input;
 
 namespace danmaq.nineball.entity.input {
 
@@ -23,18 +23,13 @@ namespace danmaq.nineball.entity.input {
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>ボタン一覧。</summary>
-		public static readonly ReadOnlyCollection<Buttons> allButtons = new List<Buttons> {
-			Buttons.DPadUp, Buttons.DPadDown, Buttons.DPadLeft, Buttons.DPadRight,
-			Buttons.Start, Buttons.Back,
-			Buttons.LeftStick, Buttons.RightStick, Buttons.LeftShoulder, Buttons.RightShoulder,
-			Buttons.BigButton, Buttons.A, Buttons.B, Buttons.X, Buttons.Y,
-			Buttons.RightTrigger, Buttons.LeftTrigger,
-			Buttons.RightThumbstickUp, Buttons.RightThumbstickDown,
-			Buttons.RightThumbstickRight, Buttons.RightThumbstickLeft,
-			Buttons.LeftThumbstickUp, Buttons.LeftThumbstickDown,
-			Buttons.LeftThumbstickRight, Buttons.LeftThumbstickLeft,
+		/// <summary>プレイヤー番号一覧。</summary>
+		public static readonly ReadOnlyCollection<PlayerIndex> allPlayers = new List<PlayerIndex> {
+			PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four
 		}.AsReadOnly();
+
+		/// <summary>ボタン割り当て値の一覧。</summary>
+		private readonly List<Buttons> m_assignList = new List<Buttons>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -43,11 +38,9 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="playerIndex">プレイヤー番号。</param>
-		public CInputXBOX360( PlayerIndex playerIndex ) :
-			base( CState<CInput, List<SInputState>>.empty )
-		{
+		public CInputXBOX360( PlayerIndex playerIndex ) : base( CState.empty ) {
 			this.playerIndex = playerIndex;
-			nextState = CStateXBOX360Controller.instance;
+			nextState = state.input.xbox360.CStateDefault.instance;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -69,5 +62,59 @@ namespace danmaq.nineball.entity.input {
 		/// 
 		/// <value>プレイヤー番号。</value>
 		public PlayerIndex playerIndex { get; private set; }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ボタン割り当て値の一覧を設定/取得します。</summary>
+		/// 
+		/// <value>ボタン割り当て値の一覧。</value>
+		public IList<Buttons> assignList {
+			get { return m_assignList; }
+			set {
+				if( value.Count != m_assignList.Count ) {
+					throw new ArgumentOutOfRangeException( "value" );
+				}
+				m_assignList.Clear();
+				m_assignList.AddRange( value );
+				ReadOnlyCollection<SInputState> stateList = buttonStateList;
+				while( m_assignList.Count > stateList.Count ) {
+					m_assignList.RemoveAt( m_assignList.Count - 1 );
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在押下されているボタン情報を取得します。</summary>
+		/// 
+		/// <value>押下されたボタン情報。</value>
+		public Buttons press {
+			get {
+				Buttons result = 0;
+				checkConnect();
+				result = GamePad.GetState( playerIndex ).getPress();
+				return result;
+			}
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化処理を実行します。</summary>
+		public override void initialize() {
+			base.initialize();
+			checkConnect();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 接続されているかどうかを調べて、接続されていない場合は自殺します。
+		/// </summary>
+		/// 
+		/// <returns>接続されている場合、<c>true</c>。</returns>
+		public bool checkConnect() {
+			bool bResult = GamePad.GetState( playerIndex ).IsConnected;
+			if( !bResult ) { Dispose(); }
+			return bResult;
+		}
 	}
 }

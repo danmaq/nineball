@@ -132,8 +132,8 @@
     <Compile Include="state\input\CStateDefault.cs" />
     <Compile Include="state\input\CStateKeyboard.cs" />
     <Compile Include="state\input\CStateLegacyController.cs" />
-    <Compile Include="state\input\CStateXBOX360Controller.cs" />
-    <Compile Include="state\input\CStateXBOX360ControllerManager.cs" />
+    <Compile Include="state\input\xbox360\CStateDefault.cs" />
+    <Compile Include="state\input\xbox360\CStateManager.cs" />
     <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="state\manager\CStateLoadManager.cs" />
     <Compile Include="state\manager\CStateMainLoopDefault.cs" />
@@ -199,6 +199,9 @@
     <Content Include="_resources\nineball.ico" />
     <Content Include="_resources\nineball.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="state\input\legacy\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -208,4 +211,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

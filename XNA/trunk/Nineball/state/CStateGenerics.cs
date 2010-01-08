@@ -26,12 +26,6 @@ namespace danmaq.nineball.state {
 	/// </typeparam>
 	public class CState<_E, _M> : IState<_E, _M> where _E : IEntity {
 
-		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* constants ──────────────────────────────-*
-
-		/// <summary>実装された、既定の空の状態。</summary>
-		public static readonly CState<_E, _M> empty = new CState<_E, _M>();
-
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
