@@ -108,6 +108,12 @@ namespace danmaq.nineball.entity {
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>汎用フレーム カウンタを取得します。</summary>
+		/// 
+		/// <value>汎用フレーム カウンタ。</value>
+		public int counter { get; protected set; }
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
 		/// </summary>
@@ -146,6 +152,7 @@ namespace danmaq.nineball.entity {
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public virtual void update( GameTime gameTime ) {
 			currentState.update( this, privateMembers, gameTime );
+			counter++;
 		}
 
 		//* -----------------------------------------------------------------------*

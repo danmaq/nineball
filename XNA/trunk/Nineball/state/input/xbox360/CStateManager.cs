@@ -11,43 +11,54 @@ using System.Collections.Generic;
 using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.ObjectModel;
 
-namespace danmaq.nineball.state.input {
+namespace danmaq.nineball.state.input.xbox360 {
 
 	// TODO : マルチプレイヤーにも対応させる
 	// TODO : 自動キーアサイン・自動プレイヤー決定
+	// TODO : CInputXBOX360の管理クラスにする
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360対応コントローラ専用の入力状態。</summary>
-	public sealed class CStateXBOX360ControllerManager : CState<CInput, List<SInputState>> {
+	public sealed class CStateManager : CState<CInput, List<SInputState>> {
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateXBOX360ControllerManager instance =
-			new CStateXBOX360ControllerManager();
+		public static readonly CStateManager instance =
+			new CStateManager();
 
-		/// <summary>プレイヤー番号一覧。</summary>
-		private readonly List<PlayerIndex> allPlayers = new List<PlayerIndex> {
-			PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four
-		};
+		/// <summary>コントローラ 入力制御・管理クラス一覧。</summary>
+		private readonly List<CInputXBOX360> inputList = new List<CInputXBOX360>( 1 );
 
-		/// <summary>ボタン割り当て値の一覧。</summary>
-		private readonly List<Buttons> assignList = new List<Buttons>();
+		/// <summary>プレイヤー一覧。</summary>
+		private readonly List<PlayerIndex> m_playerList = new List<PlayerIndex>( 1 );
 
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
+		/// <summary>入力デバイス追加用キュー。</summary>
+		private readonly Queue<CInput> addQueue = new Queue<CInput>();
 
-		/// <summary>現在アクティブなプレイヤー。</summary>
-		public PlayerIndex? primaryPlayer = null;
+		/// <summary>入力デバイス削除用キュー。</summary>
+		private readonly Queue<CInput> removeQueue = new Queue<CInput>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateXBOX360ControllerManager() { }
+		private CStateManager() { }
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>プレイヤー一覧を取得します。</summary>
+		/// 
+		/// <value>プレイヤー一覧。</value>
+		public ReadOnlyCollection<PlayerIndex> playerList {
+			get { return m_playerList.AsReadOnly(); }
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -64,47 +75,34 @@ namespace danmaq.nineball.state.input {
 			CInput entity, List<SInputState> buttonsState, GameTime gameTime
 		) {
 			base.update( entity, buttonsState, gameTime );
-			if( primaryPlayer.HasValue ) {
-				GamePadState state = GamePad.GetState( primaryPlayer.Value );
-				if( state.IsConnected ) {
-					while( buttonsState.Count > assignList.Count ) { assignList.Add( 0 ); }
-					for( int i = buttonsState.Count - 1; i >= 0; i-- ) {
-						buttonsState[i].refresh( state.IsButtonDown( assignList[i] ) );
-					}
+			int nLength = entity.buttonStateList.Count;
+			foreach( CInput input in inputList ) {
+				input.update( gameTime );
+				for( int i = nLength - 1; i >= 0; i-- ) {
+					buttonsState[i] |= input.buttonStateList[i];
 				}
-				else { primaryPlayer = null; }
-			}
-			if( !primaryPlayer.HasValue ) {
-				Buttons buttons;
-				getButton( out primaryPlayer, out buttons );
 			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// 現在のボタン割り当て一覧を破棄して、新しい割り当てを設定します。
-		/// </summary>
+		/// <summary>管理するXBOX360コントローラ追加の予約します。</summary>
+		/// <remarks>
+		/// 既に登録されているか、<paramref name="playerIndex"/>に対応する
+		/// XBOX360コントローラが接続されていない場合、予約は失敗します。
+		/// </remarks>
 		/// 
-		/// <param name="collection">ボタン割り当て一覧。</param>
-		public void setAssignList( IEnumerable<Buttons> collection ) {
-			assignList.Clear();
-			assignList.AddRange( collection );
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ボタンが押下されたかどうかを取得します。</summary>
-		/// 
-		/// <param name="playerIndex">プレイヤー番号。</param>
-		/// <returns>押下されたボタン情報。</returns>
-		private Buttons getButton( PlayerIndex playerIndex ) {
-			Buttons result = 0;
-			GamePadState state = GamePad.GetState( playerIndex );
-			if( state.IsConnected ) {
-				foreach( Buttons button in CInputXBOX360.allButtons ) {
-					if( state.IsButtonDown( button ) ) { result |= button; }
-				}
+		/// <param name="playerIndex">対応するプレイヤー番号。</param>
+		/// <returns>予約が成功した場合、<c>true</c>。</returns>
+		public bool addPlayer( PlayerIndex playerIndex ) {
+			bool bResult = !playerList.Contains( playerIndex );
+			if( bResult ) {
+				m_playerList.Add( playerIndex );
+				CInputXBOX360 input = new CInputXBOX360( playerIndex );
+				input.initialize();
+				bResult = input.currentState != CState.empty;
+				if( bResult ) { addQueue.Enqueue( input ); }
 			}
-			return result;
+			return bResult;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -114,11 +112,11 @@ namespace danmaq.nineball.state.input {
 		/// 
 		/// <param name="playerIndex">プレイヤー番号。</param>
 		/// <param name="buttons">押下されたボタン情報。</param>
-		private void getButton( out PlayerIndex? playerIndex, out Buttons buttons ) {
+		private static void getButton( out PlayerIndex? playerIndex, out Buttons buttons ) {
 			playerIndex = null;
 			buttons = 0;
-			foreach( PlayerIndex player in allPlayers ) {
-				buttons = getButton( player );
+			foreach( PlayerIndex player in CInputXBOX360.allPlayers ) {
+				buttons = GamePad.GetState( player ).getPress();
 				if( buttons != 0 ) {
 					playerIndex = player;
 					break;

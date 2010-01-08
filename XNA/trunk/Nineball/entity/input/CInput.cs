@@ -69,7 +69,7 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="firstState">初期状態。</param>
-		public CInput( IState<CInput, List<SInputState>> firstState ) { nextState = firstState; }
+		public CInput( IState firstState ) { nextStateBase = CStateDefault.instance; }
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
