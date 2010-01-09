@@ -70,6 +70,15 @@ namespace danmaq.nineball.Properties {
         }
         
         /// <summary>
+        ///   エラーが発生しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ERR_MESSAGE {
+            get {
+                return ResourceManager.GetString("ERR_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0}オブジェクトを、2つ以上作ることはできません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ERR_SINGLETON {
@@ -84,6 +93,15 @@ namespace danmaq.nineball.Properties {
         public static string NAME {
             get {
                 return ResourceManager.GetString("NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   null に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NULL {
+            get {
+                return ResourceManager.GetString("NULL", resourceCulture);
             }
         }
     }

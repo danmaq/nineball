@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using danmaq.nineball.state;
 using danmaq.nineball.state.input;
-using danmaq.nineball.state.input.xbox360;
 
 namespace danmaq.nineball.entity.input {
 
@@ -65,11 +64,11 @@ namespace danmaq.nineball.entity.input {
 					result = CStateKeyboard.instance;
 					break;
 				case EInputDevice.XBOX360:
-					result = CStateManager.instance;
+					result = state.input.xbox360.CStateManager.instance;
 					break;
 #if WINDOWS
 				case EInputDevice.Legacy:
-					result = CStateLegacyController.instance;
+					result = state.input.legacy.CStateManager.instance;
 					break;
 #endif
 				default:

@@ -7,8 +7,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+#if XBOX360
+
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 
@@ -55,7 +59,8 @@ namespace danmaq.nineball.entity.component {
 			//* constants ──────────────────────────────-*
 
 			/// <summary>ボタン一覧。</summary>
-			private readonly string[] BUTTONS = new string[] { "OK" };
+			private readonly ReadOnlyCollection<string> BUTTONS =
+				new List<string> { "OK" }.AsReadOnly();
 
 			/// <summary>メッセージ テキスト文字列。</summary>
 			private readonly string MESSAGE;
@@ -82,7 +87,7 @@ namespace danmaq.nineball.entity.component {
 				bool bResult = false;
 				if( !Guide.IsVisible ) {
 					try {
-						Guide.BeginShowMessageBox( PlayerIndex.One, "エラーが発生しました。",
+						Guide.BeginShowMessageBox( PlayerIndex.One, Resources.ERR_MESSAGE,
 							MESSAGE, BUTTONS, 0, MessageBoxIcon.Error, CALLBACK, null );
 						bResult = true;
 					}
@@ -185,3 +190,5 @@ namespace danmaq.nineball.entity.component {
 		}
 	}
 }
+
+#endif

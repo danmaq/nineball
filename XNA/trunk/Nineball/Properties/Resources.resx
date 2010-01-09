@@ -121,6 +121,10 @@
     <value>予期しない不具合が発生した為、ゲームを強制終了します。</value>
     <comment>例外発生時</comment>
   </data>
+  <data name="ERR_MESSAGE" xml:space="preserve">
+    <value>エラーが発生しました。</value>
+    <comment>何らかのエラーが発生した時のタイトル</comment>
+  </data>
   <data name="ERR_SINGLETON" xml:space="preserve">
     <value>{0}オブジェクトを、2つ以上作ることはできません。</value>
     <comment>シングルトンクラスを複数個生成しようとした場合</comment>
@@ -128,5 +132,9 @@
   <data name="NAME" xml:space="preserve">
     <value>danmaq Nineball Library</value>
     <comment>ライブラリ名</comment>
+  </data>
+  <data name="NULL" xml:space="preserve">
+    <value>null</value>
+    <comment>NULL文字列</comment>
   </data>
 </root>

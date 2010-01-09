@@ -144,6 +144,7 @@ namespace danmaq.nineball.entity {
 		public virtual void Dispose() {
 			nextState = CState.empty;
 			previousState = CState.empty;
+			changedState = null;
 		}
 
 		//* -----------------------------------------------------------------------*

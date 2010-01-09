@@ -104,6 +104,7 @@
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
     <Compile Include="entity\input\ButtonsExtension.cs" />
     <Compile Include="entity\input\CInput.cs" />
+    <Compile Include="entity\input\CInputLegacy.cs" />
     <Compile Include="entity\input\CInputXBOX360.cs" />
     <Compile Include="entity\input\EInputDevice.cs" />
     <Compile Include="entity\input\SInputState.cs" />
@@ -131,8 +132,9 @@
     <Compile Include="state\fonts\CStateGradation.cs" />
     <Compile Include="state\input\CStateDefault.cs" />
     <Compile Include="state\input\CStateKeyboard.cs" />
-    <Compile Include="state\input\CStateLegacyController.cs" />
+    <Compile Include="state\input\legacy\CStateManager.cs" />
     <Compile Include="state\input\xbox360\CStateDefault.cs" />
+    <Compile Include="state\input\xbox360\CStateDetector.cs" />
     <Compile Include="state\input\xbox360\CStateManager.cs" />
     <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="state\manager\CStateLoadManager.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="state\manager\CStateGuideHelper.cs" />
     <Compile Include="state\manager\CStateFPSCalculator.cs" />
     <Compile Include="state\misc\CStateCapsXNA.cs" />
+    <Compile Include="util\caps\CCapsExtension.cs" />
     <Compile Include="util\collection\CDisposablePartialCollection.cs" />
     <Compile Include="util\CLogger.cs" />
     <Compile Include="util\CMessageBox.cs" />
@@ -198,9 +201,6 @@
     <Content Include="README.txt" />
     <Content Include="_resources\nineball.ico" />
     <Content Include="_resources\nineball.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="state\input\legacy\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
