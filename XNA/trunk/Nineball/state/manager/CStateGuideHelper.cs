@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #if XBOX360
+
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -15,11 +16,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 using danmaq.nineball.entity;
 using danmaq.nineball.util;
-#endif
 
 namespace danmaq.nineball.state.manager {
-
-#if XBOX360
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360ガイド 補助クラス。</summary>
@@ -198,6 +196,6 @@ namespace danmaq.nineball.state.manager {
 		}
 	}
 
-#endif
-
 }
+
+#endif

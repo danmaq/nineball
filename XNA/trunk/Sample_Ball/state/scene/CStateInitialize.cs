@@ -89,6 +89,7 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		public void setup( IEntity entity, object privateMembers ) {
 			CLogger.add( "初期化シーンを開始します。" );
+			CStateMainLoopDefault.instance.game.IsMouseVisible = true;
 			CStateMainLoopDefault.instance.colorBack = Color.Black;
 			loader.initialize();
 			loader.nextState = CStateLoader.instance;

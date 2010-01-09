@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using danmaq.nineball.Properties;
 
 namespace danmaq.nineball.data {
 
@@ -59,6 +60,8 @@ namespace danmaq.nineball.data {
 		/// <summary>値の文字列表現を取得します。</summary>
 		/// 
 		/// <returns>値の文字列表現</returns>
-		public override string ToString() { return value == null ? "null" : value.ToString(); }
+		public override string ToString() {
+			return value == null ? Resources.NULL : value.ToString();
+		}
 	}
 }
