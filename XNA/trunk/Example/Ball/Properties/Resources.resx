@@ -121,4 +121,16 @@
     <value>bootlog.txt</value>
     <comment>起動ログファイル</comment>
   </data>
+  <data name="FONT_98" xml:space="preserve">
+    <value>font</value>
+    <comment>PC-98x1風フォント スプライト</comment>
+  </data>
+  <data name="FX_PART_POINT_SPRITE" xml:space="preserve">
+    <value>partPointSprite</value>
+    <comment>部分ポイント スプライト エフェクト</comment>
+  </data>
+  <data name="IMAGE_LOGO" xml:space="preserve">
+    <value>logo</value>
+    <comment>danmaq Productsロゴ</comment>
+  </data>
 </root>

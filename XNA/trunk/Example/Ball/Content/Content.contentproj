@@ -1,6 +1,6 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
-    <ProjectGuid>fdae9b85-a2ed-4295-bbec-e5e5f864bcab</ProjectGuid>
+    <ProjectGuid>3b7457ff-c41e-4ab8-be0e-08130cbda3cf</ProjectGuid>
     <ProjectTypeGuids>{96E2B04D-8817-42c6-938A-82C39BA4D311};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,10 +10,6 @@
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\$(Platform)\$(Configuration)</OutputPath>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <XnaPlatform>Windows</XnaPlatform>
@@ -42,6 +38,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CommonCPE\CommonCPE.csproj">
+      <Project>{2FF73852-FF08-4125-85C1-674694860F1D}</Project>
+      <Name>CommonCPE</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="partPointSprite.fx">
+      <Name>partPointSprite</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="logo.png">
       <Name>logo</Name>
       <Importer>TextureImporter</Importer>
@@ -49,10 +58,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="partPointSprite.fx">
-      <Name>partPointSprite</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
+    <Compile Include="font.png">
+      <Name>font</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>CCPEBallFont</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

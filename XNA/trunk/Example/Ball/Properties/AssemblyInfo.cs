@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyDescription( "キーを連打すると前進する玉を操り、相手の玉より早くゴールへ到着するかを競うワンキーゲーム。" )]
 [assembly: AssemblyCompany( "danmaq" )]
 
-[assembly: AssemblyCopyright( "Copyright © danmaq 2010" )]
+[assembly: AssemblyCopyright( "Copyright © 2010 danmaq All rights reserved." )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: ComVisible( true )]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid( "1a4cea2c-f048-4c47-b0cf-953d7f682571" )]
+[assembly: Guid( "e14a1ac1-09bf-4447-8d13-28bbbd40385e" )]
 
 
 // Version information for an assembly consists of the following four values:
@@ -31,5 +31,5 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion( "0.0.0.2" )]
+[assembly: AssemblyVersion( "0.0.0.3" )]
 [assembly: NeutralResourcesLanguageAttribute( "ja-JP" )]
