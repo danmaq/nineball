@@ -10,9 +10,9 @@
 #if WINDOWS
 
 using System;
+using danmaq.nineball.state;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
-using danmaq.nineball.state;
 
 namespace danmaq.nineball.entity.input {
 
