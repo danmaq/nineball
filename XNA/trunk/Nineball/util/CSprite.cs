@@ -154,6 +154,9 @@ namespace danmaq.nineball.util {
 		/// <summary>描画情報リスト。</summary>
 		private readonly List<CDrawInfoBase> drawList = new List<CDrawInfoBase>();
 
+		/// <summary>CResolutionAspectFixの型情報。</summary>
+		private readonly Type typeResAF = typeof( CResolutionAspectFix );
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -168,9 +171,13 @@ namespace danmaq.nineball.util {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
+		public CSprite() { resolution = new CResolution(); }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="spriteBatch">スプライトバッチ</param>
-		public CSprite( SpriteBatch spriteBatch ) { this.spriteBatch = spriteBatch; }
+		public CSprite( SpriteBatch spriteBatch ) : this() { this.spriteBatch = spriteBatch; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
@@ -183,7 +190,7 @@ namespace danmaq.nineball.util {
 		/// <summary>スプライトバッチを取得します。</summary>
 		/// 
 		/// <value>スプライトバッチ。</value>
-		public SpriteBatch spriteBatch { get; private set; }
+		public SpriteBatch spriteBatch { get; set; }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -336,7 +343,6 @@ namespace danmaq.nineball.util {
 			info.origin = origin;
 			if( resolution == null ) { info.scale = scale; }
 			else {
-				Type typeResAF = typeof( CResolutionAspectFix );
 				if( resolution.GetType() == typeResAF || resolution.GetType().IsSubclassOf( typeResAF ) ) {
 					CResolutionAspectFix res = ( CResolutionAspectFix )resolution;
 					info.scale = scale * res.scaleGapFromVGA;
@@ -350,13 +356,10 @@ namespace danmaq.nineball.util {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>予約された描画処理を実行します。</summary>
-		public void draw() { draw( Vector2.Zero ); }
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>予約された描画処理を実行します。</summary>
-		/// 
-		/// <param name="gap">描画座標誤差</param>
-		public void draw( Vector2 gap ) {
+		public void draw() {
+			if ( spriteBatch == null ) {
+				throw new InvalidOperationException( "描画に使用するSpriteBatchがありません。" );
+			}
 			drawList.Sort();
 			for( int i=0; i < drawList.Count; i++ ) {
 				CDrawInfoBase __info = drawList[i];
@@ -364,8 +367,6 @@ namespace danmaq.nineball.util {
 				if( __info.GetType() == typeof( CDrawInfo ) ) {
 					CDrawInfo info = ( CDrawInfo )__info;
 					Rectangle rectDst = info.destinationRectangle;
-					rectDst.X += ( int )gap.X;
-					rectDst.Y += ( int )gap.Y;
 					spriteBatch.Draw( info.texture, rectDst,
 						info.sourceRectangle, info.color, info.fRotation,
 						info.origin, info.effects, info.fLayerDepth );
@@ -373,7 +374,7 @@ namespace danmaq.nineball.util {
 				else {
 					CDrawStringInfo info = ( CDrawStringInfo )__info;
 					spriteBatch.DrawString( info.spriteFont, info.text,
-						info.position + gap, info.color, info.fRotation, info.origin,
+						info.position, info.color, info.fRotation, info.origin,
 						info.scale, info.effects, info.fLayerDepth );
 				}
 			}

@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyProduct( "danmaq Nineball Library" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyCompany( "danmaq" )]
-[assembly: AssemblyCopyright( "(c)2008-2010 danmaq All rights reserved." )]
+[assembly: AssemblyCopyright( "Copyright © 2008-2010 danmaq All rights reserved." )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
