@@ -226,6 +226,8 @@ namespace danmaq.nineball.util.resolution {
 				( float )( res1.Height ) / ( float )( res2.Height ) );
 		}
 
+		// TODO : この辺オペレータ オーバーロードできないかなぁ
+
 		//* -----------------------------------------------------------------------*
 		/// <summary>より上位のデバイスが対応している解像度を取得します。</summary>
 		/// <remarks>

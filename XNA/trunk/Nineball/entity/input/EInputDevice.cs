@@ -28,14 +28,14 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>XBOX360コントローラ。</summary>
 		XBOX360 = 1 << 1,
 
-#if WINDOWS
+#if WINDOWS && !DISABLE_LEGACY
 		/// <summary>レガシ コントローラ。</summary>
 		Legacy = 1 << 2,
 #endif
 
 		/// <summary>対応する全てのコントローラ。</summary>
 		All = 
-#if WINDOWS
+#if WINDOWS && !DISABLE_LEGACY
 			Keyboard | XBOX360 | Legacy,
 #else
 			Keyboard | XBOX360,
@@ -66,7 +66,7 @@ namespace danmaq.nineball.entity.input {
 				case EInputDevice.XBOX360:
 					result = state.input.xbox360.CStateManager.instance;
 					break;
-#if WINDOWS
+#if WINDOWS && !DISABLE_LEGACY
 				case EInputDevice.Legacy:
 					result = state.input.legacy.CStateManager.instance;
 					break;
@@ -90,7 +90,7 @@ namespace danmaq.nineball.entity.input {
 		) {
 			EInputDevice[] list = {
 				EInputDevice.Keyboard, EInputDevice.XBOX360,
-#if WINDOWS
+#if WINDOWS && !DISABLE_LEGACY
 				EInputDevice.Legacy
 #endif
 			};

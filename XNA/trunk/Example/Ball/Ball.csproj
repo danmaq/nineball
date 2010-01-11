@@ -30,8 +30,8 @@
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>赤い玉 青い玉 競走ゲーム</ProductName>
     <PublisherName>danmaq</PublisherName>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -78,6 +78,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -98,12 +99,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\scene\CSceneBase.cs" />
     <Compile Include="state\scene\CStateCredit.cs" />
     <Compile Include="state\scene\CStateGame.cs" />
     <Compile Include="state\scene\CStateInitialize.cs" />
     <Compile Include="state\scene\CStateTitle.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HISTORY.txt" />
     <Content Include="_resources\ball.ico" />
     <Content Include="_resources\ball.png" />
   </ItemGroup>
@@ -144,6 +147,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
