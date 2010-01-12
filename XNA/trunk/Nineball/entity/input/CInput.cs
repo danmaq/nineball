@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using danmaq.nineball.data;
 using danmaq.nineball.state;
 using danmaq.nineball.state.input;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input {
 
@@ -108,6 +109,23 @@ namespace danmaq.nineball.entity.input {
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>移動ボタンのベクトルを計算します。</summary>
+		/// 
+		/// <returns>移動ベクトル。</returns>
+		public static Vector2 createVector(
+			float up, float down, float left, float right
+		) {
+			float[] srcList = { up, down, left, right };
+			float fVelocity = 0;
+			foreach( float fSrc in srcList ) {
+				fVelocity = MathHelper.Max( fVelocity, Math.Abs( fSrc ) );
+			}
+			Vector2 result = new Vector2( -left, -up ) + new Vector2( right, down );
+			result.Normalize();
+			return result * fVelocity;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>

@@ -70,9 +70,6 @@ namespace danmaq.nineball.entity.input {
 		public IList<Buttons> assignList {
 			get { return m_assignList; }
 			set {
-				if( value.Count != m_assignList.Count ) {
-					throw new ArgumentOutOfRangeException( "value" );
-				}
 				m_assignList.Clear();
 				m_assignList.AddRange( value );
 				ReadOnlyCollection<SInputState> stateList = buttonStateList;

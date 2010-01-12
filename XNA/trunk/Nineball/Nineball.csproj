@@ -107,6 +107,7 @@
     <Compile Include="entity\input\CInputLegacy.cs" />
     <Compile Include="entity\input\CInputXBOX360.cs" />
     <Compile Include="entity\input\EInputDevice.cs" />
+    <Compile Include="entity\input\EReservedButtonID.cs" />
     <Compile Include="entity\input\SInputState.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="state\fonts\CStateGradation.cs" />
     <Compile Include="state\input\CStateDefault.cs" />
     <Compile Include="state\input\CStateKeyboard.cs" />
+    <Compile Include="state\input\legacy\CStateDefault.cs" />
     <Compile Include="state\input\legacy\CStateManager.cs" />
     <Compile Include="state\input\xbox360\CStateDefault.cs" />
     <Compile Include="state\input\xbox360\CStateDetector.cs" />

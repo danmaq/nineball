@@ -10,9 +10,12 @@
 #if WINDOWS && !DISABLE_LEGACY
 
 using System;
+using System.Collections.Generic;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.legacy;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
+using System.Collections.ObjectModel;
 
 namespace danmaq.nineball.entity.input {
 
@@ -20,20 +23,72 @@ namespace danmaq.nineball.entity.input {
 	/// <summary>レガシ ゲーム コントローラ用 入力制御・管理クラス。</summary>
 	public sealed class CInputLegacy : CInput {
 
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		public sealed class CPrivateMembers : IDisposable {
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>ボタンの入力状態一覧。</summary>
+			public readonly List<SInputState> buttonStateList;
+
+			/// <summary>レガシ ゲームパッド デバイス。</summary>
+			public readonly Device device;
+
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
+
+			/// <summary>デバイスの性能レポート。</summary>
+			public string capsReport = "";
+
+			/// <summary>エラー レポート。</summary>
+			public string errorReport = "";
+
+			/// <summary>フォース フィードバックをサポートするかどうか。</summary>
+			public bool enableForceFeedback = false;
+
+			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* constructor & destructor ───────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>コンストラクタ。</summary>
+			/// 
+			/// <param name="guid">デバイスのインスタンスGUID。</param>
+			/// <param name="buttonStateList">ボタンの入力状態一覧。</param>
+			public CPrivateMembers( Guid guid, List<SInputState> buttonStateList ) {
+				device = new Device( guid );
+				this.buttonStateList = buttonStateList;
+				capsReport =
+					device.DeviceInformation.createCapsReport() + device.Caps.createCapsReport();
+				device.SetDataFormat( DeviceDataFormat.Joystick );
+			}
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>このオブジェクトの終了処理を行います。</summary>
+			public void Dispose() {
+				try {
+					device.Unacquire();
+					device.Dispose();
+				}
+				catch( Exception ) { }
+			}
+		}
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>レガシ ゲームパッド デバイス。</summary>
-		public readonly Device device;
+		/// <summary>ウィンドウ ハンドル。</summary>
+		public static IntPtr hWnd = IntPtr.Zero;
 
-		/// <summary>デバイスの性能レポート。</summary>
-		public readonly string capsReport;
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		public readonly CPrivateMembers _privateMembers;
 
-		/// <summary>フォース フィードバックをサポートするかどうか。</summary>
-		public readonly bool enableForceFeedback;
-
-		/// <summary>エラー レポート。</summary>
-		public readonly string errorReport;
+		/// <summary>ボタン割り当て値の一覧。</summary>
+		private readonly List<int> m_assignList = new List<int>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -42,93 +97,76 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="guid">デバイスのインスタンスGUID。</param>
-		/// <param name="hWnd">ウィンドウ ハンドル。</param>
-		public CInputLegacy( Guid guid, IntPtr hWnd ) : base( CState.empty ) {
-			string strErrReport = "";
-			device = new Device( guid );
-			capsReport =
-				device.DeviceInformation.createCapsReport() + device.Caps.createCapsReport();
-			device.SetDataFormat( DeviceDataFormat.Joystick );
-			enableForceFeedback = initializeForceFeedback( hWnd, ref strErrReport );
-			initializeAxis();
-			errorReport = strErrReport;
+		public CInputLegacy( Guid guid ) : base( CState.empty ) {
+			_privateMembers = new CPrivateMembers( guid, _buttonStateList );
 		}
 
-		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* methods ───────────────────────────────-*
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>このオブジェクトの終了処理を行います。</summary>
-		public override void Dispose() {
-			if( device != null ) {
-				try {
-					device.Unacquire();
-					device.Dispose();
-				}
-				catch( Exception ) { }
-			}
-			base.Dispose();
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>フォース フィードバックの初期化をします。</summary>
+		/// <summary>次に変化する状態を設定します。</summary>
 		/// 
-		/// <param name="hWnd">ウィンドウ ハンドル。</param>
-		/// <param name="strErrReport">エラー レポート。</param>
-		/// <returns>フォース フィードバックの初期化に成功した場合、<c>true</c>。</returns>
-		private bool initializeForceFeedback( IntPtr hWnd, ref string strErrReport ) {
-			bool bResult = true;
-			CooperativeLevelFlags coLevel =
-				CooperativeLevelFlags.NoWindowsKey | CooperativeLevelFlags.Background;
-			try { device.Properties.AutoCenter = false; }
-			catch( Exception e ) {
-				bResult = false;
-				strErrReport += "ゲームパッドのオート・センター機能のOFFに出来ませんでした。" + Environment.NewLine;
-				strErrReport += "このゲームパッドではフォース フィードバックの使用はできません。" + Environment.NewLine;
-				strErrReport += e.ToString();
-				hWnd = IntPtr.Zero;
-			}
-			if( hWnd == IntPtr.Zero ) {
-				device.SetCooperativeLevel( null, CooperativeLevelFlags.NonExclusive | coLevel );
-			}
-			else {
-				try {
-					device.SetCooperativeLevel( hWnd, CooperativeLevelFlags.Exclusive | coLevel );
-				}
-				catch( Exception e ) {
-					bResult = false;
-					strErrReport += "ゲームパッドの独占に失敗しました。共有モードで再設定を試みます。" + Environment.NewLine;
-					strErrReport += "このモードではフォースフィードバックの使用は出来ません。" + Environment.NewLine;
-					strErrReport += e.ToString();
-					hWnd = IntPtr.Zero;
-					device.SetCooperativeLevel(
-						null, CooperativeLevelFlags.NonExclusive | coLevel );
-				}
-			}
-			return bResult;
+		/// <value>次に変化する状態。</value>
+		/// <exception cref="System.ArgumentNullException">
+		/// 状態として、nullを設定しようとした場合。
+		/// </exception>
+		public new IState<CInputLegacy, CPrivateMembers> nextState {
+			set { nextStateBase = value; }
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コントローラの軸の初期化をします。</summary>
-		private void initializeAxis() {
-			device.Properties.AxisModeAbsolute = true;
-			int[] anAxis = null;
-			foreach( DeviceObjectInstance doi in device.Objects ) {
-				if( ( doi.ObjectId & ( int )DeviceObjectTypeFlags.Axis ) != 0 ) {
-					device.Properties.SetRange(
-						ParameterHow.ById, doi.ObjectId, new InputRange( -1000, 1000 ) );
+		/// <summary>ボタン割り当て値の一覧を設定/取得します。</summary>
+		/// 
+		/// <value>ボタン割り当て値の一覧。</value>
+		public IList<int> assignList {
+			get { return m_assignList; }
+			set {
+				m_assignList.Clear();
+				m_assignList.AddRange( value );
+				ReadOnlyCollection<SInputState> stateList = buttonStateList;
+				while( m_assignList.Count > stateList.Count ) {
+					m_assignList.RemoveAt( m_assignList.Count - 1 );
 				}
-				if( ( doi.Flags & ( int )ObjectInstanceFlags.Actuator ) != 0 ) {
-					int[] __anAxis;
-					if( anAxis == null ) { anAxis = new int[1]; }
-					else {
-						__anAxis = new int[anAxis.Length + 1];
-						anAxis.CopyTo( __anAxis, 0 );
-						anAxis = __anAxis;
-					}
-					anAxis[anAxis.Length - 1] = doi.Offset;
-					if( anAxis.Length == 2 ) { break; }
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>性能レポートを取得します。</summary>
+		/// 
+		/// <value>性能レポート。</value>
+		public string capsReport {
+			get { return _privateMembers.capsReport; }
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>エラーレポートを取得します。</summary>
+		/// 
+		/// <value>エラーレポート。</value>
+		public string errorReport {
+			get { return _privateMembers.errorReport; }
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>フォース フィードバックが有効かどうかを取得します。</summary>
+		/// 
+		/// <value>フォース フィードバックが有効である場合、<c>true</c>。</value>
+		public bool isEnableForceFeedback {
+			get { return _privateMembers.enableForceFeedback; }
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>入力状態を取得します。</summary>
+		/// 
+		/// <value>入力状態。</value>
+		public JoystickState state {
+			get {
+				try { _privateMembers.device.Poll(); }
+				catch( NotAcquiredException ) {
+					_privateMembers.device.Acquire();
+					_privateMembers.device.Poll();
 				}
+				return _privateMembers.device.CurrentJoystickState;
 			}
 		}
 	}
