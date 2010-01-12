@@ -9,6 +9,7 @@
 
 #if WINDOWS && !DISABLE_LEGACY
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.entity;
@@ -38,6 +39,12 @@ namespace danmaq.nineball.state.input.legacy {
 
 		/// <summary>プレイヤー一覧。</summary>
 		private readonly List<int> m_playerList = new List<int>( 1 );
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>ウィンドウ ハンドル。</summary>
+		public IntPtr hWnd = IntPtr.Zero;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
