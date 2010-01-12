@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
-<includeClasses/>
+<includeClasses>
+<classEntry path="danmaq.nineball.entity.IEntity"/>
+<classEntry path="danmaq.nineball.state.IState"/>
+</includeClasses>
 <includeResources/>
 <namespaceManifests/>
 </flexLibProperties>
