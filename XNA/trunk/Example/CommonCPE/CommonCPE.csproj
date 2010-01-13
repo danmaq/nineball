@@ -9,7 +9,8 @@
     <AssemblyName>CommonCPE</AssemblyName>
     <XnaFrameworkVersion>v3.1</XnaFrameworkVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <ApplicationIcon>_resource\nineball.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,7 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="_resource\nineball.ico" />
+    <Content Include="_resources\nineball.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.ContentPipelineExtensions.targets" />
