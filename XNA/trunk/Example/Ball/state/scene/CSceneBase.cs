@@ -8,15 +8,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.ball.core;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
+using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
 using danmaq.nineball.state.manager;
 using danmaq.nineball.util;
 using danmaq.nineball.util.collection;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace danmaq.ball.state.scene {
 
@@ -39,11 +42,17 @@ namespace danmaq.ball.state.scene {
 		/// <summary>ゲーム コンポーネント管理クラス。</summary>
 		protected readonly CGameComponentManager localGameComponentManager;
 
+		/// <summary>コルーチン管理 クラス。</summary>
+		protected readonly CCoRoutineManager localCoRoutineManager = new CCoRoutineManager();
+
 		/// <summary>グラフィック デバイスの構成・管理クラス。</summary>
 		protected readonly GraphicsDeviceManager graphicDeviceManager;
 
 		/// <summary>入力管理クラス。</summary>
 		protected readonly CInput inputManager;
+
+		/// <summary>コンテンツ管理クラス。</summary>
+		protected readonly ContentManager contentManager;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -56,7 +65,8 @@ namespace danmaq.ball.state.scene {
 			this.sceneName = sceneName;
 			inputManager = game.inputManager;
 			graphicDeviceManager = game.graphicDeviceManager;
-			localGameComponentManager = new CGameComponentManager( game.Components );
+			contentManager = game.Content;
+			localGameComponentManager = new CGameComponentManager( game );
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -101,6 +111,7 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		public override void setup( IEntity entity, object privateMembers ) {
 			CLogger.add( sceneName + "シーンを開始します。" );
+			localCoRoutineManager.initialize();
 			base.setup( entity, privateMembers );
 		}
 
@@ -113,6 +124,7 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
+			localCoRoutineManager.update( gameTime );
 			localPhaseManager.count++;
 			base.update( entity, privateMembers, gameTime );
 		}
@@ -129,10 +141,12 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown( IEntity entity, object privateMembers, IState nextState ) {
-			CLogger.add( sceneName + "シーンを終了します。" );
+			localCoRoutineManager.Dispose();
 			localPhaseManager.reset();
 			localGameComponentManager.Dispose();
+			GC.Collect();
 			base.teardown( entity, privateMembers, nextState );
+			CLogger.add( sceneName + "シーンを終了しました。" );
 		}
 	}
 }

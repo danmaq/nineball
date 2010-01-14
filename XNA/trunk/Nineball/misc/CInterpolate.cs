@@ -45,8 +45,15 @@ namespace danmaq.nineball.misc {
 
 		/// <summary>範囲丸め込み付きの線形補完。</summary>
 		public static readonly Func<float, float, float, float> _clampLerp =
-			( fStart, fEnd, fAmount ) =>
-				MathHelper.Clamp( MathHelper.Lerp( fStart, fEnd, fAmount ), fStart, fEnd );
+			( fStart, fEnd, fAmount ) => {
+				float fResult = MathHelper.Lerp( fStart, fEnd, fAmount );
+				if( fStart > fEnd ) {
+					float fTemp = fEnd;
+					fEnd = fStart;
+					fStart = fTemp;
+				}
+				return MathHelper.Clamp( fResult, fStart, fEnd );
+			};
 
 		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSmooth =

@@ -16,6 +16,7 @@ using danmaq.nineball.entity.input;
 using danmaq.nineball.state.misc;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
+using danmaq.nineball.util.resolution;
 
 namespace danmaq.ball.core {
 
@@ -35,12 +36,21 @@ namespace danmaq.ball.core {
 		/// <summary>入力管理クラス。</summary>
 		public readonly CInput inputManager = new CInput();
 
+		/// <summary>解像度管理クラス。</summary>
+		public readonly CResolution resolution = new CResolution( EResolution.VGA );
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CGame() { graphicDeviceManager = new GraphicsDeviceManager( this ); }
+		private CGame() {
+			graphicDeviceManager = new GraphicsDeviceManager( this );
+			Rectangle rc = resolution;
+			graphicDeviceManager.PreferredBackBufferWidth = rc.Width;
+			graphicDeviceManager.PreferredBackBufferHeight = rc.Height;
+			IsMouseVisible = true;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*

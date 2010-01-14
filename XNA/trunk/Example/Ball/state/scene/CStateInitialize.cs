@@ -50,8 +50,8 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		public override void setup( IEntity entity, object privateMembers ) {
 			base.setup( entity, privateMembers );
-			game.IsMouseVisible = true;
 			CStateMainLoopDefault.instance.colorBack = Color.Black;
+			systemSpriteManager.resolution = game.resolution;
 		}
 
 		//* -----------------------------------------------------------------------*

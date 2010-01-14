@@ -66,7 +66,7 @@ namespace danmaq.nineball.util.resolution {
 				m_align = value;
 				if( value == EAlign.LeftTop ) { m_nXGap = 0; }
 				else {
-					int nGap = m_rect.Width - resizeFromVGA( EResolution.VGA.toRect() ).Width;
+					int nGap = rect.Width - resizeFromVGA( EResolution.VGA.toRect() ).Width;
 					switch( value ) {
 						case EAlign.Center:
 							m_nXGap = nGap >> 1;

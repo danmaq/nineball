@@ -87,7 +87,7 @@ namespace danmaq.nineball.entity.manager {
 		public CMainLoop( Game game, GraphicsDeviceManager graphicsDeviceManager ) {
 			_private.game = game;
 			_private.graphicsDeviceManager = graphicsDeviceManager;
-			_private.registedGameComponentList = new CGameComponentManager( game.Components );
+			_private.registedGameComponentList = new CGameComponentManager( game );
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
