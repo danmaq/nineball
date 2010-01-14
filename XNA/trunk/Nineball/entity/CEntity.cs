@@ -25,12 +25,6 @@ namespace danmaq.nineball.entity {
 	/// </summary>
 	public class CEntity : IEntity {
 
-		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* constants ──────────────────────────────-*
-
-		/// <summary>ダミーのオブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		private readonly object dummyPrivateMembers = new object();
-
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* events ────────────────────────────────*
 
@@ -147,7 +141,7 @@ namespace danmaq.nineball.entity {
 		/// 
 		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
 		protected virtual object privateMembers {
-			get { return dummyPrivateMembers; }
+			get { return null; }
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
