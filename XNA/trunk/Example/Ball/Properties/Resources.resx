@@ -123,7 +123,7 @@
   </data>
   <data name="FONT_98" xml:space="preserve">
     <value>font</value>
-    <comment>PC-98x1風フォント スプライト</comment>
+    <comment>よゆ風フォント スプライト</comment>
   </data>
   <data name="FX_PART_POINT_SPRITE" xml:space="preserve">
     <value>partPointSprite</value>

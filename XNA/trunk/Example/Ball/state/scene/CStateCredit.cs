@@ -8,20 +8,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections;
+using danmaq.ball.Properties;
+using danmaq.nineball.data;
 using danmaq.nineball.entity;
-using danmaq.nineball.entity.manager;
 using danmaq.nineball.misc;
-using danmaq.nineball.state;
-using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.ball.state.scene {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>クレジット画面シーン。</summary>
-	public sealed class CStateCredit : IState {
+	public sealed class CStateCredit : CSceneBase {
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -29,24 +28,18 @@ namespace danmaq.ball.state.scene {
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateCredit instance = new CStateCredit();
 
-		/// <summary>コルーチン管理 クラス。</summary>
-		public readonly CCoRoutineManager coRoutineManager = new CCoRoutineManager();
-
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>透明度。</summary>
 		private float m_fAlpha = 0;
 
-		/// <summary>終了したかどうか。</summary>
-		private bool m_bExit = false;
-
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCredit() { }
+		private CStateCredit() : base( "クレジット画面" ) { }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -61,10 +54,10 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public void setup( IEntity entity, object privateMembers ) {
-			CLogger.add( "クレジット画面シーンを開始します。" );
-			coRoutineManager.initialize();
-			coRoutineManager.add( coAlpha() );
+		public override void setup( IEntity entity, object privateMembers ) {
+			base.setup( entity, privateMembers );
+			m_fAlpha = 0;
+			localCoRoutineManager.add( coAlpha() );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -75,9 +68,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			if( m_bExit ) { entity.nextState = CStateTitle.instance; }
-			coRoutineManager.update( gameTime );
+		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
+			base.update( entity, privateMembers, gameTime );
+			if( localPhaseManager.phase == 1 ) { entity.nextState = CStateTitle.instance; }
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -88,27 +81,12 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
-
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public void teardown( IEntity entity, object privateMembers, IState nextState ) {
-			CLogger.add( "クレジット画面シーンを終了します。" );
-			coRoutineManager.Dispose();
-			m_fAlpha = 0;
-			m_bExit = false;
-			GC.Collect();
+		public override void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
+			base.draw( entity, privateMembers, gameTime );
+			systemSpriteManager.add( contentManager.Load<Texture2D>( Resources.IMAGE_LOGO ),
+				new Vector2( 320, 240 ), EAlign.Center, EAlign.Center,
+				new Rectangle( 0, 0, 384, 384 ), new Color( Color.White, m_fAlpha ), 0f,
+				SpriteBlendMode.AlphaBlend );
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -124,7 +102,7 @@ namespace danmaq.ball.state.scene {
 				int i = 0; i < FADETIME;
 				m_fAlpha = CInterpolate._clampAccelerate( 1, 0, ++i, FADETIME )
 			) { yield return null; }
-			m_bExit = true;
+			localPhaseManager.reserveNextPhase = true;
 		}
 	}
 }

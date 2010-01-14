@@ -48,8 +48,17 @@ namespace danmaq.nineball.entity {
 		public CEntity() {
 			previousState = CState.empty;
 			currentState = CState.empty;
-			name = ToString();
+			name = GetType().ToString();
 		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>既定の状態で初期化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">親オブジェクト。</param>
+		public CEntity( IEntity entity ) : this() { owner = entity; }
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -59,6 +68,19 @@ namespace danmaq.nineball.entity {
 		/// 
 		/// <param name="state">状態。</param>
 		public CEntity( IState state ) : this() { nextState = state; }
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>指定の状態で初期化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">親オブジェクト。</param>
+		/// <param name="state">状態。</param>
+		public CEntity( IEntity entity, IState state ) : this() {
+			owner = entity;
+			nextState = state;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -82,6 +104,12 @@ namespace danmaq.nineball.entity {
 		public virtual string name { get; private set; }
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
+		/// 
+		/// <value>親オブジェクト。</value>
+		public IEntity owner { get; protected set; }
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>次に変化する状態を設定します。</summary>
 		/// 
 		/// <value>次に変化する状態。</value>
@@ -101,8 +129,7 @@ namespace danmaq.nineball.entity {
 				currentState = value;
 				currentState.setup( this, privateMembers );
 				if( changedState != null ) {
-					changedState( this,
-						new CEventChangedState( oldPrevious, oldCurrent, value ) );
+					changedState( this, new CEventChangedState( oldPrevious, oldCurrent, value ) );
 				}
 			}
 		}

@@ -39,8 +39,11 @@ namespace danmaq.nineball.entity.component {
 		/// <param name="game">ゲーム コンポーネントをアタッチするゲーム。</param>
 		/// <param name="entity">状態を持つオブジェクト。</param>
 		/// <param name="bDirectRegist">ゲーム コンポーネントを直接登録するかどうか。</param>
-		public CDrawableGameComponent( Game game, _T entity, bool bDirectRegist )
-			: base( game ) {
+		/// <exception cref="System.ArgumentNullException">
+		/// 状態を持つオブジェクトとして、nullが設定された場合。
+		/// </exception>
+		public CDrawableGameComponent( Game game, _T entity, bool bDirectRegist ) : base( game ) {
+			if( entity == null ) { throw new ArgumentNullException( "entity" ); }
 			this.entity = entity;
 			if( bDirectRegist ) { game.Components.Add( this ); }
 		}
@@ -79,6 +82,14 @@ namespace danmaq.nineball.entity.component {
 		/// <value>次に変化する状態。</value>
 		public IState nextState {
 			set { entity.nextState = value; }
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
+		/// 
+		/// <value>親オブジェクト。</value>
+		public IEntity owner {
+			get { return entity.owner; }
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

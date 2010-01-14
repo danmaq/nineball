@@ -7,8 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.nineball.entity;
+using danmaq.nineball.entity.component;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
 namespace danmaq.nineball.util.collection {
 
@@ -18,17 +19,21 @@ namespace danmaq.nineball.util.collection {
 		CDisposablePartialCollection<IGameComponent, GameComponent>
 	{
 
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>オブジェクトにアタッチされたゲーム。</summary>
+		private readonly Game game;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="gameComponentCollection">
-		/// ゲームが所有しているゲーム コンポーネントのコレクション。
-		/// </param>
-		public CGameComponentManager( GameComponentCollection gameComponentCollection ) :
-			base( gameComponentCollection ) { }
+		/// <param name="game">ゲーム クラス。</param>
+		public CGameComponentManager( Game game ) :
+			base( game.Components ) { this.game = game; }
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -41,6 +46,42 @@ namespace danmaq.nineball.util.collection {
 		/// <value>ゲーム コンポーネントをアクティブにするかどうか。</value>
 		public bool Enabled {
 			set { partial.ForEach( item => item.Enabled = value ); }
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>オブジェクトをゲーム コンポーネントとして一覧に登録します。</summary>
+		/// <remarks>
+		/// オブジェクトは、自動的にゲーム コンポーネントでラッピングされます。
+		/// </remarks>
+		/// 
+		/// <param name="entity">状態を持つオブジェクト。</param>
+		/// <returns>ゲーム コンポーネントでラッピングされたオブジェクト。</returns>
+		/// <typeparam name="_T">状態を持つオブジェクトの型</typeparam>
+		public CGameComponent<_T> addEntity<_T>( _T entity ) where _T : IEntity {
+			CGameComponent<_T> result = new CGameComponent<_T>( game, entity, false );
+			Add( result );
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// オブジェクトを描画に対応したゲーム コンポーネントとして一覧に登録します。
+		/// </summary>
+		/// <remarks>
+		/// オブジェクトは、自動的に描画に対応したゲーム コンポーネントでラッピングされます。
+		/// </remarks>
+		/// 
+		/// <param name="entity">状態を持つオブジェクト。</param>
+		/// <returns>ゲーム コンポーネントでラッピングされたオブジェクト。</returns>
+		/// <typeparam name="_T">状態を持つオブジェクトの型</typeparam>
+		public CDrawableGameComponent<_T> addDrawableEntity<_T>( _T entity ) where _T : IEntity {
+			CDrawableGameComponent<_T> result =
+				new CDrawableGameComponent<_T>( game, entity, false );
+			Add( result );
+			return result;
 		}
 	}
 }
