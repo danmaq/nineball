@@ -12,12 +12,15 @@ using danmaq.ball.entity.font;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene {
+namespace danmaq.ball.state.scene
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>タイトル画面シーン。</summary>
-	public sealed class CStateTitle : CSceneBase {
+	public sealed class CStateTitle : CSceneBase
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -30,7 +33,9 @@ namespace danmaq.ball.state.scene {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateTitle() : base( "タイトル画面" ) { }
+		private CStateTitle() : base("タイトル画面")
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -42,10 +47,18 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( IEntity entity, object privateMembers ) {
-			base.setup( entity, privateMembers );
-			localGameComponentManager.addDrawableEntity(
-				new CPrint("赤い玉 青い玉 競走ゲーム", new Vector2(40, 4), EAlign.Center));
+		public override void setup(IEntity entity, object privateMembers)
+		{
+			base.setup(entity, privateMembers);
+			CPrint[] printList = {
+				new CPrint("赤い玉 青い玉 競走ゲーム", new Vector2(40, 7), EAlign.Center, Color.Aqua),
+				new CPrint("(C)1994-2009 Mc/danmaq All rights reserved.", new Vector2(40, 9), EAlign.Center, Color.Aqua),
+				new CPrint("難易度を選択してください。", new Vector2(6, 14), EAlign.LeftTop, Color.White),
+			};
+			foreach(CPrint print in printList)
+			{
+				localGameComponentManager.addDrawableEntity(print);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -56,8 +69,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.update( entity, privateMembers, gameTime );
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.update(entity, privateMembers, gameTime);
 //			entity.nextState = CStateGame.instance;
 		}
 
@@ -69,8 +83,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.draw( entity, privateMembers, gameTime );
+		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -84,8 +99,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( IEntity entity, object privateMembers, danmaq.nineball.state.IState nextState ) {
-			base.teardown( entity, privateMembers, nextState );
+		public override void teardown(IEntity entity, object privateMembers, danmaq.nineball.state.IState nextState)
+		{
+			base.teardown(entity, privateMembers, nextState);
 		}
 	}
 }

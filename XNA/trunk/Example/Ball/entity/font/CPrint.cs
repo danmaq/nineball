@@ -32,9 +32,9 @@ namespace danmaq.ball.entity.font
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="strText">テキスト。</param>
-		/// <param name="pos">描画開始カーソル位置。</param>
+		/// <param name="pos">基準カーソル位置。</param>
 		public CPrint(string strText, Vector2 pos)
-			: this(strText, pos, EAlign.LeftTop)
+			: this(strText, pos, EAlign.LeftTop, Color.White)
 		{
 		}
 
@@ -44,7 +44,8 @@ namespace danmaq.ball.entity.font
 		/// <param name="strText">テキスト。</param>
 		/// <param name="pos">基準カーソル位置。</param>
 		/// <param name="hAlign">水平位置揃え情報。</param>
-		public CPrint(string strText, Vector2 pos, EAlign hAlign)
+		/// <param name="color">文字色。</param>
+		public CPrint(string strText, Vector2 pos, EAlign hAlign, Color color)
 			: base(strText)
 		{
 			nextState = CState98.instance;
@@ -52,6 +53,7 @@ namespace danmaq.ball.entity.font
 			sprite = CStateMainLoopDefault.instance.sprite;
 			this.pos = pos;
 			alignHorizontal = hAlign;
+			this.color = color;
 		}
 	}
 }
