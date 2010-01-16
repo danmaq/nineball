@@ -8,12 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.ball.Properties;
-using danmaq.ball.state.font;
+using danmaq.ball.entity.font;
+using danmaq.nineball.data;
 using danmaq.nineball.entity;
-using danmaq.nineball.entity.fonts;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.ball.state.scene {
 
@@ -26,8 +24,6 @@ namespace danmaq.ball.state.scene {
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateTitle instance = new CStateTitle();
-
-		private CFont font = null;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -48,14 +44,8 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		public override void setup( IEntity entity, object privateMembers ) {
 			base.setup( entity, privateMembers );
-			if( font != null ) {
-				font = new CFont( contentManager.Load<SpriteFont>( Resources.FONT_98 ),
-					"赤い玉 青い玉 競走ゲーム" );
-				font.sprite = systemSpriteManager;
-				font.nextState = CStateFixed.instance;
-				font.pos = new Vector2( 10, 10 );
-				localGameComponentManager.addDrawableEntity<CFont>( font );
-			}
+			localGameComponentManager.addDrawableEntity(
+				new CPrint("赤い玉 青い玉 競走ゲーム", new Vector2(40, 4), EAlign.Center));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -95,10 +85,6 @@ namespace danmaq.ball.state.scene {
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown( IEntity entity, object privateMembers, danmaq.nineball.state.IState nextState ) {
-			if( font != null ) {
-				font.Dispose();
-				font = null;
-			}
 			base.teardown( entity, privateMembers, nextState );
 		}
 	}

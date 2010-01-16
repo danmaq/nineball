@@ -19,22 +19,25 @@ using danmaq.nineball.Properties;
 using System;
 #endif
 
-namespace danmaq.nineball {
+namespace danmaq.nineball
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>Nineballスターター クラス。</summary>
-	public static class CStarter {
+	public static class CStarter
+	{
 
 #if WINDOWS
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>ミューテックスオブジェクトのラッパー クラス。</summary>
-		private class CMutexObject {
+		private class CMutexObject
+		{
 
 			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* constants ──────────────────────────────-*
 
 			/// <summary>ミューテックスオブジェクト。</summary>
-			private readonly Mutex mutex = new Mutex( false, Resources.NAME );
+			private readonly Mutex mutex = new Mutex(false, Resources.NAME);
 
 			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* constructor & destructor ───────────────────────*
@@ -43,29 +46,38 @@ namespace danmaq.nineball {
 			/// <summary>コンストラクタ。</summary>
 			/// 
 			/// <exception cref="System.ApplicationException">多重起動した場合。</exception>
-			public CMutexObject() {
-				if ( !mutex.WaitOne( 0, false ) ) {
-					throw new ApplicationException( "多重起動されました。" + Environment.NewLine +
-						"このアプリケーションは多重起動に対応しておりません。" );
+			public CMutexObject()
+			{
+				if(!mutex.WaitOne(0, false))
+				{
+					throw new ApplicationException("多重起動されました。" + Environment.NewLine +
+						"このアプリケーションは多重起動に対応しておりません。");
 				}
 			}
 
 			//* -----------------------------------------------------------------------*
 			/// <summary>デストラクタ。</summary>
-			~CMutexObject() { mutex.Close(); }
+			~CMutexObject()
+			{
+				mutex.Close();
+			}
 		}
 #endif
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>既定のゲーム クラス。</summary>
-		private sealed class CGame : Game {
+		private sealed class CGame : Game
+		{
 
 			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* constructor & destructor ───────────────────────*
 
 			//* -----------------------------------------------------------------------*
 			/// <summary>コンストラクタ。</summary>
-			public CGame() { this.startNineball(); }
+			public CGame()
+			{
+				this.startNineball();
+			}
 		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -80,7 +92,7 @@ namespace danmaq.nineball {
 		//* fields ────────────────────────────────*
 
 		/// <summary>メインループのゲーム コンポーネント。</summary>
-		private static CDrawableGameComponent<CMainLoop> mainLoop = null;
+		private static CDrawableGameComponent mainLoop = null;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -89,8 +101,12 @@ namespace danmaq.nineball {
 		/// <summary>シーン オブジェクトを取得します。</summary>
 		/// 
 		/// <value>シーン オブジェクト。</value>
-		public static CEntity scene {
-			get { return CStateMainLoopDefault.instance.scene; }
+		public static CEntity scene
+		{
+			get
+			{
+				return CStateMainLoopDefault.instance.scene;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -100,8 +116,12 @@ namespace danmaq.nineball {
 		/// <summary>既定のゲーム クラスを新規作成して、Nineballを起動します。</summary>
 		/// 
 		/// <returns>グラフィック デバイスの構成・管理クラス。</returns>
-		public static void startNineball() {
-			using( CGame game = new CGame() ) { game.Run(); }
+		public static void startNineball()
+		{
+			using(CGame game = new CGame())
+			{
+				game.Run();
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -111,9 +131,10 @@ namespace danmaq.nineball {
 		/// 
 		/// <param name="game">Nineballを実行するゲームクラス。</param>
 		/// <returns>グラフィック デバイスの構成・管理クラス。</returns>
-		public static GraphicsDeviceManager startNineball( this Game game ) {
-			GraphicsDeviceManager graphicsDeviceManager = new GraphicsDeviceManager( game );
-			game.startNineball( graphicsDeviceManager );
+		public static GraphicsDeviceManager startNineball(this Game game)
+		{
+			GraphicsDeviceManager graphicsDeviceManager = new GraphicsDeviceManager(game);
+			game.startNineball(graphicsDeviceManager);
 			return graphicsDeviceManager;
 		}
 
@@ -126,9 +147,10 @@ namespace danmaq.nineball {
 		/// <param name="graphicsDeviceManager">グラフィック デバイスの構成・管理クラス。</param>
 		public static void startNineball(
 			this Game game, GraphicsDeviceManager graphicsDeviceManager
-		) {
-			mainLoop = new CDrawableGameComponent<CMainLoop>( game,
-				new CMainLoop( game, graphicsDeviceManager ), true );
+		)
+		{
+			mainLoop = new CDrawableGameComponent(game,
+				new CMainLoop(game, graphicsDeviceManager), true);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -136,10 +158,12 @@ namespace danmaq.nineball {
 		/// 
 		/// <param name="game">Nineballを実行するゲームクラス。</param>
 		/// <returns>正しく終了できた場合、<c>true</c>。</returns>
-		public static bool endNineball( this Game game ) {
+		public static bool endNineball(this Game game)
+		{
 			bool bResult = false;
-			if( mainLoop != null ) {
-				bResult = game.Components.Remove( mainLoop );
+			if(mainLoop != null)
+			{
+				bResult = game.Components.Remove(mainLoop);
 				mainLoop.Dispose();
 				mainLoop = null;
 			}
@@ -151,6 +175,9 @@ namespace danmaq.nineball {
 		/// <remarks>通常ここが実行されることがありません。</remarks>
 		/// 
 		/// <param name="args">プログラムへ渡される引数。</param>
-		private static void Main( string[] args ) { startNineball(); }
+		private static void Main(string[] args)
+		{
+			startNineball();
+		}
 	}
 }

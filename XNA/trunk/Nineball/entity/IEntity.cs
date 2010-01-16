@@ -12,7 +12,8 @@ using danmaq.nineball.data;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity {
+namespace danmaq.nineball.entity
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
@@ -22,7 +23,8 @@ namespace danmaq.nineball.entity {
 	/// 状態を持つオブジェクトを作ることができます。
 	/// </para>
 	/// </summary>
-	public interface IEntity : IDisposable {
+	public interface IEntity : IDisposable
+	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* events ────────────────────────────────*
@@ -37,25 +39,37 @@ namespace danmaq.nineball.entity {
 		/// <summary>最後に変化する前の状態を取得します。</summary>
 		/// 
 		/// <value>最後に変化する前の状態。初期値は<c>CState.empty</c>。</value>
-		IState previousState { get; }
+		IState previousState
+		{
+			get;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>現在の状態を取得します。</summary>
 		/// 
 		/// <value>現在の状態。初期値は<c>CState.empty</c>。</value>
-		IState currentState { get; }
+		IState currentState
+		{
+			get;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>次に変化する状態を設定します。</summary>
 		/// 
 		/// <value>次に変化する状態。</value>
-		IState nextState { set; }
+		IState nextState
+		{
+			set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
 		/// 
 		/// <value>親オブジェクト。</value>
-		IEntity owner { get; }
+		IEntity owner
+		{
+			get;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -68,12 +82,12 @@ namespace danmaq.nineball.entity {
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void update( GameTime gameTime );
+		void update(GameTime gameTime);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void draw( GameTime gameTime );
+		void draw(GameTime gameTime);
 	}
 }

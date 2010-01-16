@@ -13,11 +13,13 @@ using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene {
+namespace danmaq.ball.state.scene
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>初期化シーン。</summary>
-	public sealed class CStateInitialize : CSceneBase {
+	public sealed class CStateInitialize : CSceneBase
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -33,7 +35,9 @@ namespace danmaq.ball.state.scene {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateInitialize() : base( "初期化" ) { }
+		private CStateInitialize() : base("初期化")
+		{
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -48,8 +52,9 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( IEntity entity, object privateMembers ) {
-			base.setup( entity, privateMembers );
+		public override void setup(IEntity entity, object privateMembers)
+		{
+			base.setup(entity, privateMembers);
 			CStateMainLoopDefault.instance.colorBack = Color.Black;
 			systemSpriteManager.resolution = game.resolution;
 		}
@@ -62,8 +67,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.update( entity, privateMembers, gameTime );
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.update(entity, privateMembers, gameTime);
 			entity.nextState = CStateCredit.instance;
 		}
 	}

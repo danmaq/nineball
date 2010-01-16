@@ -11,11 +11,13 @@
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.state.scene {
+namespace danmaq.ball.state.scene
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲーム画面シーン。</summary>
-	public sealed class CStateGame : CSceneBase {
+	public sealed class CStateGame : CSceneBase
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -28,7 +30,9 @@ namespace danmaq.ball.state.scene {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateGame() : base( "ゲーム画面" ) { }
+		private CStateGame() : base("ゲーム画面")
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
@@ -38,8 +42,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.update( entity, privateMembers, gameTime );
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.update(entity, privateMembers, gameTime);
 			entity.nextState = CStateTitle.instance;
 		}
 
@@ -51,8 +56,9 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.draw( entity, privateMembers, gameTime );
+		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.draw(entity, privateMembers, gameTime);
 		}
 	}
 }

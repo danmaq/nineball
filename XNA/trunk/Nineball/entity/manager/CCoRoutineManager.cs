@@ -12,7 +12,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity.manager {
+namespace danmaq.nineball.entity.manager
+{
 
 	// TODO : コルーチン ハンドル作った方がいいかも。removeの引数設定が紛らわしい
 	// 特に引数を持つコルーチンの場合どうすんの、とか
@@ -20,17 +21,19 @@ namespace danmaq.nineball.entity.manager {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>コルーチン管理 クラス。</summary>
-	public sealed class CCoRoutineManager : CEntity {
+	public sealed class CCoRoutineManager : CEntity
+	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>コルーチン追加/削除用キューのデータ。</summary>
-		private struct SQueue {
+		private struct SQueue
+		{
 
 			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* constants ──────────────────────────────-*
 
 			/// <summary>コルーチンの全削除のためのキュー。</summary>
-			public static readonly SQueue removeAll = new SQueue( false );
+			public static readonly SQueue removeAll = new SQueue(false);
 
 			/// <summary>追加するかどうか。</summary>
 			public readonly bool add;
@@ -49,8 +52,12 @@ namespace danmaq.nineball.entity.manager {
 			/// <exception cref="System.ArgumentNullException">
 			/// コルーチン本体にnullを設定しようとした場合。
 			/// </exception>
-			public SQueue( bool add, IEnumerator coRoutine ) {
-				if( coRoutine == null ) { throw new ArgumentNullException( "coRoutine" ); }
+			public SQueue(bool add, IEnumerator coRoutine)
+			{
+				if(coRoutine == null)
+				{
+					throw new ArgumentNullException("coRoutine");
+				}
 				this.add = add;
 				this.coRoutine = coRoutine;
 			}
@@ -59,7 +66,8 @@ namespace danmaq.nineball.entity.manager {
 			/// <summary>コンストラクタ。</summary>
 			/// 
 			/// <param name="add">追加するかどうか。</param>
-			private SQueue( bool add ) {
+			private SQueue(bool add)
+			{
 				this.add = add;
 				this.coRoutine = null;
 			}
@@ -82,9 +90,14 @@ namespace danmaq.nineball.entity.manager {
 		/// <summary>無限ループ用コルーチンです。</summary>
 		/// 
 		/// <returns>null</returns>
-		public static IEnumerator coEternalWait {
-			get {
-				while( true ) { yield return null; }
+		public static IEnumerator coEternalWait
+		{
+			get
+			{
+				while(true)
+				{
+					yield return null;
+				}
 			}
 		}
 
@@ -92,15 +105,27 @@ namespace danmaq.nineball.entity.manager {
 		/// <summary>コルーチンの件数を取得します。</summary>
 		/// 
 		/// <value>コルーチンの件数</value>
-		public int count {
-			get {
+		public int count
+		{
+			get
+			{
 				int nResult = coRoutines.Count;
-				foreach( SQueue item in operationQueue ) {
-					if( item.add ) { nResult++; }
-					else if( item.coRoutine == null ) { nResult = 0; }
-					else { nResult--; }
+				foreach(SQueue item in operationQueue)
+				{
+					if(item.add)
+					{
+						nResult++;
+					}
+					else if(item.coRoutine == null)
+					{
+						nResult = 0;
+					}
+					else
+					{
+						nResult--;
+					}
 				}
-				return Math.Max( 0, nResult );
+				return Math.Max(0, nResult);
 			}
 		}
 
@@ -112,11 +137,15 @@ namespace danmaq.nineball.entity.manager {
 		/// 
 		/// <param name="m">コルーチン管理クラス</param>
 		/// <returns>コルーチンの件数</returns>
-		public static implicit operator int( CCoRoutineManager m ) { return m.count; }
+		public static implicit operator int(CCoRoutineManager m)
+		{
+			return m.count;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンの全削除を予約します。</summary>
-		public override void Dispose() {
+		public override void Dispose()
+		{
 			remove();
 			commitQueue();
 			base.Dispose();
@@ -129,47 +158,68 @@ namespace danmaq.nineball.entity.manager {
 		/// </summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( GameTime gameTime ) {
+		public override void update(GameTime gameTime)
+		{
 			commitQueue();
 			LinkedListNode<IEnumerator> nodeNext;
 			for(
 				LinkedListNode<IEnumerator> node = coRoutines.First; node != null; node = nodeNext
-			) {
+			)
+			{
 				nodeNext = node.Next;
-				if( node.Value == null || !node.Value.MoveNext() ) { remove( node.Value ); }
+				if(node.Value == null || !node.Value.MoveNext())
+				{
+					remove(node.Value);
+				}
 			}
 			commitQueue();
-			base.update( gameTime );
+			base.update(gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンの全削除を予約します。</summary>
-		public void remove() { operationQueue.Enqueue( SQueue.removeAll ); }
+		public void remove()
+		{
+			operationQueue.Enqueue(SQueue.removeAll);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンの削除を予約します。</summary>
 		/// 
 		/// <param name="coRoutine">コルーチン</param>
-		public void remove( IEnumerator coRoutine ) {
-			operationQueue.Enqueue( new SQueue( false, coRoutine ) );
+		public void remove(IEnumerator coRoutine)
+		{
+			operationQueue.Enqueue(new SQueue(false, coRoutine));
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンの登録を予約します。</summary>
 		/// 
 		/// <param name="coRoutine">コルーチン</param>
-		public void add( IEnumerator coRoutine ) {
-			operationQueue.Enqueue( new SQueue( true, coRoutine ) );
+		public void add(IEnumerator coRoutine)
+		{
+			operationQueue.Enqueue(new SQueue(true, coRoutine));
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチン操作キューをリストへ反映します。</summary>
-		private void commitQueue() {
-			while( operationQueue.Count > 0 ) {
+		private void commitQueue()
+		{
+			while(operationQueue.Count > 0)
+			{
 				SQueue data = operationQueue.Dequeue();
-				if( data.add ) { coRoutines.AddLast( data.coRoutine ); }
-				else if( data.coRoutine == null ) { coRoutines.Clear(); }
-				else { coRoutines.Remove( data.coRoutine ); }
+				if(data.add)
+				{
+					coRoutines.AddLast(data.coRoutine);
+				}
+				else if(data.coRoutine == null)
+				{
+					coRoutines.Clear();
+				}
+				else
+				{
+					coRoutines.Remove(data.coRoutine);
+				}
 			}
 		}
 	}

@@ -12,12 +12,14 @@ using System.Collections.Generic;
 using danmaq.nineball.state;
 using danmaq.nineball.state.input;
 
-namespace danmaq.nineball.entity.input {
+namespace danmaq.nineball.entity.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイス列挙体。</summary>
 	[Flags]
-	public enum EInputDevice : byte {
+	public enum EInputDevice : byte
+	{
 
 		/// <summary>入力デバイスなし。</summary>
 		None = 0,
@@ -34,18 +36,19 @@ namespace danmaq.nineball.entity.input {
 #endif
 
 		/// <summary>対応する全てのコントローラ。</summary>
-		All = 
+		All =
 #if WINDOWS && !DISABLE_LEGACY
 			Keyboard | XBOX360 | Legacy,
 #else
-			Keyboard | XBOX360,
+ Keyboard | XBOX360,
 #endif
 
 	}
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイス列挙体の拡張機能。</summary>
-	public static class EInputDeviceExtension {
+	public static class EInputDeviceExtension
+	{
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>対応する状態を取得します。</summary>
@@ -55,9 +58,11 @@ namespace danmaq.nineball.entity.input {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 複数の定数を定義した場合。
 		/// </exception>
-		public static IState<CInput, List<SInputState>> getState( this EInputDevice device ) {
+		public static IState<CInput, List<SInputState>> getState(this EInputDevice device)
+		{
 			IState<CInput, List<SInputState>> result = null;
-			switch( device ) {
+			switch(device)
+			{
 				case EInputDevice.None:
 					break;
 				case EInputDevice.Keyboard:
@@ -72,7 +77,7 @@ namespace danmaq.nineball.entity.input {
 					break;
 #endif
 				default:
-					throw new ArgumentOutOfRangeException( "device" );
+					throw new ArgumentOutOfRangeException("device");
 			}
 			return result;
 		}
@@ -87,21 +92,29 @@ namespace danmaq.nineball.entity.input {
 			this EInputDevice device,
 			out List<IState<CInput, List<SInputState>>> enabled,
 			out List<IState<CInput, List<SInputState>>> disabled
-		) {
+		)
+		{
 			EInputDevice[] list = {
 				EInputDevice.Keyboard, EInputDevice.XBOX360,
 #if WINDOWS && !DISABLE_LEGACY
 				EInputDevice.Legacy
 #endif
 			};
-			EInputDevice _device = ( device & EInputDevice.All );
-			enabled = new List<IState<CInput,List<SInputState>>>();
-			disabled = new List<IState<CInput,List<SInputState>>>();
+			EInputDevice _device = (device & EInputDevice.All);
+			enabled = new List<IState<CInput, List<SInputState>>>();
+			disabled = new List<IState<CInput, List<SInputState>>>();
 			IState<CInput, List<SInputState>> state;
-			foreach( EInputDevice target in list ) {
-				state = ( _device & target ).getState();
-				if( state == null ) { disabled.Add( target.getState() ); }
-				else { enabled.Add( state ); }
+			foreach(EInputDevice target in list)
+			{
+				state = (_device & target).getState();
+				if(state == null)
+				{
+					disabled.Add(target.getState());
+				}
+				else
+				{
+					enabled.Add(state);
+				}
 			}
 		}
 	}

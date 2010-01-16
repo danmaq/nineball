@@ -21,11 +21,13 @@ using danmaq.nineball.util.collection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace danmaq.ball.state.scene {
+namespace danmaq.ball.state.scene
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>シーン基底クラス。</summary>
-	public abstract class CSceneBase : CState {
+	public abstract class CSceneBase : CState
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -54,6 +56,9 @@ namespace danmaq.ball.state.scene {
 		/// <summary>コンテンツ管理クラス。</summary>
 		protected readonly ContentManager contentManager;
 
+		/// <summary>メインループ用の既定の状態。</summary>
+		private readonly CStateMainLoopDefault stateMainLoop = CStateMainLoopDefault.instance;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -61,12 +66,13 @@ namespace danmaq.ball.state.scene {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="sceneName">シーン名称。</param>
-		protected CSceneBase( string sceneName ) {
+		protected CSceneBase(string sceneName)
+		{
 			this.sceneName = sceneName;
 			inputManager = game.inputManager;
 			graphicDeviceManager = game.graphicDeviceManager;
 			contentManager = game.Content;
-			localGameComponentManager = new CGameComponentManager( game );
+			localGameComponentManager = new CGameComponentManager(game);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -76,24 +82,36 @@ namespace danmaq.ball.state.scene {
 		/// <summary>ゲーム共通のフェーズ・カウンタ管理クラスを取得します。</summary>
 		/// 
 		/// <value>ゲーム共通のフェーズ・カウンタ管理クラス。</value>
-		protected CPhase systemPhaseManager {
-			get { return CStateMainLoopDefault.instance.phase; }
+		protected CPhase systemPhaseManager
+		{
+			get
+			{
+				return stateMainLoop.phase;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ゲーム共通のスプライト バッチ管理クラスを取得します。</summary>
 		/// 
 		/// <value>ゲーム共通のスプライト バッチ管理クラス。</value>
-		protected CSprite systemSpriteManager {
-			get { return CStateMainLoopDefault.instance.sprite; }
+		protected CSprite systemSpriteManager
+		{
+			get
+			{
+				return stateMainLoop.sprite;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ゲーム共通のゲーム コンポーネント管理クラスを取得します。</summary>
 		/// 
 		/// <value>ゲーム共通のゲーム コンポーネント管理クラス。</value>
-		protected CGameComponentManager systemGameComponentManager {
-			get { return CStateMainLoopDefault.instance.registedGameComponentList; }
+		protected CGameComponentManager systemGameComponentManager
+		{
+			get
+			{
+				return stateMainLoop.registedGameComponentList;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -109,10 +127,11 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( IEntity entity, object privateMembers ) {
-			CLogger.add( sceneName + "シーンを開始します。" );
+		public override void setup(IEntity entity, object privateMembers)
+		{
+			CLogger.add(sceneName + "シーンを開始します。");
 			localCoRoutineManager.initialize();
-			base.setup( entity, privateMembers );
+			base.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -123,10 +142,11 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			localCoRoutineManager.update( gameTime );
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			localCoRoutineManager.update(gameTime);
 			localPhaseManager.count++;
-			base.update( entity, privateMembers, gameTime );
+			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -140,13 +160,14 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( IEntity entity, object privateMembers, IState nextState ) {
+		public override void teardown(IEntity entity, object privateMembers, IState nextState)
+		{
 			localCoRoutineManager.Dispose();
 			localPhaseManager.reset();
 			localGameComponentManager.Dispose();
 			GC.Collect();
-			base.teardown( entity, privateMembers, nextState );
-			CLogger.add( sceneName + "シーンを終了しました。" );
+			base.teardown(entity, privateMembers, nextState);
+			CLogger.add(sceneName + "シーンを終了しました。");
 		}
 	}
 }

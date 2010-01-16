@@ -13,11 +13,13 @@ using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.entity.input {
+namespace danmaq.nineball.entity.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイスのボタン列挙体 拡張機能。</summary>
-	public static class ButtonsExtension {
+	public static class ButtonsExtension
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -38,8 +40,12 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>アナログ入力可能なボタン一覧を取得します。</summary>
 		/// 
 		/// <value>アナログ入力可能なボタン一覧。</value>
-		public static ReadOnlyCollection<Buttons> anaglogInputList {
-			get { return _anaglogInputList.AsReadOnly(); }
+		public static ReadOnlyCollection<Buttons> anaglogInputList
+		{
+			get
+			{
+				return _anaglogInputList.AsReadOnly();
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -50,8 +56,9 @@ namespace danmaq.nineball.entity.input {
 		/// 
 		/// <param name="button">ボタン。</param>
 		/// <returns>アナログ入力に対応している場合、<c>true</c>。</returns>
-		public static bool isAvailableAnalogInput( this Buttons button ) {
-			return _anaglogInputList.Contains( button );
+		public static bool isAvailableAnalogInput(this Buttons button)
+		{
+			return _anaglogInputList.Contains(button);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -63,34 +70,50 @@ namespace danmaq.nineball.entity.input {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// アナログ入力に対応していないボタンでこのメソッドを呼び出した場合。
 		/// </exception>
-		public static float getAnalogInput( this Buttons button, PlayerIndex playerIndex ) {
+		public static float getAnalogInput(this Buttons button, PlayerIndex playerIndex)
+		{
 			float fResult = 0f;
-			if( !button.isAvailableAnalogInput() ) {	// アナログ入力出来ないものは予め弾く
-				throw new ArgumentOutOfRangeException( "button" );
+			if(!button.isAvailableAnalogInput())
+			{	// アナログ入力出来ないものは予め弾く
+				throw new ArgumentOutOfRangeException("button");
 			}
-			GamePadState state = GamePad.GetState( playerIndex );
-			if( ( button & ( Buttons.LeftTrigger | Buttons.RightTrigger ) ) != 0 ) {
+			GamePadState state = GamePad.GetState(playerIndex);
+			if((button & (Buttons.LeftTrigger | Buttons.RightTrigger)) != 0)
+			{
 				fResult = button == Buttons.LeftTrigger ?
 					state.Triggers.Left : state.Triggers.Right;
 			}
-			else {
+			else
+			{
 				const Buttons THUMB_LEFT = (
 					Buttons.LeftThumbstickUp | Buttons.LeftThumbstickDown |
-					Buttons.LeftThumbstickLeft | Buttons.LeftThumbstickRight );
+					Buttons.LeftThumbstickLeft | Buttons.LeftThumbstickRight);
 				const Buttons THUMB_BOTH_UP = (
-					Buttons.LeftThumbstickUp | Buttons.RightThumbstickUp );
+					Buttons.LeftThumbstickUp | Buttons.RightThumbstickUp);
 				const Buttons THUMB_BOTH_DOWN = (
-					Buttons.LeftThumbstickDown | Buttons.RightThumbstickDown );
+					Buttons.LeftThumbstickDown | Buttons.RightThumbstickDown);
 				const Buttons THUMB_BOTH_LEFT = (
-					Buttons.LeftThumbstickLeft | Buttons.RightThumbstickLeft );
+					Buttons.LeftThumbstickLeft | Buttons.RightThumbstickLeft);
 				const Buttons THUMB_BOTH_RIGHT = (
-					Buttons.LeftThumbstickRight | Buttons.RightThumbstickRight );
-				Vector2 thumb = ( button & THUMB_LEFT ) != 0 ?
+					Buttons.LeftThumbstickRight | Buttons.RightThumbstickRight);
+				Vector2 thumb = (button & THUMB_LEFT) != 0 ?
 					state.ThumbSticks.Left : state.ThumbSticks.Right;
-				if( ( button & THUMB_BOTH_UP ) != 0 ) { fResult = MathHelper.Max( thumb.Y, 0 ); }
-				if( ( button & THUMB_BOTH_DOWN ) != 0 ) { fResult = -MathHelper.Min( thumb.Y, 0 ); }
-				if( ( button & THUMB_BOTH_LEFT ) != 0 ) { fResult = MathHelper.Max( thumb.X, 0 ); }
-				if( ( button & THUMB_BOTH_RIGHT ) != 0 ) { fResult = -MathHelper.Min( thumb.X, 0 ); }
+				if((button & THUMB_BOTH_UP) != 0)
+				{
+					fResult = MathHelper.Max(thumb.Y, 0);
+				}
+				if((button & THUMB_BOTH_DOWN) != 0)
+				{
+					fResult = -MathHelper.Min(thumb.Y, 0);
+				}
+				if((button & THUMB_BOTH_LEFT) != 0)
+				{
+					fResult = MathHelper.Max(thumb.X, 0);
+				}
+				if((button & THUMB_BOTH_RIGHT) != 0)
+				{
+					fResult = -MathHelper.Min(thumb.X, 0);
+				}
 			}
 			return fResult;
 		}
@@ -98,7 +121,8 @@ namespace danmaq.nineball.entity.input {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360用コントローラ 入力情報クラス 拡張機能。</summary>
-	public static class GamePadStateExtention {
+	public static class GamePadStateExtention
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -123,10 +147,15 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>現在の入力状態を取得します。</summary>
 		/// 
 		/// <param name="state"></param>
-		public static Buttons getPress( this GamePadState state ) {
+		public static Buttons getPress(this GamePadState state)
+		{
 			Buttons result = 0;
-			foreach( Buttons button in allButtons ) {
-				if( state.IsButtonDown( button ) ) { result |= button; }
+			foreach(Buttons button in allButtons)
+			{
+				if(state.IsButtonDown(button))
+				{
+					result |= button;
+				}
 			}
 			return result;
 		}

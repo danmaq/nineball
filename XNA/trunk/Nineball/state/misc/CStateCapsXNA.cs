@@ -15,11 +15,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.state.misc {
+namespace danmaq.nineball.state.misc
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XNA・ビデオ環境検証クラス。</summary>
-	public sealed class CStateCapsXNA : CState {
+	public sealed class CStateCapsXNA : CState
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -29,7 +31,7 @@ namespace danmaq.nineball.state.misc {
 
 		/// <summary>接続されているXBOX360コントローラ一覧。</summary>
 		private readonly List<PlayerIndex> connectedXBOX360ControllersList =
-			new List<PlayerIndex>( 4 );
+			new List<PlayerIndex>(4);
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -48,7 +50,9 @@ namespace danmaq.nineball.state.misc {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCapsXNA() { }
+		private CStateCapsXNA()
+		{
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -57,19 +61,31 @@ namespace danmaq.nineball.state.misc {
 		/// <summary>使用可能なピクセル シェーダのバージョンを取得します。</summary>
 		/// 
 		/// <value>使用可能なピクセル シェーダのバージョン。</value>
-		public ShaderProfile PixelShaderProfile { get; private set; }
+		public ShaderProfile PixelShaderProfile
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>使用可能な頂点シェーダのバージョンを取得します。</summary>
 		/// 
 		/// <value>使用可能な頂点シェーダのバージョン。</value>
-		public ShaderProfile VertexShaderProfile { get; private set; }
+		public ShaderProfile VertexShaderProfile
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>XNA・ビデオ環境レポートを取得します。</summary>
 		/// 
 		/// <value>XNA・ビデオ環境レポート文字列。</value>
-		public string report { get; private set; }
+		public string report
+		{
+			get;
+			private set;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -84,9 +100,10 @@ namespace danmaq.nineball.state.misc {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( IEntity entity, object privateMembers ) {
+		public override void setup(IEntity entity, object privateMembers)
+		{
 			report = createReport();
-			base.setup( entity, privateMembers );
+			base.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -97,34 +114,43 @@ namespace danmaq.nineball.state.misc {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
 			entity.nextState = nextState;
 			nextState = empty;
-			base.update( entity, privateMembers, gameTime );
+			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>XNA・ビデオ環境レポートを生成します。</summary>
-		private string createReport() {
+		private string createReport()
+		{
 			string strResult = "◆◆◆ DirectX環境情報" + Environment.NewLine;
-			foreach ( GraphicsAdapter adapter in GraphicsAdapter.Adapters ) {
+			foreach(GraphicsAdapter adapter in GraphicsAdapter.Adapters)
+			{
 				bool bCurrentDevice;
 				ShaderProfile ps;
 				ShaderProfile vs;
-				strResult += adapter.createCapsReport( out bCurrentDevice, out ps, out vs ) + Environment.NewLine;
-				if( bCurrentDevice ) {
+				strResult += adapter.createCapsReport(out bCurrentDevice, out ps, out vs) + Environment.NewLine;
+				if(bCurrentDevice)
+				{
 					PixelShaderProfile = ps;
 					VertexShaderProfile = vs;
 				}
 			}
-			try {
+			try
+			{
 				PlayerIndex[] all = {
 					PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
-				foreach ( PlayerIndex i in all ) {
-					strResult += GamePad.GetCapabilities( i ).createCapsReport( i );
+				foreach(PlayerIndex i in all)
+				{
+					strResult += GamePad.GetCapabilities(i).createCapsReport(i);
 				}
 			}
-			catch ( Exception e ) { strResult += "!▲! XBOX360コントローラ デバイスの性能取得に失敗。" + Environment.NewLine + e.ToString(); }
+			catch(Exception e)
+			{
+				strResult += "!▲! XBOX360コントローラ デバイスの性能取得に失敗。" + Environment.NewLine + e.ToString();
+			}
 			return strResult;
 		}
 	}

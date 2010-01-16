@@ -9,11 +9,13 @@
 
 using System;
 
-namespace danmaq.nineball.misc {
+namespace danmaq.nineball.misc
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>静的な擬似乱数ジェネレータ。</summary>
-	public static class CStaticRandom {
+	public static class CStaticRandom
+	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -26,7 +28,10 @@ namespace danmaq.nineball.misc {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		static CStaticRandom() { reset(); }
+		static CStaticRandom()
+		{
+			reset();
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -35,7 +40,11 @@ namespace danmaq.nineball.misc {
 		/// <summary>擬似乱数ジェネレータを取得します。</summary>
 		/// 
 		/// <returns>擬似乱数ジェネレータ。</returns>
-		public static Random random { get; private set; }
+		public static Random random
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -43,9 +52,16 @@ namespace danmaq.nineball.misc {
 		/// </summary>
 		/// 
 		/// <returns>擬似乱数系列の開始値を計算するために使用する数値。</returns>
-		public static int seed {
-			get { return m_nSeed; }
-			set { reset( value ); }
+		public static int seed
+		{
+			get
+			{
+				return m_nSeed;
+			}
+			set
+			{
+				reset(value);
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -55,8 +71,9 @@ namespace danmaq.nineball.misc {
 		/// <summary>既定のシード値を使用し、乱数ジェネレータをリセットします。</summary>
 		/// 
 		/// <returns>擬似乱数系列の開始値を計算するために使用する数値。</returns>
-		public static int reset() {
-			reset( new Random().Next() );
+		public static int reset()
+		{
+			reset(new Random().Next());
 			return seed;
 		}
 
@@ -71,9 +88,10 @@ namespace danmaq.nineball.misc {
 		/// <para><c>Seed</c>>が<c>Int32.MinValue</c>です。</para>
 		/// <para>これは、絶対値が計算されるときにオーバーフローの原因となります。</para>
 		/// </exception>
-		public static void reset( int nSeed ) {
+		public static void reset(int nSeed)
+		{
 			m_nSeed = nSeed;
-			random = new Random( nSeed );
+			random = new Random(nSeed);
 		}
 	}
 }

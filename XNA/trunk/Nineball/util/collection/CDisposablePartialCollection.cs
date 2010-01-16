@@ -10,7 +10,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace danmaq.nineball.util.collection {
+namespace danmaq.nineball.util.collection
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
@@ -23,7 +24,8 @@ namespace danmaq.nineball.util.collection {
 	/// 
 	/// <typeparam name="_T">コレクション内の要素の型。</typeparam>
 	public class CDisposablePartialCollection<_T> :
-		CDisposablePartialCollection<_T, _T> where _T : IDisposable {
+		CDisposablePartialCollection<_T, _T> where _T : IDisposable
+	{
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -32,8 +34,10 @@ namespace danmaq.nineball.util.collection {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CDisposablePartialCollection( ICollection<_T> collection ) :
-			base( collection ) { }
+		public CDisposablePartialCollection(ICollection<_T> collection) :
+			base(collection)
+		{
+		}
 
 	}
 
@@ -59,8 +63,10 @@ namespace danmaq.nineball.util.collection {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CDisposablePartialCollection( ICollection<_T> collection ) :
-			base( collection ) { }
+		public CDisposablePartialCollection(ICollection<_T> collection) :
+			base(collection)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>管理している要素を全て解放します。</summary>
@@ -68,9 +74,10 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public override void Clear() {
+		public override void Clear()
+		{
 			throwAtReadOnly();
-			partial.ForEach( item => item.Dispose() );
+			partial.ForEach(item => item.Dispose());
 			base.Clear();
 		}
 
@@ -82,9 +89,13 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public override bool Remove( _P item ) {
-			bool bResult = base.Remove( item );
-			if( bResult ) { item.Dispose(); }
+		public override bool Remove(_P item)
+		{
+			bool bResult = base.Remove(item);
+			if(bResult)
+			{
+				item.Dispose();
+			}
 			return bResult;
 		}
 	}

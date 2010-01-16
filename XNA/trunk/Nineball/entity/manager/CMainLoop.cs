@@ -15,15 +15,18 @@ using danmaq.nineball.util;
 using danmaq.nineball.util.collection;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity.manager {
+namespace danmaq.nineball.entity.manager
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>メインループのゲームコンポーネント クラス。</summary>
-	public sealed class CMainLoop : CEntity {
+	public sealed class CMainLoop : CEntity
+	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		public sealed class CPrivateMembers : IDisposable {
+		public sealed class CPrivateMembers : IDisposable
+		{
 
 			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* constants ──────────────────────────────-*
@@ -51,10 +54,12 @@ namespace danmaq.nineball.entity.manager {
 
 			//* -----------------------------------------------------------------------*
 			/// <summary>フィールドのオブジェクトを解放します。</summary>
-			public void Dispose() {
+			public void Dispose()
+			{
 				registedGameComponentList.Dispose();
 				registedGameComponentList = null;
-				if( sprite != null ) {
+				if(sprite != null)
+				{
 					sprite.Dispose();
 					sprite = null;
 				}
@@ -84,10 +89,11 @@ namespace danmaq.nineball.entity.manager {
 		/// <param name="graphicsDeviceManager">
 		/// グラフィック デバイスの構成・管理クラス。
 		/// </param>
-		public CMainLoop( Game game, GraphicsDeviceManager graphicsDeviceManager ) {
+		public CMainLoop(Game game, GraphicsDeviceManager graphicsDeviceManager)
+		{
 			_private.game = game;
 			_private.graphicsDeviceManager = graphicsDeviceManager;
-			_private.registedGameComponentList = new CGameComponentManager( game );
+			_private.registedGameComponentList = new CGameComponentManager(game);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -100,8 +106,12 @@ namespace danmaq.nineball.entity.manager {
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
-		public new IState<CMainLoop, CPrivateMembers> nextState {
-			set { base.nextState = value; }
+		public new IState<CMainLoop, CPrivateMembers> nextState
+		{
+			set
+			{
+				base.nextState = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -110,8 +120,12 @@ namespace danmaq.nineball.entity.manager {
 		/// </summary>
 		/// 
 		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
-		protected override object privateMembers {
-			get { return _private; }
+		protected override object privateMembers
+		{
+			get
+			{
+				return _private;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -119,17 +133,22 @@ namespace danmaq.nineball.entity.manager {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public override void initialize() {
+		public override void initialize()
+		{
 			nextState = CStateMainLoopDefault.instance;
 			base.initialize();
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
-		public override void Dispose() {
+		public override void Dispose()
+		{
 			base.Dispose();
 			_private.Dispose();
-			if( exitOnDispose ) { _private.game.Exit(); }
+			if(exitOnDispose)
+			{
+				_private.game.Exit();
+			}
 		}
 	}
 }

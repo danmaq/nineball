@@ -12,21 +12,20 @@ using danmaq.nineball.data;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity.component {
+namespace danmaq.nineball.entity.component
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲームコンポーネントと状態を持つオブジェクトとのアダプタ クラス。</summary>
-	/// 
-	/// <typeparam name="_T">状態を持つオブジェクト型。</typeparam>
-	public class CGameComponent<_T> :
-		GameComponent, IGameComponentWithEntity<_T> where _T : IEntity
+	public class CGameComponent :
+		GameComponent, IGameComponentWithEntity
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>状態を持つオブジェクト。</summary>
-		private readonly _T entity;
+		private readonly IEntity entity;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -40,10 +39,18 @@ namespace danmaq.nineball.entity.component {
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態を持つオブジェクトとして、nullが設定された場合。
 		/// </exception>
-		public CGameComponent( Game game, _T entity, bool bDirectRegist ) : base( game ) {
-			if( entity == null ) { throw new ArgumentNullException( "entity" ); }
+		public CGameComponent(Game game, IEntity entity, bool bDirectRegist)
+			: base(game)
+		{
+			if(entity == null)
+			{
+				throw new ArgumentNullException("entity");
+			}
 			this.entity = entity;
-			if( bDirectRegist ) { game.Components.Add( this ); }
+			if(bDirectRegist)
+			{
+				game.Components.Add(this);
+			}
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -53,41 +60,64 @@ namespace danmaq.nineball.entity.component {
 		/// <summary>状態が遷移された時に呼び出されるイベントを追加/削除します。</summary>
 		/// 
 		/// <value>状態が遷移された時に呼び出されるイベント。</value>
-		public event EventHandler<CEventChangedState> changedState {
-			add { entity.changedState += value; }
-			remove { entity.changedState -= value; }
+		public event EventHandler<CEventChangedState> changedState
+		{
+			add
+			{
+				entity.changedState += value;
+			}
+			remove
+			{
+				entity.changedState -= value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>最後に変化する前の状態を取得します。</summary>
 		/// 
 		/// <value>最後に変化する前の状態。初期値は<c>CState.empty</c>。</value>
-		public IState previousState {
-			get { return entity.previousState; }
+		public IState previousState
+		{
+			get
+			{
+				return entity.previousState;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>現在の状態を取得します。</summary>
 		/// 
 		/// <value>現在の状態。初期値は<c>CState.empty</c>。</value>
-		public IState currentState {
-			get { return entity.currentState; }
+		public IState currentState
+		{
+			get
+			{
+				return entity.currentState;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>次に変化する状態を設定します。</summary>
 		/// 
 		/// <value>次に変化する状態。</value>
-		public IState nextState {
-			set { entity.nextState = value; }
+		public IState nextState
+		{
+			set
+			{
+				entity.nextState = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
 		/// 
 		/// <value>親オブジェクト。</value>
-		public IEntity owner {
-			get { return entity.owner; }
+		public IEntity owner
+		{
+			get
+			{
+				return entity.owner;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -95,7 +125,8 @@ namespace danmaq.nineball.entity.component {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public override void Initialize() {
+		public override void Initialize()
+		{
 			initialize();
 			base.Initialize();
 		}
@@ -104,26 +135,36 @@ namespace danmaq.nineball.entity.component {
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void Update( GameTime gameTime ) {
-			update( gameTime );
-			base.Update( gameTime );
+		public override void Update(GameTime gameTime)
+		{
+			update(gameTime);
+			base.Update(gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public void initialize() { entity.initialize(); }
+		public void initialize()
+		{
+			entity.initialize();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void update( GameTime gameTime ) { entity.update( gameTime ); }
+		public void update(GameTime gameTime)
+		{
+			entity.update(gameTime);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void draw( GameTime gameTime ) { entity.draw( gameTime ); }
+		public void draw(GameTime gameTime)
+		{
+			entity.draw(gameTime);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
@@ -131,9 +172,10 @@ namespace danmaq.nineball.entity.component {
 		/// <param name="disposing">
 		/// マネージ リソースとアンマネージ リソースの両方を解放するかどうか。
 		/// </param>
-		protected override void Dispose( bool disposing ) {
+		protected override void Dispose(bool disposing)
+		{
 			entity.Dispose();
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 	}
 }

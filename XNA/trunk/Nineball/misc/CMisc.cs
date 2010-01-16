@@ -11,11 +11,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.misc {
+namespace danmaq.nineball.misc
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>雑多な演算関数集クラス。</summary>
-	public static class CMisc {
+	public static class CMisc
+	{
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -29,11 +31,15 @@ namespace danmaq.nineball.misc {
 		/// <exception cref="System.ArgumentNullException">
 		/// 引数にnullを指定した場合。
 		/// </exception>
-		public static List<_T> getUnique<_T>( this IEnumerable<_T> expr ) {
-			if( expr == null ) { throw new ArgumentNullException( "expr" ); }
+		public static List<_T> getUnique<_T>(this IEnumerable<_T> expr)
+		{
+			if(expr == null)
+			{
+				throw new ArgumentNullException("expr");
+			}
 			List<_T> result;
 #if WINDOWS
-			result = new List<_T>( new HashSet<_T>( expr ) );
+			result = new List<_T>(new HashSet<_T>(expr));
 			result.Sort();
 #else
 			result = new List<_T>();
@@ -59,8 +65,9 @@ namespace danmaq.nineball.misc {
 		/// <param name="fMin">制限値(最小)</param>
 		/// <param name="fMax">制限値(最大)</param>
 		/// <returns><paramref name="fMin"/>～<paramref name="fMax"/>に制限された値</returns>
-		public static float clampLoop( float fExpr, float fMin, float fMax ) {
-			return clampLoop( fExpr, fMin, fMax, false, true );
+		public static float clampLoop(float fExpr, float fMin, float fMax)
+		{
+			return clampLoop(fExpr, fMin, fMax, false, true);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -78,21 +85,33 @@ namespace danmaq.nineball.misc {
 		/// <returns><paramref name="fMin"/>～<paramref name="fMax"/>に制限された値</returns>
 		public static float clampLoop(
 			float fExpr, float fMin, float fMax, bool bClampMinEqual, bool bClampMaxEqual
-		) {
-			if( fMin == fMax ) { return fMin; }
-			else if( fMin > fMax ) {
+		)
+		{
+			if(fMin == fMax)
+			{
+				return fMin;
+			}
+			else if(fMin > fMax)
+			{
 				float fBuffer = fMax;
 				fMax = fMin;
 				fMin = fBuffer;
 			}
 			while(
-				( bClampMaxEqual ? fExpr >= fMax : fExpr > fMax ) ||
-				( bClampMinEqual ? fExpr <= fMin : fExpr < fMin )
-			) {
-				if( bClampMaxEqual ? fExpr >= fMax : fExpr > fMax ) { fExpr = fMin + fExpr - fMax; }
-				if( bClampMinEqual ? fExpr <= fMin : fExpr < fMin ) { fExpr = fMax - Math.Abs( fExpr - fMin ); }
+				(bClampMaxEqual ? fExpr >= fMax : fExpr > fMax) ||
+				(bClampMinEqual ? fExpr <= fMin : fExpr < fMin)
+			)
+			{
+				if(bClampMaxEqual ? fExpr >= fMax : fExpr > fMax)
+				{
+					fExpr = fMin + fExpr - fMax;
+				}
+				if(bClampMinEqual ? fExpr <= fMin : fExpr < fMin)
+				{
+					fExpr = fMax - Math.Abs(fExpr - fMin);
+				}
 			}
-			return MathHelper.Clamp( fExpr, fMin, fMax );
+			return MathHelper.Clamp(fExpr, fMin, fMax);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -101,12 +120,13 @@ namespace danmaq.nineball.misc {
 		/// <param name="rectExpr">矩形</param>
 		/// <param name="fScale">拡大率</param>
 		/// <returns>拡大した矩形</returns>
-		public static Rectangle Inflate( this Rectangle rectExpr, float fScale ) {
+		public static Rectangle Inflate(this Rectangle rectExpr, float fScale)
+		{
 			float fScaleHalf = fScale * 0.5f;
 			Rectangle result = rectExpr;
 			result.Inflate(
-				( int )( result.Width * fScaleHalf ),
-				( int )( result.Height * fScaleHalf ) );
+				(int)(result.Width * fScaleHalf),
+				(int)(result.Height * fScaleHalf));
 			return result;
 		}
 	}

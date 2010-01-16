@@ -7,11 +7,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace danmaq.nineball.data {
+namespace danmaq.nineball.data
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>文字位置揃えのための列挙体。</summary>
-	public enum EAlign {
+	public enum EAlign
+	{
 
 		/// <summary>左端、または上端揃え</summary>
 		LeftTop,

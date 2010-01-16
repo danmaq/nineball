@@ -12,11 +12,13 @@ using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.state.input {
+namespace danmaq.nineball.state.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>キーボード専用の入力状態。</summary>
-	public sealed class CStateKeyboard : CState<CInput, List<SInputState>> {
+	public sealed class CStateKeyboard : CState<CInput, List<SInputState>>
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -32,7 +34,9 @@ namespace danmaq.nineball.state.input {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateKeyboard() { }
+		private CStateKeyboard()
+		{
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -50,11 +54,16 @@ namespace danmaq.nineball.state.input {
 		/// </exception>
 		public override void update(
 			CInput entity, List<SInputState> buttonsState, GameTime gameTime
-		) {
+		)
+		{
 			KeyboardState state = Keyboard.GetState();
-			while( buttonsState.Count > assignList.Count ) { assignList.Add( Keys.None ); }
-			for( int i = buttonsState.Count - 1; i >= 0; i-- ) {
-				buttonsState[i].refresh( state.IsKeyDown( assignList[i] ) );
+			while(buttonsState.Count > assignList.Count)
+			{
+				assignList.Add(Keys.None);
+			}
+			for(int i = buttonsState.Count - 1; i >= 0; i--)
+			{
+				buttonsState[i].refresh(state.IsKeyDown(assignList[i]));
 			}
 		}
 
@@ -64,9 +73,10 @@ namespace danmaq.nineball.state.input {
 		/// </summary>
 		/// 
 		/// <param name="collection">キー割り当て一覧。</param>
-		public void setAssignList( IEnumerable<Keys> collection ) {
+		public void setAssignList(IEnumerable<Keys> collection)
+		{
 			assignList.Clear();
-			assignList.AddRange( collection );
+			assignList.AddRange(collection);
 		}
 	}
 }

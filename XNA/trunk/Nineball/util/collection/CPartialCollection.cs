@@ -11,7 +11,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace danmaq.nineball.util.collection {
+namespace danmaq.nineball.util.collection
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
@@ -23,7 +24,8 @@ namespace danmaq.nineball.util.collection {
 	/// </summary>
 	/// 
 	/// <typeparam name="_T">コレクション内の要素の型。</typeparam>
-	public class CPartialCollection<_T> : CPartialCollection<_T, _T> {
+	public class CPartialCollection<_T> : CPartialCollection<_T, _T>
+	{
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -32,7 +34,9 @@ namespace danmaq.nineball.util.collection {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CPartialCollection( ICollection<_T> collection ) : base( collection ) { }
+		public CPartialCollection(ICollection<_T> collection) : base(collection)
+		{
+		}
 
 	}
 
@@ -50,7 +54,8 @@ namespace danmaq.nineball.util.collection {
 	/// 部分責任コレクション内の要素の型。
 	/// <typeparamref name="_T"/>と同一型またはサブクラスを指定します。
 	/// </typeparam>
-	public class CPartialCollection<_T, _P> : ICollection<_P>, IDisposable where _P : _T {
+	public class CPartialCollection<_T, _P> : ICollection<_P>, IDisposable where _P : _T
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -68,13 +73,17 @@ namespace danmaq.nineball.util.collection {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CPartialCollection( ICollection<_T> collection ) {
+		public CPartialCollection(ICollection<_T> collection)
+		{
 			this.collection = collection;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
-		~CPartialCollection() { Dispose(); }
+		~CPartialCollection()
+		{
+			Dispose();
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -83,22 +92,33 @@ namespace danmaq.nineball.util.collection {
 		/// <summary>格納されている要素の数を取得します。</summary>
 		/// 
 		/// <value>格納されている要素の数。</value>
-		public virtual int Count {
-			get { return partial.Count; }
+		public virtual int Count
+		{
+			get
+			{
+				return partial.Count;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>読み取り専用かどうかを示す値を設定/取得します。</summary>
 		/// 
 		/// <value>読み取り専用の場合、<c>true</c>。</value>
-		public virtual bool IsReadOnly { get; set; }
+		public virtual bool IsReadOnly
+		{
+			get;
+			set;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>管理している要素を全て解放します。</summary>
-		public virtual void Dispose() { Clear(); }
+		public virtual void Dispose()
+		{
+			Clear();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>要素を追加します。</summary>
@@ -107,10 +127,11 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public virtual void Add( _P item ) {
+		public virtual void Add(_P item)
+		{
 			throwAtReadOnly();
-			collection.Add( item );
-			partial.Add( item );
+			collection.Add(item);
+			partial.Add(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -119,9 +140,13 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public virtual void Clear() {
+		public virtual void Clear()
+		{
 			throwAtReadOnly();
-			foreach( _P item in partial ) { collection.Remove( item ); }
+			foreach(_P item in partial)
+			{
+				collection.Remove(item);
+			}
 			castoff();
 		}
 
@@ -133,9 +158,10 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public virtual bool Remove( _P item ) {
+		public virtual bool Remove(_P item)
+		{
 			throwAtReadOnly();
-			return castoff( item ) || partial.Remove( item );
+			return castoff(item) || partial.Remove(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -143,7 +169,10 @@ namespace danmaq.nineball.util.collection {
 		/// 
 		/// <param name="item">検索するオブジェクト。</param>
 		/// <returns>存在する場合、<c>true</c>。</returns>
-		public virtual bool Contains( _P item ) { return partial.Contains( item ); }
+		public virtual bool Contains(_P item)
+		{
+			return partial.Contains(item);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>要素を配列にコピーします。</summary>
@@ -154,8 +183,9 @@ namespace danmaq.nineball.util.collection {
 		/// <param name="arrayIndex">
 		/// コピーの開始位置となる、配列の0から始まるインデックス番号。
 		/// </param>
-		public virtual void CopyTo( _P[] array, int arrayIndex ) {
-			partial.CopyTo( array, arrayIndex );
+		public virtual void CopyTo(_P[] array, int arrayIndex)
+		{
+			partial.CopyTo(array, arrayIndex);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -164,7 +194,10 @@ namespace danmaq.nineball.util.collection {
 		/// </summary>
 		/// 
 		/// <returns>列挙するオブジェクトの型。</returns>
-		public virtual IEnumerator<_P> GetEnumerator() { return partial.GetEnumerator(); }
+		public virtual IEnumerator<_P> GetEnumerator()
+		{
+			return partial.GetEnumerator();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -172,8 +205,9 @@ namespace danmaq.nineball.util.collection {
 		/// </summary>
 		/// 
 		/// <returns>列挙するオブジェクトの型。</returns>
-		IEnumerator IEnumerable.GetEnumerator() {
-			return ( ( IEnumerable )partial ).GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return ((IEnumerable)partial).GetEnumerator();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -182,7 +216,8 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public virtual void castoff() {
+		public virtual void castoff()
+		{
 			throwAtReadOnly();
 			partial.Clear();
 		}
@@ -195,9 +230,10 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public virtual bool castoff( _P item ) {
+		public virtual bool castoff(_P item)
+		{
 			throwAtReadOnly();
-			return partial.Remove( item );
+			return partial.Remove(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -206,8 +242,12 @@ namespace danmaq.nineball.util.collection {
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		protected void throwAtReadOnly() {
-			if( IsReadOnly ) { throw new NotSupportedException(); }
+		protected void throwAtReadOnly()
+		{
+			if(IsReadOnly)
+			{
+				throw new NotSupportedException();
+			}
 		}
 	}
 }

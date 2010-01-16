@@ -16,11 +16,13 @@ using danmaq.nineball.misc;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene {
+namespace danmaq.ball.state.scene
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>クレジット画面シーン。</summary>
-	public sealed class CStateCredit : CSceneBase {
+	public sealed class CStateCredit : CSceneBase
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -39,7 +41,9 @@ namespace danmaq.ball.state.scene {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCredit() : base( "クレジット画面" ) { }
+		private CStateCredit() : base("クレジット画面")
+		{
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -54,10 +58,11 @@ namespace danmaq.ball.state.scene {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( IEntity entity, object privateMembers ) {
-			base.setup( entity, privateMembers );
+		public override void setup(IEntity entity, object privateMembers)
+		{
+			base.setup(entity, privateMembers);
 			m_fAlpha = 0;
-			localCoRoutineManager.add( coAlpha() );
+			localCoRoutineManager.add(coAlpha());
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -68,9 +73,13 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.update( entity, privateMembers, gameTime );
-			if( localPhaseManager.phase == 1 ) { entity.nextState = CStateTitle.instance; }
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.update(entity, privateMembers, gameTime);
+			if(localPhaseManager.phase == 1)
+			{
+				entity.nextState = CStateTitle.instance;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -81,27 +90,38 @@ namespace danmaq.ball.state.scene {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
-			base.draw( entity, privateMembers, gameTime );
-			systemSpriteManager.add( contentManager.Load<Texture2D>( Resources.IMAGE_LOGO ),
-				new Vector2( 320, 240 ), EAlign.Center, EAlign.Center,
-				new Rectangle( 0, 0, 384, 384 ), new Color( Color.White, m_fAlpha ), 0f,
-				SpriteBlendMode.AlphaBlend );
+		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			base.draw(entity, privateMembers, gameTime);
+			systemSpriteManager.add(contentManager.Load<Texture2D>(Resources.IMAGE_LOGO),
+				new Vector2(320, 240), EAlign.Center, EAlign.Center,
+				new Rectangle(0, 0, 384, 384), new Color(Color.White, m_fAlpha), 0f,
+				SpriteBlendMode.AlphaBlend);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		private IEnumerator coAlpha() {
+		private IEnumerator coAlpha()
+		{
 			const int FADETIME = 60;
 			for(
 				int i = 0; i < FADETIME;
-				m_fAlpha = CInterpolate._clampAccelerate( 0, 1, ++i, FADETIME )
-			) { yield return null; }
-			for( int i = 0; i < 120; i++ ) { yield return null; }
+				m_fAlpha = CInterpolate._clampAccelerate(0, 1, ++i, FADETIME)
+			)
+			{
+				yield return null;
+			}
+			for(int i = 0; i < 120; i++)
+			{
+				yield return null;
+			}
 			for(
 				int i = 0; i < FADETIME;
-				m_fAlpha = CInterpolate._clampAccelerate( 1, 0, ++i, FADETIME )
-			) { yield return null; }
+				m_fAlpha = CInterpolate._clampAccelerate(1, 0, ++i, FADETIME)
+			)
+			{
+				yield return null;
+			}
 			localPhaseManager.reserveNextPhase = true;
 		}
 	}

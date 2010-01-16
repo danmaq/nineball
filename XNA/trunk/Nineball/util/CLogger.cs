@@ -13,11 +13,13 @@ using System.IO;
 using System.Diagnostics;
 #endif
 
-namespace danmaq.nineball.util {
+namespace danmaq.nineball.util
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ログ出力 クラス。</summary>
-	public static class CLogger {
+	public static class CLogger
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -39,7 +41,10 @@ namespace danmaq.nineball.util {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		static CLogger() { logStart(); }
+		static CLogger()
+		{
+			logStart();
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -48,11 +53,13 @@ namespace danmaq.nineball.util {
 		/// <summary>現在時間文字列を取得します。</summary>
 		/// 
 		/// <value>現在時間文字列。</value>
-		public static string now {
-			get {
+		public static string now
+		{
+			get
+			{
 				DateTime time = DateTime.Now;
 				return string.Format(
-					"{0}:{1}:{2}.{3}", time.Hour, time.Minute, time.Second, time.Millisecond );
+					"{0}:{1}:{2}.{3}", time.Hour, time.Minute, time.Second, time.Millisecond);
 			}
 		}
 
@@ -66,36 +73,49 @@ namespace danmaq.nineball.util {
 		/// </remarks>
 		/// 
 		/// <value>出力先ファイル名。</value>
-		public static string outFile {
-			get { return m_strOutFile; }
-			set {
-				if( m_strOutFile != value ) {
+		public static string outFile
+		{
+			get
+			{
+				return m_strOutFile;
+			}
+			set
+			{
+				if(m_strOutFile != value)
+				{
 					bool bCompleted = false;
-					try {
+					try
+					{
 #if WINDOWS
-						if( value != null && value.Length > 0 ) {
-							StreamWriter sw = File.CreateText( value );
+						if(value != null && value.Length > 0)
+						{
+							StreamWriter sw = File.CreateText(value);
 							sw.AutoFlush = true;
-							Console.SetOut( sw );
+							Console.SetOut(sw);
 						}
-						else { Console.SetOut( DEFAULT_OUT ); }
+						else
+						{
+							Console.SetOut(DEFAULT_OUT);
+						}
 						bCompleted = true;
 #else
 						throw new PlatformNotSupportedException(
 							"現行のバージョンのXBOX360版では、ログ出力先を標準出力以外に設定することができません。" );
 #endif
 					}
-					catch( Exception e ) {
-						add( "出力先を切り替えることが出来ませんでした。" +
-							Environment.NewLine + e.ToString() );
+					catch(Exception e)
+					{
+						add("出力先を切り替えることが出来ませんでした。" +
+							Environment.NewLine + e.ToString());
 					}
 					logStart();
-					if( bCompleted ) {
+					if(bCompleted)
+					{
 						string strPrevOutFile = m_strOutFile;
 						m_strOutFile = value;
-						Console.WriteLine( "出力先が切り替わりました。" + Environment.NewLine +
+						Console.WriteLine("出力先が切り替わりました。" + Environment.NewLine +
 							"以前の出力先は {0} で、現在の変更された出力先は {1} です。",
-							getDestDescription( strPrevOutFile ), getDestDescription( value ) );
+							getDestDescription(strPrevOutFile), getDestDescription(value));
 					}
 				}
 			}
@@ -109,13 +129,14 @@ namespace danmaq.nineball.util {
 		/// <remarks>自動的に現在時刻が追加されます。</remarks>
 		/// 
 		/// <param name="obj">オブジェクト</param>
-		public static void add( object obj ) {
+		public static void add(object obj)
+		{
 			// TODO : 可変引数に対応する
 			string strText = obj == null ? "null" : obj.ToString();
-			strText = now + ( strText.Contains( Environment.NewLine ) ?
-				( " > " + Environment.NewLine ) : " > " ) + strText;
+			strText = now + (strText.Contains(Environment.NewLine) ?
+				(" > " + Environment.NewLine) : " > ") + strText;
 #if WINDOWS
-			Console.WriteLine( strText );
+			Console.WriteLine(strText);
 #else
 			Trace.WriteLine( strText );
 #endif
@@ -123,15 +144,19 @@ namespace danmaq.nineball.util {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ログの末尾に改行を追加します。</summary>
-		public static void add() { Console.WriteLine(); }
+		public static void add()
+		{
+			Console.WriteLine();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ログ出力開始メッセージを出力します。</summary>
-		private static void logStart() {
+		private static void logStart()
+		{
 			string strText = DateTime.Now.ToString() +
 				Environment.NewLine + Environment.NewLine + now + " > ログ出力開始";
 #if WINDOWS
-			Console.WriteLine( strText );
+			Console.WriteLine(strText);
 #else
 			Trace.WriteLine( strText );
 #endif
@@ -147,8 +172,9 @@ namespace danmaq.nineball.util {
 		/// </summary>
 		/// 
 		/// <param name="strDest">出力先ファイル名</param>
-		private static string getDestDescription( string strDest ) {
-			return ( strDest == null ? DESCRIPTION_STDOUT : strDest );
+		private static string getDestDescription(string strDest)
+		{
+			return (strDest == null ? DESCRIPTION_STDOUT : strDest);
 		}
 	}
 }
