@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="core\CGame.cs" />
+    <Compile Include="entity\font\CCursor.cs" />
     <Compile Include="entity\font\CPrint.cs" />
     <Compile Include="misc\CMisc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
