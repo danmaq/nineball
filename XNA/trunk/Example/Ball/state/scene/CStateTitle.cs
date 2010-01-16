@@ -54,6 +54,7 @@ namespace danmaq.ball.state.scene
 				new CPrint("赤い玉 青い玉 競走ゲーム", new Vector2(40, 7), EAlign.Center, Color.Aqua),
 				new CPrint("(C)1994-2009 Mc/danmaq All rights reserved.", new Vector2(40, 9), EAlign.Center, Color.Aqua),
 				new CPrint("難易度を選択してください。", new Vector2(6, 14), EAlign.LeftTop, Color.White),
+				new CPrint("１      ２      ３      ４      ５      ６      ７      ８      ９", new Vector2(6, 16), EAlign.LeftTop, Color.White),
 			};
 			foreach(CPrint print in printList)
 			{
