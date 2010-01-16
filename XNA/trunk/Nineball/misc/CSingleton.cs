@@ -9,7 +9,8 @@
 
 using System;
 
-namespace danmaq.nineball.data {
+namespace danmaq.nineball.data
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
@@ -28,9 +29,10 @@ namespace danmaq.nineball.data {
 	/// <example>
 	/// 下記のコードの場合、SingletonHogeをシングルトン クラスとして使用します。
 	/// <code>
-	/// public class SingletonHoge{ // シングルトンにしたいオブジェクト。
-	///		private SingletonHoge() { }	// コンストラクタはprivateにする。
-	/// }
+	/// public sealed class SingletonHoge	// シングルトンにしたいオブジェクト。
+	/// {									// 継承できないようsealedする。
+	///		private SingletonHoge() { }		// コンストラクタはprivateにする。
+	/// }									// XBOX版ではprivateにしてはいけない。
 	/// static class Program{
 	///		static void Main( string[] args ){
 	///			SingletonHoge hoge = CSingleton&lt;SingletonHoge&gt;.instance;
@@ -59,7 +61,7 @@ namespace danmaq.nineball.data {
 #if XBOX360
 		, new()
 #endif
- {
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -72,11 +74,12 @@ namespace danmaq.nineball.data {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		static CSingleton() {
+		static CSingleton()
+		{
 			// HACK : XBOX360版でもCreateInstanceできんかなぁ……orz
 #if WINDOWS
 			// private？でもそんなの関係ねぇ！
-			instance = ( _T )Activator.CreateInstance( typeof( _T ), true );
+			instance = (_T)Activator.CreateInstance(typeof(_T), true);
 #else
 			instance = new _T();
 #endif

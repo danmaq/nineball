@@ -14,17 +14,20 @@ using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.util {
+namespace danmaq.nineball.util
+{
 
 	// TODO : Entityにしようかな
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>スプライト描画管理 クラス。</summary>
-	public sealed class CSprite : IDisposable {
+	public sealed class CSprite : IDisposable
+	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>描画情報が格納された基本クラス。</summary>
-		public abstract class CDrawInfoBase : IComparable<CDrawInfoBase> {
+		public abstract class CDrawInfoBase : IComparable<CDrawInfoBase>
+		{
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
@@ -65,14 +68,31 @@ namespace danmaq.nineball.util {
 			/// <returns>
 			/// 比較対象オブジェクトの相対順序を示す 32 ビット符号付き整数。
 			/// </returns>
-			public int CompareTo( CDrawInfoBase other ) {
-				int nResult = Math.Sign( other.fLayerDepth - fLayerDepth );
-				if( nResult == 0 ) {
-					if( !bString && other.bString ) { nResult = -1; }
-					else if( bString && !other.bString ) { nResult = 1; }
-					else if( blendMode < other.blendMode ) { nResult = -1; }
-					else if( blendMode > other.blendMode ) { nResult = 1; }
-					else { nResult = onCompare( other ); }
+			public int CompareTo(CDrawInfoBase other)
+			{
+				int nResult = Math.Sign(other.fLayerDepth - fLayerDepth);
+				if(nResult == 0)
+				{
+					if(!bString && other.bString)
+					{
+						nResult = -1;
+					}
+					else if(bString && !other.bString)
+					{
+						nResult = 1;
+					}
+					else if(blendMode < other.blendMode)
+					{
+						nResult = -1;
+					}
+					else if(blendMode > other.blendMode)
+					{
+						nResult = 1;
+					}
+					else
+					{
+						nResult = onCompare(other);
+					}
 				}
 				return nResult;
 			}
@@ -80,7 +100,8 @@ namespace danmaq.nineball.util {
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>画像用描画情報が格納されたクラス。</summary>
-		public sealed class CDrawInfo : CDrawInfoBase {
+		public sealed class CDrawInfo : CDrawInfoBase
+		{
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
@@ -99,16 +120,18 @@ namespace danmaq.nineball.util {
 
 			//* -----------------------------------------------------------------------*
 			/// <summary>コンストラクタ。</summary>
-			public CDrawInfo() {
+			public CDrawInfo()
+			{
 				onCompare = info => Math.Sign(
-					texture.GetHashCode() - ( ( CDrawInfo )info ).texture.GetHashCode() );
+					texture.GetHashCode() - ((CDrawInfo)info).texture.GetHashCode());
 				bString = false;
 			}
 		}
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>文字用描画情報が格納されたクラス。</summary>
-		public sealed class CDrawStringInfo : CDrawInfoBase {
+		public sealed class CDrawStringInfo : CDrawInfoBase
+		{
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
@@ -130,8 +153,9 @@ namespace danmaq.nineball.util {
 
 			//* -----------------------------------------------------------------------*
 			/// <summary>コンストラクタ。</summary>
-			public CDrawStringInfo() {
-				onCompare = info => text.CompareTo( ( ( CDrawStringInfo )info ).text );
+			public CDrawStringInfo()
+			{
+				onCompare = info => text.CompareTo(((CDrawStringInfo)info).text);
 				bString = true;
 				blendMode = SpriteBlendMode.AlphaBlend;
 			}
@@ -139,7 +163,8 @@ namespace danmaq.nineball.util {
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>現在の描画状態が格納された構造体。</summary>
-		public struct SDrawMode {
+		public struct SDrawMode
+		{
 
 			/// <summary>描画中かどうか。</summary>
 			public bool isBegin;
@@ -155,7 +180,7 @@ namespace danmaq.nineball.util {
 		private readonly List<CDrawInfoBase> drawList = new List<CDrawInfoBase>();
 
 		/// <summary>CResolutionAspectFixの型情報。</summary>
-		private readonly Type typeResAF = typeof( CResolutionAspectFix );
+		private readonly Type typeResAF = typeof(CResolutionAspectFix);
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -171,17 +196,26 @@ namespace danmaq.nineball.util {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CSprite() { resolution = new CResolution(); }
+		public CSprite()
+		{
+			resolution = new CResolution();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="spriteBatch">スプライトバッチ</param>
-		public CSprite( SpriteBatch spriteBatch ) : this() { this.spriteBatch = spriteBatch; }
+		public CSprite(SpriteBatch spriteBatch) : this()
+		{
+			this.spriteBatch = spriteBatch;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
-		~CSprite() { Dispose(); }
+		~CSprite()
+		{
+			Dispose();
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -190,7 +224,11 @@ namespace danmaq.nineball.util {
 		/// <summary>スプライトバッチを取得します。</summary>
 		/// 
 		/// <value>スプライトバッチ。</value>
-		public SpriteBatch spriteBatch { get; set; }
+		public SpriteBatch spriteBatch
+		{
+			get;
+			set;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -200,7 +238,10 @@ namespace danmaq.nineball.util {
 		/// アンマネージ リソースの解放およびリセットに関連付けられている
 		/// アプリケーション定義のタスクを実行します。
 		/// </summary>
-		public void Dispose() { drawList.Clear(); }
+		public void Dispose()
+		{
+			drawList.Clear();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>描画処理を予約します。</summary>
@@ -212,7 +253,10 @@ namespace danmaq.nineball.util {
 		/// <param name="blend">合成モード</param>
 		public void add(
 			Texture2D tex, Rectangle rect, Color color, float fLayer, SpriteBlendMode blend
-		) { add( tex, rect, rect, color, 0, Vector2.Zero, SpriteEffects.None, fLayer, blend ); }
+		)
+		{
+			add(tex, rect, rect, color, 0, Vector2.Zero, SpriteEffects.None, fLayer, blend);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>描画処理を予約します。</summary>
@@ -228,7 +272,10 @@ namespace danmaq.nineball.util {
 		public void add(
 			Texture2D tex, Vector2 pos, EAlign halign, EAlign valign, Rectangle srcRect,
 			Color color, float fLayer, SpriteBlendMode blend
-		) { add( tex, pos, halign, valign, srcRect, color, 0, Vector2.One, SpriteEffects.None, fLayer, blend ); }
+		)
+		{
+			add(tex, pos, halign, valign, srcRect, color, 0, Vector2.One, SpriteEffects.None, fLayer, blend);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>描画処理を予約します。</summary>
@@ -247,27 +294,30 @@ namespace danmaq.nineball.util {
 		public void add(
 			Texture2D tex, Vector2 pos, EAlign halign, EAlign valign, Rectangle srcRect, Color color,
 			float fRotate, Vector2 scale, SpriteEffects effects, float fLayer, SpriteBlendMode blend
-		) {
+		)
+		{
 			Vector2 origin = Vector2.Zero;
-			switch( halign ) {
+			switch(halign)
+			{
 				case EAlign.Center:
-					origin.X = ( float )( srcRect.Width ) * 0.5f;
+					origin.X = (float)(srcRect.Width) * 0.5f;
 					break;
 				case EAlign.RightBottom:
 					origin.X = srcRect.Width;
 					break;
 			}
-			switch( valign ) {
+			switch(valign)
+			{
 				case EAlign.Center:
-					origin.Y = ( float )( srcRect.Height ) * 0.5f;
+					origin.Y = (float)(srcRect.Height) * 0.5f;
 					break;
 				case EAlign.RightBottom:
 					origin.Y = srcRect.Height;
 					break;
 			}
-			add( tex, new Rectangle( ( int )( pos.X ), ( int )( pos.Y ),
-					( int )( srcRect.Width * scale.X ), ( int )( srcRect.Height * scale.Y ) ),
-				srcRect, color, fRotate, origin, effects, fLayer, blend );
+			add(tex, new Rectangle((int)(pos.X), (int)(pos.Y),
+					(int)(srcRect.Width * scale.X), (int)(srcRect.Height * scale.Y)),
+				srcRect, color, fRotate, origin, effects, fLayer, blend);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -282,9 +332,10 @@ namespace danmaq.nineball.util {
 		public void add(
 			Texture2D tex, Rectangle dstRect, Rectangle srcRect,
 			Color color, float fLayer, SpriteBlendMode blend
-		) {
-			add( tex, dstRect, srcRect, color, 0,
-				Vector2.Zero, SpriteEffects.None, fLayer, blend );
+		)
+		{
+			add(tex, dstRect, srcRect, color, 0,
+				Vector2.Zero, SpriteEffects.None, fLayer, blend);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -302,20 +353,21 @@ namespace danmaq.nineball.util {
 		public void add(
 			Texture2D tex, Rectangle dstRect, Rectangle srcRect, Color color, float fRotate,
 			Vector2 origin, SpriteEffects effects, float fLayer, SpriteBlendMode blend
-		) {
+		)
+		{
 			CDrawInfo info = new CDrawInfo();
 			info.texture = tex;
 			info.destinationRectangle = resolution == null ?
-				dstRect : resolution.resizeFromVGA( dstRect );
+				dstRect : resolution.resizeFromVGA(dstRect);
 			info.sourceRectangle = srcRect;
 			info.color = color;
 			info.fRotation = fRotate -
-				( resolution != null && resolution.vertical ? 0 : 0 );
+				(resolution != null && resolution.vertical ? 0 : 0);
 			info.origin = origin;
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
 			info.blendMode = blend;
-			drawList.Add( info );
+			drawList.Add(info);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -333,52 +385,66 @@ namespace danmaq.nineball.util {
 		public void add(
 			SpriteFont spriteFont, string text, Vector2 pos, Color color, float fRotate,
 			Vector2 origin, Vector2 scale, SpriteEffects effects, float fLayer
-		) {
+		)
+		{
 			CDrawStringInfo info = new CDrawStringInfo();
 			info.spriteFont = spriteFont;
 			info.text = text;
-			info.position = resolution == null ? pos : resolution.resizeFromVGA( pos );
+			info.position = resolution == null ? pos : resolution.resizeFromVGA(pos);
 			info.color = color;
 			info.fRotation = fRotate;
 			info.origin = origin;
-			if( resolution == null ) { info.scale = scale; }
-			else {
-				if( resolution.GetType() == typeResAF || resolution.GetType().IsSubclassOf( typeResAF ) ) {
-					CResolutionAspectFix res = ( CResolutionAspectFix )resolution;
+			if(resolution == null)
+			{
+				info.scale = scale;
+			}
+			else
+			{
+				if(resolution.GetType() == typeResAF || resolution.GetType().IsSubclassOf(typeResAF))
+				{
+					CResolutionAspectFix res = (CResolutionAspectFix)resolution;
 					info.scale = scale * res.scaleGapFromVGA;
 				}
-				else { info.scale = scale * resolution.scaleGapFromVGA; }
+				else
+				{
+					info.scale = scale * resolution.scaleGapFromVGA;
+				}
 			}
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
-			drawList.Add( info );
+			drawList.Add(info);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>予約された描画処理を実行します。</summary>
-		public void draw() {
-			if ( spriteBatch == null ) {
-				throw new InvalidOperationException( "描画に使用するSpriteBatchがありません。" );
+		public void draw()
+		{
+			if(spriteBatch == null)
+			{
+				throw new InvalidOperationException("描画に使用するSpriteBatchがありません。");
 			}
 			drawList.Sort();
-			for( int i=0; i < drawList.Count; i++ ) {
+			for(int i=0; i < drawList.Count; i++)
+			{
 				CDrawInfoBase __info = drawList[i];
-				changeMode( __info );
-				if( __info.GetType() == typeof( CDrawInfo ) ) {
-					CDrawInfo info = ( CDrawInfo )__info;
+				changeMode(__info);
+				if(__info.GetType() == typeof(CDrawInfo))
+				{
+					CDrawInfo info = (CDrawInfo)__info;
 					Rectangle rectDst = info.destinationRectangle;
-					spriteBatch.Draw( info.texture, rectDst,
+					spriteBatch.Draw(info.texture, rectDst,
 						info.sourceRectangle, info.color, info.fRotation,
-						info.origin, info.effects, info.fLayerDepth );
+						info.origin, info.effects, info.fLayerDepth);
 				}
-				else {
-					CDrawStringInfo info = ( CDrawStringInfo )__info;
-					spriteBatch.DrawString( info.spriteFont, info.text,
+				else
+				{
+					CDrawStringInfo info = (CDrawStringInfo)__info;
+					spriteBatch.DrawString(info.spriteFont, info.text,
 						info.position, info.color, info.fRotation, info.origin,
-						info.scale, info.effects, info.fLayerDepth );
+						info.scale, info.effects, info.fLayerDepth);
 				}
 			}
-			changeMode( null );
+			changeMode(null);
 			drawList.Clear();
 		}
 
@@ -387,14 +453,18 @@ namespace danmaq.nineball.util {
 		/// <remarks>引数に<c>null</c>を渡すことで描画処理を終了します。</remarks>
 		/// 
 		/// <param name="info">次に描画する情報</param>
-		private void changeMode( CDrawInfoBase info ) {
-			if( !spriteBatch.IsDisposed ) {
-				if( m_drawMode.isBegin && ( info == null || m_drawMode.blendMode != info.blendMode ) ) {
+		private void changeMode(CDrawInfoBase info)
+		{
+			if(!spriteBatch.IsDisposed)
+			{
+				if(m_drawMode.isBegin && (info == null || m_drawMode.blendMode != info.blendMode))
+				{
 					spriteBatch.End();
 					m_drawMode.isBegin = false;
 				}
-				if( info != null && !m_drawMode.isBegin ) {
-					spriteBatch.Begin( info.blendMode, SpriteSortMode.FrontToBack, SaveStateMode.None );
+				if(info != null && !m_drawMode.isBegin)
+				{
+					spriteBatch.Begin(info.blendMode, SpriteSortMode.FrontToBack, SaveStateMode.None);
 					m_drawMode.isBegin = true;
 					m_drawMode.blendMode = info.blendMode;
 					spriteBatch.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;

@@ -16,11 +16,13 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.DirectX.DirectInput;
 #endif
 
-namespace danmaq.nineball.util.caps {
+namespace danmaq.nineball.util.caps
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>各設定を文字列化するクラス。</summary>
-	public static class CCapsExtension {
+	public static class CCapsExtension
+	{
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -30,7 +32,10 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="b">ブール値</param>
 		/// <returns><paramref name="b" />に対応する○×文字列</returns>
-		public static string ToStringOX( this bool b ) { return b ? "○" : "×"; }
+		public static string ToStringOX(this bool b)
+		{
+			return b ? "○" : "×";
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>グラフィック アダプタの環境レポートを作成します。</summary>
@@ -40,7 +45,8 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="ps">ピクセル シェーダの対応バージョン</param>
 		/// <param name="vs">頂点シェーダの対応バージョン</param>
 		/// <returns>グラフィック アダプタの環境レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsAdapter adapter, out bool bCurrentDevice, out ShaderProfile ps, out ShaderProfile vs ) {
+		public static string createCapsReport(this GraphicsAdapter adapter, out bool bCurrentDevice, out ShaderProfile ps, out ShaderProfile vs)
+		{
 			bCurrentDevice = adapter.IsDefaultAdapter;
 			string strResult = "◎◎ グラフィック デバイス " + adapter.DeviceName + Environment.NewLine;
 			strResult += "▽ グラフィック デバイス環境情報一覧" + Environment.NewLine;
@@ -56,15 +62,18 @@ namespace danmaq.nineball.util.caps {
 			strResult += "  デフォルト デバイス  : " + bCurrentDevice.ToStringOX() + Environment.NewLine;
 			strResult += "  ワイド画面 サポート  : " + adapter.IsWideScreen.ToStringOX() + Environment.NewLine;
 			strResult += "  対応画面モード一覧   : " + Environment.NewLine;
-			foreach( DisplayMode mode in adapter.SupportedDisplayModes ) {
+			foreach(DisplayMode mode in adapter.SupportedDisplayModes)
+			{
 				strResult += "  >>  " + mode.ToString() + Environment.NewLine;
 			}
-			try {
+			try
+			{
 				strResult += adapter.GetCapabilities(
 					Microsoft.Xna.Framework.Graphics.DeviceType.Hardware
-				).createCapsReport( out ps, out vs );
+				).createCapsReport(out ps, out vs);
 			}
-			catch( Exception e ) {
+			catch(Exception e)
+			{
 				strResult += "!▲! グラフィック デバイスの性能取得に失敗。" + Environment.NewLine + e.ToString();
 				ps = ShaderProfile.Unknown;
 				vs = ShaderProfile.Unknown;
@@ -78,22 +87,23 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="ps">ピクセル シェーダの対応バージョン</param>
 		/// <param name="vs">頂点シェーダの対応バージョン</param>
 		/// <returns>グラフィック アダプタの性能レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities caps, out ShaderProfile ps, out ShaderProfile vs ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities caps, out ShaderProfile ps, out ShaderProfile vs)
+		{
 			ps = caps.MaxPixelShaderProfile;
 			vs = caps.MaxVertexShaderProfile;
 			string strResult = "▽ グラフィック デバイス基本能力一覧" + Environment.NewLine;
 			strResult += "  ヘッド参照順序           : " + caps.AdapterOrdinalInGroup + Environment.NewLine;
 			strResult += "  デバイス 種別            : " + caps.DeviceType.ToString() + Environment.NewLine;
-			strResult += "  ExtentsAdjust            : " + caps.ExtentsAdjust.ToString( "F02" ) + Environment.NewLine;
-			strResult += "  ガードバンド 下端座標    : " + caps.GuardBandBottom.ToString( "F02" ) + Environment.NewLine;
-			strResult += "  ガードバンド 左端座標    : " + caps.GuardBandLeft.ToString( "F02" ) + Environment.NewLine;
-			strResult += "  ガードバンド 右端座標    : " + caps.GuardBandRight.ToString( "F02" ) + Environment.NewLine;
-			strResult += "  ガードバンド 上端座標    : " + caps.GuardBandTop.ToString( "F02" ) + Environment.NewLine;
+			strResult += "  ExtentsAdjust            : " + caps.ExtentsAdjust.ToString("F02") + Environment.NewLine;
+			strResult += "  ガードバンド 下端座標    : " + caps.GuardBandBottom.ToString("F02") + Environment.NewLine;
+			strResult += "  ガードバンド 左端座標    : " + caps.GuardBandLeft.ToString("F02") + Environment.NewLine;
+			strResult += "  ガードバンド 右端座標    : " + caps.GuardBandRight.ToString("F02") + Environment.NewLine;
+			strResult += "  ガードバンド 上端座標    : " + caps.GuardBandTop.ToString("F02") + Environment.NewLine;
 			strResult += "  マスタ デバイス識別ID    : " + caps.MasterAdapterOrdinal + Environment.NewLine;
 			strResult += "  異方性フィルタ最大有効値 : " + caps.MaxAnisotropy + Environment.NewLine;
 			strResult += "  PS30命令スロット最大数   : " + caps.MaxPixelShader30InstructionSlots + Environment.NewLine;
 			strResult += "  対応最大PSバージョン     : " + caps.MaxPixelShaderProfile.ToString() + Environment.NewLine;
-			strResult += "  点プリミティブ最大サイズ : " + caps.MaxPointSize.ToString( "F02" ) + Environment.NewLine;
+			strResult += "  点プリミティブ最大サイズ : " + caps.MaxPointSize.ToString("F02") + Environment.NewLine;
 			strResult += "  プリミティブ最大描画数   : " + caps.MaxPrimitiveCount + Environment.NewLine;
 			strResult += "  レンダリング対象最大数   : " + caps.MaxSimultaneousRenderTargets + Environment.NewLine;
 			strResult += "  MaxSimultaneousTextures  : " + caps.MaxSimultaneousTextures + Environment.NewLine;
@@ -108,10 +118,10 @@ namespace danmaq.nineball.util.caps {
 			strResult += "  VS30命令スロット最大数   : " + caps.MaxVertexShader30InstructionSlots + Environment.NewLine;
 			strResult += "  定数用VSレジスタ数       : " + caps.MaxVertexShaderConstants + Environment.NewLine;
 			strResult += "  対応最大VSバージョン     : " + caps.MaxVertexShaderProfile.ToString() + Environment.NewLine;
-			strResult += "  対応最大Wベース深度値    : " + caps.MaxVertexW.ToString( "F02" ) + Environment.NewLine;
+			strResult += "  対応最大Wベース深度値    : " + caps.MaxVertexW.ToString("F02") + Environment.NewLine;
 			strResult += "  VolumeTexture最大サイズ  : " + caps.MaxVolumeExtent + Environment.NewLine;
 			strResult += "  このグループのアダプタ数 : " + caps.NumberOfAdaptersInGroup + Environment.NewLine;
-			strResult += "  PS算術Component最大値    : " + caps.PixelShader1xMaxValue.ToString( "F02" ) + Environment.NewLine;
+			strResult += "  PS算術Component最大値    : " + caps.PixelShader1xMaxValue.ToString("F02") + Environment.NewLine;
 			strResult += "  Pixelシェーダ バージョン : " + caps.PixelShaderVersion.ToString() + Environment.NewLine;
 			strResult += "  画面スワップ間隔         : " + caps.PresentInterval.ToString() + Environment.NewLine;
 			strResult += "  頂点シェーダ バージョン  : " + caps.VertexShaderVersion.ToString() + Environment.NewLine;
@@ -130,19 +140,19 @@ namespace danmaq.nineball.util.caps {
 			strResult += caps.ShadingCapabilities.createCapsReport();
 			strResult += caps.StencilCapabilities.createCapsReport();
 
-			strResult += caps.AlphaCompareCapabilities.createCapsReport( "アルファテスト" );
-			strResult += caps.DepthBufferCompareCapabilities.createCapsReport( "深度バッファ" );
+			strResult += caps.AlphaCompareCapabilities.createCapsReport("アルファテスト");
+			strResult += caps.DepthBufferCompareCapabilities.createCapsReport("深度バッファ");
 
-			strResult += caps.CubeTextureFilterCapabilities.createCapsReport( "キューブ テクスチャ" );
-			strResult += caps.TextureFilterCapabilities.createCapsReport( "テクスチャ" );
-			strResult += caps.VertexTextureFilterCapabilities.createCapsReport( "頂点シェーダ" );
-			strResult += caps.VolumeTextureFilterCapabilities.createCapsReport( "ボリューム テクスチャ" );
+			strResult += caps.CubeTextureFilterCapabilities.createCapsReport("キューブ テクスチャ");
+			strResult += caps.TextureFilterCapabilities.createCapsReport("テクスチャ");
+			strResult += caps.VertexTextureFilterCapabilities.createCapsReport("頂点シェーダ");
+			strResult += caps.VolumeTextureFilterCapabilities.createCapsReport("ボリューム テクスチャ");
 
-			strResult += caps.TextureAddressCapabilities.createCapsReport( "テクスチャ" );
-			strResult += caps.VolumeTextureAddressCapabilities.createCapsReport( "ボリューム テクスチャ" );
+			strResult += caps.TextureAddressCapabilities.createCapsReport("テクスチャ");
+			strResult += caps.VolumeTextureAddressCapabilities.createCapsReport("ボリューム テクスチャ");
 
-			strResult += caps.DestinationBlendCapabilities.createCapsReport( "転送先" );
-			strResult += caps.SourceBlendCapabilities.createCapsReport( "転送元" );
+			strResult += caps.DestinationBlendCapabilities.createCapsReport("転送先");
+			strResult += caps.SourceBlendCapabilities.createCapsReport("転送元");
 
 			return strResult;
 		}
@@ -152,7 +162,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">グラフィック デバイス固有の機能オブジェクト</param>
 		/// <returns>グラフィック デバイス固有の機能レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.DeviceCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.DeviceCaps caps)
+		{
 			string strResult = "▽ グラフィック デバイス機能 対応能力一覧" + Environment.NewLine;
 			strResult += "  (Primitive描画)DirectX5準拠   : " + caps.SupportsDrawPrimitives2.ToStringOX() + Environment.NewLine;
 			strResult += "  (Primitive描画)DirectX7準拠   : " + caps.SupportsDrawPrimitives2Ex.ToStringOX() + Environment.NewLine;
@@ -180,7 +191,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">グラフィック ドライバ固有の機能オブジェクト</param>
 		/// <returns>グラフィック ドライバ固有の機能レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.DriverCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.DriverCaps caps)
+		{
 			string strResult = "▽ グラフィック デバイス ドライバ機能 対応能力一覧" + Environment.NewLine;
 			strResult += "  ミップマップの自動生成       : " + caps.CanAutoGenerateMipMap.ToStringOX() + Environment.NewLine;
 			strResult += "  ダイナミック テクスチャ      : " + caps.SupportsDynamicTextures.ToStringOX() + Environment.NewLine;
@@ -200,7 +212,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">ハードウェア カーソル対応能力列挙オブジェクト</param>
 		/// <returns>ハードウェア カーソル対応能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.CursorCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.CursorCaps caps)
+		{
 			string strResult = "▽ ハードウェア カーソル対応能力一覧" + Environment.NewLine;
 			strResult += "  高解像度フルカラー : " + caps.SupportsColor.ToStringOX() + Environment.NewLine;
 			strResult += "  低解像度フルカラー : " + caps.SupportsLowResolution.ToStringOX() + Environment.NewLine;
@@ -212,7 +225,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">使用出来る頂点データ型列挙オブジェクト</param>
 		/// <returns>使用出来る頂点データ型レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.DeclarationTypeCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.DeclarationTypeCaps caps)
+		{
 			string strResult = "▽ 使用出来る頂点データ型一覧" + Environment.NewLine;
 			strResult += "  BYTE4            : " + caps.SupportsByte4.ToStringOX() + Environment.NewLine;
 			strResult += "  HalfVector2      : " + caps.SupportsHalfVector2.ToStringOX() + Environment.NewLine;
@@ -232,7 +246,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">線描画プリミティブ対応能力 列挙オブジェクト</param>
 		/// <returns>線描画プリミティブ対応能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.LineCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.LineCaps caps)
+		{
 			string strResult = "▽ 線描画プリミティブ対応能力一覧" + Environment.NewLine;
 			strResult += "  フォグ効果            : " + caps.SupportsFog.ToStringOX() + Environment.NewLine;
 			strResult += "  アルファ テスト       : " + caps.SupportsAlphaCompare.ToStringOX() + Environment.NewLine;
@@ -248,7 +263,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">その他のプリミティブ対応能力 列挙オブジェクト</param>
 		/// <returns>その他のプリミティブ対応能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.PrimitiveCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.PrimitiveCaps caps)
+		{
 			string strResult = "▽ その他のドライバ プリミティブ対応能力一覧" + Environment.NewLine;
 			strResult += "  レンダリングしないダミー デバイス   : " + caps.IsNullReference.ToStringOX() + Environment.NewLine;
 			strResult += "  頂点毎のフォグ ブレンド係数のClamp  : " + caps.HasFogVertexClamped.ToStringOX() + Environment.NewLine;
@@ -272,7 +288,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">その他のテクスチャ マッピング対応能力 列挙オブジェクト</param>
 		/// <returns>その他のテクスチャ マッピング対応能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.TextureCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.TextureCaps caps)
+		{
 			string strResult = "▽ その他のテクスチャ マッピング対応能力一覧" + Environment.NewLine;
 			strResult += "  ピクセルのアルファ色         : " + caps.SupportsAlpha.ToStringOX() + Environment.NewLine;
 			strResult += "  キューブ テクスチャ マップ   : " + caps.SupportsCubeMap.ToStringOX() + Environment.NewLine;
@@ -297,7 +314,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">フレキシブル頂点フォーマット対応能力 列挙オブジェクト</param>
 		/// <returns>フレキシブル頂点フォーマット対応能力レポート 文字列</returns>
-		public static string createCapsReport( this  GraphicsDeviceCapabilities.VertexFormatCaps caps ) {
+		public static string createCapsReport(this  GraphicsDeviceCapabilities.VertexFormatCaps caps)
+		{
 			string strResult = "▽ フレキシブル頂点フォーマット対応能力一覧" + Environment.NewLine;
 			strResult += "  NumberSimultaneousTextureCoordinates : " + caps.NumberSimultaneousTextureCoordinates + Environment.NewLine;
 			strResult += "  頂点要素を削除しなくて良い           : " + caps.SupportsDoNotStripElements.ToStringOX() + Environment.NewLine;
@@ -310,7 +328,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">頂点処理能力 列挙オブジェクト</param>
 		/// <returns>頂点処理能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.VertexProcessingCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.VertexProcessingCaps caps)
+		{
 			string strResult = "▽ 頂点処理対応能力一覧" + Environment.NewLine;
 			strResult += "  ローカル ビューアの実行          : " + caps.SupportsLocalViewer.ToStringOX() + Environment.NewLine;
 			strResult += "  非LocalViewerModeでのTexture生成 : " + caps.SupportsNoTextureGenerationNonLocalViewer.ToStringOX() + Environment.NewLine;
@@ -324,7 +343,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">頂点シェーダ2.0extended 対応能力 列挙オブジェクト</param>
 		/// <returns>頂点シェーダ2.0extended 対応能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.VertexShaderCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.VertexShaderCaps caps)
+		{
 			string strResult = "▽ 頂点シェーダ2.0extended 対応能力一覧" + Environment.NewLine;
 			strResult += "  動的フロー制御の最大深度 : " + caps.DynamicFlowControlDepth + Environment.NewLine;
 			strResult += "  テンポラリ レジスタの数  : " + caps.NumberTemps + Environment.NewLine;
@@ -338,7 +358,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">ピクセル シェーダ2.0 対応能力 列挙オブジェクト</param>
 		/// <returns>ピクセル シェーダ2.0 対応能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.PixelShaderCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.PixelShaderCaps caps)
+		{
 			string strResult = "▽ ピクセル シェーダ2.0 対応能力一覧" + Environment.NewLine;
 			strResult += "  動的フロー制御の最大深度 : " + caps.DynamicFlowControlDepth + Environment.NewLine;
 			strResult += "  静的フロー制御の最大深度 : " + caps.StaticFlowControlDepth + Environment.NewLine;
@@ -357,7 +378,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">ラスタ描画能力 列挙オブジェクト</param>
 		/// <returns>ラスタ描画能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.RasterCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.RasterCaps caps)
+		{
 			string strResult = "▽ ラスタ描画対応能力一覧" + Environment.NewLine;
 			strResult += "  異方性フィルタリング    : " + caps.SupportsAnisotropy.ToStringOX() + Environment.NewLine;
 			strResult += "  色のパースペクティブ    : " + caps.SupportsColorPerspective.ToStringOX() + Environment.NewLine;
@@ -381,7 +403,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">シェーディング処理能力 列挙オブジェクト</param>
 		/// <returns>シェーディング処理能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.ShadingCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.ShadingCaps caps)
+		{
 			string strResult = "▽ シェーディング処理対応能力一覧" + Environment.NewLine;
 			strResult += "  AlphaGouraudBlend  : " + caps.SupportsAlphaGouraudBlend.ToStringOX() + Environment.NewLine;
 			strResult += "  ColorGouraudRgb    : " + caps.SupportsColorGouraudRgb.ToStringOX() + Environment.NewLine;
@@ -395,7 +418,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">ステンシル バッファ処理能力 列挙オブジェクト</param>
 		/// <returns>ステンシル バッファ処理能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.StencilCaps caps ) {
+		public static string createCapsReport(this GraphicsDeviceCapabilities.StencilCaps caps)
+		{
 			string strResult = "▽ ステンシル バッファ処理対応能力一覧" + Environment.NewLine;
 			strResult += "  -1(ループ)     : " + caps.SupportsDecrement.ToStringOX() + Environment.NewLine;
 			strResult += "  -1(カンスト)   : " + caps.SupportsDecrementSaturation.ToStringOX() + Environment.NewLine;
@@ -415,8 +439,9 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="caps">比較能力 列挙オブジェクト</param>
 		/// <param name="strDescription">対象の解説文字列</param>
 		/// <returns>比較能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.CompareCaps caps, string strDescription ) {
-			string strResult = string.Format( "▽ {0} 比較対応能力一覧(A:現在、B:新しい値、R:比較結果)" + Environment.NewLine, strDescription );
+		public static string createCapsReport(this GraphicsDeviceCapabilities.CompareCaps caps, string strDescription)
+		{
+			string strResult = string.Format("▽ {0} 比較対応能力一覧(A:現在、B:新しい値、R:比較結果)" + Environment.NewLine, strDescription);
 			strResult += "  R = true    の演算 : " + caps.SupportsAlways.ToStringOX() + Environment.NewLine;
 			strResult += "  R = false   の演算 : " + caps.SupportsNever.ToStringOX() + Environment.NewLine;
 			strResult += "  R = (A ＝ B)の演算 : " + caps.SupportsEqual.ToStringOX() + Environment.NewLine;
@@ -434,8 +459,9 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="caps">テクスチャ フィルタリング能力 列挙オブジェクト</param>
 		/// <param name="strDescription">対象の解説文字列</param>
 		/// <returns>テクスチャ フィルタリング能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.FilterCaps caps, string strDescription ) {
-			string strResult = string.Format( "▽ {0}のテクスチャ フィルタリング対応能力一覧" + Environment.NewLine, strDescription );
+		public static string createCapsReport(this GraphicsDeviceCapabilities.FilterCaps caps, string strDescription)
+		{
+			string strResult = string.Format("▽ {0}のテクスチャ フィルタリング対応能力一覧" + Environment.NewLine, strDescription);
 			strResult += "  (拡大)異方性              : " + caps.SupportsMagnifyAnisotropic.ToStringOX() + Environment.NewLine;
 			strResult += "  (縮小)異方性              : " + caps.SupportsMinifyAnisotropic.ToStringOX() + Environment.NewLine;
 			strResult += "  (拡大)ガウス求積          : " + caps.SupportsMagnifyGaussianQuad.ToStringOX() + Environment.NewLine;
@@ -457,8 +483,9 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="caps">テクスチャ アドレッシング能力 列挙オブジェクト</param>
 		/// <param name="strDescription">対象の解説文字列</param>
 		/// <returns>テクスチャ アドレッシング能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.AddressCaps caps, string strDescription ) {
-			string strResult = string.Format( "▽ {0}のテクスチャ アドレッシング対応能力一覧" + Environment.NewLine, strDescription );
+		public static string createCapsReport(this GraphicsDeviceCapabilities.AddressCaps caps, string strDescription)
+		{
+			string strResult = string.Format("▽ {0}のテクスチャ アドレッシング対応能力一覧" + Environment.NewLine, strDescription);
 			strResult += "  Border        : " + caps.SupportsBorder.ToStringOX() + Environment.NewLine;
 			strResult += "  Clamp         : " + caps.SupportsClamp.ToStringOX() + Environment.NewLine;
 			strResult += "  IndependentUV : " + caps.SupportsIndependentUV.ToStringOX() + Environment.NewLine;
@@ -474,8 +501,9 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="caps">ブレンディング能力 列挙オブジェクト</param>
 		/// <param name="strDescription">対象の解説文字列</param>
 		/// <returns>ブレンディング能力レポート 文字列</returns>
-		public static string createCapsReport( this GraphicsDeviceCapabilities.BlendCaps caps, string strDescription ) {
-			string strResult = string.Format( "▽ {0} ブレンディング対応能力一覧" + Environment.NewLine, strDescription );
+		public static string createCapsReport(this GraphicsDeviceCapabilities.BlendCaps caps, string strDescription)
+		{
+			string strResult = string.Format("▽ {0} ブレンディング対応能力一覧" + Environment.NewLine, strDescription);
 			strResult += "  Zero                    : " + caps.SupportsZero.ToStringOX() + Environment.NewLine;
 			strResult += "  One                     : " + caps.SupportsOne.ToStringOX() + Environment.NewLine;
 			strResult += "  BlendFactor             : " + caps.SupportsBlendFactor.ToStringOX() + Environment.NewLine;
@@ -499,9 +527,11 @@ namespace danmaq.nineball.util.caps {
 		/// <param name="caps">XBOX360コントローラの性能 列挙オブジェクト</param>
 		/// <param name="index">XBOX360コントローラに対応しているプレイヤー番号</param>
 		/// <returns>XBOX360コントローラの性能レポート 文字列</returns>
-		public static string createCapsReport( this GamePadCapabilities caps, PlayerIndex index ) {
+		public static string createCapsReport(this GamePadCapabilities caps, PlayerIndex index)
+		{
 			string strResult = "◎◎ プレイヤー番号 : " + index.ToString() + " XBOX360コントローラ対応能力一覧" + Environment.NewLine;
-			if( caps.IsConnected ) {
+			if(caps.IsConnected)
+			{
 				strResult += "  コントローラ種別 : " + caps.GamePadType.ToString() + Environment.NewLine;
 				strResult += "  Aボタン          : " + caps.HasAButton.ToStringOX() + Environment.NewLine;
 				strResult += "  Bボタン          : " + caps.HasBButton.ToStringOX() + Environment.NewLine;
@@ -527,7 +557,10 @@ namespace danmaq.nineball.util.caps {
 				strResult += "  右モーター       : " + caps.HasRightVibrationMotor.ToStringOX() + Environment.NewLine;
 				strResult += "  音声入出力       : " + caps.HasVoiceSupport.ToStringOX() + Environment.NewLine;
 			}
-			else { strResult += "  × 接続されていません。 ×" + Environment.NewLine; }
+			else
+			{
+				strResult += "  × 接続されていません。 ×" + Environment.NewLine;
+			}
 			return strResult;
 		}
 
@@ -538,7 +571,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="info">デバイスの識別情報 列挙オブジェクト</param>
 		/// <returns>デバイスの識別情報レポート 文字列</returns>
-		public static string createCapsReport( this DeviceInstance info ) {
+		public static string createCapsReport(this DeviceInstance info)
+		{
 			string strResult = "▽ レガシ ゲームパッド デバイスの識別情報一覧\r\n";
 			strResult += "  デバイス名・説明    : " + info.ProductName + Environment.NewLine;
 			strResult += "  デバイスGUID        : " + info.ProductGuid.ToString() + Environment.NewLine;
@@ -557,7 +591,8 @@ namespace danmaq.nineball.util.caps {
 		/// 
 		/// <param name="caps">デバイスの性能 列挙オブジェクト</param>
 		/// <returns>デバイスの性能レポート 文字列</returns>
-		public static string createCapsReport( this DeviceCaps caps ) {
+		public static string createCapsReport(this DeviceCaps caps)
+		{
 			string strResult = "▽ レガシ ゲームパッド デバイスの能力一覧" + Environment.NewLine;
 			strResult += "  ドライバ バージョン       : " + caps.FFDriverVersion + Environment.NewLine;
 			strResult += "  ファームウェア バージョン : " + caps.FirmwareRevision + Environment.NewLine;

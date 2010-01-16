@@ -12,11 +12,13 @@ using danmaq.nineball.data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.util.resolution {
+namespace danmaq.nineball.util.resolution
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>解像度管理クラス。</summary>
-	public class CResolution {
+	public class CResolution
+	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -38,21 +40,31 @@ namespace danmaq.nineball.util.resolution {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CResolution() : this( null ) { }
+		public CResolution() : this(null)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="gdm"></param>
-		public CResolution( GraphicsDeviceManager gdm ) {
+		/// <param name="graphicsDeviceManager">
+		/// グラフィック デバイスの構成・管理クラス。
+		/// </param>
+		public CResolution(GraphicsDeviceManager graphicsDeviceManager)
+		{
 			int nTarget = 0;
 			Rectangle backbuffer = Rectangle.Empty;
-			if( gdm != null ) {
-				backbuffer.Width = gdm.PreferredBackBufferWidth;
-				backbuffer.Height = gdm.PreferredBackBufferHeight;
+			if(graphicsDeviceManager != null)
+			{
+				backbuffer.Width = graphicsDeviceManager.PreferredBackBufferWidth;
+				backbuffer.Height = graphicsDeviceManager.PreferredBackBufferHeight;
 				int nLength = supports.Count;
-				for( int i = 0; i < nLength && nTarget == 0; i++ ) {
-					if( backbuffer.Equals( supports[i].toRect() ) ) { nTarget = i; }
+				for(int i = 0; i < nLength && nTarget == 0; i++)
+				{
+					if(backbuffer.Equals(supports[i].toRect()))
+					{
+						nTarget = i;
+					}
 				}
 			}
 			now = supports[nTarget];
@@ -62,32 +74,46 @@ namespace danmaq.nineball.util.resolution {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="r">解像度定数</param>
-		public CResolution( EResolution r ) : this() { now = r; }
+		public CResolution(EResolution r) : this()
+		{
+			now = r;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		/// <summary>グラフィック アダプタがワイド画面をサポートしているかどうか。</summary>
-		public static bool supportWideScreen {
-			get {
-				if( m_bWide == null ) { m_bWide = GraphicsAdapter.DefaultAdapter.IsWideScreen; }
+		public static bool supportWideScreen
+		{
+			get
+			{
+				if(m_bWide == null)
+				{
+					m_bWide = GraphicsAdapter.DefaultAdapter.IsWideScreen;
+				}
 				return m_bWide;
 			}
 		}
 
 		/// <summary>対応している解像度一覧。</summary>
-		protected static List<EResolution> supports {
-			get {
-				if( m_supports == null ) {
+		protected static List<EResolution> supports
+		{
+			get
+			{
+				if(m_supports == null)
+				{
 					m_supports = new List<EResolution>();
-					foreach( DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes ) {
-						for( EResolution i = EResolution.VGA; i < EResolution.__reserved; i++ ) {
+					foreach(DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+					{
+						for(EResolution i = EResolution.VGA; i < EResolution.__reserved; i++)
+						{
 							Rectangle rect = i.toRect();
 							if(
 								mode.Width == rect.Width && mode.Height == rect.Height &&
-								!m_supports.Contains( i )
-							) {
-								m_supports.Add( i );
+								!m_supports.Contains(i)
+							)
+							{
+								m_supports.Add(i);
 								break;
 							}
 						}
@@ -99,34 +125,57 @@ namespace danmaq.nineball.util.resolution {
 		}
 
 		/// <summary>現在の解像度とVGAとの比率ギャップ。</summary>
-		public virtual Vector2 scaleGapFromVGA { get; protected set; }
+		public virtual Vector2 scaleGapFromVGA
+		{
+			get;
+			protected set;
+		}
 
 		/// <summary>アスペクト比。</summary>
-		public virtual float aspect {
-			get { return ( float )( rect.Width ) / ( float )( rect.Height ); }
+		public virtual float aspect
+		{
+			get
+			{
+				return (float)(rect.Width) / (float)(rect.Height);
+			}
 		}
 
 		/// <summary>現在の解像度。</summary>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public virtual EResolution now {
-			get { return m_now; }
-			protected set {
-				if( supports.Contains( value ) ) {
+		public virtual EResolution now
+		{
+			get
+			{
+				return m_now;
+			}
+			protected set
+			{
+				if(supports.Contains(value))
+				{
 					m_now = value;
 					rect = value.toRect();
-					if( vertical ) { rect = rotate( rect ); }
-					scaleGapFromVGA = getScaleGap( value, EResolution.VGA );
+					if(vertical)
+					{
+						rect = rotate(rect);
+					}
+					scaleGapFromVGA = getScaleGap(value, EResolution.VGA);
 				}
 			}
 		}
 
 		/// <summary>縦画面にするかどうか。</summary>
-		public virtual bool vertical {
-			get { return m_vertical; }
-			set {
-				if( m_vertical != value ) {
+		public virtual bool vertical
+		{
+			get
+			{
+				return m_vertical;
+			}
+			set
+			{
+				if(m_vertical != value)
+				{
 					m_vertical = value;
 					EResolution __now = now;
 					now = __now;
@@ -135,7 +184,11 @@ namespace danmaq.nineball.util.resolution {
 		}
 
 		/// <summary>現在の解像度の矩形情報。</summary>
-		public Rectangle rect { get; protected set; }
+		public Rectangle rect
+		{
+			get;
+			protected set;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -145,8 +198,9 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="r">解像度列挙体。</param>
 		/// <returns>解像度 オブジェクト。</returns>
-		public static implicit operator CResolution( EResolution r ) {
-			return new CResolution( r );
+		public static implicit operator CResolution(EResolution r)
+		{
+			return new CResolution(r);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -154,8 +208,9 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="r"></param>
 		/// <returns>解像度 オブジェクト。</returns>
-		public static implicit operator CResolution( GraphicsDeviceManager r ) {
-			return new CResolution( r );
+		public static implicit operator CResolution(GraphicsDeviceManager r)
+		{
+			return new CResolution(r);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -163,28 +218,38 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="r">解像度 オブジェクト。</param>
 		/// <returns>解像度列挙体</returns>
-		public static implicit operator EResolution( CResolution r ) { return r.now; }
+		public static implicit operator EResolution(CResolution r)
+		{
+			return r.now;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>現在の解像度を取得します。</summary>
 		/// 
 		/// <param name="r">解像度 オブジェクト。</param>
 		/// <returns>解像度</returns>
-		public static implicit operator Rectangle( CResolution r ) { return r.rect; }
+		public static implicit operator Rectangle(CResolution r)
+		{
+			return r.rect;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アスペクト比を取得します。</summary>
 		/// 
 		/// <param name="r">解像度 オブジェクト。</param>
 		/// <returns>アスペクト比</returns>
-		public static implicit operator float( CResolution r ) { return r.aspect; }
+		public static implicit operator float(CResolution r)
+		{
+			return r.aspect;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>矩形を回転します。</summary>
 		/// 
 		/// <param name="expr">矩形。</param>
 		/// <returns>回転した矩形。</returns>
-		public static Rectangle rotate( Rectangle expr ) {
+		public static Rectangle rotate(Rectangle expr)
+		{
 			expr.Width ^= expr.Height;
 			expr.Height ^= expr.Width;
 			expr.Width ^= expr.Height;
@@ -203,12 +268,13 @@ namespace danmaq.nineball.util.resolution {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static Vector2 getScaleGap( EResolution res1, EResolution res2 ) {
+		public static Vector2 getScaleGap(EResolution res1, EResolution res2)
+		{
 			Rectangle rectRes1 = res1.toRect();
 			Rectangle rectRes2 = res2.toRect();
 			return new Vector2(
-				( float )( rectRes1.Width ) / ( float )( rectRes2.Width ),
-				( float )( rectRes1.Height ) / ( float )( rectRes2.Height ) );
+				(float)(rectRes1.Width) / (float)(rectRes2.Width),
+				(float)(rectRes1.Height) / (float)(rectRes2.Height));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -220,10 +286,11 @@ namespace danmaq.nineball.util.resolution {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static Vector2 getScaleGap( Rectangle res1, Rectangle res2 ) {
+		public static Vector2 getScaleGap(Rectangle res1, Rectangle res2)
+		{
 			return new Vector2(
-				( float )( res1.Width ) / ( float )( res2.Width ),
-				( float )( res1.Height ) / ( float )( res2.Height ) );
+				(float)(res1.Width) / (float)(res2.Width),
+				(float)(res1.Height) / (float)(res2.Height));
 		}
 
 		// TODO : この辺オペレータ オーバーロードできないかなぁ
@@ -236,12 +303,17 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="resolution">基準となる解像度列挙体。</param>
 		/// <returns>より上位の解像度列挙体。</returns>
-		public static EResolution getNext( EResolution resolution ) {
+		public static EResolution getNext(EResolution resolution)
+		{
 			bool bWide = resolution.isWide();
-			for( EResolution __res = resolution + 1; __res < EResolution.__reserved; __res++ ) {
-				if( supports.Contains( __res ) && __res.isWide() == bWide ) { return __res; }
+			for(EResolution __res = resolution + 1; __res < EResolution.__reserved; __res++)
+			{
+				if(supports.Contains(__res) && __res.isWide() == bWide)
+				{
+					return __res;
+				}
 			}
-			return getMinResolution( bWide );
+			return getMinResolution(bWide);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -252,56 +324,72 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="resolution">基準となる解像度列挙体。</param>
 		/// <returns>より上位の解像度列挙体。</returns>
-		public static EResolution getPrev( EResolution resolution ) {
+		public static EResolution getPrev(EResolution resolution)
+		{
 			bool bWide = resolution.isWide();
-			for( EResolution __res = resolution - 1; __res > EResolution.VGA; __res-- ) {
-				if( supports.Contains( __res ) && __res.isWide() == bWide ) { return __res; }
+			for(EResolution __res = resolution - 1; __res > EResolution.VGA; __res--)
+			{
+				if(supports.Contains(__res) && __res.isWide() == bWide)
+				{
+					return __res;
+				}
 			}
-			return getMinResolution( bWide );
+			return getMinResolution(bWide);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>対応する最低解像度を取得します。</summary>
 		/// 
 		/// <returns>対応する最低解像度。</returns>
-		public static EResolution getMinResolution() { return getMinResolution( supportWideScreen ); }
+		public static EResolution getMinResolution()
+		{
+			return getMinResolution(supportWideScreen);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>対応する最低解像度を取得します。</summary>
 		/// 
 		/// <param name="bWide">ワイド画面を優先して検索するかどうか。</param>
 		/// <returns>対応する最低解像度。</returns>
-		public static EResolution getMinResolution( bool bWide ) {
+		public static EResolution getMinResolution(bool bWide)
+		{
 			for(
 				EResolution resolution = EResolution.VGA;
 				resolution < EResolution.__reserved; resolution++
-			) {
-				if( supports.Contains( resolution ) && resolution.isWide() == bWide ) {
+			)
+			{
+				if(supports.Contains(resolution) && resolution.isWide() == bWide)
+				{
 					return resolution;
 				}
 			}
-			return bWide ? getMinResolution( false ) : EResolution.VGA;
+			return bWide ? getMinResolution(false) : EResolution.VGA;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>対応する最大解像度を取得します。</summary>
 		/// 
 		/// <returns>対応する最大解像度。</returns>
-		public static EResolution getMaxResolution() { return getMaxResolution( supportWideScreen ); }
+		public static EResolution getMaxResolution()
+		{
+			return getMaxResolution(supportWideScreen);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>対応する最大解像度を取得します。</summary>
 		/// 
 		/// <param name="bWide">ワイド画面を優先して検索するかどうか。</param>
 		/// <returns>対応する最大解像度。</returns>
-		public static EResolution getMaxResolution( bool bWide ) {
-			EResolution resolution = getMinResolution( bWide );
+		public static EResolution getMaxResolution(bool bWide)
+		{
+			EResolution resolution = getMinResolution(bWide);
 			EResolution resNext = resolution;
-			do {
+			do
+			{
 				resolution = resNext;
-				resNext = getNext( resolution );
+				resNext = getNext(resolution);
 			}
-			while( resolution < resNext );
+			while(resolution < resNext);
 			return resolution;
 		}
 #if WINDOWS
@@ -318,15 +406,20 @@ namespace danmaq.nineball.util.resolution {
 		/// <returns>
 		/// 自動設定の結果が現在の設定と異なり、かつ設定完了した場合、<c>true</c>。
 		/// </returns>
-		public static bool applyScreenChange( GraphicsDeviceManager gdm, bool bWide, bool bFullScreen ) {
+		public static bool applyScreenChange(GraphicsDeviceManager gdm, bool bWide, bool bFullScreen)
+		{
 			bool bResult = false;
-			EResolution resolution = CResolution.getMinResolution( bWide );
-			if( bFullScreen ) { resolution = CResolution.getPrev( CResolution.getMaxResolution( bWide ) ); }
+			EResolution resolution = CResolution.getMinResolution(bWide);
+			if(bFullScreen)
+			{
+				resolution = CResolution.getPrev(CResolution.getMaxResolution(bWide));
+			}
 			Rectangle screenRect = resolution.toRect();
-			bResult = ( gdm.IsFullScreen != bFullScreen ) ||
-				( gdm.PreferredBackBufferWidth != screenRect.Width ) ||
-				( gdm.PreferredBackBufferHeight != screenRect.Height );
-			if( bResult ) {
+			bResult = (gdm.IsFullScreen != bFullScreen) ||
+				(gdm.PreferredBackBufferWidth != screenRect.Width) ||
+				(gdm.PreferredBackBufferHeight != screenRect.Height);
+			if(bResult)
+			{
 				gdm.IsFullScreen = bFullScreen;
 				gdm.PreferredBackBufferWidth = screenRect.Width;
 				gdm.PreferredBackBufferHeight = screenRect.Height;
@@ -341,15 +434,20 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="srcRect">VGA基準の値。</param>
 		/// <returns>現在の解像度基準の値。</returns>
-		public virtual Rectangle resizeFromVGA( Rectangle srcRect ) {
-			if( now == EResolution.VGA ) { return srcRect; }
-			else {
+		public virtual Rectangle resizeFromVGA(Rectangle srcRect)
+		{
+			if(now == EResolution.VGA)
+			{
+				return srcRect;
+			}
+			else
+			{
 				Vector2 scaleGap = scaleGapFromVGA;
 				return new Rectangle(
-					( int )( scaleGap.X * srcRect.X ),
-					( int )( scaleGap.Y * srcRect.Y ),
-					( int )( scaleGap.X * srcRect.Width ),
-					( int )( scaleGap.Y * srcRect.Height ) );
+					(int)(scaleGap.X * srcRect.X),
+					(int)(scaleGap.Y * srcRect.Y),
+					(int)(scaleGap.X * srcRect.Width),
+					(int)(scaleGap.Y * srcRect.Height));
 			}
 		}
 
@@ -358,8 +456,9 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="srcPoint">VGA基準の値。</param>
 		/// <returns>現在の解像度基準の値。</returns>
-		public virtual Vector2 resizeFromVGA( Vector2 srcPoint ) {
-			return ( now == EResolution.VGA ? srcPoint : srcPoint * scaleGapFromVGA );
+		public virtual Vector2 resizeFromVGA(Vector2 srcPoint)
+		{
+			return (now == EResolution.VGA ? srcPoint : srcPoint * scaleGapFromVGA);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -368,6 +467,9 @@ namespace danmaq.nineball.util.resolution {
 		/// </summary>
 		/// 
 		/// <returns>解説。</returns>
-		public override string ToString() { return now.ToString(); }
+		public override string ToString()
+		{
+			return now.ToString();
+		}
 	}
 }

@@ -15,14 +15,16 @@ using danmaq.nineball.entity.component;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.state.misc;
 using danmaq.nineball.util;
-using Microsoft.Xna.Framework;
 using danmaq.nineball.util.resolution;
+using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.core {
+namespace danmaq.ball.core
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲーム クラス。</summary>
-	public sealed class CGame : Game {
+	public sealed class CGame : Game
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -37,15 +39,16 @@ namespace danmaq.ball.core {
 		public readonly CInput inputManager = new CInput();
 
 		/// <summary>解像度管理クラス。</summary>
-		public readonly CResolution resolution = new CResolution( EResolution.VGA );
+		public readonly CResolution resolution = new CResolution(EResolution.VGA);
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CGame() {
-			graphicDeviceManager = new GraphicsDeviceManager( this );
+		private CGame()
+		{
+			graphicDeviceManager = new GraphicsDeviceManager(this);
 			Rectangle rc = resolution;
 			graphicDeviceManager.PreferredBackBufferWidth = rc.Width;
 			graphicDeviceManager.PreferredBackBufferHeight = rc.Height;
@@ -57,14 +60,15 @@ namespace danmaq.ball.core {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ゲームを初期化します。</summary>
-		protected override void Initialize() {
+		protected override void Initialize()
+		{
 			CStateCapsXNA xnastate = CStateCapsXNA.instance;
 			xnastate.nextState = CStateInitialize.instance;
 			CStarter.scene.nextState = xnastate;
 			CLogger.outFile = Resources.FILE_BOOTLOG;
-			CLogger.add( xnastate.report );
-			CStarter.startNineball( this, graphicDeviceManager );
-			new CGameComponent<CInput>( this, inputManager, true );
+			CLogger.add(xnastate.report);
+			CStarter.startNineball(this, graphicDeviceManager);
+			new CGameComponent(this, inputManager, true);
 			base.Initialize();
 		}
 
@@ -72,7 +76,8 @@ namespace danmaq.ball.core {
 		/// <summary>ここからプログラムが開始されます。</summary>
 		/// 
 		/// <param name="args">プログラムへ渡される引数</param>
-		private static void Main( string[] args ) {
+		private static void Main(string[] args)
+		{
 			instance.Run();
 			instance.Dispose();
 		}

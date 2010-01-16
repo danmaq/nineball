@@ -15,19 +15,21 @@ using danmaq.nineball.state;
 using danmaq.nineball.state.input;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity.input {
+namespace danmaq.nineball.entity.input
+{
 
 	// TODO : ボタンを「挿入」できないかなぁ
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>コントローラ 入力制御・管理クラス。</summary>
-	public class CInput : CEntity {
+	public class CInput : CEntity
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>ボタンの入力状態一覧。</summary>
-		protected readonly List<SInputState> _buttonStateList = new List<SInputState>( 1 );
+		protected readonly List<SInputState> _buttonStateList = new List<SInputState>(1);
 
 		/// <summary>ボタンの数が変更されたときに発生するイベント。</summary>
 		public event EventHandler<CEventMonoValue<ushort>> changedButtonsNum;
@@ -39,23 +41,39 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>ボタンの入力状態一覧を取得します。</summary>
 		/// 
 		/// <value>ボタンの入力状態一覧。</value>
-		public ReadOnlyCollection<SInputState> buttonStateList {
-			get { return _buttonStateList.AsReadOnly(); }
+		public ReadOnlyCollection<SInputState> buttonStateList
+		{
+			get
+			{
+				return _buttonStateList.AsReadOnly();
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ボタンの数を設定/取得します。</summary>
 		/// 
 		/// <value>ボタンの数。</value>
-		public ushort buttons {
-			get { return ( ushort )_buttonStateList.Count; }
-			set {
+		public ushort buttons
+		{
+			get
+			{
+				return (ushort)_buttonStateList.Count;
+			}
+			set
+			{
 				bool bChanged = value != buttons;
-				while( value < buttons ) {
-					_buttonStateList.RemoveAt( _buttonStateList.Count - 1 );
+				while(value < buttons)
+				{
+					_buttonStateList.RemoveAt(_buttonStateList.Count - 1);
 				}
-				while( value > buttons ) { _buttonStateList.Add( new SInputState() ); }
-				if( bChanged && changedButtonsNum != null ) { changedButtonsNum( this, buttons ); }
+				while(value > buttons)
+				{
+					_buttonStateList.Add(new SInputState());
+				}
+				if(bChanged && changedButtonsNum != null)
+				{
+					changedButtonsNum(this, buttons);
+				}
 			}
 		}
 
@@ -64,13 +82,18 @@ namespace danmaq.nineball.entity.input {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CInput() : this( CStateDefault.instance ) { }
+		public CInput() : this(CStateDefault.instance)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="firstState">初期状態。</param>
-		public CInput( IState firstState ) { nextStateBase = firstState; }
+		public CInput(IState firstState)
+		{
+			nextStateBase = firstState;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -82,8 +105,12 @@ namespace danmaq.nineball.entity.input {
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
-		public new IState<CInput, List<SInputState>> nextState {
-			set { nextStateBase = value; }
+		public new IState<CInput, List<SInputState>> nextState
+		{
+			set
+			{
+				nextStateBase = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -93,8 +120,12 @@ namespace danmaq.nineball.entity.input {
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
-		protected IState nextStateBase {
-			set { base.nextState = value; }
+		protected IState nextStateBase
+		{
+			set
+			{
+				base.nextState = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -103,8 +134,12 @@ namespace danmaq.nineball.entity.input {
 		/// </summary>
 		/// 
 		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
-		protected override object privateMembers {
-			get { return _buttonStateList; }
+		protected override object privateMembers
+		{
+			get
+			{
+				return _buttonStateList;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -116,20 +151,23 @@ namespace danmaq.nineball.entity.input {
 		/// <returns>移動ベクトル。</returns>
 		public static Vector2 createVector(
 			float up, float down, float left, float right
-		) {
+		)
+		{
 			float[] srcList = { up, down, left, right };
 			float fVelocity = 0;
-			foreach( float fSrc in srcList ) {
-				fVelocity = MathHelper.Max( fVelocity, Math.Abs( fSrc ) );
+			foreach(float fSrc in srcList)
+			{
+				fVelocity = MathHelper.Max(fVelocity, Math.Abs(fSrc));
 			}
-			Vector2 result = new Vector2( -left, -up ) + new Vector2( right, down );
+			Vector2 result = new Vector2(-left, -up) + new Vector2(right, down);
 			result.Normalize();
 			return result * fVelocity;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
-		public override void Dispose() {
+		public override void Dispose()
+		{
 			changedButtonsNum = null;
 			_buttonStateList.Clear();
 			_buttonStateList.TrimExcess();
@@ -141,7 +179,8 @@ namespace danmaq.nineball.entity.input {
 		/// 
 		/// <param name="sender">送信元のオブジェクト。</param>
 		/// <param name="e">変化後のボタンの数。</param>
-		public void onChangedButtonsNum( object sender, CEventMonoValue<ushort> e ) {
+		public void onChangedButtonsNum(object sender, CEventMonoValue<ushort> e)
+		{
 			buttons = e;
 		}
 	}

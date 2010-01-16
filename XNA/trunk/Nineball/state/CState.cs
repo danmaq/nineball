@@ -10,7 +10,8 @@
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state {
+namespace danmaq.nineball.state
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
@@ -19,7 +20,8 @@ namespace danmaq.nineball.state {
 	/// これを継承するか、<c>IState</c>を実装することで、状態を表現することが出来ます。
 	/// </para>
 	/// </summary>
-	public class CState : IState {
+	public class CState : IState
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -40,7 +42,9 @@ namespace danmaq.nineball.state {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public virtual void setup( IEntity entity, object privateMembers ) { }
+		public virtual void setup(IEntity entity, object privateMembers)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
@@ -50,7 +54,9 @@ namespace danmaq.nineball.state {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public virtual void update( IEntity entity, object privateMembers, GameTime gameTime ) { }
+		public virtual void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
@@ -60,7 +66,9 @@ namespace danmaq.nineball.state {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public virtual void draw( IEntity entity, object privateMembers, GameTime gameTime ) { }
+		public virtual void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -73,6 +81,8 @@ namespace danmaq.nineball.state {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public virtual void teardown( IEntity entity, object privateMembers, IState nextState ) { }
+		public virtual void teardown(IEntity entity, object privateMembers, IState nextState)
+		{
+		}
 	}
 }

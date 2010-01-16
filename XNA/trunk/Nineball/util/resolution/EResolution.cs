@@ -10,11 +10,13 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.util.resolution {
+namespace danmaq.nineball.util.resolution
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>画面解像度列挙体。</summary>
-	public enum EResolution {
+	public enum EResolution
+	{
 
 		/// <summary>VGA(640x480)</summary>
 		VGA,
@@ -67,7 +69,8 @@ namespace danmaq.nineball.util.resolution {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>画面解像度列挙体の拡張機能。</summary>
-	public static class ERectangleExtention {
+	public static class ERectangleExtention
+	{
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -80,38 +83,40 @@ namespace danmaq.nineball.util.resolution {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static Rectangle toRect( this EResolution resolution ) {
-			switch( resolution ) {
+		public static Rectangle toRect(this EResolution resolution)
+		{
+			switch(resolution)
+			{
 				case EResolution.VGA:
-					return new Rectangle( 0, 0, 640, 480 );
+					return new Rectangle(0, 0, 640, 480);
 				case EResolution.SVGA:
-					return new Rectangle( 0, 0, 800, 600 );
+					return new Rectangle(0, 0, 800, 600);
 				case EResolution.XGA:
-					return new Rectangle( 0, 0, 1024, 768 );
+					return new Rectangle(0, 0, 1024, 768);
 				case EResolution.XGAplus:
-					return new Rectangle( 0, 0, 1154, 864 );
+					return new Rectangle(0, 0, 1154, 864);
 				case EResolution.SXGA43:
-					return new Rectangle( 0, 0, 1280, 960 );
+					return new Rectangle(0, 0, 1280, 960);
 				case EResolution.SXGA:
-					return new Rectangle( 0, 0, 1280, 1024 );
+					return new Rectangle(0, 0, 1280, 1024);
 				case EResolution.SXGAplus:
-					return new Rectangle( 0, 0, 1400, 1050 );
+					return new Rectangle(0, 0, 1400, 1050);
 				case EResolution.UXGA:
-					return new Rectangle( 0, 0, 1600, 1200 );
+					return new Rectangle(0, 0, 1600, 1200);
 				case EResolution.WVGAplus:
-					return new Rectangle( 0, 0, 848, 480 );
+					return new Rectangle(0, 0, 848, 480);
 				case EResolution.HD720p:
-					return new Rectangle( 0, 0, 1280, 720 );
+					return new Rectangle(0, 0, 1280, 720);
 				case EResolution.WXGA:
-					return new Rectangle( 0, 0, 1280, 768 );
+					return new Rectangle(0, 0, 1280, 768);
 				case EResolution.FullWideXGA:
-					return new Rectangle( 0, 0, 1360, 768 );
+					return new Rectangle(0, 0, 1360, 768);
 				case EResolution.WXGAplus:
-					return new Rectangle( 0, 0, 1440, 900 );
+					return new Rectangle(0, 0, 1440, 900);
 				case EResolution.WSXGAplus:
-					return new Rectangle( 0, 0, 1680, 1050 );
+					return new Rectangle(0, 0, 1680, 1050);
 				case EResolution.FullHD:
-					return new Rectangle( 0, 0, 1920, 1080 );
+					return new Rectangle(0, 0, 1920, 1080);
 			}
 			throw new ArgumentOutOfRangeException();
 		}
@@ -124,9 +129,10 @@ namespace danmaq.nineball.util.resolution {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static float getAspect( this EResolution res ) {
-			Rectangle rectRes = toRect( res );
-			return ( float )( rectRes.Width ) / ( float )( rectRes.Height );
+		public static float getAspect(this EResolution res)
+		{
+			Rectangle rectRes = toRect(res);
+			return (float)(rectRes.Width) / (float)(rectRes.Height);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -137,17 +143,21 @@ namespace danmaq.nineball.util.resolution {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static bool isWide( this EResolution res ) { return getAspect( res ) > 1.5f; }
+		public static bool isWide(this EResolution res)
+		{
+			return getAspect(res) > 1.5f;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>解像度列挙体に対応する解説を取得します。</summary>
 		/// 
 		/// <param name="resolution">解像度列挙体</param>
 		/// <returns>解説</returns>
-		public static string ToString( this EResolution resolution ) {
-			string strRes = resolution.ToString().Replace( "plus", "+" ).Replace( "43", "" );
+		public static string ToString(this EResolution resolution)
+		{
+			string strRes = resolution.ToString().Replace("plus", "+").Replace("43", "");
 			Rectangle rect = resolution.toRect();
-			return strRes + string.Format( "({0}x{1})", rect.Width, rect.Height );
+			return strRes + string.Format("({0}x{1})", rect.Width, rect.Height);
 		}
 	}
 }

@@ -11,12 +11,14 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.entity.fonts {
+namespace danmaq.nineball.entity.fonts
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レンダリングされたグラデーション情報を格納する構造体。</summary>
 	[Serializable]
-	public struct SFontGradationInfo {
+	public struct SFontGradationInfo
+	{
 
 		/// <summary>位置情報</summary>
 		public Vector2 pos;

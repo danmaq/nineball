@@ -10,104 +10,122 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.misc {
+namespace danmaq.nineball.misc
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>内分カウンタ機能の関数集クラス。</summary>
-	public static class CInterpolate {
+	public static class CInterpolate
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>等速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountSmooth = ( fTarget, fLimit ) =>
+		public static readonly Func<float, float, float> _amountSmooth = (fTarget, fLimit) =>
 			fTarget / fLimit;
 
 		/// <summary>加速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountSlowdown = ( fTarget, fLimit ) =>
-			1 - ( float )Math.Pow( 1 - fTarget / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountSlowdown = (fTarget, fLimit) =>
+			1 - (float)Math.Pow(1 - fTarget / fLimit, 2);
 
 		/// <summary>減速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountAccelerate = ( fTarget, fLimit ) =>
-			( float )Math.Pow( fTarget / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountAccelerate = (fTarget, fLimit) =>
+			(float)Math.Pow(fTarget / fLimit, 2);
 
 		/// <summary>等速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopSmooth = ( fTarget, fLimit ) =>
-			CMisc.clampLoop( fTarget, 0, fLimit ) / fLimit;
+		public static readonly Func<float, float, float> _amountLoopSmooth = (fTarget, fLimit) =>
+			CMisc.clampLoop(fTarget, 0, fLimit) / fLimit;
 
 		/// <summary>加速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopSlowdown = ( fTarget, fLimit ) =>
-			1 - ( float )Math.Pow( 1 - CMisc.clampLoop( fTarget, 0, fLimit ) / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountLoopSlowdown = (fTarget, fLimit) =>
+			1 - (float)Math.Pow(1 - CMisc.clampLoop(fTarget, 0, fLimit) / fLimit, 2);
 
 		/// <summary>減速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopAccelerate = ( fTarget, fLimit ) =>
-			( float )Math.Pow( CMisc.clampLoop( fTarget, 0, fLimit ) / fLimit, 2 );
+		public static readonly Func<float, float, float> _amountLoopAccelerate = (fTarget, fLimit) =>
+			(float)Math.Pow(CMisc.clampLoop(fTarget, 0, fLimit) / fLimit, 2);
 
 		/// <summary>範囲丸め込み付きの線形補完。</summary>
 		public static readonly Func<float, float, float, float> _clampLerp =
-			( fStart, fEnd, fAmount ) => {
-				float fResult = MathHelper.Lerp( fStart, fEnd, fAmount );
-				if( fStart > fEnd ) {
+			(fStart, fEnd, fAmount) =>
+			{
+				float fResult = MathHelper.Lerp(fStart, fEnd, fAmount);
+				if(fStart > fEnd)
+				{
 					float fTemp = fEnd;
 					fEnd = fStart;
 					fStart = fTemp;
 				}
-				return MathHelper.Clamp( fResult, fStart, fEnd );
+				return MathHelper.Clamp(fResult, fStart, fEnd);
 			};
 
 		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSmooth =
-			( fStart, fEnd, fNow, fLimit ) =>
-				_clampLerp( fStart, fEnd, _amountSmooth( fNow, fLimit ) );
+			(fStart, fEnd, fNow, fLimit) =>
+				_clampLerp(fStart, fEnd, _amountSmooth(fNow, fLimit));
 
 		/// <summary>範囲丸め込み付きの減速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSlowdown =
-			( fStart, fEnd, fNow, fLimit ) =>
-				_clampLerp( fStart, fEnd, _amountSlowdown( fNow, fLimit ) );
+			(fStart, fEnd, fNow, fLimit) =>
+				_clampLerp(fStart, fEnd, _amountSlowdown(fNow, fLimit));
 
 		/// <summary>範囲丸め込み付きの加速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampAccelerate =
-			( fStart, fEnd, fNow, fLimit ) =>
-				_clampLerp( fStart, fEnd, _amountAccelerate( fNow, fLimit ) );
+			(fStart, fEnd, fNow, fLimit) =>
+				_clampLerp(fStart, fEnd, _amountAccelerate(fNow, fLimit));
 
 		/// <summary>範囲丸め込み付きの加速→減速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSlowFastSlow =
-			( fStart, fEnd, fNow, fLimit ) => {
-				if( fNow <= 0.0f ) { return fStart; }
-				if( fNow >= fLimit ) { return fEnd; }
-				float fCenter = MathHelper.Lerp( fStart, fEnd, 0.5f );
+			(fStart, fEnd, fNow, fLimit) =>
+			{
+				if(fNow <= 0.0f)
+				{
+					return fStart;
+				}
+				if(fNow >= fLimit)
+				{
+					return fEnd;
+				}
+				float fCenter = MathHelper.Lerp(fStart, fEnd, 0.5f);
 				float fHalfLimit = fLimit * 0.5f;
 				return fNow < fHalfLimit ?
-					MathHelper.Lerp( fStart, fCenter, _amountAccelerate( fNow, fHalfLimit ) ) :
-					MathHelper.Lerp( fCenter, fEnd, _amountSlowdown( fNow - fHalfLimit, fHalfLimit ) );
+					MathHelper.Lerp(fStart, fCenter, _amountAccelerate(fNow, fHalfLimit)) :
+					MathHelper.Lerp(fCenter, fEnd, _amountSlowdown(fNow - fHalfLimit, fHalfLimit));
 			};
 
 		/// <summary>範囲丸め込み付きの減速→加速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampFastSlowFast =
-			( fStart, fEnd, fNow, fLimit ) => {
-				if( fNow <= 0.0f ) { return fStart; }
-				if( fNow >= fLimit ) { return fEnd; }
-				float fCenter = MathHelper.Lerp( fStart, fEnd, 0.5f );
+			(fStart, fEnd, fNow, fLimit) =>
+			{
+				if(fNow <= 0.0f)
+				{
+					return fStart;
+				}
+				if(fNow >= fLimit)
+				{
+					return fEnd;
+				}
+				float fCenter = MathHelper.Lerp(fStart, fEnd, 0.5f);
 				float fHalfLimit = fLimit * 0.5f;
 				return fNow < fHalfLimit ?
-					MathHelper.Lerp( fStart, fCenter, _amountSlowdown( fNow, fHalfLimit ) ) :
-					MathHelper.Lerp( fCenter, fEnd, _amountAccelerate( fNow - fHalfLimit, fHalfLimit ) );
+					MathHelper.Lerp(fStart, fCenter, _amountSlowdown(fNow, fHalfLimit)) :
+					MathHelper.Lerp(fCenter, fEnd, _amountAccelerate(fNow - fHalfLimit, fHalfLimit));
 			};
 
 		/// <summary>範囲ループ付きの等速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _loopSmooth =
-			( fStart, fEnd, fNow, fLimit ) =>
-				MathHelper.Lerp( fStart, fEnd, _amountLoopSmooth( fNow, fLimit ) );
+			(fStart, fEnd, fNow, fLimit) =>
+				MathHelper.Lerp(fStart, fEnd, _amountLoopSmooth(fNow, fLimit));
 
 		/// <summary>範囲ループ付きの減速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _loopSlowdown =
-			( fStart, fEnd, fNow, fLimit ) =>
-				MathHelper.Lerp( fStart, fEnd, _amountLoopSlowdown( fNow, fLimit ) );
+			(fStart, fEnd, fNow, fLimit) =>
+				MathHelper.Lerp(fStart, fEnd, _amountLoopSlowdown(fNow, fLimit));
 
 		/// <summary>範囲ループ付きの加速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _loopAccelerate =
-			( fStart, fEnd, fNow, fLimit ) =>
-				MathHelper.Lerp( fStart, fEnd, _amountLoopAccelerate( fNow, fLimit ) );
+			(fStart, fEnd, fNow, fLimit) =>
+				MathHelper.Lerp(fStart, fEnd, _amountLoopAccelerate(fNow, fLimit));
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -126,8 +144,9 @@ namespace danmaq.nineball.misc {
 		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountSmooth( float fTarget, float fLimit ) {
-			return _amountSmooth( fTarget, fLimit );
+		public static float amountSmooth(float fTarget, float fLimit)
+		{
+			return _amountSmooth(fTarget, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -144,8 +163,9 @@ namespace danmaq.nineball.misc {
 		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountSlowdown( float fTarget, float fLimit ) {
-			return _amountSlowdown( fTarget, fLimit );
+		public static float amountSlowdown(float fTarget, float fLimit)
+		{
+			return _amountSlowdown(fTarget, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -162,8 +182,9 @@ namespace danmaq.nineball.misc {
 		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountAccelerate( float fTarget, float fLimit ) {
-			return _amountAccelerate( fTarget, fLimit );
+		public static float amountAccelerate(float fTarget, float fLimit)
+		{
+			return _amountAccelerate(fTarget, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -185,8 +206,9 @@ namespace danmaq.nineball.misc {
 		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountLoopSmooth( float fTarget, float fLimit ) {
-			return _amountLoopSmooth( fTarget, fLimit );
+		public static float amountLoopSmooth(float fTarget, float fLimit)
+		{
+			return _amountLoopSmooth(fTarget, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -208,8 +230,9 @@ namespace danmaq.nineball.misc {
 		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountLoopSlowdown( float fTarget, float fLimit ) {
-			return _amountLoopSlowdown( fTarget, fLimit );
+		public static float amountLoopSlowdown(float fTarget, float fLimit)
+		{
+			return _amountLoopSlowdown(fTarget, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -231,8 +254,9 @@ namespace danmaq.nineball.misc {
 		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountLoopAccelerate( float fTarget, float fLimit ) {
-			return _amountLoopAccelerate( fTarget, fLimit );
+		public static float amountLoopAccelerate(float fTarget, float fLimit)
+		{
+			return _amountLoopAccelerate(fTarget, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -250,8 +274,9 @@ namespace danmaq.nineball.misc {
 		/// <paramref name="fValue2"/>の重みを示す<c>0.0</c>から<c>1.0</c>までの値。
 		/// </param>
 		/// <returns>補完された値。</returns>
-		public static float clampLerp( float fValue1, float fValue2, float fAmount ) {
-			return _clampLerp( fValue1, fValue2, fAmount );
+		public static float clampLerp(float fValue1, float fValue2, float fAmount)
+		{
+			return _clampLerp(fValue1, fValue2, fAmount);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -265,8 +290,9 @@ namespace danmaq.nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float clampSmooth( float fStart, float fEnd, float fNow, float fLimit ) {
-			return _clampSmooth( fStart, fEnd, fNow, fLimit );
+		public static float clampSmooth(float fStart, float fEnd, float fNow, float fLimit)
+		{
+			return _clampSmooth(fStart, fEnd, fNow, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -280,8 +306,9 @@ namespace danmaq.nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float clampSlowdown( float fStart, float fEnd, float fNow, float fLimit ) {
-			return _clampSlowdown( fStart, fEnd, fNow, fLimit );
+		public static float clampSlowdown(float fStart, float fEnd, float fNow, float fLimit)
+		{
+			return _clampSlowdown(fStart, fEnd, fNow, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -295,8 +322,9 @@ namespace danmaq.nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float clampAccelerate( float fStart, float fEnd, float fNow, float fLimit ) {
-			return _clampAccelerate( fStart, fEnd, fNow, fLimit );
+		public static float clampAccelerate(float fStart, float fEnd, float fNow, float fLimit)
+		{
+			return _clampAccelerate(fStart, fEnd, fNow, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -318,7 +346,10 @@ namespace danmaq.nineball.misc {
 		/// </returns>
 		public static float clampSlowFastSlow(
 			float fStart, float fEnd, float fNow, float fLimit
-		) { return _clampSlowFastSlow( fStart, fEnd, fNow, fLimit ); }
+		)
+		{
+			return _clampSlowFastSlow(fStart, fEnd, fNow, fLimit);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -339,7 +370,10 @@ namespace danmaq.nineball.misc {
 		/// </returns>
 		public static float clampFastSlowFast(
 			float fStart, float fEnd, float fNow, float fLimit
-		) { return _clampFastSlowFast( fStart, fEnd, fNow, fLimit ); }
+		)
+		{
+			return _clampFastSlowFast(fStart, fEnd, fNow, fLimit);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>等速変化でループする内分カウンタです。</summary>
@@ -352,8 +386,9 @@ namespace danmaq.nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float loopSmooth( float fStart, float fEnd, float fNow, float fLimit ) {
-			return _loopSmooth( fStart, fEnd, fNow, fLimit );
+		public static float loopSmooth(float fStart, float fEnd, float fNow, float fLimit)
+		{
+			return _loopSmooth(fStart, fEnd, fNow, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -367,8 +402,9 @@ namespace danmaq.nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float loopSlowdown( float fStart, float fEnd, float fNow, float fLimit ) {
-			return _loopSlowdown( fStart, fEnd, fNow, fLimit );
+		public static float loopSlowdown(float fStart, float fEnd, float fNow, float fLimit)
+		{
+			return _loopSlowdown(fStart, fEnd, fNow, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -382,8 +418,9 @@ namespace danmaq.nineball.misc {
 		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
 		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
 		/// </returns>
-		public static float loopAccelerate( float fStart, float fEnd, float fNow, float fLimit ) {
-			return _loopAccelerate( fStart, fEnd, fNow, fLimit );
+		public static float loopAccelerate(float fStart, float fEnd, float fNow, float fLimit)
+		{
+			return _loopAccelerate(fStart, fEnd, fNow, fLimit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -400,13 +437,20 @@ namespace danmaq.nineball.misc {
 		/// </returns>
 		public static float neville(
 			float fStart, float fMiddle, float fEnd, float fNow, float fLimit
-		) {
-			if( fNow >= fLimit || fStart == fEnd || fLimit <= 0 ) { return fEnd; }
-			if( fNow <= 0 ) { return fStart; }
+		)
+		{
+			if(fNow >= fLimit || fStart == fEnd || fLimit <= 0)
+			{
+				return fEnd;
+			}
+			if(fNow <= 0)
+			{
+				return fStart;
+			}
 			float fTimePoint = fNow / fLimit * 2;
-			fMiddle = fEnd + ( fEnd - fMiddle ) * ( fTimePoint - 2 );
-			return fMiddle + ( fMiddle - ( fMiddle + ( fMiddle - fStart ) * ( fTimePoint - 1 ) ) ) *
-				( fTimePoint - 2 ) * 0.5f;
+			fMiddle = fEnd + (fEnd - fMiddle) * (fTimePoint - 2);
+			return fMiddle + (fMiddle - (fMiddle + (fMiddle - fStart) * (fTimePoint - 1))) *
+				(fTimePoint - 2) * 0.5f;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -423,15 +467,22 @@ namespace danmaq.nineball.misc {
 		/// </returns>
 		public static float bezier(
 			float fStart, float fMiddle, float fEnd, float fNow, float fLimit
-		) {
-			if( fNow >= fLimit || fStart == fEnd || fLimit <= 0 ) { return fEnd; }
-			if( fNow <= 0 ) { return fStart; }
+		)
+		{
+			if(fNow >= fLimit || fStart == fEnd || fLimit <= 0)
+			{
+				return fEnd;
+			}
+			if(fNow <= 0)
+			{
+				return fStart;
+			}
 			float fTimePoint = fNow / fLimit * 2;
 			float fResidual = 1 - fTimePoint;
 			return
-				( float )Math.Pow( fResidual, 2 ) * fStart +
-				( float )Math.Pow( fTimePoint, 2 ) * fEnd +
-				( 2 * fResidual * fTimePoint * fMiddle );
+				(float)Math.Pow(fResidual, 2) * fStart +
+				(float)Math.Pow(fTimePoint, 2) * fEnd +
+				(2 * fResidual * fTimePoint * fMiddle);
 		}
 	}
 }

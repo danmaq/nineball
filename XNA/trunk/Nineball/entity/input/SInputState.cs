@@ -14,12 +14,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 #endif
 
-namespace danmaq.nineball.entity.input {
+namespace danmaq.nineball.entity.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ボタンの入力状態を保持するクラス。</summary>
 	[Serializable]
-	public struct SInputState {
+	public struct SInputState
+	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -40,34 +42,54 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>現在ボタンが押されているかどうかを取得します。</summary>
 		/// 
 		/// <value>現在ボタンが押されている場合、<c>true</c>。</value>
-		public bool press { get; private set; }
+		public bool press
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>最後にボタンの状態が更新されてからの時間を取得します。</summary>
 		/// 
 		/// <value>最後にボタンの状態が更新されてからの時間。</value>
-		public int count { get; private set; }
+		public int count
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アナログ入力値を取得します。</summary>
 		/// 
 		/// <value>アナログ入力値。</value>
-		public float analogValue { get; private set; }
+		public float analogValue
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>閾値でハイパスフィルタしたアナログ入力値を取得します。</summary>
 		/// 
 		/// <value>閾値でハイパスフィルタしたアナログ入力値。</value>
-		public float analogHPF {
-			get { return analogValue < analogThreshold ? 0 : analogValue; }
+		public float analogHPF
+		{
+			get
+			{
+				return analogValue < analogThreshold ? 0 : analogValue;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>現在のフレームでボタンが押されたかどうかを取得します。</summary>
 		/// 
 		/// <value>現在のフレームでボタンが押された場合、<c>true</c>。</value>
-		public bool push {
-			get { return ( press && count == 0 ); }
+		public bool push
+		{
+			get
+			{
+				return (press && count == 0);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -79,8 +101,12 @@ namespace danmaq.nineball.entity.input {
 		/// </summary>
 		/// 
 		/// <value>現在のフレームでボタンが押された場合、<c>true</c>。</value>
-		public bool pushLoop {
-			get { return ( press && countLoop == 0 ); }
+		public bool pushLoop
+		{
+			get
+			{
+				return (press && countLoop == 0);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -92,8 +118,12 @@ namespace danmaq.nineball.entity.input {
 		/// </summary>
 		/// 
 		/// <value>最後にボタンの状態が更新されてからの時間。</value>
-		public int countLoop {
-			get { return ( ( count >= loopStart ) ? ( count % loopInterval ) : count ); }
+		public int countLoop
+		{
+			get
+			{
+				return ((count >= loopStart) ? (count % loopInterval) : count);
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -108,11 +138,12 @@ namespace danmaq.nineball.entity.input {
 		/// <param name="a">ボタン状態。</param>
 		/// <param name="b">ボタン状態。</param>
 		/// <returns>合成されたボタン状態。</returns>
-		public static SInputState operator |( SInputState a, SInputState b ) {
+		public static SInputState operator |(SInputState a, SInputState b)
+		{
 			SInputState result = new SInputState();
 			result.press = a.press || b.press;
-			result.count = Math.Min( a.count, b.count );
-			result.analogValue = MathHelper.Max( a.analogValue, b.analogValue );
+			result.count = Math.Min(a.count, b.count);
+			result.analogValue = MathHelper.Max(a.analogValue, b.analogValue);
 			return result;
 		}
 
@@ -125,11 +156,12 @@ namespace danmaq.nineball.entity.input {
 		/// <param name="a">ボタン状態。</param>
 		/// <param name="b">ボタン状態。</param>
 		/// <returns>合成されたボタン状態。</returns>
-		public static SInputState operator &( SInputState a, SInputState b ) {
+		public static SInputState operator &(SInputState a, SInputState b)
+		{
 			SInputState result = new SInputState();
 			result.press = a.press && b.press;
-			result.count = Math.Max( a.count, b.count );
-			result.analogValue = MathHelper.Min( a.analogValue, b.analogValue );
+			result.count = Math.Max(a.count, b.count);
+			result.analogValue = MathHelper.Min(a.analogValue, b.analogValue);
 			return result;
 		}
 
@@ -138,7 +170,10 @@ namespace danmaq.nineball.entity.input {
 		/// 
 		/// <param name="b">ボタン状態</param>
 		/// <returns>現在ボタンが押されている場合、<c>true</c></returns>
-		public static implicit operator bool( SInputState b ) { return b.press; }
+		public static implicit operator bool(SInputState b)
+		{
+			return b.press;
+		}
 
 #if XBOX360
 		//* -----------------------------------------------------------------------*
@@ -164,9 +199,14 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>ボタン状態の更新をします。</summary>
 		/// 
 		/// <param name="bState">最新のボタン状態</param>
-		public void refresh( bool bState ) {
-			if( press == bState ) { count++; }
-			else {
+		public void refresh(bool bState)
+		{
+			if(press == bState)
+			{
+				count++;
+			}
+			else
+			{
 				analogValue = bState ? 1f : 0f;
 				press = bState;
 				count = 0;
@@ -177,12 +217,17 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>アナログボタン状態の更新をします。</summary>
 		/// 
 		/// <param name="fAnalogValue">最新のアナログボタン状態</param>
-		public void refresh( float fAnalogValue ) {
+		public void refresh(float fAnalogValue)
+		{
 			if(
-				( press && fAnalogValue >= analogThreshold ) ||
-				( !press && fAnalogValue < analogThreshold )
-			) { count++; }
-			else {
+				(press && fAnalogValue >= analogThreshold) ||
+				(!press && fAnalogValue < analogThreshold)
+			)
+			{
+				count++;
+			}
+			else
+			{
 				press = !press;
 				count = 0;
 			}

@@ -13,11 +13,13 @@ using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
 using danmaq.nineball.data;
 
-namespace danmaq.nineball.state.input {
+namespace danmaq.nineball.state.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>既定の入力状態。</summary>
-	public sealed class CStateDefault : CState<CInput, List<SInputState>> {
+	public sealed class CStateDefault : CState<CInput, List<SInputState>>
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -26,7 +28,7 @@ namespace danmaq.nineball.state.input {
 		public static readonly CStateDefault instance = new CStateDefault();
 
 		/// <summary>コントローラ 入力制御・管理クラス一覧。</summary>
-		private readonly List<CInput> inputList = new List<CInput>( 1 );
+		private readonly List<CInput> inputList = new List<CInput>(1);
 
 		/// <summary>入力デバイス追加用キュー。</summary>
 		private readonly Queue<CInput> addQueue = new Queue<CInput>();
@@ -45,7 +47,9 @@ namespace danmaq.nineball.state.input {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateDefault() { }
+		private CStateDefault()
+		{
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -54,28 +58,40 @@ namespace danmaq.nineball.state.input {
 		/// <summary>入力デバイスを設定/取得します。</summary>
 		/// 
 		/// <value>入力デバイス。</value>
-		public EInputDevice inputDevice {
-			get { return m_inputDevice; }
-			set {
+		public EInputDevice inputDevice
+		{
+			get
+			{
+				return m_inputDevice;
+			}
+			set
+			{
 				value &= EInputDevice.All;
-				if( value != m_inputDevice ) {
-					if( value == EInputDevice.None ) {	// ないなら全部消してしまう
-						inputList.ForEach( item => item.Dispose() );
+				if(value != m_inputDevice)
+				{
+					if(value == EInputDevice.None)
+					{	// ないなら全部消してしまう
+						inputList.ForEach(item => item.Dispose());
 						inputList.Clear();
 					}
-					else {	// 一部だけある場合はちょっとややこしい
+					else
+					{	// 一部だけある場合はちょっとややこしい
 						List<IState<CInput, List<SInputState>>> enabled, disabled;
-						value.getState( out enabled, out disabled );
-						foreach( IState<CInput, List<SInputState>> state in enabled ) {
-							if( inputList.Find( input => input.currentState == state ) == null ) {
-								addQueue.Enqueue( new CInput( state ) );
+						value.getState(out enabled, out disabled);
+						foreach(IState<CInput, List<SInputState>> state in enabled)
+						{
+							if(inputList.Find(input => input.currentState == state) == null)
+							{
+								addQueue.Enqueue(new CInput(state));
 							}
 						}
-						foreach( IState<CInput, List<SInputState>> state in disabled ) {
-							CInput input = inputList.Find( i => i.currentState == state );
-							if( input != null ) {
+						foreach(IState<CInput, List<SInputState>> state in disabled)
+						{
+							CInput input = inputList.Find(i => i.currentState == state);
+							if(input != null)
+							{
 								input.Dispose();
-								removeQueue.Enqueue( input );
+								removeQueue.Enqueue(input);
 							}
 						}
 					}
@@ -97,8 +113,9 @@ namespace danmaq.nineball.state.input {
 		/// <param name="buttonsState">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( CInput entity, List<SInputState> buttonsState ) {
-			base.setup( entity, buttonsState );
+		public override void setup(CInput entity, List<SInputState> buttonsState)
+		{
+			base.setup(entity, buttonsState);
 			inputDevice |= EInputDevice.Keyboard;
 		}
 
@@ -112,23 +129,28 @@ namespace danmaq.nineball.state.input {
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
 			CInput entity, List<SInputState> buttonsState, GameTime gameTime
-		) {
-			base.update( entity, buttonsState, gameTime );
-			while( removeQueue.Count > 0 ) {	// デバイス削除の予約を実行
+		)
+		{
+			base.update(entity, buttonsState, gameTime);
+			while(removeQueue.Count > 0)
+			{	// デバイス削除の予約を実行
 				CInput input = removeQueue.Dequeue();
 				entity.changedButtonsNum -= input.onChangedButtonsNum;
-				inputList.Remove( input );
+				inputList.Remove(input);
 			}
-			while( addQueue.Count > 0 ) {	// デバイス追加の予約を実行
+			while(addQueue.Count > 0)
+			{	// デバイス追加の予約を実行
 				CInput input = addQueue.Dequeue();
 				entity.changedButtonsNum += input.onChangedButtonsNum;
 				input.changedState += onChangeState;
-				inputList.Add( input );
+				inputList.Add(input);
 			}
 			int nLength = buttonsState.Count;
-			foreach( CInput input in inputList ) {
-				input.update( gameTime );
-				for( int i = nLength - 1; i >= 0; i-- ) {
+			foreach(CInput input in inputList)
+			{
+				input.update(gameTime);
+				for(int i = nLength - 1; i >= 0; i--)
+				{
 					buttonsState[i] |= input.buttonStateList[i];
 				}
 			}
@@ -144,9 +166,10 @@ namespace danmaq.nineball.state.input {
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
 			CInput entity, List<SInputState> buttonsState, GameTime gameTime
-		) {
-			base.draw( entity, buttonsState, gameTime );
-			inputList.ForEach( input => input.draw( gameTime ) );
+		)
+		{
+			base.draw(entity, buttonsState, gameTime);
+			inputList.ForEach(input => input.draw(gameTime));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -160,10 +183,11 @@ namespace danmaq.nineball.state.input {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( IEntity entity, object buttonsState, IState nextState ) {
-			inputList.ForEach( input => input.Dispose() );
+		public override void teardown(IEntity entity, object buttonsState, IState nextState)
+		{
+			inputList.ForEach(input => input.Dispose());
 			inputList.Clear();
-			base.teardown( entity, buttonsState, nextState );
+			base.teardown(entity, buttonsState, nextState);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -171,11 +195,13 @@ namespace danmaq.nineball.state.input {
 		/// 
 		/// <param name="sender">送信元のオブジェクト。</param>
 		/// <param name="e">変化後の状態。</param>
-		private void onChangeState( object sender, CEventChangedState e ) {
-			CInput input = ( CInput )sender;
-			if( input.currentState == CState.empty ) {
+		private void onChangeState(object sender, CEventChangedState e)
+		{
+			CInput input = (CInput)sender;
+			if(input.currentState == CState.empty)
+			{
 				input.changedState -= onChangeState;
-				removeQueue.Enqueue( ( CInput )sender );
+				removeQueue.Enqueue((CInput)sender);
 			}
 		}
 	}

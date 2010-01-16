@@ -11,11 +11,13 @@
 
 using System;
 
-namespace danmaq.nineball.entity.input {
+namespace danmaq.nineball.entity.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ用の予約されたボタンID。</summary>
-	public enum EReservedButtonAxisID : short {
+	public enum EReservedButtonAxisID : short
+	{
 
 		/// <summary>POV(上)。</summary>
 		povUp = -1,
@@ -45,9 +47,10 @@ namespace danmaq.nineball.entity.input {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ状態の拡張機能。</summary>
-	public static class JoystickStateExtension {
+	public static class JoystickStateExtension
+	{
 
-//		public static float 
+		//		public static float 
 
 	}
 }

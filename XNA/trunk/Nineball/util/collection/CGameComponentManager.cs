@@ -11,7 +11,8 @@ using danmaq.nineball.entity;
 using danmaq.nineball.entity.component;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.util.collection {
+namespace danmaq.nineball.util.collection
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ゲーム コンポーネント管理クラス。</summary>
@@ -32,8 +33,11 @@ namespace danmaq.nineball.util.collection {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="game">ゲーム クラス。</param>
-		public CGameComponentManager( Game game ) :
-			base( game.Components ) { this.game = game; }
+		public CGameComponentManager(Game game) :
+			base(game.Components)
+		{
+			this.game = game;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -44,8 +48,12 @@ namespace danmaq.nineball.util.collection {
 		/// </summary>
 		/// 
 		/// <value>ゲーム コンポーネントをアクティブにするかどうか。</value>
-		public bool Enabled {
-			set { partial.ForEach( item => item.Enabled = value ); }
+		public bool Enabled
+		{
+			set
+			{
+				partial.ForEach(item => item.Enabled = value);
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -59,10 +67,10 @@ namespace danmaq.nineball.util.collection {
 		/// 
 		/// <param name="entity">状態を持つオブジェクト。</param>
 		/// <returns>ゲーム コンポーネントでラッピングされたオブジェクト。</returns>
-		/// <typeparam name="_T">状態を持つオブジェクトの型</typeparam>
-		public CGameComponent<_T> addEntity<_T>( _T entity ) where _T : IEntity {
-			CGameComponent<_T> result = new CGameComponent<_T>( game, entity, false );
-			Add( result );
+		public CGameComponent addEntity(IEntity entity)
+		{
+			CGameComponent result = new CGameComponent(game, entity, false);
+			Add(result);
 			return result;
 		}
 
@@ -76,11 +84,11 @@ namespace danmaq.nineball.util.collection {
 		/// 
 		/// <param name="entity">状態を持つオブジェクト。</param>
 		/// <returns>ゲーム コンポーネントでラッピングされたオブジェクト。</returns>
-		/// <typeparam name="_T">状態を持つオブジェクトの型</typeparam>
-		public CDrawableGameComponent<_T> addDrawableEntity<_T>( _T entity ) where _T : IEntity {
-			CDrawableGameComponent<_T> result =
-				new CDrawableGameComponent<_T>( game, entity, false );
-			Add( result );
+		public CDrawableGameComponent addDrawableEntity(IEntity entity)
+		{
+			CDrawableGameComponent result =
+				new CDrawableGameComponent(game, entity, false);
+			Add(result);
 			return result;
 		}
 	}

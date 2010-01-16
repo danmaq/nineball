@@ -14,11 +14,13 @@ using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.entity.input {
+namespace danmaq.nineball.entity.input
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360用コントローラ 入力制御・管理クラス。</summary>
-	public sealed class CInputXBOX360 : CInput {
+	public sealed class CInputXBOX360 : CInput
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -38,7 +40,9 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="playerIndex">プレイヤー番号。</param>
-		public CInputXBOX360( PlayerIndex playerIndex ) : base( CState.empty ) {
+		public CInputXBOX360(PlayerIndex playerIndex)
+			: base(CState.empty)
+		{
 			this.playerIndex = playerIndex;
 			nextState = state.input.xbox360.CStateDefault.instance;
 		}
@@ -53,28 +57,42 @@ namespace danmaq.nineball.entity.input {
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
-		public new IState<CInputXBOX360, List<SInputState>> nextState {
-			set { nextStateBase = value; }
+		public new IState<CInputXBOX360, List<SInputState>> nextState
+		{
+			set
+			{
+				nextStateBase = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>プレイヤー番号を取得します。</summary>
 		/// 
 		/// <value>プレイヤー番号。</value>
-		public PlayerIndex playerIndex { get; private set; }
+		public PlayerIndex playerIndex
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ボタン割り当て値の一覧を設定/取得します。</summary>
 		/// 
 		/// <value>ボタン割り当て値の一覧。</value>
-		public IList<Buttons> assignList {
-			get { return m_assignList; }
-			set {
+		public IList<Buttons> assignList
+		{
+			get
+			{
+				return m_assignList;
+			}
+			set
+			{
 				m_assignList.Clear();
-				m_assignList.AddRange( value );
+				m_assignList.AddRange(value);
 				ReadOnlyCollection<SInputState> stateList = buttonStateList;
-				while( m_assignList.Count > stateList.Count ) {
-					m_assignList.RemoveAt( m_assignList.Count - 1 );
+				while(m_assignList.Count > stateList.Count)
+				{
+					m_assignList.RemoveAt(m_assignList.Count - 1);
 				}
 			}
 		}
@@ -83,11 +101,13 @@ namespace danmaq.nineball.entity.input {
 		/// <summary>現在押下されているボタン情報を取得します。</summary>
 		/// 
 		/// <value>押下されたボタン情報。</value>
-		public Buttons press {
-			get {
+		public Buttons press
+		{
+			get
+			{
 				Buttons result = 0;
 				checkConnect();
-				result = GamePad.GetState( playerIndex ).getPress();
+				result = GamePad.GetState(playerIndex).getPress();
 				return result;
 			}
 		}
@@ -97,7 +117,8 @@ namespace danmaq.nineball.entity.input {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public override void initialize() {
+		public override void initialize()
+		{
 			base.initialize();
 			checkConnect();
 		}
@@ -108,9 +129,13 @@ namespace danmaq.nineball.entity.input {
 		/// </summary>
 		/// 
 		/// <returns>接続されている場合、<c>true</c>。</returns>
-		public bool checkConnect() {
-			bool bResult = GamePad.GetState( playerIndex ).IsConnected;
-			if( !bResult ) { Dispose(); }
+		public bool checkConnect()
+		{
+			bool bResult = GamePad.GetState(playerIndex).IsConnected;
+			if(!bResult)
+			{
+				Dispose();
+			}
 			return bResult;
 		}
 	}

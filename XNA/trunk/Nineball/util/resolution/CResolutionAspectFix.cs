@@ -10,11 +10,13 @@
 using danmaq.nineball.data;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.util.resolution {
+namespace danmaq.nineball.util.resolution
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>アスペクト比を4:3に固定した解像度管理クラス。</summary>
-	public sealed class CResolutionAspectFix : CResolution {
+	public sealed class CResolutionAspectFix : CResolution
+	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -38,36 +40,62 @@ namespace danmaq.nineball.util.resolution {
 		//* properties ──────────────────────────────*
 
 		/// <summary>現在の解像度とVGAとの比率ギャップ。</summary>
-		public new float scaleGapFromVGA {
-			get { return m_fScaleGapFromVGA * m_scale; }
-			private set { m_fScaleGapFromVGA = value; }
+		public new float scaleGapFromVGA
+		{
+			get
+			{
+				return m_fScaleGapFromVGA * m_scale;
+			}
+			private set
+			{
+				m_fScaleGapFromVGA = value;
+			}
 		}
 
 		/// <summary>現在の解像度。</summary>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public override EResolution now {
-			get { return base.now; }
-			protected set {
+		public override EResolution now
+		{
+			get
+			{
+				return base.now;
+			}
+			protected set
+			{
 				base.now = value;
-				if( vertical ) {
+				if(vertical)
+				{
 					scaleGapFromVGA =
-						getScaleGap( rotate( EResolution.VGA.toRect() ), value.toRect() ).Y;
+						getScaleGap(rotate(EResolution.VGA.toRect()), value.toRect()).Y;
 				}
-				else { scaleGapFromVGA = getScaleGap( value, EResolution.VGA ).Y; }
+				else
+				{
+					scaleGapFromVGA = getScaleGap(value, EResolution.VGA).Y;
+				}
 			}
 		}
 
 		/// <summary>水平位置揃え。</summary>
-		public EAlign align {
-			get { return m_align; }
-			set {
+		public EAlign align
+		{
+			get
+			{
+				return m_align;
+			}
+			set
+			{
 				m_align = value;
-				if( value == EAlign.LeftTop ) { m_nXGap = 0; }
-				else {
-					int nGap = rect.Width - resizeFromVGA( EResolution.VGA.toRect() ).Width;
-					switch( value ) {
+				if(value == EAlign.LeftTop)
+				{
+					m_nXGap = 0;
+				}
+				else
+				{
+					int nGap = rect.Width - resizeFromVGA(EResolution.VGA.toRect()).Width;
+					switch(value)
+					{
 						case EAlign.Center:
 							m_nXGap = nGap >> 1;
 							break;
@@ -80,15 +108,20 @@ namespace danmaq.nineball.util.resolution {
 		}
 
 		/// <summary>微調整用拡大率。</summary>
-		public float scale {
-			get { return m_scale; }
-			set {
+		public float scale
+		{
+			get
+			{
+				return m_scale;
+			}
+			set
+			{
 				m_pos = Vector2.Zero;
 				m_scale = 1.0f;
-				Rectangle r = resizeFromVGA( EResolution.VGA.toRect() );
+				Rectangle r = resizeFromVGA(EResolution.VGA.toRect());
 				r.Width += m_nXGap;
-				m_pos.X = ( r.Width - r.Width * value ) * 0.5f;
-				m_pos.Y = ( r.Height - r.Height * value ) * 0.5f;
+				m_pos.X = (r.Width - r.Width * value) * 0.5f;
+				m_pos.Y = (r.Height - r.Height * value) * 0.5f;
 				m_scale = value;
 			}
 		}
@@ -98,19 +131,28 @@ namespace danmaq.nineball.util.resolution {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CResolutionAspectFix() : this( null ) { }
+		public CResolutionAspectFix() : this(null)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="gdm"></param>
-		public CResolutionAspectFix( GraphicsDeviceManager gdm ) : base( gdm ) { }
+		/// <param name="graphicsDeviceManager">
+		/// グラフィック デバイスの構成・管理クラス。
+		/// </param>
+		public CResolutionAspectFix(GraphicsDeviceManager graphicsDeviceManager)
+			: base(graphicsDeviceManager)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="r">解像度定数</param>
-		public CResolutionAspectFix( EResolution r ) : base( r ) { }
+		public CResolutionAspectFix(EResolution r) : base(r)
+		{
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -120,13 +162,14 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="srcRect">VGA基準の値</param>
 		/// <returns>現在の解像度基準の値</returns>
-		public override Rectangle resizeFromVGA( Rectangle srcRect ) {
+		public override Rectangle resizeFromVGA(Rectangle srcRect)
+		{
 			float fScaleGap = scaleGapFromVGA;
 			return new Rectangle(
-				( int )( m_pos.X + fScaleGap * srcRect.X + scale * m_nXGap ),
-				( int )( m_pos.Y + fScaleGap * srcRect.Y ),
-				( int )( fScaleGap * srcRect.Width ),
-				( int )( fScaleGap * srcRect.Height ) );
+				(int)(m_pos.X + fScaleGap * srcRect.X + scale * m_nXGap),
+				(int)(m_pos.Y + fScaleGap * srcRect.Y),
+				(int)(fScaleGap * srcRect.Width),
+				(int)(fScaleGap * srcRect.Height));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -134,7 +177,8 @@ namespace danmaq.nineball.util.resolution {
 		/// 
 		/// <param name="srcPoint">VGA基準の値</param>
 		/// <returns>現在の解像度基準の値</returns>
-		public override Vector2 resizeFromVGA( Vector2 srcPoint ) {
+		public override Vector2 resizeFromVGA(Vector2 srcPoint)
+		{
 			Vector2 result;
 			result = srcPoint * scaleGapFromVGA;
 			result.X += m_nXGap * scale;

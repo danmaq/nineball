@@ -11,15 +11,18 @@ using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.manager {
+namespace danmaq.nineball.state.manager
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>FPS計測・計算クラス。</summary>
-	public sealed class CStateFPSCalculator : CState {
+	public sealed class CStateFPSCalculator : CState
+	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>FPS保持データ。</summary>
-		public struct SFPSData {
+		public struct SFPSData
+		{
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
@@ -44,10 +47,12 @@ namespace danmaq.nineball.state.manager {
 			/// </remarks>
 			/// 
 			/// <param name="gameTime">前フレームからの経過時間</param>
-			public void update( GameTime gameTime ) {
+			public void update(GameTime gameTime)
+			{
 				m_phaseManager.count++;
 				int nNowSeconds = gameTime.TotalRealTime.Seconds;
-				if( m_prevSeconds != nNowSeconds ) {
+				if(m_prevSeconds != nNowSeconds)
+				{
 					m_prevSeconds = nNowSeconds;
 					m_fps = m_phaseManager.countPhase;
 					m_phaseManager.phase++;
@@ -76,7 +81,8 @@ namespace danmaq.nineball.state.manager {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFPSCalculator() {
+		private CStateFPSCalculator()
+		{
 			m_dataUpdate.m_phaseManager = new CPhase();
 			m_dataDraw.m_phaseManager = new CPhase();
 		}
@@ -88,16 +94,24 @@ namespace danmaq.nineball.state.manager {
 		/// <summary>更新処理のFPSを取得します。</summary>
 		/// 
 		/// <value>更新処理のFPS。</value>
-		public int fpsUpdate {
-			get { return m_dataUpdate.m_fps; }
+		public int fpsUpdate
+		{
+			get
+			{
+				return m_dataUpdate.m_fps;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>描画処理のFPSを取得します。</summary>
 		/// 
 		/// <value>描画処理のFPS。</value>
-		public int fpsDraw {
-			get { return m_dataDraw.m_fps; }
+		public int fpsDraw
+		{
+			get
+			{
+				return m_dataDraw.m_fps;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -108,9 +122,10 @@ namespace danmaq.nineball.state.manager {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update( IEntity entity, object privateMembers, GameTime gameTime ) {
-			m_dataUpdate.update( gameTime );
-			base.update( entity, privateMembers, gameTime );
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			m_dataUpdate.update(gameTime);
+			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -121,9 +136,10 @@ namespace danmaq.nineball.state.manager {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw( IEntity entity, object privateMembers, GameTime gameTime ) {
-			m_dataDraw.update( gameTime );
-			base.draw( entity, privateMembers, gameTime );
+		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			m_dataDraw.update(gameTime);
+			base.draw(entity, privateMembers, gameTime);
 		}
 	}
 }

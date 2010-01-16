@@ -15,24 +15,28 @@ using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.font {
+namespace danmaq.ball.state.font
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>よゆ風固定ピッチフォント用の状態。</summary>
-	public sealed class CStateFixed : CState<CFont, object> {
+	public sealed class CState98 : CState<CFont, object>
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateFixed instance = new CStateFixed();
+		public static readonly CState98 instance = new CState98();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFixed() { }
+		private CState98()
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
@@ -42,17 +46,19 @@ namespace danmaq.ball.state.font {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw( CFont entity, object privateMembers, GameTime gameTime ) {
-			if( entity.sprite != null && entity.font != null ) {
+		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
+		{
+			if(entity.sprite != null && entity.font != null)
+			{
 				Vector2 pos = entity.pos;
-				pos.X += getOriginX( entity );
-				entity.sprite.add( entity.font, entity.text, CMisc.Cursor2VGA( pos ),
+				pos.X -= getOriginX(entity);
+				entity.sprite.add(entity.font, entity.text, CMisc.Cursor2VGA(pos),
 					new Color(
-						( byte )entity.colorRed, ( byte )entity.colorGreen,
-						( byte )entity.colorBlue, ( byte )entity.colorAlpha ),
-					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, entity.layer );
+						(byte)entity.colorRed, (byte)entity.colorGreen,
+						(byte)entity.colorBlue, (byte)entity.colorAlpha),
+					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, entity.layer);
 			}
-			base.draw( entity, privateMembers, gameTime );
+			base.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -60,10 +66,12 @@ namespace danmaq.ball.state.font {
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
 		/// <returns>原点X座標</returns>
-		private int getOriginX( CFont entity ) {
+		private int getOriginX(CFont entity)
+		{
 			int nResult = 0;
-			int nWidth = ( int )( entity.font.MeasureString( entity.text ) / 8 ).X;
-			switch( entity.alignHorizontal ) {
+			int nWidth = (int)(entity.font.MeasureString(entity.text) / 8).X;
+			switch(entity.alignHorizontal)
+			{
 				case EAlign.LeftTop:
 					nResult = 0;
 					break;

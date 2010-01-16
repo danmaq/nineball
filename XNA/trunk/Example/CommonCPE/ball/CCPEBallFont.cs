@@ -12,7 +12,8 @@ using System;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 
-namespace danmaq.common_cpe.ball {
+namespace danmaq.common_cpe.ball
+{
 
 	//* „ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª„ª *
 	/// <summary>
@@ -26,8 +27,9 @@ namespace danmaq.common_cpe.ball {
 	/// TODO: change the ContentProcessor attribute to specify the correct
 	/// display name for this processor.
 	/// </summary>
-	[ContentProcessor( DisplayName = "Ô‚¢‹Ê Â‚¢‹Ê ‹£‘–ƒQ[ƒ€ ƒXƒvƒ‰ƒCƒg ƒtƒHƒ“ƒg ƒvƒƒZƒbƒT" )]
-	public sealed class CCPEBallFont : FontTextureProcessor {
+	[ContentProcessor(DisplayName = "Ô‚¢‹Ê Â‚¢‹Ê ‹£‘–ƒQ[ƒ€ ƒXƒvƒ‰ƒCƒg ƒtƒHƒ“ƒg ƒvƒƒZƒbƒT")]
+	public sealed class CCPEBallFont : FontTextureProcessor
+	{
 
 		//* „Ÿ„Ÿ„Ÿ„Ÿ„ŸQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ_*
 		//* constants „Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ-*
@@ -51,8 +53,12 @@ namespace danmaq.common_cpe.ball {
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// <paramref name="index"/>‚ªAg—p‰Â”\‚È•¶š‚Ì”ÍˆÍŠO‚Å‚·B
 		/// </exception>
-		protected override char GetCharacterForIndex( int index ) {
-			if ( index >= charList.Length ) { throw new ArgumentOutOfRangeException( "index" ); }
+		protected override char GetCharacterForIndex(int index)
+		{
+			if(index >= charList.Length)
+			{
+				throw new ArgumentOutOfRangeException("index");
+			}
 			return charList[index];
 		}
 	}

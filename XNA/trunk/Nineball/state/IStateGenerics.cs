@@ -10,7 +10,8 @@
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state {
+namespace danmaq.nineball.state
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
@@ -24,7 +25,8 @@ namespace danmaq.nineball.state {
 	/// <typeparam name="_M">
 	/// オブジェクトと状態クラスのみがアクセス可能なフィールドの型。
 	/// </typeparam>
-	public interface IState<_E, _M> : IState where _E : IEntity {
+	public interface IState<_E, _M> : IState where _E : IEntity
+	{
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -36,7 +38,7 @@ namespace danmaq.nineball.state {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		void setup( _E entity, _M privateMembers );
+		void setup(_E entity, _M privateMembers);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
@@ -46,7 +48,7 @@ namespace danmaq.nineball.state {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void update( _E entity, _M privateMembers, GameTime gameTime );
+		void update(_E entity, _M privateMembers, GameTime gameTime);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
@@ -56,7 +58,7 @@ namespace danmaq.nineball.state {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void draw( _E entity, _M privateMembers, GameTime gameTime );
+		void draw(_E entity, _M privateMembers, GameTime gameTime);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -69,7 +71,7 @@ namespace danmaq.nineball.state {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		void teardown( _E entity, _M privateMembers, IState<_E, _M> nextState );
+		void teardown(_E entity, _M privateMembers, IState<_E, _M> nextState);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -84,7 +86,7 @@ namespace danmaq.nineball.state {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		void teardown( _E entity, _M privateMembers );
+		void teardown(_E entity, _M privateMembers);
 
 	}
 }

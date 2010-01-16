@@ -10,19 +10,22 @@
 
 using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.misc {
+namespace danmaq.ball.misc
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>雑多な関数群クラス。</summary>
-	public static class CMisc {
+	public static class CMisc
+	{
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>カーソル座標からVGAへ座標変換をします。</summary>
 		/// 
 		/// <param name="src">カーソル座標。</param>
 		/// <returns>VGA座標。</returns>
-		public static Vector2 Cursor2VGA( Vector2 src ) {
-			return DCGA2VGA( new Vector2( ( int )src.X * 8, ( int )src.Y * 16 ) );
+		public static Vector2 Cursor2VGA(Vector2 src)
+		{
+			return DCGA2VGA(new Vector2((int)src.X * 8, (int)src.Y * 16));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -30,8 +33,9 @@ namespace danmaq.ball.misc {
 		/// 
 		/// <param name="src">カーソル座標。</param>
 		/// <returns>VGA座標。</returns>
-		public static Point Cursor2VGA( Point src ) {
-			return DCGA2VGA( new Point( src.X * 8, src.X * 16 ) );
+		public static Point Cursor2VGA(Point src)
+		{
+			return DCGA2VGA(new Point(src.X * 8, src.X * 16));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -39,12 +43,13 @@ namespace danmaq.ball.misc {
 		/// 
 		/// <param name="src">カーソル座標。</param>
 		/// <returns>VGA座標。</returns>
-		public static Rectangle Cursor2VGA( Rectangle src ) {
+		public static Rectangle Cursor2VGA(Rectangle src)
+		{
 			src.X *= 8;
 			src.Y *= 16;
 			src.Width *= 8;
 			src.Height *= 16;
-			return DCGA2VGA( src );
+			return DCGA2VGA(src);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -52,7 +57,8 @@ namespace danmaq.ball.misc {
 		/// 
 		/// <param name="src">DCGA座標。</param>
 		/// <returns>VGA座標。</returns>
-		public static Vector2 DCGA2VGA( Vector2 src ) {
+		public static Vector2 DCGA2VGA(Vector2 src)
+		{
 			src.Y += 40;
 			return src;
 		}
@@ -62,7 +68,8 @@ namespace danmaq.ball.misc {
 		/// 
 		/// <param name="src">DCGA座標。</param>
 		/// <returns>VGA座標。</returns>
-		public static Point DCGA2VGA( Point src ) {
+		public static Point DCGA2VGA(Point src)
+		{
 			src.Y += 40;
 			return src;
 		}
@@ -72,7 +79,8 @@ namespace danmaq.ball.misc {
 		/// 
 		/// <param name="src">DCGA座標。</param>
 		/// <returns>VGA座標。</returns>
-		public static Rectangle DCGA2VGA( Rectangle src ) {
+		public static Rectangle DCGA2VGA(Rectangle src)
+		{
 			src.Y += 40;
 			return src;
 		}

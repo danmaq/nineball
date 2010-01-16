@@ -10,7 +10,8 @@
 using System;
 using danmaq.nineball.Properties;
 
-namespace danmaq.nineball.data {
+namespace danmaq.nineball.data
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>参照可能な値ラッパー。</summary>
@@ -18,7 +19,8 @@ namespace danmaq.nineball.data {
 	/// 
 	/// <typeparam name="_T">値</typeparam>
 	[Serializable]
-	public sealed class CValue<_T> {
+	public sealed class CValue<_T>
+	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -31,13 +33,18 @@ namespace danmaq.nineball.data {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CValue() { }
+		public CValue()
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="v">値</param>
-		public CValue( _T v ) { this.value = v; }
+		public CValue(_T v)
+		{
+			this.value = v;
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -47,20 +54,27 @@ namespace danmaq.nineball.data {
 		/// 
 		/// <param name="r">値</param>
 		/// <returns>値オブジェクト</returns>
-		public static implicit operator CValue<_T>( _T r ) { return new CValue<_T>( r ); }
+		public static implicit operator CValue<_T>(_T r)
+		{
+			return new CValue<_T>(r);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>値を取得します。</summary>
 		/// 
 		/// <param name="r">値オブジェクト</param>
 		/// <returns>値</returns>
-		public static implicit operator _T( CValue<_T> r ) { return r.value; }
+		public static implicit operator _T(CValue<_T> r)
+		{
+			return r.value;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>値の文字列表現を取得します。</summary>
 		/// 
 		/// <returns>値の文字列表現</returns>
-		public override string ToString() {
+		public override string ToString()
+		{
 			return value == null ? Resources.NULL : value.ToString();
 		}
 	}
