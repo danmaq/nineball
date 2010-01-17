@@ -68,6 +68,7 @@ namespace danmaq.ball.state.scene
 			{
 				localGameComponentManager.addDrawableEntity(print);
 			}
+			localGameComponentManager.addDrawableEntity(cursor);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -81,7 +82,6 @@ namespace danmaq.ball.state.scene
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 			base.update(entity, privateMembers, gameTime);
-			cursor.update(gameTime);
 //			entity.nextState = CStateGame.instance;
 		}
 
@@ -96,7 +96,6 @@ namespace danmaq.ball.state.scene
 		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 			base.draw(entity, privateMembers, gameTime);
-			cursor.draw(gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
