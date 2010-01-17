@@ -21,6 +21,8 @@ namespace danmaq.ball.entity.font
 	class CCursor : CEntity
 	{
 
+		// TODO : 表示だけでなく、中身も実装する。
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
@@ -38,9 +40,9 @@ namespace danmaq.ball.entity.font
 		/// <summary>コンストラクタ。</summary>
 		private CCursor()
 		{
-			vertex[0] = new VertexPositionNormalTexture(new Vector3(0, 1, 0), Vector3.Zero, Vector2.Zero);
+			vertex[0] = new VertexPositionNormalTexture(new Vector3(0, 0, 1), Vector3.Zero, Vector2.Zero);
 			vertex[1] = new VertexPositionNormalTexture(new Vector3(1, 0, 0), Vector3.Zero, Vector2.Zero);
-			vertex[2] = new VertexPositionNormalTexture(new Vector3(0, 0, 1), Vector3.Zero, Vector2.Zero);
+			vertex[2] = new VertexPositionNormalTexture(new Vector3(1, 0, 1), Vector3.Zero, Vector2.Zero);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -50,7 +52,25 @@ namespace danmaq.ball.entity.font
 		public override void draw(GameTime gameTime)
 		{
 			base.draw(gameTime);
-			device.VertexDeclaration = new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
+			device.VertexDeclaration =
+				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
+			BasicEffect effect = new BasicEffect(device, null);
+			Matrix world = Matrix.Identity;
+			Matrix view = Matrix.CreateLookAt(new Vector3(30, 30, 30), Vector3.Zero, new Vector3(0, 1, 0));
+			Matrix projection = Matrix.CreatePerspectiveFieldOfView(
+				MathHelper.ToRadians(45), device.Viewport.Width / device.Viewport.Height, 0.1f, 1000f);
+			effect.World = world;
+			effect.View = view;
+			effect.Projection = projection;
+			effect.Begin();
+			foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+			{
+				pass.Begin();
+				device.DrawUserPrimitives<VertexPositionNormalTexture>(
+					PrimitiveType.TriangleList, vertex, 0, 1);
+				pass.End();
+			}
+			effect.End();
 		}
 	}
 }

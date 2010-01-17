@@ -30,7 +30,7 @@
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>赤い玉 青い玉 競走ゲーム</ProductName>
     <PublisherName>danmaq</PublisherName>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
