@@ -129,7 +129,9 @@ namespace danmaq.ball.state.scene
 		/// </param>
 		public override void setup(IEntity entity, object privateMembers)
 		{
+#if TRACE
 			CLogger.add(sceneName + "シーンを開始します。");
+#endif
 			localCoRoutineManager.initialize();
 			base.setup(entity, privateMembers);
 		}
@@ -167,7 +169,9 @@ namespace danmaq.ball.state.scene
 			localGameComponentManager.Dispose();
 			GC.Collect();
 			base.teardown(entity, privateMembers, nextState);
+#if TRACE
 			CLogger.add(sceneName + "シーンを終了しました。");
+#endif
 		}
 	}
 }

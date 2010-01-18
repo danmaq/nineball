@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CREDIT" xml:space="preserve">
+    <value>(C)1994-2009 Mc/danmaq All rights reserved.</value>
+    <comment>クレジット表示</comment>
+  </data>
+  <data name="DESC_LEVEL" xml:space="preserve">
+    <value>難易度を選択してください。</value>
+    <comment>難易度選択の解説表示</comment>
+  </data>
+  <data name="DIR_CONTENT" xml:space="preserve">
+    <value>Content</value>
+    <comment>コンテンツ ディレクトリ</comment>
+  </data>
   <data name="FILE_BOOTLOG" xml:space="preserve">
     <value>bootlog.txt</value>
     <comment>起動ログファイル</comment>
@@ -132,5 +144,25 @@
   <data name="IMAGE_LOGO" xml:space="preserve">
     <value>logo</value>
     <comment>danmaq Productsロゴ</comment>
+  </data>
+  <data name="SCENE_CREDIT" xml:space="preserve">
+    <value>クレジット画面</value>
+    <comment>クレジット画面実行時のトレース情報</comment>
+  </data>
+  <data name="SCENE_GAME" xml:space="preserve">
+    <value>ゲーム画面</value>
+    <comment>ゲーム画面実行時のトレース情報</comment>
+  </data>
+  <data name="SCENE_INITIALIZE" xml:space="preserve">
+    <value>初期化画面</value>
+    <comment>初期化画面実行時のトレース情報</comment>
+  </data>
+  <data name="SCENE_TITLE" xml:space="preserve">
+    <value>タイトル画面</value>
+    <comment>タイトル画面実行時のトレース情報</comment>
+  </data>
+  <data name="TITLE" xml:space="preserve">
+    <value>赤い玉 青い玉 競走ゲーム</value>
+    <comment>ゲーム タイトル</comment>
   </data>
 </root>

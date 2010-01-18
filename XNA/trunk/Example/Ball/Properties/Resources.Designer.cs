@@ -61,6 +61,33 @@ namespace danmaq.ball.Properties {
         }
         
         /// <summary>
+        ///   (C)1994-2009 Mc/danmaq All rights reserved. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CREDIT {
+            get {
+                return ResourceManager.GetString("CREDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   難易度を選択してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DESC_LEVEL {
+            get {
+                return ResourceManager.GetString("DESC_LEVEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Content に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DIR_CONTENT {
+            get {
+                return ResourceManager.GetString("DIR_CONTENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   bootlog.txt に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FILE_BOOTLOG {
@@ -93,6 +120,51 @@ namespace danmaq.ball.Properties {
         internal static string IMAGE_LOGO {
             get {
                 return ResourceManager.GetString("IMAGE_LOGO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   クレジット画面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SCENE_CREDIT {
+            get {
+                return ResourceManager.GetString("SCENE_CREDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ゲーム画面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SCENE_GAME {
+            get {
+                return ResourceManager.GetString("SCENE_GAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   初期化画面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SCENE_INITIALIZE {
+            get {
+                return ResourceManager.GetString("SCENE_INITIALIZE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル画面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SCENE_TITLE {
+            get {
+                return ResourceManager.GetString("SCENE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   赤い玉 青い玉 競走ゲーム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TITLE {
+            get {
+                return ResourceManager.GetString("TITLE", resourceCulture);
             }
         }
     }

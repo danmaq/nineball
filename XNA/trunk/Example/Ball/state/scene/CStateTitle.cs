@@ -9,6 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using danmaq.ball.entity.font;
+using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
@@ -36,7 +37,7 @@ namespace danmaq.ball.state.scene
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateTitle() : base("タイトル画面")
+		private CStateTitle() : base(Resources.SCENE_TITLE)
 		{
 			cursor.initialize();
 		}
@@ -55,12 +56,9 @@ namespace danmaq.ball.state.scene
 		{
 			base.setup(entity, privateMembers);
 			CPrint[] printList = {
-				new CPrint("赤い玉 青い玉 競走ゲーム",
-					new Vector2(40, 7), EAlign.Center, Color.Aqua),
-				new CPrint("(C)1994-2009 Mc/danmaq All rights reserved.",
-					new Vector2(40, 9), EAlign.Center, Color.Aqua),
-				new CPrint("難易度を選択してください。",
-					new Vector2(6, 14), EAlign.LeftTop, Color.White),
+				new CPrint(Resources.TITLE, new Vector2(40, 7), EAlign.Center, Color.Aqua),
+				new CPrint(Resources.CREDIT, new Vector2(40, 9), EAlign.Center, Color.Aqua),
+				new CPrint(Resources.DESC_LEVEL, new Vector2(6, 14), EAlign.LeftTop, Color.White),
 				new CPrint(string.Format("１{0}２{0}３{0}４{0}５{0}６{0}７{0}８{0}９", "      "),
 					new Vector2(6, 16), EAlign.LeftTop, Color.White),
 			};

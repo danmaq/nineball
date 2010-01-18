@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.ball.Properties;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
@@ -30,7 +31,8 @@ namespace danmaq.ball.state.scene
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateGame() : base("ゲーム画面")
+		private CStateGame()
+			: base(Resources.SCENE_GAME)
 		{
 		}
 
