@@ -55,14 +55,20 @@ namespace danmaq.ball.entity.font
 			base.draw(gameTime);
 			device.VertexDeclaration =
 				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
-			BasicEffect effect = new BasicEffect(device, null);
+			Effect effect = CGame.instance.Content.Load<Effect>("cursor");
+//			BasicEffect effect = new BasicEffect(device, null);
 			Matrix world = Matrix.Identity;
 			Matrix view = Matrix.CreateLookAt(new Vector3(8, 0, 8), Vector3.Zero, new Vector3(0, 1, 0));
 			Matrix projection = Matrix.CreatePerspectiveFieldOfView(
 				MathHelper.PiOver4, device.Viewport.Width / device.Viewport.Height, 0.1f, 1000f);
-			effect.World = world;
-			effect.View = view;
-			effect.Projection = projection;
+			effect.Parameters["World"].SetValue(world);
+			effect.Parameters["View"].SetValue(view);
+			effect.Parameters["Projection"].SetValue(projection);
+			effect.CurrentTechnique = effect.Techniques["Technique1"];
+
+//			effect.World = world;
+//			effect.View = view;
+//			effect.Projection = projection;
 			effect.Begin();
 			foreach (EffectPass pass in effect.CurrentTechnique.Passes)
 			{
