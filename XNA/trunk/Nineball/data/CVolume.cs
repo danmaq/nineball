@@ -162,7 +162,7 @@ namespace danmaq.nineball.data
 		public string ToString(bool bSlider)
 		{
 			string strResult = "";
-			string strDB = String.Format("{0:+0.0;-0.0;0}dB", dB);
+			string strDB = String.Format("{0:+0.0;-0.0;0}dB", dB.ToString());
 			if(bSlider)
 			{
 				char[] szVolume = new string('・', 10).ToCharArray();

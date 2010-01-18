@@ -53,6 +53,7 @@ namespace danmaq.ball.core
 			graphicDeviceManager.PreferredBackBufferWidth = rc.Width;
 			graphicDeviceManager.PreferredBackBufferHeight = rc.Height;
 			IsMouseVisible = true;
+			Content.RootDirectory = Resources.DIR_CONTENT;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

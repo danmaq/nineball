@@ -20,11 +20,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.GamerServices;
 #endif
 
-namespace danmaq.nineball.state.manager {
+namespace danmaq.nineball.state.manager
+{
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>メインループクラス用の既定の状態です。</summary>
-	public sealed class CStateMainLoopDefault : CState<CMainLoop, CMainLoop.CPrivateMembers> {
+	public sealed class CStateMainLoopDefault : CState<CMainLoop, CMainLoop.CPrivateMembers>
+	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -49,7 +51,11 @@ namespace danmaq.nineball.state.manager {
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateMainLoopDefault() { }
+		private CStateMainLoopDefault()
+		{
+			isUseDepthBuffer = true;
+			isWriteDepthBuffer = true;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -58,41 +64,85 @@ namespace danmaq.nineball.state.manager {
 		/// <summary>フェーズ・カウンタ進行管理クラスを取得します。</summary>
 		/// 
 		/// <value>フェーズ・カウンタ進行管理クラス。</value>
-		public CPhase phase {
-			get { return _private.phase; }
+		public CPhase phase
+		{
+			get
+			{
+				return _private.phase;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>グラフィック デバイスの構成・管理クラスを取得します。</summary>
 		/// 
 		/// <value>グラフィック デバイスの構成・管理クラス。</value>
-		public GraphicsDeviceManager graphicsDeviceManager {
-			get { return _private.graphicsDeviceManager; }
+		public GraphicsDeviceManager graphicsDeviceManager
+		{
+			get
+			{
+				return _private.graphicsDeviceManager;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>スプライト描画管理クラスを取得します。</summary>
 		/// 
 		/// <value>スプライト描画管理クラス。</value>
-		public CSprite sprite {
-			get { return _private.sprite; }
-			set { _private.sprite = value; }
+		public CSprite sprite
+		{
+			get
+			{
+				return _private.sprite;
+			}
+			set
+			{
+				_private.sprite = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>オブジェクトにアタッチされたゲームを取得します。</summary>
 		/// 
 		/// <value>オブジェクトにアタッチされたゲーム。</value>
-		public Game game {
-			get { return _private.game; }
+		public Game game
+		{
+			get
+			{
+				return _private.game;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>登録されているゲーム コンポーネント一覧を取得します。</summary>
 		/// 
 		/// <value>登録されているゲーム コンポーネント一覧。</value>
-		public CGameComponentManager registedGameComponentList {
-			get { return _private.registedGameComponentList; }
+		public CGameComponentManager registedGameComponentList
+		{
+			get
+			{
+				return _private.registedGameComponentList;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>深度バッファを使用するかどうかを設定/取得します。</summary>
+		/// 
+		/// <value>深度バッファを使用する場合、<c>true</c>。</value>
+		public bool isUseDepthBuffer
+		{
+			get;
+			set;
+		}
+
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>深度バッファへ書き込みを行うかどうかを設定/取得します。</summary>
+		/// 
+		/// <value>深度バッファへ書き込みを行う場合、<c>true</c>。</value>
+		public bool isWriteDepthBuffer
+		{
+			get;
+			set;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -108,19 +158,20 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup( CMainLoop entity, CMainLoop.CPrivateMembers privateMembers ) {
+		public override void setup(CMainLoop entity, CMainLoop.CPrivateMembers privateMembers)
+		{
 			_private = privateMembers;
 #if XBOX360
 			registedGameComponentList.Add( new GamerServicesComponent( game ) );
 			registedGameComponentList.Add(
 				new CGameComponent<CEntity>( game, new CEntity( CStateGuideHelper.instance ), false ) );
 #endif
-			registedGameComponentList.Add( new CDrawableGameComponent(
-				game, new CEntity( CStateFPSCalculator.instance ), false ) );
-			sprite = new CSprite( new SpriteBatch( game.GraphicsDevice ) );
+			registedGameComponentList.Add(new CDrawableGameComponent(
+				game, new CEntity(CStateFPSCalculator.instance), false));
+			sprite = new CSprite(new SpriteBatch(game.GraphicsDevice));
 			game.Content.RootDirectory = "Content";
 			scene.initialize();
-			base.setup( entity, privateMembers );
+			base.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -133,10 +184,11 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
 			CMainLoop entity, CMainLoop.CPrivateMembers privateMembers, GameTime gameTime
-		) {
-			scene.update( gameTime );
+		)
+		{
+			scene.update(gameTime);
 			phase.count++;
-			base.update( entity, privateMembers, gameTime );
+			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -149,14 +201,15 @@ namespace danmaq.nineball.state.manager {
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
 			CMainLoop entity, CMainLoop.CPrivateMembers privateMembers, GameTime gameTime
-		) {
-			scene.draw( gameTime );
+		)
+		{
+			scene.draw(gameTime);
 			GraphicsDevice device = game.GraphicsDevice;
-			device.Clear( colorBack );
-			device.RenderState.DepthBufferEnable = true;
-			device.RenderState.DepthBufferWriteEnable = true;
+			device.Clear(colorBack);
+			device.RenderState.DepthBufferEnable = isUseDepthBuffer;
+			device.RenderState.DepthBufferWriteEnable = isWriteDepthBuffer;
 			sprite.draw();
-			base.draw( entity, privateMembers, gameTime );
+			base.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -170,9 +223,10 @@ namespace danmaq.nineball.state.manager {
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown( IEntity entity, object privateMembers, IState nextState ) {
+		public override void teardown(IEntity entity, object privateMembers, IState nextState)
+		{
 			scene.Dispose();
-			base.teardown( entity, privateMembers, nextState );
+			base.teardown(entity, privateMembers, nextState);
 		}
 	}
 }

@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.ball.Properties;
 using danmaq.nineball.entity;
 using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
@@ -35,7 +36,8 @@ namespace danmaq.ball.state.scene
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateInitialize() : base("初期化")
+		private CStateInitialize()
+			: base(Resources.SCENE_INITIALIZE)
 		{
 		}
 
@@ -55,7 +57,10 @@ namespace danmaq.ball.state.scene
 		public override void setup(IEntity entity, object privateMembers)
 		{
 			base.setup(entity, privateMembers);
-			CStateMainLoopDefault.instance.colorBack = Color.Black;
+			CStateMainLoopDefault stateMain = CStateMainLoopDefault.instance;
+			stateMain.colorBack = Color.Black;
+			stateMain.isUseDepthBuffer = false;
+			stateMain.isWriteDepthBuffer = false;
 			systemSpriteManager.resolution = game.resolution;
 		}
 

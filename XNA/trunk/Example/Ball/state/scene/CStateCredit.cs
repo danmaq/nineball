@@ -41,7 +41,8 @@ namespace danmaq.ball.state.scene
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCredit() : base("クレジット画面")
+		private CStateCredit()
+			: base(Resources.SCENE_CREDIT)
 		{
 		}
 

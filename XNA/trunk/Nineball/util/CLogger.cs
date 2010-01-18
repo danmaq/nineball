@@ -59,7 +59,9 @@ namespace danmaq.nineball.util
 			{
 				DateTime time = DateTime.Now;
 				return string.Format(
-					"{0}:{1}:{2}.{3}", time.Hour, time.Minute, time.Second, time.Millisecond);
+					"{0}:{1}:{2}.{3}",
+					time.Hour.ToString(), time.Minute.ToString(),
+					time.Second.ToString(), time.Millisecond.ToString());
 			}
 		}
 

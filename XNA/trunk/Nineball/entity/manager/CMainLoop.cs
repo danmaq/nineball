@@ -79,6 +79,9 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>Nineball終了時にアプリケーションも終了するかどうか。</summary>
 		public bool exitOnDispose = true;
 
+		/// <summary>最初に設定される状態。</summary>
+		private IState<CMainLoop, CPrivateMembers> m_firstState = null;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -94,6 +97,21 @@ namespace danmaq.nineball.entity.manager
 			_private.game = game;
 			_private.graphicsDeviceManager = graphicsDeviceManager;
 			_private.registedGameComponentList = new CGameComponentManager(game);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="game">ゲーム コンポーネントをアタッチするゲーム。</param>
+		/// <param name="graphicsDeviceManager">
+		/// グラフィック デバイスの構成・管理クラス。
+		/// </param>
+		/// <param name="firstState">最初に設定される状態。</param>
+		public CMainLoop(Game game, GraphicsDeviceManager graphicsDeviceManager,
+			IState<CMainLoop, CPrivateMembers> firstState)
+			: this(game, graphicsDeviceManager)
+		{
+			m_firstState = firstState;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -135,7 +153,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>初期化処理を実行します。</summary>
 		public override void initialize()
 		{
-			nextState = CStateMainLoopDefault.instance;
+			nextState = m_firstState == null ? CStateMainLoopDefault.instance : m_firstState;
 			base.initialize();
 		}
 

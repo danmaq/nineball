@@ -17,7 +17,7 @@ namespace danmaq.ball.entity.font
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カーソル。</summary>
+	/// <summary>カーソル オブジェクト。</summary>
 	class CCursor : CEntity
 	{
 
@@ -29,7 +29,7 @@ namespace danmaq.ball.entity.font
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CCursor instance = new CCursor();
 
-		private readonly VertexPositionNormalTexture[] vertex = new VertexPositionNormalTexture[3];
+		private readonly VertexPositionNormalTexture[] vertex = new VertexPositionNormalTexture[4];
 
 		private readonly GraphicsDevice device = CGame.instance.GraphicsDevice;
 
@@ -40,9 +40,10 @@ namespace danmaq.ball.entity.font
 		/// <summary>コンストラクタ。</summary>
 		private CCursor()
 		{
-			vertex[0] = new VertexPositionNormalTexture(new Vector3(0, 0, 1), Vector3.Zero, Vector2.Zero);
-			vertex[1] = new VertexPositionNormalTexture(new Vector3(1, 0, 0), Vector3.Zero, Vector2.Zero);
-			vertex[2] = new VertexPositionNormalTexture(new Vector3(1, 0, 1), Vector3.Zero, Vector2.Zero);
+			vertex[0] = new VertexPositionNormalTexture(new Vector3(1, 0, 0), Vector3.Zero, Vector2.Zero);
+			vertex[1] = new VertexPositionNormalTexture(new Vector3(0, 0, 0), Vector3.Zero, Vector2.Zero);
+			vertex[2] = new VertexPositionNormalTexture(new Vector3(1, 1, 0), Vector3.Zero, Vector2.Zero);
+			vertex[3] = new VertexPositionNormalTexture(new Vector3(0, 1, 0), Vector3.Zero, Vector2.Zero);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -56,9 +57,9 @@ namespace danmaq.ball.entity.font
 				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
 			BasicEffect effect = new BasicEffect(device, null);
 			Matrix world = Matrix.Identity;
-			Matrix view = Matrix.CreateLookAt(new Vector3(30, 30, 30), Vector3.Zero, new Vector3(0, 1, 0));
+			Matrix view = Matrix.CreateLookAt(new Vector3(8, 0, 8), Vector3.Zero, new Vector3(0, 1, 0));
 			Matrix projection = Matrix.CreatePerspectiveFieldOfView(
-				MathHelper.ToRadians(45), device.Viewport.Width / device.Viewport.Height, 0.1f, 1000f);
+				MathHelper.PiOver4, device.Viewport.Width / device.Viewport.Height, 0.1f, 1000f);
 			effect.World = world;
 			effect.View = view;
 			effect.Projection = projection;
@@ -67,7 +68,7 @@ namespace danmaq.ball.entity.font
 			{
 				pass.Begin();
 				device.DrawUserPrimitives<VertexPositionNormalTexture>(
-					PrimitiveType.TriangleList, vertex, 0, 1);
+					PrimitiveType.TriangleStrip, vertex, 0, 2);
 				pass.End();
 			}
 			effect.End();
