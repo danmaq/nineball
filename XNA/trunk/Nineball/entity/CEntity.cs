@@ -57,6 +57,7 @@ namespace danmaq.nineball.entity
 		{
 			previousState = CState.empty;
 			currentState = CState.empty;
+			lastStateChangeTime = DateTime.Now;
 			name = GetType().ToString();
 		}
 
@@ -133,6 +134,26 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>汎用フレーム カウンタを取得します。</summary>
+		/// 
+		/// <value>汎用フレーム カウンタ。</value>
+		public int counter
+		{
+			get;
+			protected set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>最後に状態が変化した時間を取得します。</summary>
+		/// 
+		/// <value>最後に状態が変化した時間。</value>
+		public DateTime lastStateChangeTime
+		{
+			get;
+			private set;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
 		/// 
 		/// <value>親オブジェクト。</value>
@@ -175,22 +196,13 @@ namespace danmaq.nineball.entity
 				IState oldCurrent = currentState;
 				previousState = currentState;
 				currentState = value;
+				lastStateChangeTime = DateTime.Now;
 				currentState.setup(this, privateMembers);
 				if(changedState != null)
 				{
 					changedState(this, new CEventChangedState(oldPrevious, oldCurrent, value));
 				}
 			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>汎用フレーム カウンタを取得します。</summary>
-		/// 
-		/// <value>汎用フレーム カウンタ。</value>
-		public int counter
-		{
-			get;
-			protected set;
 		}
 
 		//* -----------------------------------------------------------------------*

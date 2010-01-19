@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.nineball.data;
+using danmaq.nineball.data.phase;
 using danmaq.nineball.state;
 using danmaq.nineball.state.manager;
 using danmaq.nineball.util;

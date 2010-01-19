@@ -8,17 +8,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.ball.state.font.cursor;
 using danmaq.nineball.entity;
+using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using danmaq.ball.core;
 
 namespace danmaq.ball.entity.font
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>カーソル オブジェクト。</summary>
-	class CCursor : CEntity
+	public sealed class CCursor : CEntity
 	{
 
 		// TODO : 表示だけでなく、中身も実装する。
@@ -29,55 +29,86 @@ namespace danmaq.ball.entity.font
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CCursor instance = new CCursor();
 
-		private readonly VertexPositionNormalTexture[] vertex = new VertexPositionNormalTexture[4];
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
 
-		private readonly GraphicsDevice device = CGame.instance.GraphicsDevice;
+		/// <summary>カーソル位置。</summary>
+		private Vector2 m_locate;
+
+		/// <summary>ワールド空間。</summary>
+		private Matrix m_world = Matrix.Identity;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CCursor()
+		private CCursor() : base(CStateVisible.instance)
 		{
-			vertex[0] = new VertexPositionNormalTexture(new Vector3(1, 0, 0), Vector3.Zero, Vector2.Zero);
-			vertex[1] = new VertexPositionNormalTexture(new Vector3(0, 0, 0), Vector3.Zero, Vector2.Zero);
-			vertex[2] = new VertexPositionNormalTexture(new Vector3(1, 1, 0), Vector3.Zero, Vector2.Zero);
-			vertex[3] = new VertexPositionNormalTexture(new Vector3(0, 1, 0), Vector3.Zero, Vector2.Zero);
+			locate = Vector2.Zero;
+		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>次に変化する状態を設定します。</summary>
+		/// 
+		/// <value>次に変化する状態。</value>
+		/// <exception cref="System.ArgumentNullException">
+		/// 状態として、nullを設定しようとした場合。
+		/// </exception>
+		public new IState<CCursor, Matrix> nextState
+		{
+			set
+			{
+				base.nextState = value;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// <summary>カーソル位置を設定/取得します。</summary>
 		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(GameTime gameTime)
+		/// <value>カーソル位置。</value>
+		public Vector2 locate
 		{
-			base.draw(gameTime);
-			device.VertexDeclaration =
-				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
-			Effect effect = CGame.instance.Content.Load<Effect>("cursor");
-//			BasicEffect effect = new BasicEffect(device, null);
-			Matrix world = Matrix.Identity;
-			Matrix view = Matrix.CreateLookAt(new Vector3(8, 0, 8), Vector3.Zero, new Vector3(0, 1, 0));
-			Matrix projection = Matrix.CreatePerspectiveFieldOfView(
-				MathHelper.PiOver4, device.Viewport.Width / device.Viewport.Height, 0.1f, 1000f);
-			effect.Parameters["World"].SetValue(world);
-			effect.Parameters["View"].SetValue(view);
-			effect.Parameters["Projection"].SetValue(projection);
-			effect.CurrentTechnique = effect.Techniques["Technique1"];
-
-//			effect.World = world;
-//			effect.View = view;
-//			effect.Projection = projection;
-			effect.Begin();
-			foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+			get
 			{
-				pass.Begin();
-				device.DrawUserPrimitives<VertexPositionNormalTexture>(
-					PrimitiveType.TriangleStrip, vertex, 0, 2);
-				pass.End();
+				return m_locate;
 			}
-			effect.End();
+			set
+			{
+				m_locate = value;
+				m_world = Matrix.Identity;
+				m_world.Translation = getCursorTranslation(value);
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+		/// </summary>
+		/// 
+		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
+		protected override object privateMembers
+		{
+			get
+			{
+				return m_world;
+			}
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>カーソル座標から3D空間座標へ変換を行います。</summary>
+		/// 
+		/// <param name="locate">カーソル座標。</param>
+		/// <returns>3D空間座標。</returns>
+		public static Vector3 getCursorTranslation(Vector2 locate)
+		{
+			return new Vector3(((int)locate.X - 40f) * 8f, (-(int)locate.Y + 11.5f) * 16f, 0);
 		}
 	}
 }

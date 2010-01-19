@@ -42,6 +42,9 @@ namespace danmaq.ball.state.scene
 			cursor.initialize();
 		}
 
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
 		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// <para>状態が開始された時に呼び出されます。</para>
@@ -66,6 +69,7 @@ namespace danmaq.ball.state.scene
 			{
 				localGameComponentManager.addDrawableEntity(print);
 			}
+			cursor.locate = new Vector2(6, 16);
 			localGameComponentManager.addDrawableEntity(cursor);
 		}
 

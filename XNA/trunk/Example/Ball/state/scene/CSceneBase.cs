@@ -10,7 +10,7 @@
 
 using System;
 using danmaq.ball.core;
-using danmaq.nineball.data;
+using danmaq.nineball.data.phase;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.manager;

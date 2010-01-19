@@ -9,7 +9,7 @@
 
 using System;
 
-namespace danmaq.nineball.data
+namespace danmaq.nineball.data.phase
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -21,6 +21,7 @@ namespace danmaq.nineball.data
 	{
 
 		// TODO : phaseのスタック積みできないかなぁ
+		// TODO : リードオンリ版対応
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
