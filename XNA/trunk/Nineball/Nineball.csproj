@@ -120,7 +120,7 @@
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CMath.cs" />
     <Compile Include="misc\CMisc.cs" />
-    <Compile Include="data\CPhase.cs" />
+    <Compile Include="data\phase\CPhase.cs" />
     <Compile Include="misc\CSingleton.cs" />
     <Compile Include="misc\CStaticRandom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

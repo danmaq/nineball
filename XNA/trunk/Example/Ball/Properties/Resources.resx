@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CREDIT" xml:space="preserve">
-    <value>(C)1994-2009 Mc/danmaq All rights reserved.</value>
+    <value>(C)1994-2010 Mc/danmaq All rights reserved.</value>
     <comment>クレジット表示</comment>
   </data>
   <data name="DESC_LEVEL" xml:space="preserve">
@@ -136,6 +136,10 @@
   <data name="FONT_98" xml:space="preserve">
     <value>font</value>
     <comment>よゆ風フォント スプライト</comment>
+  </data>
+  <data name="FX_CURSOR" xml:space="preserve">
+    <value>cursor</value>
+    <comment>カーソル用エフェクト</comment>
   </data>
   <data name="FX_PART_POINT_SPRITE" xml:space="preserve">
     <value>partPointSprite</value>
