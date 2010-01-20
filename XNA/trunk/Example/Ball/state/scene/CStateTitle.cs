@@ -99,21 +99,5 @@ namespace danmaq.ball.state.scene
 		{
 			base.draw(entity, privateMembers, gameTime);
 		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(IEntity entity, object privateMembers, danmaq.nineball.state.IState nextState)
-		{
-			base.teardown(entity, privateMembers, nextState);
-		}
 	}
 }
