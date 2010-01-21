@@ -108,6 +108,7 @@
     <Compile Include="entity\input\CInputXBOX360.cs" />
     <Compile Include="entity\input\EInputDevice.cs" />
     <Compile Include="entity\input\EReservedButtonID.cs" />
+    <Compile Include="entity\input\IInput.cs" />
     <Compile Include="entity\input\SInputState.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
