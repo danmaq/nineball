@@ -53,7 +53,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>ボタンの数を設定/取得します。</summary>
 		/// 
 		/// <value>ボタンの数。</value>
-		public ushort buttons
+		public ushort count
 		{
 			get
 			{
@@ -61,18 +61,18 @@ namespace danmaq.nineball.entity.input
 			}
 			set
 			{
-				bool bChanged = value != buttons;
-				while(value < buttons)
+				bool bChanged = value != count;
+				while(value < count)
 				{
 					_buttonStateList.RemoveAt(_buttonStateList.Count - 1);
 				}
-				while(value > buttons)
+				while(value > count)
 				{
 					_buttonStateList.Add(new SInputState());
 				}
 				if(bChanged && changedButtonsNum != null)
 				{
-					changedButtonsNum(this, buttons);
+					changedButtonsNum(this, count);
 				}
 			}
 		}
@@ -110,6 +110,18 @@ namespace danmaq.nineball.entity.input
 			set
 			{
 				nextStateBase = value;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>プレイヤー番号を取得します。</summary>
+		/// 
+		/// <value>プレイヤー番号。</value>
+		public ushort playerNumber
+		{
+			get
+			{
+				throw new NotImplementedException();
 			}
 		}
 
@@ -181,7 +193,7 @@ namespace danmaq.nineball.entity.input
 		/// <param name="e">変化後のボタンの数。</param>
 		public void onChangedButtonsNum(object sender, CEventMonoValue<ushort> e)
 		{
-			buttons = e;
+			count = e;
 		}
 	}
 }
