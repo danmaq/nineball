@@ -19,7 +19,7 @@ namespace danmaq.nineball.entity.input
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360用コントローラ 入力制御・管理クラス。</summary>
-	public sealed class CInputXBOX360 : CInput
+	public sealed class CInputXBOX360 : CInputParent
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
