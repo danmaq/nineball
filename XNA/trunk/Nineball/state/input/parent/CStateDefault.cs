@@ -10,31 +10,27 @@
 using System.Collections.Generic;
 using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.state.input
+namespace danmaq.nineball.state.input.parent
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>キーボード専用の入力状態。</summary>
-	public sealed class CStateKeyboard : CState<CInput, List<SInputState>>
+	/// <summary>既定の入力状態。</summary>
+	public sealed class CStateDefault : CState<CInputCollection, List<SInputState>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateKeyboard instance = new CStateKeyboard();
-
-		/// <summary>キー割り当て値の一覧。</summary>
-		public readonly List<Keys> assignList = new List<Keys>();
+		public static readonly CStateDefault instance = new CStateDefault();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateKeyboard()
+		private CStateDefault()
 		{
 		}
 
@@ -49,34 +45,39 @@ namespace danmaq.nineball.state.input
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		/// <exception cref="System.ArgumentOutOfRangeException">
-		/// キー割り当てがボタンの数よりも少ない場合。
-		/// </exception>
 		public override void update(
-			CInput entity, List<SInputState> buttonsState, GameTime gameTime
+			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
 		)
 		{
-			KeyboardState state = Keyboard.GetState();
-			while(buttonsState.Count > assignList.Count)
+			base.update(entity, buttonsState, gameTime);
+			int nLength = entity.Count;
+			foreach(CInput input in entity)
 			{
-				assignList.Add(Keys.None);
-			}
-			for(int i = buttonsState.Count - 1; i >= 0; i--)
-			{
-				buttonsState[i].refresh(state.IsKeyDown(assignList[i]));
+				input.update(gameTime);
+				for(int i = nLength - 1; i >= 0; i--)
+				{
+					buttonsState[i] |= input.buttonStateList[i];
+				}
 			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// 現在のキー割り当て一覧を破棄して、新しい割り当てを設定します。
-		/// </summary>
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
-		/// <param name="collection">キー割り当て一覧。</param>
-		public void setAssignList(IEnumerable<Keys> collection)
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="buttonsState">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(
+			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
+		)
 		{
-			assignList.Clear();
-			assignList.AddRange(collection);
+			base.draw(entity, buttonsState, gameTime);
+			foreach(CInput input in entity)
+			{
+				input.draw(gameTime);
+			}
 		}
 	}
 }
