@@ -73,8 +73,15 @@ namespace danmaq.nineball.util.collection
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
+		/// <exception cref="System.ArgumentException">
+		/// 対象のリストが読み取り専用状態である場合。
+		/// </exception>
 		public CPartialCollection(ICollection<_T> collection)
 		{
+			if(collection.IsReadOnly)
+			{
+				throw new ArgumentException("collection");
+			}
 			this.collection = collection;
 		}
 
@@ -161,7 +168,7 @@ namespace danmaq.nineball.util.collection
 		public virtual bool Remove(_P item)
 		{
 			throwAtReadOnly();
-			return castoff(item) || partial.Remove(item);
+			return castoff(item) && collection.Remove(item);
 		}
 
 		//* -----------------------------------------------------------------------*
