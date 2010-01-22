@@ -58,9 +58,9 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 複数の定数を定義した場合。
 		/// </exception>
-		public static IState<CInput, List<SInputState>> getState(this EInputDevice device)
+		public static IState<CInputParent, List<SInputState>> getState(this EInputDevice device)
 		{
-			IState<CInput, List<SInputState>> result = null;
+			IState<CInputParent, List<SInputState>> result = null;
 			switch(device)
 			{
 				case EInputDevice.None:
@@ -90,8 +90,8 @@ namespace danmaq.nineball.entity.input
 		/// <param name="disabled">無効なデバイスに対応する状態一覧。</param>
 		public static void getState(
 			this EInputDevice device,
-			out List<IState<CInput, List<SInputState>>> enabled,
-			out List<IState<CInput, List<SInputState>>> disabled
+			out List<IState<CInputParent, List<SInputState>>> enabled,
+			out List<IState<CInputParent, List<SInputState>>> disabled
 		)
 		{
 			EInputDevice[] list = {
@@ -101,9 +101,9 @@ namespace danmaq.nineball.entity.input
 #endif
 			};
 			EInputDevice _device = (device & EInputDevice.All);
-			enabled = new List<IState<CInput, List<SInputState>>>();
-			disabled = new List<IState<CInput, List<SInputState>>>();
-			IState<CInput, List<SInputState>> state;
+			enabled = new List<IState<CInputParent, List<SInputState>>>();
+			disabled = new List<IState<CInputParent, List<SInputState>>>();
+			IState<CInputParent, List<SInputState>> state;
 			foreach(EInputDevice target in list)
 			{
 				state = (_device & target).getState();
