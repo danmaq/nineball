@@ -18,7 +18,7 @@ namespace danmaq.nineball.entity.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>マンマシンI/F入力制御・管理クラス。</summary>
+	/// <summary>マンマシンI/F入力制御・管理クラスのコレクション。</summary>
 	public sealed class CInputCollection : CInput, ICollection<CInput>
 	{
 
