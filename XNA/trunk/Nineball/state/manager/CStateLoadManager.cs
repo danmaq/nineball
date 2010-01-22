@@ -256,6 +256,77 @@ namespace danmaq.nineball.state.manager
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
+		/// <para>1フレーム分の更新処理を実行します。</para>
+		/// <para>ここではループ中にアセットを遅延読み込みします。</para>
+		/// <para>オーバーライドする場合、必ず呼び出してください。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		{
+			if(counter % interval == interval - 1)
+			{
+				for(int i = loadPerFrame - 1; i >= 0 && loadQueueList.Count > 0; i--)
+				{
+					SData data = loadQueueList.Dequeue();
+					Func<string, object> loader;
+					if(loaderList.TryGetValue(data.type, out loader))
+					{
+						data.dst.value = loader(data.asset);
+						totalLoaded++;
+					}
+					else
+					{
+						throw new ContentLoadException(data.type.FullName +
+							"型のアセットを読み込むためのローダが定義されていません。");
+					}
+				}
+				if(loadQueueList.Count == 0 && !loaded)
+				{
+					loaded = true;
+					onLoaded(entity, privateMembers);
+				}
+			}
+			counter++;
+			base.update(entity, privateMembers, gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public override void teardown(IEntity entity, object privateMembers, IState nextState)
+		{
+			loadQueueList.Clear();
+			totalReserved = 0;
+			totalLoaded = 0;
+			counter = 0;
+			loaded = false;
+			base.teardown(entity, privateMembers, nextState);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>継承先で読み込み終えた際の処理を記述してください。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		protected abstract void onLoaded(IEntity entity, object privateMembers);
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
 		/// <para>アセット読み込みの予約を追加します。</para>
 		/// <para>
 		/// 読み込まれたアセットは<c>ContentManager</c>のキャッシュとして保持されます。
@@ -337,74 +408,5 @@ namespace danmaq.nineball.state.manager
 			totalReserved++;
 			loaded = false;
 		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>1フレーム分の更新処理を実行します。</para>
-		/// <para>ここではループ中にアセットを遅延読み込みします。</para>
-		/// <para>オーバーライドする場合、必ず呼び出してください。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
-		{
-			if(counter % interval == interval - 1)
-			{
-				for(int i = loadPerFrame - 1; i >= 0 && loadQueueList.Count > 0; i--)
-				{
-					SData data = loadQueueList.Dequeue();
-					Func<string, object> loader;
-					if(loaderList.TryGetValue(data.type, out loader))
-					{
-						data.dst.value = loader(data.asset);
-						totalLoaded++;
-					}
-					else
-					{
-						throw new ContentLoadException(data.type.FullName +
-							"型のアセットを読み込むためのローダが定義されていません。");
-					}
-				}
-				if(loadQueueList.Count == 0 && !loaded)
-				{
-					loaded = true;
-					onLoaded(entity, privateMembers);
-				}
-			}
-			counter++;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(IEntity entity, object privateMembers, IState nextState)
-		{
-			loadQueueList.Clear();
-			totalReserved = 0;
-			totalLoaded = 0;
-			counter = 0;
-			loaded = false;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>継承先で読み込み終えた際の処理を記述してください。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		protected abstract void onLoaded(IEntity entity, object privateMembers);
 	}
 }

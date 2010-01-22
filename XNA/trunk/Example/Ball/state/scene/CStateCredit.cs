@@ -76,11 +76,11 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			base.update(entity, privateMembers, gameTime);
 			if(localPhaseManager.phase == 1)
 			{
 				entity.nextState = CStateTitle.instance;
 			}
+			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -93,11 +93,11 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			base.draw(entity, privateMembers, gameTime);
 			systemSpriteManager.add(contentManager.Load<Texture2D>(Resources.IMAGE_LOGO),
 				new Vector2(320, 240), EAlign.Center, EAlign.Center,
 				new Rectangle(0, 0, 384, 384), new Color(Color.White, m_fAlpha), 0f,
 				SpriteBlendMode.AlphaBlend);
+			base.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*

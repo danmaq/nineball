@@ -122,6 +122,30 @@
     <Compile Include="data\phase\CPhase.cs" />
     <Compile Include="misc\CSingleton.cs" />
     <Compile Include="misc\CStaticRandom.cs" />
+    <Compile Include="old\core\data\CDataIOManager.cs" />
+    <Compile Include="old\core\data\CResource.cs" />
+    <Compile Include="old\core\data\EDirType.cs" />
+    <Compile Include="old\core\data\EForcePreset.cs" />
+    <Compile Include="old\core\data\EInputDevice.cs" />
+    <Compile Include="old\core\data\SStarter.cs" />
+    <Compile Include="old\core\inner\CGuideManager.cs" />
+    <Compile Include="old\core\inner\CValidateDirectX.cs" />
+    <Compile Include="old\core\inner\CValidateEnvironment.cs" />
+    <Compile Include="old\core\manager\CCoRoutineManager.cs" />
+    <Compile Include="old\core\manager\CMainLoop.cs" />
+    <Compile Include="old\core\manager\CTaskManager.cs" />
+    <Compile Include="old\core\manager\CTaskSceneManager.cs" />
+    <Compile Include="old\core\manager\IScene.cs" />
+    <Compile Include="old\core\manager\ITask.cs" />
+    <Compile Include="old\core\raw\CAudio.cs" />
+    <Compile Include="old\core\raw\CCResourceManager.cs" />
+    <Compile Include="old\core\raw\CFont.cs" />
+    <Compile Include="old\core\raw\CInput.cs" />
+    <Compile Include="old\core\raw\CLegacyInput.cs" />
+    <Compile Include="old\core\raw\CLegacyInputManager.cs" />
+    <Compile Include="old\scene\CSceneBase.cs" />
+    <Compile Include="old\task\CTaskBase.cs" />
+    <Compile Include="old\task\CTaskFPSCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -130,7 +154,9 @@
     </Compile>
     <Compile Include="state\fonts\CStateDefault.cs" />
     <Compile Include="state\fonts\CStateGradation.cs" />
-    <Compile Include="state\input\parent\CStateDefault.cs" />
+    <Compile Include="state\input\collection\CStateDefault.cs" />
+    <Compile Include="state\input\collection\CStateWaitDetect.cs" />
+    <Compile Include="state\input\collection\CStateXBOX360Detect.cs" />
     <Compile Include="state\input\xbox360\CStateDefault.cs" />
     <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="state\manager\CStateLoadManager.cs" />

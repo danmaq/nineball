@@ -121,6 +121,10 @@
     <value>予期しない不具合が発生した為、ゲームを強制終了します。</value>
     <comment>例外発生時</comment>
   </data>
+  <data name="ERR_INPUT_DETECT_DUPLICATION" xml:space="preserve">
+    <value>ゲーム コントローラ自動認識状態は、コントローラが2つ以上登録されているコレクションには適用することはできません。</value>
+    <comment>複数ゲーム コントローラが登録されているマンマシンI/F入力制御・管理クラスコレクションに対し、自動認識状態を設定した場合。</comment>
+  </data>
   <data name="ERR_MESSAGE" xml:space="preserve">
     <value>エラーが発生しました。</value>
     <comment>何らかのエラーが発生した時のタイトル</comment>
