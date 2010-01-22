@@ -104,6 +104,7 @@
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
     <Compile Include="entity\input\ButtonsExtension.cs" />
     <Compile Include="entity\input\CInputCollection.cs" />
+    <Compile Include="entity\input\CInputXBOX360.cs" />
     <Compile Include="entity\input\EReservedButtonID.cs" />
     <Compile Include="entity\input\CInput.cs" />
     <Compile Include="entity\input\SInputState.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="state\fonts\CStateDefault.cs" />
     <Compile Include="state\fonts\CStateGradation.cs" />
     <Compile Include="state\input\parent\CStateDefault.cs" />
+    <Compile Include="state\input\xbox360\CStateDefault.cs" />
     <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="state\manager\CStateLoadManager.cs" />
     <Compile Include="state\manager\CStateMainLoopDefault.cs" />

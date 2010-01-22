@@ -42,7 +42,7 @@ namespace danmaq.nineball.entity.input
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="playerNumber">プレイヤー番号</param>
+		/// <param name="playerNumber">プレイヤー番号。</param>
 		/// <param name="firstState">初期状態。</param>
 		public CInput(short playerNumber, IState firstState)
 			: base(firstState)
