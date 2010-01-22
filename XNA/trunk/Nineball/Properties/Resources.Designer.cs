@@ -70,6 +70,15 @@ namespace danmaq.nineball.Properties {
         }
         
         /// <summary>
+        ///   ゲーム コントローラ自動認識状態は、コントローラが2つ以上登録されているコレクションには適用することはできません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ERR_INPUT_DETECT_DUPLICATION {
+            get {
+                return ResourceManager.GetString("ERR_INPUT_DETECT_DUPLICATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   エラーが発生しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ERR_MESSAGE {

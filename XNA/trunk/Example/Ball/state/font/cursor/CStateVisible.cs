@@ -56,17 +56,6 @@ namespace danmaq.ball.state.font.cursor
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="world">カーソルの3D位置を示すワールド行列。</param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CCursor entity, Matrix world, GameTime gameTime)
-		{
-			base.update(entity, world, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
@@ -74,7 +63,6 @@ namespace danmaq.ball.state.font.cursor
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(CCursor entity, Matrix world, GameTime gameTime)
 		{
-			base.draw(entity, world, gameTime);
 			device.VertexDeclaration =
 				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
 			Effect effect = contentManager.Load<Effect>(Resources.FX_CURSOR);
@@ -94,6 +82,7 @@ namespace danmaq.ball.state.font.cursor
 				pass.End();
 			}
 			effect.End();
+			base.draw(entity, world, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*

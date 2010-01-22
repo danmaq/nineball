@@ -10,9 +10,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using danmaq.nineball.state;
-using danmaq.nineball.state.input.parent;
 using System.Collections.ObjectModel;
+using danmaq.nineball.state;
+using danmaq.nineball.state.input.collection;
 
 namespace danmaq.nineball.entity.input
 {
@@ -28,15 +28,36 @@ namespace danmaq.nineball.entity.input
 		/// <summary>子入力クラス。</summary>
 		private readonly List<CInput> childs = new List<CInput>(1);
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>接続されていないコントローラを自動的に解放するかどうか。</summary>
+		public bool releaseAwayController = false;
+
+		/// <summary>子入力クラスとして受け入れる最大値。</summary>
+		private ushort m_capacity = ushort.MaxValue;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>コンストラクタ。既定の状態で初期化します。</summary>
 		/// 
 		/// <param name="playerNumber">プレイヤー番号。</param>
 		public CInputCollection(short playerNumber)
-			: base(playerNumber, CStateDefault.instance)
+			: this(playerNumber, CStateDefault.instance)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。指定の状態で初期化します。</summary>
+		/// 
+		/// <param name="playerNumber">プレイヤー番号。</param>
+		/// <param name="firstState">初期状態。</param>
+		public CInputCollection(
+			short playerNumber, IState<CInputCollection, List<SInputState>> firstState
+		)
+			: base(playerNumber, firstState)
 		{
 		}
 
@@ -67,6 +88,29 @@ namespace danmaq.nineball.entity.input
 			set
 			{
 				nextStateBase = value;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>子入力クラスとして受け入れる最大値を設定/取得します。</summary>
+		/// 
+		/// <value>子入力クラスとして受け入れる最大値。</value>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// 現在の保有個数未満の値を設定した場合。
+		/// </exception>
+		public ushort capacity
+		{
+			get
+			{
+				return m_capacity;
+			}
+			set
+			{
+				if(m_capacity != value)
+				{
+					childs.Capacity = value;
+					m_capacity = value;
+				}
 			}
 		}
 
@@ -125,6 +169,9 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.ArgumentException">
 		/// 対象のプレイヤー番号が自身のものと相違する場合。
 		/// </exception>
+		/// <exception cref="System.InvalidOperationException">
+		/// 許容値以上の数の子入力クラスを登録しようとした場合。
+		/// </exception>
 		public void Add(CInput item)
 		{
 			throwAtReadOnly();
@@ -132,7 +179,12 @@ namespace danmaq.nineball.entity.input
 			{
 				throw new ArgumentOutOfRangeException("item");
 			}
+			if(Count == capacity)
+			{
+				throw new InvalidOperationException();
+			}
 			changedButtonsNum += item.onChangedButtonsNum;
+			item.ButtonsNum = ButtonsNum;
 			childs.Add(item);
 		}
 

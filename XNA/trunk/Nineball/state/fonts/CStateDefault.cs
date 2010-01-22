@@ -38,6 +38,18 @@ namespace danmaq.nineball.state.fonts
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 登録されているスプライトフォントを基準に原点を算出します。
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <returns>原点座標</returns>
+		public static Vector2 getOrigin(CFont entity)
+		{
+			return entity.getOrigin(entity.font.MeasureString(entity.text) * entity.scale);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
@@ -67,18 +79,6 @@ namespace danmaq.nineball.state.fonts
 					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fLayer);
 			}
 			base.draw(entity, privateMembers, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// 登録されているスプライトフォントを基準に原点を算出します。
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <returns>原点座標</returns>
-		public static Vector2 getOrigin(CFont entity)
-		{
-			return entity.getOrigin(entity.font.MeasureString(entity.text) * entity.scale);
 		}
 	}
 }

@@ -7,14 +7,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.xbox360;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using danmaq.nineball.state.input.xbox360;
-using System;
 
 namespace danmaq.nineball.entity.input
 {
@@ -27,28 +27,30 @@ namespace danmaq.nineball.entity.input
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>プレイヤー番号一覧。</summary>
+		public static readonly ReadOnlyCollection<PlayerIndex> allPlayerIndex = new List<PlayerIndex>
+		{
+			PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four
+		}.AsReadOnly();
+
 		/// <summary>クラス オブジェクト一覧。</summary>
 		private static readonly ReadOnlyCollection<CInputXBOX360> instanceList;
 
 		/// <summary>XBOX360 プレイヤー番号。</summary>
 		public readonly PlayerIndex playerIndex;
 
+		/// <summary>ボタン割り当て値の一覧。</summary>
+		private readonly List<Buttons> m_assignList = new List<Buttons>();
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>静的なコンストラクタ。</summary>
 		static CInputXBOX360()
 		{
-			PlayerIndex[] all =
-			{
-				PlayerIndex.One,
-				PlayerIndex.Two,
-				PlayerIndex.Three,
-				PlayerIndex.Four,
-			};
-			List<CInputXBOX360> _instanceList = new List<CInputXBOX360>(all.Length);
-			foreach(PlayerIndex playerIndex in all)
+			List<CInputXBOX360> _instanceList = new List<CInputXBOX360>(allPlayerIndex.Count);
+			foreach(PlayerIndex playerIndex in allPlayerIndex)
 			{
 				_instanceList.Add(new CInputXBOX360(playerIndex));
 			}
@@ -58,7 +60,7 @@ namespace danmaq.nineball.entity.input
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		private CInputXBOX360(PlayerIndex playerIndex)
-			: base(-1, CStateDefault.empty)
+			: base(-1, CStateDefault.instance)
 		{
 			this.playerIndex = playerIndex;
 		}
@@ -93,6 +95,28 @@ namespace danmaq.nineball.entity.input
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>ボタン割り当て値の一覧を設定/取得します。</summary>
+		/// 
+		/// <value>ボタン割り当て値の一覧。</value>
+		public IList<Buttons> assignList
+		{
+			get
+			{
+				return m_assignList;
+			}
+			set
+			{
+				m_assignList.Clear();
+				m_assignList.AddRange(value);
+				int buttonsNum = ButtonsNum;
+				while(m_assignList.Count > buttonsNum)
+				{
+					m_assignList.RemoveAt(m_assignList.Count - 1);
+				}
+			}
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -112,10 +136,23 @@ namespace danmaq.nineball.entity.input
 		{
 			CInputXBOX360 instance = instanceList.First(input => input.playerIndex == playerIndex);
 			if(instance.connect)
-			{
+			{	// クラス オブジェクトが既に使用中である場合
 				throw new ArgumentException("playerIndex");
 			}
 			return instance;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// XBOX360ゲーム コントローラを自動認識する入力制御・管理クラスを作成します。
+		/// </summary>
+		/// 
+		/// <param name="playerNumber">設定したいプレイヤー番号。</param>
+		/// <returns>XBOX360ゲーム コントローラ入力制御・管理クラスコレクション。</returns>
+		public static CInputCollection createXBOX360Detector(short playerNumber)
+		{
+			return new CInputCollection(
+				playerNumber, state.input.collection.CStateXBOX360Detect.instance);
 		}
 	}
 }
