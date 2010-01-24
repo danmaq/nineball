@@ -150,10 +150,7 @@ namespace danmaq.nineball.util.collection
 		public virtual void Clear()
 		{
 			throwAtReadOnly();
-			foreach(_P item in partial)
-			{
-				collection.Remove(item);
-			}
+			partial.ForEach(item => collection.Remove(item));
 			castoff();
 		}
 

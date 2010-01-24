@@ -23,38 +23,6 @@ namespace danmaq.nineball.misc
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>リストをソートして一意な値のみ抽出します。</summary>
-		/// 
-		/// <typeparam name="_T">配列の元となる型</typeparam>
-		/// <param name="expr">対象となるリスト</param>
-		/// <returns>一意なソートされた配列</returns>
-		/// <exception cref="System.ArgumentNullException">
-		/// 引数にnullを指定した場合。
-		/// </exception>
-		public static List<_T> getUnique<_T>(this IEnumerable<_T> expr)
-		{
-			if(expr == null)
-			{
-				throw new ArgumentNullException("expr");
-			}
-			List<_T> result;
-#if WINDOWS
-			result = new List<_T>(new HashSet<_T>(expr));
-			result.Sort();
-#else
-			result = new List<_T>();
-			foreach( _T value in expr ) {
-				if(
-					result.FindIndex(
-						_expr => ( _expr == null && value == null ) || _expr.Equals( value )
-					) == -1
-				) { result.Add( value ); }
-			}
-#endif
-			return result;
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>値を指定された範囲内に制限します。</summary>
 		/// <remarks>
 		/// 最小値と最大値を逆さに設定しても内部で自動的に認識・交換しますが、

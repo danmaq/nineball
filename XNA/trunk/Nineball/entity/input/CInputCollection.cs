@@ -197,10 +197,7 @@ namespace danmaq.nineball.entity.input
 		public virtual void Clear()
 		{
 			throwAtReadOnly();
-			foreach(CInput item in childs)
-			{
-				Remove(item);
-			}
+			childs.ForEach(item => Remove(item));
 		}
 
 		//* -----------------------------------------------------------------------*
