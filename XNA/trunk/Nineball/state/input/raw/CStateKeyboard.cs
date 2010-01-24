@@ -12,26 +12,26 @@ using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.state.input.xbox360
+namespace danmaq.nineball.state.input.raw
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>XBOX360ゲーム コントローラ既定の入力状態。</summary>
-	public sealed class CStateDefault : CState<CInputXBOX360, List<SInputState>>
+	/// <summary>キーボード既定の入力状態。</summary>
+	public sealed class CStateKeyboard : CState<CInputKeyboard, List<SInputState>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateDefault instance = new CStateDefault();
+		public static readonly CStateKeyboard instance = new CStateKeyboard();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateDefault()
+		private CStateKeyboard()
 		{
 		}
 
@@ -45,21 +45,14 @@ namespace danmaq.nineball.state.input.xbox360
 		/// <param name="buttonsState">ボタン押下情報一覧。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CInputXBOX360 entity, List<SInputState> buttonsState, GameTime gameTime
+			CInputKeyboard entity, List<SInputState> buttonsState, GameTime gameTime
 		)
 		{
-			GamePadState state = GamePad.GetState(entity.playerIndex);
-			if(state.IsConnected)
+			KeyboardState state = Keyboard.GetState();
+			IList<Keys> assignList = entity.assignList;
+			for(int i = assignList.Count - 1; i >= 0; i--)
 			{
-				IList<Buttons> assignList = entity.assignList;
-				for(int i = assignList.Count - 1; i >= 0; i--)
-				{
-					buttonsState[i].refresh(state.IsButtonDown(assignList[i]));
-				}
-			}
-			else
-			{
-				entity.Dispose();
+				buttonsState[i].refresh(state.IsKeyDown(assignList[i]));
 			}
 			base.update(entity, buttonsState, gameTime);
 		}

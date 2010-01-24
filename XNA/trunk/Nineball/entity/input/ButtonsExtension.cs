@@ -64,56 +64,55 @@ namespace danmaq.nineball.entity.input
 		//* -----------------------------------------------------------------------*
 		/// <summary>アナログ入力を取得します。</summary>
 		/// 
+		/// <param name="state">XBOX360ゲーム コントローラの現在の情報。</param>
 		/// <param name="button">ボタン。</param>
-		/// <param name="playerIndex">プレイヤー番号。</param>
 		/// <returns>アナログ入力値。</returns>
-		/// <exception cref="System.ArgumentOutOfRangeException">
-		/// アナログ入力に対応していないボタンでこのメソッドを呼び出した場合。
-		/// </exception>
-		public static float getAnalogInput(this Buttons button, PlayerIndex playerIndex)
+		public static float getInputState(this GamePadState state, Buttons button)
 		{
 			float fResult = 0f;
-			if(!button.isAvailableAnalogInput())
-			{	// アナログ入力出来ないものは予め弾く
-				throw new ArgumentOutOfRangeException("button");
-			}
-			GamePadState state = GamePad.GetState(playerIndex);
-			if((button & (Buttons.LeftTrigger | Buttons.RightTrigger)) != 0)
+			if(button.isAvailableAnalogInput())
 			{
-				fResult = button == Buttons.LeftTrigger ?
-					state.Triggers.Left : state.Triggers.Right;
+				if((button & (Buttons.LeftTrigger | Buttons.RightTrigger)) != 0)
+				{
+					fResult = button == Buttons.LeftTrigger ?
+						state.Triggers.Left : state.Triggers.Right;
+				}
+				else
+				{
+					const Buttons THUMB_LEFT = (
+						Buttons.LeftThumbstickUp | Buttons.LeftThumbstickDown |
+						Buttons.LeftThumbstickLeft | Buttons.LeftThumbstickRight);
+					const Buttons THUMB_BOTH_UP = (
+						Buttons.LeftThumbstickUp | Buttons.RightThumbstickUp);
+					const Buttons THUMB_BOTH_DOWN = (
+						Buttons.LeftThumbstickDown | Buttons.RightThumbstickDown);
+					const Buttons THUMB_BOTH_LEFT = (
+						Buttons.LeftThumbstickLeft | Buttons.RightThumbstickLeft);
+					const Buttons THUMB_BOTH_RIGHT = (
+						Buttons.LeftThumbstickRight | Buttons.RightThumbstickRight);
+					Vector2 thumb = (button & THUMB_LEFT) != 0 ?
+						state.ThumbSticks.Left : state.ThumbSticks.Right;
+					if((button & THUMB_BOTH_UP) != 0)
+					{
+						fResult = MathHelper.Max(thumb.Y, 0);
+					}
+					if((button & THUMB_BOTH_DOWN) != 0)
+					{
+						fResult = -MathHelper.Min(thumb.Y, 0);
+					}
+					if((button & THUMB_BOTH_LEFT) != 0)
+					{
+						fResult = MathHelper.Max(thumb.X, 0);
+					}
+					if((button & THUMB_BOTH_RIGHT) != 0)
+					{
+						fResult = -MathHelper.Min(thumb.X, 0);
+					}
+				}
 			}
 			else
 			{
-				const Buttons THUMB_LEFT = (
-					Buttons.LeftThumbstickUp | Buttons.LeftThumbstickDown |
-					Buttons.LeftThumbstickLeft | Buttons.LeftThumbstickRight);
-				const Buttons THUMB_BOTH_UP = (
-					Buttons.LeftThumbstickUp | Buttons.RightThumbstickUp);
-				const Buttons THUMB_BOTH_DOWN = (
-					Buttons.LeftThumbstickDown | Buttons.RightThumbstickDown);
-				const Buttons THUMB_BOTH_LEFT = (
-					Buttons.LeftThumbstickLeft | Buttons.RightThumbstickLeft);
-				const Buttons THUMB_BOTH_RIGHT = (
-					Buttons.LeftThumbstickRight | Buttons.RightThumbstickRight);
-				Vector2 thumb = (button & THUMB_LEFT) != 0 ?
-					state.ThumbSticks.Left : state.ThumbSticks.Right;
-				if((button & THUMB_BOTH_UP) != 0)
-				{
-					fResult = MathHelper.Max(thumb.Y, 0);
-				}
-				if((button & THUMB_BOTH_DOWN) != 0)
-				{
-					fResult = -MathHelper.Min(thumb.Y, 0);
-				}
-				if((button & THUMB_BOTH_LEFT) != 0)
-				{
-					fResult = MathHelper.Max(thumb.X, 0);
-				}
-				if((button & THUMB_BOTH_RIGHT) != 0)
-				{
-					fResult = -MathHelper.Min(thumb.X, 0);
-				}
+				fResult = state.IsButtonDown(button) ? 1f : 0f;
 			}
 			return fResult;
 		}

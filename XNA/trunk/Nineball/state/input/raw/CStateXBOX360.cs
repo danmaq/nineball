@@ -10,27 +10,28 @@
 using System.Collections.Generic;
 using danmaq.nineball.entity.input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.state.input.collection
+namespace danmaq.nineball.state.input.raw
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>マンマシンI/F入力制御・管理クラスコレクションの既定の入力状態。</summary>
-	public sealed class CStateDefault : CState<CInputCollection, List<SInputState>>
+	/// <summary>XBOX360ゲーム コントローラ既定の入力状態。</summary>
+	public sealed class CStateXBOX360 : CState<CInputXBOX360, List<SInputState>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateDefault instance = new CStateDefault();
+		public static readonly CStateXBOX360 instance = new CStateXBOX360();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateDefault()
+		private CStateXBOX360()
 		{
 		}
 
@@ -44,43 +45,30 @@ namespace danmaq.nineball.state.input.collection
 		/// <param name="buttonsState">ボタン押下情報一覧。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
+			CInputXBOX360 entity, List<SInputState> buttonsState, GameTime gameTime
 		)
-		{	// この辺の処理はentity側に書いちゃってもいいかも
-			int nLength = buttonsState.Count;
-			foreach(CInput input in entity)
+		{
+			GamePadState state = GamePad.GetState(entity.playerIndex);
+			if(state.IsConnected)
 			{
-				if(!entity.releaseAwayController || entity.connect)
+				for(int i = entity.assignList.Count - 1; i >= 0; i--)
 				{
-					input.update(gameTime);
-					for(int i = nLength - 1; i >= 0; i--)
+					Buttons button = entity.assignList[i];
+					if(button.isAvailableAnalogInput())
 					{
-						buttonsState[i] |= input.buttonStateList[i];
+						buttonsState[i].refresh(state.getInputState(button));
+					}
+					else
+					{
+						buttonsState[i].refresh(state.IsButtonDown(button));
 					}
 				}
-				else
-				{
-					entity.Dispose();
-				}
+			}
+			else
+			{
+				entity.Dispose();
 			}
 			base.update(entity, buttonsState, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="buttonsState">ボタン押下情報一覧。</param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(
-			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
-		)
-		{	// この辺の処理はentity側に書いちゃってもいいかも
-			foreach(CInput input in entity)
-			{
-				input.draw(gameTime);
-			}
-			base.draw(entity, buttonsState, gameTime);
 		}
 	}
 }
