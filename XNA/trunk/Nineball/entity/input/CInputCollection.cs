@@ -19,7 +19,7 @@ namespace danmaq.nineball.entity.input
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>マンマシンI/F入力制御・管理クラスのコレクション。</summary>
-	public sealed class CInputCollection : CInput, ICollection<CInput>
+	public class CInputCollection : CInput, ICollection<CInput>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -98,7 +98,7 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 現在の保有個数未満の値を設定した場合。
 		/// </exception>
-		public ushort capacity
+		public virtual ushort capacity
 		{
 			get
 			{
@@ -118,7 +118,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>格納されている要素の数を取得します。</summary>
 		/// 
 		/// <value>格納されている要素の数。</value>
-		public int Count
+		public virtual int Count
 		{
 			get
 			{
@@ -130,7 +130,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>子リストを取得します。</summary>
 		/// 
 		/// <value>子リスト。</value>
-		public ReadOnlyCollection<CInput> childList
+		public virtual ReadOnlyCollection<CInput> childList
 		{
 			get
 			{
@@ -142,7 +142,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>読み取り専用かどうかを示す値を設定/取得します。</summary>
 		/// 
 		/// <value>読み取り専用の場合、<c>true</c>。</value>
-		public bool IsReadOnly
+		public virtual bool IsReadOnly
 		{
 			get;
 			set;
@@ -172,7 +172,7 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.InvalidOperationException">
 		/// 許容値以上の数の子入力クラスを登録しようとした場合。
 		/// </exception>
-		public void Add(CInput item)
+		public virtual void Add(CInput item)
 		{
 			throwAtReadOnly();
 			if(!(item.playerNumber == playerNumber))
@@ -194,7 +194,7 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public void Clear()
+		public virtual void Clear()
 		{
 			throwAtReadOnly();
 			foreach(CInput item in childs)
@@ -208,7 +208,7 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="item">検索するオブジェクト。</param>
 		/// <returns>存在する場合、<c>true</c>。</returns>
-		public bool Contains(CInput item)
+		public virtual bool Contains(CInput item)
 		{
 			return childs.Contains(item);
 		}
@@ -222,7 +222,7 @@ namespace danmaq.nineball.entity.input
 		/// <param name="arrayIndex">
 		/// コピーの開始位置となる、配列の0から始まるインデックス番号。
 		/// </param>
-		public void CopyTo(CInput[] array, int arrayIndex)
+		public virtual void CopyTo(CInput[] array, int arrayIndex)
 		{
 			childs.CopyTo(array, arrayIndex);
 		}
@@ -235,7 +235,7 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		public bool Remove(CInput item)
+		public virtual bool Remove(CInput item)
 		{
 			throwAtReadOnly();
 			bool bResult = childs.Remove(item);
@@ -253,7 +253,7 @@ namespace danmaq.nineball.entity.input
 		/// </summary>
 		/// 
 		/// <returns>列挙するオブジェクトの型。</returns>
-		public IEnumerator<CInput> GetEnumerator()
+		public virtual IEnumerator<CInput> GetEnumerator()
 		{
 			return childs.GetEnumerator();
 		}
@@ -275,7 +275,7 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
 		/// </exception>
-		private void throwAtReadOnly()
+		protected virtual void throwAtReadOnly()
 		{
 			if(IsReadOnly)
 			{
