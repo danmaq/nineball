@@ -106,6 +106,7 @@
     <Compile Include="entity\input\CInputCollection.cs" />
     <Compile Include="entity\input\CInputEmpty.cs" />
     <Compile Include="entity\input\CInputKeyboard.cs" />
+    <Compile Include="entity\input\CInputLegacy.cs" />
     <Compile Include="entity\input\CInputXBOX360.cs" />
     <Compile Include="entity\input\CInputXBOX360ChatPad.cs" />
     <Compile Include="entity\input\EReservedButtonID.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="state\fonts\CStateDefault.cs" />
     <Compile Include="state\fonts\CStateGradation.cs" />
     <Compile Include="state\input\collection\CStateDefault.cs" />
+    <Compile Include="state\input\collection\CStateLegacyDetect.cs" />
     <Compile Include="state\input\collection\CStateWaitDetect.cs" />
     <Compile Include="state\input\collection\CStateXBOX360Detect.cs" />
     <Compile Include="state\input\raw\CStateKeyboard.cs" />
