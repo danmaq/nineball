@@ -163,6 +163,7 @@
     <Compile Include="state\input\collection\CStateWaitDetect.cs" />
     <Compile Include="state\input\collection\CStateXBOX360Detect.cs" />
     <Compile Include="state\input\raw\CStateKeyboard.cs" />
+    <Compile Include="state\input\raw\CStateLegacy.cs" />
     <Compile Include="state\input\raw\CStateXBOX360.cs" />
     <Compile Include="state\input\raw\CStateXBOX360ChatPad.cs" />
     <Compile Include="state\IStateGenerics.cs" />
