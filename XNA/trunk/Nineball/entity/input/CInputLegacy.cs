@@ -11,8 +11,9 @@
 
 using System;
 using System.Collections.Generic;
+using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input.raw;
+using danmaq.nineball.state.input;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
 
@@ -26,7 +27,7 @@ namespace danmaq.nineball.entity.input
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		public sealed class CPrivateMembers
+		public sealed class CPrivateMembers : IDisposable
 		{
 
 			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -89,6 +90,23 @@ namespace danmaq.nineball.entity.input
 				}
 			}
 
+			//* -----------------------------------------------------------------------*
+			/// <summary>デバイス状態を更新し、最新のデバイス状態を取得します。</summary>
+			/// 
+			/// <returns>最新のデバイス状態。</returns>
+			public JoystickState poll()
+			{
+				try
+				{
+					device.Poll();
+				}
+				catch(NotAcquiredException)
+				{
+					device.Acquire();
+					device.Poll();
+				}
+				return device.CurrentJoystickState;
+			}
 		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -207,12 +225,23 @@ namespace danmaq.nineball.entity.input
 		/// <summary>デバイス オブジェクトを取得します。</summary>
 		/// 
 		/// <value>レガシ ゲーム コントローラ デバイス オブジェクト。</value>
-		public Device devide
+		public Device device
 		{
 			get
 			{
 				return _privateMembers.device;
 			}
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
+		{
+			_privateMembers.Dispose();
+			base.Dispose();
 		}
 	}
 }
