@@ -11,7 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using danmaq.nineball.entity.input.data;
+using danmaq.nineball.Properties;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.xbox360;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -31,6 +34,12 @@ namespace danmaq.nineball.entity.input
 
 		/// <summary>XBOX360 プレイヤー番号。</summary>
 		public readonly PlayerIndex playerIndex;
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>XBOX360 ゲーム コントローラ入力制御・管理クラス。</summary>
+		private CInputXBOX360 inputController = null;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -53,7 +62,7 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="playerIndex">XBOX360 プレイヤー番号。</param>
 		private CInputXBOX360ChatPad(PlayerIndex playerIndex)
-			: base(-1, CState.empty)
+			: base(-1, CStateChatPad.instance)
 		{
 			this.playerIndex = playerIndex;
 		}
@@ -70,6 +79,55 @@ namespace danmaq.nineball.entity.input
 			get
 			{
 				return playerNumber >= 0 && GamePad.GetState(playerIndex).IsConnected;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンの状態をベクトルで取得します。</summary>
+		/// <remarks>
+		/// 取得時は、XBOX360 ゲーム コントローラ入力制御・管理クラスの
+		/// エイリアスとして機能します。設定はサポートしません。
+		/// </remarks>
+		/// 
+		/// <value>方向ボタンの状態。</value>
+		/// <exception cref="System.NotSupportedException">
+		/// 設定を試みた場合。(このクラスでは、設定はサポートしません。)
+		/// </exception>
+		public override Vector2 axisVector
+		{
+			get
+			{
+				return inputController.axisVector;
+			}
+			protected set
+			{
+				throw new NotSupportedException(Resources.ERR_READONLY);
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンの状態をフラグで取得します。</summary>
+		/// <remarks>
+		/// 取得時は、XBOX360 ゲーム コントローラ入力制御・管理クラスの
+		/// エイリアスとして機能します。設定はサポートしません。
+		/// </remarks>
+		/// <example>
+		/// bool bDown = (obj.axisFlag &amp; EDirectionFlags.down) != 0;
+		/// </example>
+		/// 
+		/// <value>方向ボタンの状態。</value>
+		/// <exception cref="System.NotSupportedException">
+		/// 設定を試みた場合。(このクラスでは、設定はサポートしません。)
+		/// </exception>
+		public override EDirectionFlags axisFlag
+		{
+			get
+			{
+				return inputController.axisFlag;
+			}
+			protected set
+			{
+				throw new NotSupportedException(Resources.ERR_READONLY);
 			}
 		}
 
@@ -121,6 +179,7 @@ namespace danmaq.nineball.entity.input
 				throw new ArgumentException("inputController");
 			}
 			instance.playerNumber = playerNumber;
+			instance.inputController = inputController;
 			return instance;
 		}
 	}

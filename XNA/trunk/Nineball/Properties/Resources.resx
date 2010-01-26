@@ -129,6 +129,10 @@
     <value>エラーが発生しました。</value>
     <comment>何らかのエラーが発生した時のタイトル</comment>
   </data>
+  <data name="ERR_READONLY" xml:space="preserve">
+    <value>設定・書き込みはサポートしません。</value>
+    <comment>読み取り専用状態のクラス等の状態を変更しようとした場合。</comment>
+  </data>
   <data name="ERR_SINGLETON" xml:space="preserve">
     <value>{0}オブジェクトを、2つ以上作ることはできません。</value>
     <comment>シングルトンクラスを複数個生成しようとした場合</comment>

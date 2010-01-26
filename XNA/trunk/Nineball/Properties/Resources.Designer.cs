@@ -88,6 +88,15 @@ namespace danmaq.nineball.Properties {
         }
         
         /// <summary>
+        ///   設定・書き込みはサポートしません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ERR_READONLY {
+            get {
+                return ResourceManager.GetString("ERR_READONLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0}オブジェクトを、2つ以上作ることはできません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ERR_SINGLETON {

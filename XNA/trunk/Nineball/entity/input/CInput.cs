@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.data;
+using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
@@ -29,6 +30,15 @@ namespace danmaq.nineball.entity.input
 
 		/// <summary>ボタンの入力状態一覧。</summary>
 		protected readonly List<SInputState> _buttonStateList = new List<SInputState>(1);
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>アナログ入力を認識する閾値。</summary>
+		public float analogThreshold = 0.5f;
+
+		/// <summary>方向ボタンの状態。</summary>
+		protected Vector2 axis = Vector2.Zero;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* events ────────────────────────────────*
@@ -119,6 +129,55 @@ namespace danmaq.nineball.entity.input
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンの状態をベクトルで取得します。</summary>
+		/// 
+		/// <value>方向ボタンの状態。</value>
+		public virtual Vector2 axisVector
+		{
+			get
+			{
+				return axis;
+			}
+			protected set
+			{
+				axis = value;
+				axisFlag = EDirectionFlags.None;
+				if(value.Length() >= analogThreshold)
+				{
+					if(-MathHelper.Min(value.Y, 0) > analogThreshold)
+					{
+						axisFlag |= EDirectionFlags.up;
+					}
+					if(MathHelper.Max(value.Y, 0) > analogThreshold)
+					{
+						axisFlag |= EDirectionFlags.down;
+					}
+					if(-MathHelper.Min(value.X, 0) > analogThreshold)
+					{
+						axisFlag |= EDirectionFlags.left;
+					}
+					if(MathHelper.Max(value.X, 0) > analogThreshold)
+					{
+						axisFlag |= EDirectionFlags.right;
+					}
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンの状態をフラグで取得します。</summary>
+		/// <example>
+		/// bool bDown = (obj.axisFlag &amp; EDirectionFlags.down) != 0;
+		/// </example>
+		/// 
+		/// <value>方向ボタンの状態。</value>
+		public virtual EDirectionFlags axisFlag
+		{
+			get;
+			protected set;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>接続されているかどうかを取得します。</summary>
 		/// 
 		/// <value>接続されている場合、<c>true</c>。</value>
@@ -158,27 +217,6 @@ namespace danmaq.nineball.entity.input
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>移動ボタンのベクトルを計算します。</summary>
-		/// 
-		/// <param name="up">上方向アナログ入力値(0.0f～1.0f)。</param>
-		/// <param name="down">下方向アナログ入力値(0.0f～1.0f)。</param>
-		/// <param name="left">左方向アナログ入力値(0.0f～1.0f)。</param>
-		/// <param name="right">右方向アナログ入力値(0.0f～1.0f)。</param>
-		/// <returns>移動ベクトル。</returns>
-		public static Vector2 createVector( float up, float down, float left, float right )
-		{
-			float[] srcList = { up, down, left, right };
-			float fVelocity = 0;
-			foreach(float fSrc in srcList)
-			{
-				fVelocity = MathHelper.Max(fVelocity, Math.Abs(fSrc));
-			}
-			Vector2 result = new Vector2(-left, -up) + new Vector2(right, down);
-			result.Normalize();
-			return result * fVelocity;
-		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>

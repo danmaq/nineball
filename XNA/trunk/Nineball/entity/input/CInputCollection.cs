@@ -11,8 +11,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input.collection;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
 {
@@ -45,7 +46,7 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="playerNumber">プレイヤー番号。</param>
 		public CInputCollection(short playerNumber)
-			: this(playerNumber, CStateDefault.instance)
+			: base(playerNumber, CState.empty)
 		{
 		}
 
@@ -150,6 +151,55 @@ namespace danmaq.nineball.entity.input
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化処理を実行します。</summary>
+		public override void initialize()
+		{
+			childs.ForEach(input => input.initialize());
+			base.initialize();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(GameTime gameTime)
+		{
+			int nLength = _buttonStateList.Count;
+			axisFlag = EDirectionFlags.None;
+			foreach(CInput input in childs)
+			{
+				if(!releaseAwayController || input.connect)
+				{
+					input.update(gameTime);
+					for(int i = nLength - 1; i >= 0; i--)
+					{
+						_buttonStateList[i] |= input.buttonStateList[i];
+					}
+					float axisLength = axis.Length();
+					axis += input.axisVector;
+					axis.Normalize();
+					axis *= MathHelper.Max(axisLength, input.axisVector.Length());
+					axisFlag |= input.axisFlag;
+				}
+				else
+				{
+					input.Dispose();
+				}
+			}
+			base.update(gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(GameTime gameTime)
+		{
+			childs.ForEach(input => input.draw(gameTime));
+			base.draw(gameTime);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>

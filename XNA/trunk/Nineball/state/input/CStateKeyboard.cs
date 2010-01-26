@@ -7,38 +7,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
-using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
-using Microsoft.Xna.Framework;
 using danmaq.nineball.entity.input.data;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.nineball.state.input.collection
+namespace danmaq.nineball.state.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>
-	/// マンマシンI/F入力制御・管理クラスコレクションの自動認識待機状態。
-	/// </summary>
-	public sealed class CStateWaitDetect : CState<CInputCollection, List<SInputState>>
+	/// <summary>キーボード既定の入力状態。</summary>
+	public sealed class CStateKeyboard : CState<CInputKeyboard, CInputKeyboard.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateWaitDetect instance = new CStateWaitDetect();
-
-		/// <summary>要求する自動認識状態の型。</summary>
-		private readonly Type detectType = typeof(CState<CInputCollection, List<SInputState>>);
+		public static readonly CStateKeyboard instance = new CStateKeyboard();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateWaitDetect()
+		private CStateKeyboard()
 		{
 		}
 
@@ -46,43 +40,35 @@ namespace danmaq.nineball.state.input.collection
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>状態が開始された時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を適用されたオブジェクト。</param>
-		/// <param name="buttonsState">ボタン押下情報一覧。</param>
-		/// <exception cref="System.InvalidOperationException">
-		/// 自動認識発動時に戻るべき状態が見つからない場合。
-		/// </exception>
-		public override void setup(CInputCollection entity, List<SInputState> buttonsState)
-		{
-			Type type = entity.previousState.GetType();
-			if(!(type == detectType || type.IsSubclassOf(detectType)))
-			{
-				throw new InvalidOperationException(
-					"戻るべき自動認識状態を見つけることができませんでした。");
-			}
-			base.setup(entity, buttonsState);
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="buttonsState">ボタン押下情報一覧。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
+			CInputKeyboard entity, CInputKeyboard.CPrivateMembers privateMembers,
+			GameTime gameTime
 		)
 		{
-			if(entity.Count == 0)
+			KeyboardState state = Keyboard.GetState();
+			IList<Keys> assignList = entity.assignList;
+			for(int i = assignList.Count - 1; i >= 0; i--)
 			{
-				entity.nextState =
-					(CState<CInputCollection, List<SInputState>>)entity.previousState;
+				privateMembers.buttonStateList[i].refresh(state.IsKeyDown(assignList[i]));
 			}
-			base.update(entity, buttonsState, gameTime);
+			List<bool> axis = new List<bool>(4);
+			foreach(Keys key in entity.directionAssignList)
+			{
+				axis.Add(state.IsKeyDown(key));
+			}
+			EDirectionFlags axisFlags;
+			Vector2 axisVector;
+			CHelper.createVector(axis, out axisVector, out axisFlags);
+			privateMembers.axisVector = axisVector;
+			privateMembers.axisFlag = axisFlags;
+			base.update(entity, privateMembers, gameTime);
 		}
 	}
 }

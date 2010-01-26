@@ -14,8 +14,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
+using danmaq.nineball.entity.input.data;
 using danmaq.nineball.Properties;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
@@ -35,9 +35,6 @@ namespace danmaq.nineball.state.input.collection
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateLegacyDetect instance = new CStateLegacyDetect();
-
-		/// <summary>既定の入力状態。</summary>
-		private readonly CStateDefault defaultState = CStateDefault.instance;
 
 		/// <summary>
 		/// レガシ ゲーム コントローラ入力制御・管理クラス オブジェクト一覧。
@@ -84,7 +81,6 @@ namespace danmaq.nineball.state.input.collection
 			}
 			setCapacity(entity);
 			entity.releaseAwayController = true;
-			defaultState.setup(entity, buttonsState);
 			base.setup(entity, buttonsState);
 		}
 
@@ -110,39 +106,7 @@ namespace danmaq.nineball.state.input.collection
 				setCapacity(entity);
 				entity.nextState = CStateWaitDetect.instance;
 			}
-			defaultState.update(entity, buttonsState, gameTime);
 			base.update(entity, buttonsState, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="buttonsState">ボタン押下情報一覧。</param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(
-			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
-		)
-		{
-			defaultState.draw(entity, buttonsState, gameTime);
-			base.draw(entity, buttonsState, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(IEntity entity, object privateMembers, IState nextState)
-		{
-			defaultState.teardown(entity, privateMembers, nextState);
-			base.teardown(entity, privateMembers, nextState);
 		}
 
 		//* -----------------------------------------------------------------------*
