@@ -29,7 +29,6 @@ namespace danmaq.nineball.entity.input.data
 		RightStick,
 	}
 
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>方向ボタン列挙体。</summary>
 	public enum EDirection : byte
