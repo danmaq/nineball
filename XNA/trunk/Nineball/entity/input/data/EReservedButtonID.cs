@@ -18,6 +18,20 @@ namespace danmaq.nineball.entity.input.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+	/// <summary>方向ボタン列挙体。</summary>
+	public enum EAxisLegacy
+	{
+		/// <summary>無効。</summary>
+		None,
+
+		/// <summary>POV。</summary>
+		POV,
+
+		/// <summary>スライダー。</summary>
+		Slider,
+	}
+
+	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ用の予約されたボタンID。</summary>
 	public enum EReservedButtonAxisID : short
 	{

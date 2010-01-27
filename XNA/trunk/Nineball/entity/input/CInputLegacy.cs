@@ -16,6 +16,7 @@ using danmaq.nineball.state;
 using danmaq.nineball.state.input;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
 {
@@ -42,6 +43,9 @@ namespace danmaq.nineball.entity.input
 			/// <summary>レガシ ゲーム コントローラ デバイス。</summary>
 			public readonly Device device;
 
+			/// <summary>レガシ ゲーム コントローラ入力制御・管理クラス。</summary>
+			private readonly CInputLegacy input;
+
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
@@ -60,10 +64,12 @@ namespace danmaq.nineball.entity.input
 			//* -----------------------------------------------------------------------*
 			/// <summary>コンストラクタ。</summary>
 			/// 
+			/// <param name="input">レガシ ゲーム コントローラ入力制御・管理クラス。</param>
 			/// <param name="idDevice">デバイスのインスタンスGUID。</param>
 			/// <param name="hWnd">ウィンドウ ハンドル</param>
 			/// <param name="buttonStateList">ボタンの入力状態一覧。</param>
-			public CPrivateMembers(Guid idDevice, IntPtr hWnd, List<SInputState> buttonStateList)
+			public CPrivateMembers(
+				CInputLegacy input, Guid idDevice, IntPtr hWnd, List<SInputState> buttonStateList)
 			{
 				device = new Device(idDevice);
 				this.hWnd = hWnd;
@@ -71,6 +77,40 @@ namespace danmaq.nineball.entity.input
 				capsReport =
 					device.DeviceInformation.createCapsReport() + device.Caps.createCapsReport();
 				device.SetDataFormat(DeviceDataFormat.Joystick);
+			}
+
+			//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* properties ──────────────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>方向ボタンの状態をベクトルで設定します。</summary>
+			/// 
+			/// <value>方向ボタンの状態。</value>
+			public Vector2 axisVector
+			{
+				set
+				{
+					input.axisVector = value;
+				}
+			}
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>方向ボタンの状態をフラグで設定/取得します。</summary>
+			/// <example>
+			/// bool bDown = (obj.axisFlag &amp; EDirectionFlags.down) != 0;
+			/// </example>
+			/// 
+			/// <value>方向ボタンの状態。</value>
+			public EDirectionFlags axisFlag
+			{
+				get
+				{
+					return input.axisFlag;
+				}
+				set
+				{
+					input.axisFlag = value;
+				}
 			}
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -118,6 +158,12 @@ namespace danmaq.nineball.entity.input
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		public readonly CPrivateMembers _privateMembers;
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>方向ボタンとして使用するボタン種類。</summary>
+		private EAxisLegacy m_useForAxis = EAxisLegacy.POV;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -130,7 +176,7 @@ namespace danmaq.nineball.entity.input
 		public CInputLegacy(short playerNumber, Guid idDevice, IntPtr hWnd)
 			: base(playerNumber, CStateLegacy.instance)
 		{
-			_privateMembers = new CPrivateMembers(idDevice, hWnd, _buttonStateList);
+			_privateMembers = new CPrivateMembers(this, idDevice, hWnd, _buttonStateList);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -181,6 +227,26 @@ namespace danmaq.nineball.entity.input
 				while(m_assignList.Count > buttonsNum)
 				{
 					m_assignList.RemoveAt(m_assignList.Count - 1);
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンとして使用するボタン種類を設定/取得します。</summary>
+		/// 
+		/// <value>方向ボタンとして使用するボタン種類。</value>
+		public EAxisLegacy useForAxis
+		{
+			get
+			{
+				return m_useForAxis;
+			}
+			set
+			{
+				if(value != m_useForAxis)
+				{
+					m_useForAxis = value;
+					// TODO : 変更がかかった際の処理(ステート変更など)を挿入する
 				}
 			}
 		}
