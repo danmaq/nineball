@@ -72,6 +72,7 @@ namespace danmaq.nineball.entity.input
 				CInputLegacy input, Guid idDevice, IntPtr hWnd, List<SInputState> buttonStateList)
 			{
 				device = new Device(idDevice);
+				this.input = input;
 				this.hWnd = hWnd;
 				this.buttonStateList = buttonStateList;
 				capsReport =

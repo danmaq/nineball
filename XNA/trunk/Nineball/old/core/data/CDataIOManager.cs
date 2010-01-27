@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Xml.Serialization;
+using danmaq.nineball.data;
 using danmaq.nineball.util;
 
 #if XBOX360
@@ -23,6 +24,149 @@ namespace danmaq.nineball.old.core.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+	/// <summary>
+	/// <para>永続データ管理クラスの共有部分。</para>
+	/// <para>ジェネリックだとstaticが共有されないので分割。</para>
+	/// </summary>
+	sealed class CDataIOManager : IDisposable
+	{
+
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly CDataIOManager instance = new CDataIOManager();
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+#if XBOX360
+
+		/// <summary>データの入出力対象デバイス。</summary>
+		public StorageDevice device = null;
+
+		/// <summary>ストレージ ファイルの論理コレクション。</summary>
+		public StorageContainer container = null;
+#endif
+
+		/// <summary>アプリケーション タイトル文字列。</summary>
+		private string m_titleName;
+
+		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		private CDataIOManager()
+		{
+		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+#if XBOX360
+		//* -----------------------------------------------------------------------*
+		/// <summary>デバイスの準備が出来ているかどうかを取得します。</summary>
+		/// 
+		/// <value>デバイスの準備が出来ている場合、<c>true</c>。</value>
+		public bool deviceReady
+		{
+			get
+			{
+				return device != null && device.IsConnected;
+			}
+		}
+#endif
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>アプリケーション タイトルを設定/取得します。</summary>
+		/// 
+		/// <value>アプリケーション タイトル文字列。</value>
+		/// <exception cref="System.InvalidOperationException">
+		/// アプリケーション タイトルを変更しようとしたとき。
+		/// </exception>
+		public string titleName
+		{
+			get
+			{
+				return m_titleName;
+			}
+			set
+			{
+				if(m_titleName != null && m_titleName != value)
+				{
+					throw new InvalidOperationException("アプリケーション タイトルの変更はできません。");
+				}
+				m_titleName = value;
+			}
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+#if XBOX360
+		//* -----------------------------------------------------------------------*
+		/// <summary>デバイスを初期化します。</summary>
+		/// 
+		/// <param name="result">非同期操作のステータス。</param>
+		public void initializeDevice(IAsyncResult result)
+		{
+			device = Guide.EndShowStorageDeviceSelector(result);
+		}
+#endif
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ファイルへの絶対パスを取得します。</summary>
+		/// 
+		/// <param name="strFileName">ファイル名。</param>
+		/// <returns>ファイルへの絶対パス。</returns>
+		public string getPath(string strFileName)
+		{
+			string strResult = strFileName;
+#if XBOX360
+			if(deviceReady)
+			{
+				if(container == null)
+				{
+					if(container == null)
+					{
+						container = device.OpenContainer(titleName);
+					}
+				}
+				strResult = Path.Combine(container.Path, strFileName);
+			}
+#endif
+			return strResult;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// アンマネージ リソースの解放およびリセットに関連付けられている
+		/// アプリケーション定義のタスクを実行します。
+		/// </summary>
+		public void Dispose()
+		{
+#if XBOX360
+			try
+			{
+				device = null;
+				if(container != null)
+				{
+					container.Dispose();
+					container = null;
+				}
+			}
+			catch(Exception e)
+			{
+				CLogger.add("ゲーム 設定データI/Oクラスの解放時に例外が発生しました。");
+				CLogger.add(e);
+			}
+			GC.SuppressFinalize(this);
+#endif
+		}
+
+	}
+
+	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>永続データ管理クラス。</summary>
 	public sealed class CDataIOManager<_T> : IDisposable where _T : new()
 	{
@@ -33,17 +177,20 @@ namespace danmaq.nineball.old.core.data
 		/// <summary>データファイル名。</summary>
 		public readonly string FILE;
 
-		/// <summary>XNA Framework タイトル名(半角英数)。</summary>
-		public readonly string TITLENAME;
+		/// <summary>データ型名。</summary>
+		public readonly string typeName = typeof(_T).FullName;
+
+		/// <summary>静的な情報。</summary>
+		private readonly CDataIOManager staticMembers = CDataIOManager.instance;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* events ────────────────────────────────*
 
 		/// <summary>読込完了時に発生するイベント。</summary>
-		public event EventHandler loaded;
+		public event EventHandler<CEventMonoValue<bool>> loaded;
 
 		/// <summary>保存完了時に発生するイベント。</summary>
-		public event EventHandler saved;
+		public event EventHandler<CEventMonoValue<bool>> saved;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -51,13 +198,6 @@ namespace danmaq.nineball.old.core.data
 		/// <summary>永続データ。</summary>
 		public _T data = new _T();
 
-#if XBOX360
-		/// <summary>データの入出力対象デバイス。</summary>
-		private static StorageDevice device = null;
-
-		/// <summary>ストレージ ファイルの論理コレクション。</summary>
-		private static StorageContainer container = null;
-#endif
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -71,17 +211,13 @@ namespace danmaq.nineball.old.core.data
 		/// </exception>
 		public CDataIOManager(string strTitleName, string strFile)
 		{
-			if(strFile == null)
+			if(strFile == null || strTitleName == null)
 			{
 				throw new ArgumentNullException("strFile");
 			}
-			TITLENAME = strTitleName;
+			staticMembers.titleName = strTitleName;
 			FILE = strFile;
 		}
-
-		//		//* -----------------------------------------------------------------------*
-		//		/// <summary>デストラクタ。</summary>
-		//		~CDataIOManager() { Dispose(); }
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -93,16 +229,8 @@ namespace danmaq.nineball.old.core.data
 		/// </summary>
 		public void Dispose()
 		{
-#if XBOX360
-			try {
-				device = null;
-				if( container != null ) {
-					container.Dispose();
-					container = null;
-				}
-			}
-			catch( Exception ) { }
-#endif
+			staticMembers.Dispose();
+			GC.SuppressFinalize(this);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -113,7 +241,7 @@ namespace danmaq.nineball.old.core.data
 		/// </remarks>
 		public void resetData()
 		{
-			CLogger.add("ゲーム 設定データは初期化されました。");
+			CLogger.add(typeName + "は初期化されました。");
 			data = new _T();
 		}
 
@@ -131,15 +259,20 @@ namespace danmaq.nineball.old.core.data
 		/// </remarks>
 		public void load()
 		{
-			CLogger.add("ゲーム 設定データを読込しています...");
+			CLogger.add(FILE + "を" + typeName + "へ読込しています...");
 #if WINDOWS
-			__load(FILE);
+			load(FILE);
 #else
-			if( ( device == null || !device.IsConnected ) && !Guide.IsVisible ) {
-				device = null;
-				CGuideManager.reserveSelectDevice( load );
+			if(staticMembers.deviceReady)
+			{
+				load(staticMembers.getPath(fileName));
+			}
+			else
+			{
+				CGuideManager.reserveSelectDevice(load);
 			}
 #endif
+
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -148,19 +281,22 @@ namespace danmaq.nineball.old.core.data
 		/// <returns>保存に成功した場合、true</returns>
 		public bool save()
 		{
-			CLogger.add("ゲーム 設定データを保存しています...");
+			CLogger.add(typeName + "を" + FILE + "へ保存しています...");
 			bool bResult = false;
 #if WINDOWS
 			save(FILE);
 			bResult = true;
 #else
-			if( device != null && device.IsConnected ){
-				if( container == null ) { container = device.OpenContainer( CODENAME ); }
-				save( Path.Combine( container.Path, FILE ) );
-				bResult = true;
+			if(staticMembers.deviceReady)
+			{
+				bResult = save(staticMembers.getPath(fileName));
 			}
 #endif
-			CLogger.add("ゲーム 設定データを" + (bResult ? "保存完了。" : "保存に失敗"));
+			CLogger.add(typeName + "を" + FILE + "へ保存" + (bResult ? "完了。" : "に失敗。"));
+			if(saved != null)
+			{
+				saved(this, bResult);
+			}
 			return bResult;
 		}
 #if XBOX360
@@ -173,12 +309,10 @@ namespace danmaq.nineball.old.core.data
 		/// 
 		/// <param name="result">非同期操作のステータス</param>
 		private void load( IAsyncResult result ){
-			device = Guide.EndShowStorageDeviceSelector( result );
-			if( device != null && device.IsConnected ){
-				if( container == null ) { container = device.OpenContainer( CODENAME ); }
-				__load( Path.Combine( container.Path, FILE ) );
-			}
-			else { __load( null ); }
+			staticMembers.initializeDevice(result);
+			load(
+				staticMembers.deviceReady ?
+				staticMembers.getPath(fileName) : null);
 		}
 #endif
 
@@ -189,7 +323,7 @@ namespace danmaq.nineball.old.core.data
 		/// </remarks>
 		/// 
 		/// <param name="strPath">設定データ ファイルへのパス</param>
-		private void __load(string strPath)
+		private void load(string strPath)
 		{
 			bool bReaded = false;
 			if(strPath != null && File.Exists(strPath))
@@ -204,10 +338,11 @@ namespace danmaq.nineball.old.core.data
 #else
 					stream = File.Open( strPath, FileMode.Open, FileAccess.Read );
 #endif
-					data = (_T)((new XmlSerializer(typeof(_T))).Deserialize(stream));
+					data = (_T)((new XmlSerializer(typeof(_T), new XmlRootAttribute())).Deserialize(stream));
 					if(data != null)
 					{
 						bReaded = true;
+						CLogger.add(FILE + "を" + typeName + "へ読み込みました。");
 					}
 				}
 				catch(Exception e)
@@ -222,17 +357,17 @@ namespace danmaq.nineball.old.core.data
 			}
 			else
 			{
-				CLogger.add("指定した補助記憶装置に設定データが存在しません。");
+				CLogger.add("指定した補助記憶装置に" + FILE + "が存在しません。");
 			}
 			if(!bReaded)
 			{
 				resetData();
-				save();
+				bReaded = save();
 			}
 			CLogger.add(data.ToString());
 			if(loaded != null)
 			{
-				loaded(this, EventArgs.Empty);
+				loaded(this, bReaded);
 			}
 		}
 
@@ -243,24 +378,41 @@ namespace danmaq.nineball.old.core.data
 		/// </remarks>
 		/// 
 		/// <param name="strPath">設定データ ファイルへのパス</param>
-		private void save(string strPath)
+		/// <returns>正常に保存できた場合、<c>true</c></returns>
+		private bool save(string strPath)
 		{
+			bool bResult = false;
 			if(strPath != null)
 			{
 #if WINDOWS
-				DeflateStream stream = new DeflateStream(
-					File.Open(strPath, FileMode.Create, FileAccess.Write),
-					CompressionMode.Compress);
+				DeflateStream stream = null;
 #else
-				FileStream stream = File.Open( strPath, FileMode.Create, FileAccess.Write );
+				FileStream stream = null;
 #endif
-				(new XmlSerializer(typeof(_T))).Serialize(stream, data);
-				stream.Close();
-				if(saved != null)
+				try
 				{
-					saved(this, EventArgs.Empty);
+#if WINDOWS
+					stream = new DeflateStream(
+						File.Open(strPath, FileMode.Create, FileAccess.Write),
+						CompressionMode.Compress);
+#else
+					stream = File.Open( strPath, FileMode.Create, FileAccess.Write );
+#endif
+					(new XmlSerializer(typeof(_T), new XmlRootAttribute())).Serialize(stream, data);
+				}
+				catch(Exception e)
+				{
+					CLogger.add(e);
+				}
+				finally
+				{
+					if(stream != null)
+					{
+						stream.Close();
+					}
 				}
 			}
+			return bResult;
 		}
 	}
 }
