@@ -110,9 +110,12 @@
     <Compile Include="entity\input\CInputLegacy.cs" />
     <Compile Include="entity\input\CInputXBOX360.cs" />
     <Compile Include="entity\input\CInputXBOX360ChatPad.cs" />
+    <Compile Include="entity\input\data\EAxisLegacy.cs" />
+    <Compile Include="entity\input\data\EAxisXBOX360.cs" />
     <Compile Include="entity\input\data\EDirection.cs" />
     <Compile Include="entity\input\data\EReservedButtonID.cs" />
     <Compile Include="entity\input\CInput.cs" />
+    <Compile Include="entity\input\data\GamePadStateExtention.cs" />
     <Compile Include="entity\input\data\SInputState.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
@@ -164,7 +167,7 @@
     <Compile Include="state\input\collection\CStateWaitDetect.cs" />
     <Compile Include="state\input\collection\CStateXBOX360Detect.cs" />
     <Compile Include="state\input\CStateKeyboard.cs" />
-    <Compile Include="state\input\CStateLegacy.cs" />
+    <Compile Include="state\input\legacy\CStateDefaultBase.cs" />
     <Compile Include="state\input\xbox360\CStateDefaultBase.cs" />
     <Compile Include="state\input\xbox360\CStateChatPad.cs" />
     <Compile Include="state\input\xbox360\CStateDpad.cs" />

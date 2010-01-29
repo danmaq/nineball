@@ -18,20 +18,6 @@ namespace danmaq.nineball.entity.input.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>方向ボタン列挙体。</summary>
-	public enum EAxisLegacy
-	{
-		/// <summary>無効。</summary>
-		None,
-
-		/// <summary>POV。</summary>
-		POV,
-
-		/// <summary>スライダー。</summary>
-		Slider,
-	}
-
-	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ用の予約されたボタンID。</summary>
 	public enum EReservedButtonAxisID : short
 	{
@@ -80,7 +66,8 @@ namespace danmaq.nineball.entity.input.data
 						int pov = state.GetPointOfView()[0];
 						if(pov != -1)
 						{
-							new Vector2();
+							float fRadian = MathHelper.ToRadians(pov * 0.01f) - MathHelper.PiOver2;
+							new Vector2((float)Math.Cos(fRadian), (float)Math.Sin(fRadian));
 						}
 					}
 					break;

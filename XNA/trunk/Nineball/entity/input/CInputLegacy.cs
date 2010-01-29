@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input;
+using danmaq.nineball.state.input.legacy;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
@@ -175,7 +175,7 @@ namespace danmaq.nineball.entity.input
 		/// <param name="idDevice">デバイスのインスタンスGUID</param>
 		/// <param name="hWnd">ウィンドウ ハンドル</param>
 		public CInputLegacy(short playerNumber, Guid idDevice, IntPtr hWnd)
-			: base(playerNumber, CStateLegacy.instance)
+			: base(playerNumber, CStateDefaultBase.instance)
 		{
 			_privateMembers = new CPrivateMembers(this, idDevice, hWnd, _buttonStateList);
 		}

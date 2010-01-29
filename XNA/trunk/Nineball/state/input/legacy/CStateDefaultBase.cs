@@ -14,19 +14,19 @@ using danmaq.nineball.entity.input;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.input
+namespace danmaq.nineball.state.input.legacy
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ既定の入力状態。</summary>
-	public sealed class CStateLegacy : CState<CInputLegacy, CInputLegacy.CPrivateMembers>
+	public sealed class CStateDefaultBase : CState<CInputLegacy, CInputLegacy.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateLegacy instance = new CStateLegacy();
+		public static readonly CStateDefaultBase instance = new CStateDefaultBase();
 
 		/// <summary>入力値の幅。</summary>
 		private const int INPUTRANGE = 1000;
@@ -36,7 +36,7 @@ namespace danmaq.nineball.state.input
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateLegacy()
+		private CStateDefaultBase()
 		{
 		}
 

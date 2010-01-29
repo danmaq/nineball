@@ -24,28 +24,13 @@ namespace danmaq.nineball.entity.input.data
 		//* constants ──────────────────────────────-*
 
 		/// <summary>アナログ入力可能なボタン一覧。</summary>
-		private static readonly List<Buttons> _anaglogInputList = new List<Buttons> {
+		public static readonly ReadOnlyCollection<Buttons> anaglogInputList = new List<Buttons> {
 			Buttons.LeftTrigger, Buttons.RightTrigger,
 			Buttons.LeftThumbstickDown, Buttons.LeftThumbstickUp,
 			Buttons.LeftThumbstickLeft, Buttons.LeftThumbstickRight,
 			Buttons.RightThumbstickDown, Buttons.RightThumbstickUp,
 			Buttons.RightThumbstickLeft, Buttons.RightThumbstickRight
-		};
-
-		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>アナログ入力可能なボタン一覧を取得します。</summary>
-		/// 
-		/// <value>アナログ入力可能なボタン一覧。</value>
-		public static ReadOnlyCollection<Buttons> anaglogInputList
-		{
-			get
-			{
-				return _anaglogInputList.AsReadOnly();
-			}
-		}
+		}.AsReadOnly();
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -57,7 +42,7 @@ namespace danmaq.nineball.entity.input.data
 		/// <returns>アナログ入力に対応している場合、<c>true</c>。</returns>
 		public static bool isAvailableAnalogInput(this Buttons button)
 		{
-			return _anaglogInputList.Contains(button);
+			return anaglogInputList.Contains(button);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -114,48 +99,6 @@ namespace danmaq.nineball.entity.input.data
 				fResult = state.IsButtonDown(button) ? 1f : 0f;
 			}
 			return fResult;
-		}
-	}
-
-	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>XBOX360用コントローラ 入力情報クラス 拡張機能。</summary>
-	public static class GamePadStateExtention
-	{
-
-		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* constants ──────────────────────────────-*
-
-		/// <summary>ボタン一覧。</summary>
-		public static readonly ReadOnlyCollection<Buttons> allButtons = new List<Buttons> {
-			Buttons.DPadUp, Buttons.DPadDown, Buttons.DPadLeft, Buttons.DPadRight,
-			Buttons.Start, Buttons.Back,
-			Buttons.LeftStick, Buttons.RightStick, Buttons.LeftShoulder, Buttons.RightShoulder,
-			Buttons.BigButton, Buttons.A, Buttons.B, Buttons.X, Buttons.Y,
-			Buttons.RightTrigger, Buttons.LeftTrigger,
-			Buttons.RightThumbstickUp, Buttons.RightThumbstickDown,
-			Buttons.RightThumbstickRight, Buttons.RightThumbstickLeft,
-			Buttons.LeftThumbstickUp, Buttons.LeftThumbstickDown,
-			Buttons.LeftThumbstickRight, Buttons.LeftThumbstickLeft,
-		}.AsReadOnly();
-
-		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* methods ───────────────────────────────-*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>現在の入力状態を取得します。</summary>
-		/// 
-		/// <param name="state"></param>
-		public static Buttons getPress(this GamePadState state)
-		{
-			Buttons result = 0;
-			foreach(Buttons button in allButtons)
-			{
-				if(state.IsButtonDown(button))
-				{
-					result |= button;
-				}
-			}
-			return result;
 		}
 	}
 }
