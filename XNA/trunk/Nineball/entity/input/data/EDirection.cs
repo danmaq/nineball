@@ -14,23 +14,6 @@ namespace danmaq.nineball.entity.input.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>方向ボタン列挙体。</summary>
-	public enum EAxisXBOX360
-	{
-		/// <summary>無効。</summary>
-		None,
-
-		/// <summary>POV。</summary>
-		DPad,
-
-		/// <summary>左スティック。</summary>
-		LeftStick,
-
-		/// <summary>右スティック。</summary>
-		RightStick,
-	}
-
-	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>方向ボタン列挙体。</summary>
 	public enum EDirection : byte
 	{
 		/// <summary>上。</summary>
