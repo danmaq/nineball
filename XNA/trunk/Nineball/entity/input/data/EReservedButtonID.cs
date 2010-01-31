@@ -102,7 +102,23 @@ namespace danmaq.nineball.entity.input.data
 				case (short)EReservedButtonAxisID.analogLeft:
 				case (short)EReservedButtonAxisID.analogRight:
 					{
-						state.GetSlider();
+						int[] sliders = state.GetSlider();
+						switch(sButtonID)
+						{
+							case (short)EReservedButtonAxisID.analogUp:
+								fResult = -MathHelper.Min(sliders[1], 0);
+								break;
+							case (short)EReservedButtonAxisID.analogDown:
+								fResult = MathHelper.Max(sliders[1], 0);
+								break;
+							case (short)EReservedButtonAxisID.analogLeft:
+								fResult = -MathHelper.Min(sliders[0], 0);
+								break;
+							case (short)EReservedButtonAxisID.analogRight:
+								fResult = MathHelper.Max(sliders[0], 0);
+								break;
+						}
+						fResult /= (float)nRange;
 					}
 					break;
 				default:
