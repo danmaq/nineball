@@ -53,6 +53,16 @@ namespace danmaq.nineball.entity.input.data
 	public static class JoystickStateExtension
 	{
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>入力状態をアナログ値で取得します。</summary>
+		/// <remarks>
+		/// デジタル値でのみ取得できるボタンを指定した場合、戻り値は0.0か1.0となります。
+		/// </remarks>
+		/// 
+		/// <param name="state">入力状態の格納された構造体。</param>
+		/// <param name="sButtonID">ボタンID。</param>
+		/// <param name="nRange">アナログ値の取りうる最大値。</param>
+		/// <returns>入力されたアナログ値(0.0～1.0)。</returns>
 		public static float getInputState(this JoystickState state, short sButtonID, int nRange)
 		{
 			float fResult = 0f;
@@ -67,7 +77,23 @@ namespace danmaq.nineball.entity.input.data
 						if(pov != -1)
 						{
 							float fRadian = MathHelper.ToRadians(pov * 0.01f) - MathHelper.PiOver2;
-							new Vector2((float)Math.Cos(fRadian), (float)Math.Sin(fRadian));
+							Vector2 vector =
+								new Vector2((float)Math.Cos(fRadian), (float)Math.Sin(fRadian));
+							switch(sButtonID)
+							{
+								case (short)EReservedButtonAxisID.povUp:
+									fResult = -MathHelper.Min(vector.Y, 0);
+									break;
+								case (short)EReservedButtonAxisID.povDown:
+									fResult = MathHelper.Max(vector.Y, 0);
+									break;
+								case (short)EReservedButtonAxisID.povLeft:
+									fResult = -MathHelper.Min(vector.X, 0);
+									break;
+								case (short)EReservedButtonAxisID.povRight:
+									fResult = MathHelper.Max(vector.X, 0);
+									break;
+							}
 						}
 					}
 					break;
@@ -75,6 +101,9 @@ namespace danmaq.nineball.entity.input.data
 				case (short)EReservedButtonAxisID.analogDown:
 				case (short)EReservedButtonAxisID.analogLeft:
 				case (short)EReservedButtonAxisID.analogRight:
+					{
+						state.GetSlider();
+					}
 					break;
 				default:
 					fResult = (state.GetButtons()[sButtonID] == 0) ? 0f : 1f;
