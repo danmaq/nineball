@@ -140,6 +140,7 @@ namespace danmaq.nineball.entity.input
 			}
 			protected set
 			{
+				value.Normalize();
 				axis = value;
 				axisFlag = EDirectionFlags.None;
 				if(value.Length() >= analogThreshold)

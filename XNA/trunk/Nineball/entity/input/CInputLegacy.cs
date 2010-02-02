@@ -11,8 +11,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.collection;
 using danmaq.nineball.state.input.legacy;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
@@ -50,10 +55,10 @@ namespace danmaq.nineball.entity.input
 			//* fields ────────────────────────────────*
 
 			/// <summary>デバイスの性能レポート。</summary>
-			public string capsReport = "";
+			public string capsReport = string.Empty;
 
 			/// <summary>エラー レポート。</summary>
-			public string errorReport = "";
+			public string errorReport = string.Empty;
 
 			/// <summary>フォース フィードバックをサポートするかどうか。</summary>
 			public bool enableForceFeedback = false;
@@ -153,20 +158,43 @@ namespace danmaq.nineball.entity.input
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>
+		/// レガシ ゲーム コントローラ入力制御・管理クラス オブジェクト一覧。
+		/// </summary>
+		public static readonly ReadOnlyCollection<CInputLegacy> instanceList;
+
 		/// <summary>ボタン割り当て値の一覧。</summary>
 		private readonly List<short> m_assignList = new List<short>();
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		public readonly CPrivateMembers _privateMembers;
+		private readonly CPrivateMembers _privateMembers;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>方向ボタンとして使用するボタン種類。</summary>
-		private EAxisLegacy m_useForAxis = EAxisLegacy.POV;
+		private EAxisLegacy m_useForAxis;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>静的なコンストラクタ。</summary>
+		static CInputLegacy()
+		{
+			List<CInputLegacy> inputList = new List<CInputLegacy>();
+			DeviceList controllers =
+				Manager.GetDevices(DeviceClass.GameControl, EnumDevicesFlags.AttachedOnly);
+			foreach(DeviceInstance controller in controllers)
+			{
+				if(!(Regex.IsMatch(controller.ProductName, "Xbox ?360", RegexOptions.IgnoreCase)))
+				{
+					inputList.Add(new CInputLegacy(
+						-1, controller.InstanceGuid, Process.GetCurrentProcess().Handle));
+				}
+			}
+			instanceList = inputList.AsReadOnly();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
@@ -174,10 +202,11 @@ namespace danmaq.nineball.entity.input
 		/// <param name="playerNumber">プレイヤー番号。</param>
 		/// <param name="idDevice">デバイスのインスタンスGUID</param>
 		/// <param name="hWnd">ウィンドウ ハンドル</param>
-		public CInputLegacy(short playerNumber, Guid idDevice, IntPtr hWnd)
-			: base(playerNumber, CStateDefaultBase.instance)
+		private CInputLegacy(short playerNumber, Guid idDevice, IntPtr hWnd)
+			: base(playerNumber, CStateNoAxis.instance)
 		{
 			_privateMembers = new CPrivateMembers(this, idDevice, hWnd, _buttonStateList);
+			useForAxis = EAxisLegacy.POV;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -247,7 +276,18 @@ namespace danmaq.nineball.entity.input
 				if(value != m_useForAxis)
 				{
 					m_useForAxis = value;
-					// TODO : 変更がかかった際の処理(ステート変更など)を挿入する
+					switch(value)
+					{
+						case EAxisLegacy.POV:
+							nextState = CStatePOV.instance;
+							break;
+						case EAxisLegacy.Slider:
+							nextState = CStateSlider.instance;
+							break;
+						default:
+							nextState = CStateNoAxis.instance;
+							break;
+					}
 				}
 			}
 		}
@@ -304,11 +344,45 @@ namespace danmaq.nineball.entity.input
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// レガシ ゲーム コントローラを自動認識する入力制御・管理クラスを作成します。
+		/// </summary>
+		/// 
+		/// <param name="playerNumber">設定したいプレイヤー番号。</param>
+		/// <returns>レガシ ゲーム コントローラ入力制御・管理クラスコレクション。</returns>
+		public static CInputCollection createDetector(short playerNumber)
+		{
+			return new CInputCollection(playerNumber, CStateLegacyDetect.instance);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
 			_privateMembers.Dispose();
 			base.Dispose();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>任意のボタンが押されたかどうかを判定します。</summary>
+		/// 
+		/// <param name="pov">POVの操作も判定するかどうか。</param>
+		/// <param name="slider">スライダーの操作も判定するかどうか。</param>
+		/// <returns>任意のボタンが押された場合、<c>true</c>。</returns>
+		public bool isPushAnyKey(bool pov, bool slider)
+		{
+			JoystickState state = _privateMembers.poll();
+			byte[] buttons = state.GetButtons();
+			bool bResult = buttons.Any(button => button != 0);
+			if(!bResult && pov)
+			{
+				bResult = state.GetPointOfView()[0] != -1;
+			}
+			if(!bResult && slider)
+			{
+				bResult = state.getVector3Slider().Length() >= analogThreshold;
+			}
+			return bResult;
 		}
 	}
 }

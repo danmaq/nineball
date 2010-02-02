@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
+using danmaq.nineball.Properties;
 
 namespace danmaq.nineball.entity.input
 {
@@ -213,18 +214,28 @@ namespace danmaq.nineball.entity.input
 		/// <summary>要素を追加します。</summary>
 		/// 
 		/// <param name="item">要素。</param>
-		/// <exception cref="System.NotSupportedException">
-		/// 読み取り専用状態でこのメソッドを実行した場合。
-		/// </exception>
 		/// <exception cref="System.ArgumentException">
+		/// 既に登録されている子入力クラスを登録しようとした場合。
+		/// </exception>
+		/// <exception cref="System.ArgumentNullException">
+		/// 要素が<c>null</c>である場合。
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 対象のプレイヤー番号が自身のものと相違する場合。
 		/// </exception>
 		/// <exception cref="System.InvalidOperationException">
 		/// 許容値以上の数の子入力クラスを登録しようとした場合。
 		/// </exception>
+		/// <exception cref="System.NotSupportedException">
+		/// 読み取り専用状態でこのメソッドを実行した場合。
+		/// </exception>
 		public virtual void Add(CInput item)
 		{
 			throwAtReadOnly();
+			if(item == null)
+			{
+				throw new ArgumentNullException("item");
+			}
 			if(!(item.playerNumber == playerNumber))
 			{
 				throw new ArgumentOutOfRangeException("item");
@@ -233,13 +244,17 @@ namespace danmaq.nineball.entity.input
 			{
 				throw new InvalidOperationException();
 			}
+			if(childs.Contains(item))
+			{
+				throw new ArgumentException("item");
+			}
 			changedButtonsNum += item.onChangedButtonsNum;
 			item.ButtonsNum = ButtonsNum;
 			childs.Add(item);
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>管理している要素を全て解放します。</summary>
+		/// <summary>管理している子入力クラスを全て解放します。</summary>
 		/// 
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
@@ -275,9 +290,9 @@ namespace danmaq.nineball.entity.input
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>管理している要素を解放します。</summary>
+		/// <summary>管理している子入力クラスを解放します。</summary>
 		/// 
-		/// <param name="item">要素。</param>
+		/// <param name="item">子入力クラス。</param>
 		/// <returns>解放できた場合、<c>true</c>。</returns>
 		/// <exception cref="System.NotSupportedException">
 		/// 読み取り専用状態でこのメソッドを実行した場合。
@@ -326,7 +341,7 @@ namespace danmaq.nineball.entity.input
 		{
 			if(IsReadOnly)
 			{
-				throw new NotSupportedException();
+				throw new NotSupportedException(Resources.ERR_READONLY);
 			}
 		}
 	}

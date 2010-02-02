@@ -45,6 +45,9 @@ namespace danmaq.nineball.entity
 		/// </summary>
 		private bool m_bOwnerIsCEntity = false;
 
+		/// <summary>型名のキャッシュ。</summary>
+		private string m_strTypeName = null;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -58,7 +61,6 @@ namespace danmaq.nineball.entity
 			previousState = CState.empty;
 			currentState = CState.empty;
 			lastStateChangeTime = DateTime.Now;
-			name = GetType().ToString();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -118,16 +120,6 @@ namespace danmaq.nineball.entity
 		/// 
 		/// <value>現在の状態。初期値は<c>CState.empty</c>。</value>
 		public IState currentState
-		{
-			get;
-			private set;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>このオブジェクトの名前を取得します。</summary>
-		/// 
-		/// <value>このオブジェクトの名前。</value>
-		public virtual string name
 		{
 			get;
 			private set;
@@ -228,8 +220,13 @@ namespace danmaq.nineball.entity
 		/// <value>このオブジェクトを示す文字列情報。</value>
 		public override string ToString()
 		{
+			if(m_strTypeName == null)
+			{
+				m_strTypeName = GetType().ToString();
+			}
 			return string.Format("{0} STATE[CUR:{1}, PREV:{2}] {3} MEMBERS:{4}",
-				name, currentState, previousState, Environment.NewLine, privateMembers);
+				m_strTypeName, currentState, previousState,
+				Environment.NewLine, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*

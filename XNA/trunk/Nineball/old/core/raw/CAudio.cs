@@ -221,7 +221,7 @@ namespace danmaq.nineball.old.core.raw
 		public void Dispose()
 		{
 			CLogger.add("音響リソースの解放をしています...");
-			string strErr = "";
+			string strErr = string.Empty;
 			try
 			{
 				if(cueBGM != null)

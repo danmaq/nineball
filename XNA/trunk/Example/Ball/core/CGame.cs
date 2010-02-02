@@ -36,7 +36,7 @@ namespace danmaq.ball.core
 		public readonly GraphicsDeviceManager graphicDeviceManager;
 
 		/// <summary>入力管理クラス。</summary>
-		public readonly CInputCollection inputManager = new CInputCollection(0);
+		public readonly CInputManager inputManager = CInputManager.create();
 
 		/// <summary>解像度管理クラス。</summary>
 		public readonly CResolution resolution = new CResolution(EResolution.VGA);

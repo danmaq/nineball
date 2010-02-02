@@ -155,7 +155,7 @@ namespace danmaq.nineball.util.resolution
 		/// <returns>解説</returns>
 		public static string ToString(this EResolution resolution)
 		{
-			string strRes = resolution.ToString().Replace("plus", "+").Replace("43", "");
+			string strRes = resolution.ToString().Replace("plus", "+").Replace("43", string.Empty);
 			Rectangle rect = resolution.toRect();
 			return strRes + string.Format(
 				"({0}x{1})", rect.Width.ToString(), rect.Height.ToString());

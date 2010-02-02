@@ -104,15 +104,15 @@ namespace danmaq.nineball.old.core.data
 			{
 				if(dirContent == null)
 				{
-					dirContent = "";
+					dirContent = string.Empty;
 				}
 				if(fileConfigure == null)
 				{
-					fileConfigure = "";
+					fileConfigure = string.Empty;
 				}
 				if(fileLog == null)
 				{
-					fileLog = "";
+					fileLog = string.Empty;
 				}
 			}
 		}
@@ -157,7 +157,7 @@ namespace danmaq.nineball.old.core.data
 				{
 
 					complete();
-					string strResult = "";
+					string strResult = string.Empty;
 					if(fileXGS.Length > 0 && !fileXGS.ToLower().Contains(".xgs"))
 					{
 						strResult +=
@@ -230,19 +230,19 @@ namespace danmaq.nineball.old.core.data
 			{
 				if(fileXGS == null)
 				{
-					fileXGS = "";
+					fileXGS = string.Empty;
 				}
 				if(fileXSB == null)
 				{
-					fileXSB = "";
+					fileXSB = string.Empty;
 				}
 				if(fileXWBSE == null)
 				{
-					fileXWBSE = "";
+					fileXWBSE = string.Empty;
 				}
 				if(fileXWBBGM == null)
 				{
-					fileXWBBGM = "";
+					fileXWBBGM = string.Empty;
 				}
 			}
 		}

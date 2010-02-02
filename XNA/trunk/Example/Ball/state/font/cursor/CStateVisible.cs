@@ -43,6 +43,9 @@ namespace danmaq.ball.state.font.cursor
 		/// <summary>シェーダ プログラム読み込みのためのコンテンツ管理クラス。</summary>
 		private readonly ContentManager contentManager = CGame.instance.Content;
 
+		/// <summary>カーソル表示のためのシェーダ。</summary>
+		private readonly Effect effect;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -50,6 +53,14 @@ namespace danmaq.ball.state.font.cursor
 		/// <summary>コンストラクタ。</summary>
 		private CStateVisible()
 		{
+			device.VertexDeclaration =
+				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
+			effect = contentManager.Load<Effect>(Resources.FX_CURSOR);
+			effect.Parameters["View"].SetValue(Matrix.CreateLookAt(
+				new Vector3(0, 0, 1), Vector3.Zero, new Vector3(0, 1, 0)));
+			effect.Parameters["Projection"].SetValue(Matrix.CreateOrthographic(
+				device.Viewport.Width, device.Viewport.Height, 0.1f, 1000f));
+			effect.CurrentTechnique = effect.Techniques["XORTechnique"];
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -63,16 +74,7 @@ namespace danmaq.ball.state.font.cursor
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(CCursor entity, Matrix world, GameTime gameTime)
 		{
-			device.VertexDeclaration =
-				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
-			Effect effect = contentManager.Load<Effect>(Resources.FX_CURSOR);
 			effect.Parameters["World"].SetValue(world);
-			effect.Parameters["View"].SetValue(Matrix.CreateLookAt(
-				new Vector3(0, 0, 1), Vector3.Zero, new Vector3(0, 1, 0)));
-			effect.Parameters["Projection"].SetValue(Matrix.CreateOrthographic(
-				device.Viewport.Width, device.Viewport.Height, 0.1f, 1000f));
-			effect.CurrentTechnique = effect.Techniques["XORTechnique"];
-
 			effect.Begin();
 			foreach (EffectPass pass in effect.CurrentTechnique.Passes)
 			{

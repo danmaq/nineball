@@ -54,6 +54,43 @@ namespace danmaq.nineball.entity.input.data
 	{
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>POVの入力状態をベクトルで取得します。</summary>
+		/// 
+		/// <param name="state">入力状態の格納された構造体。</param>
+		/// <returns>入力されたPOVのベクトル(-1.0～+1.0)。</returns>
+		public static Vector2 getVectorPOV(this JoystickState state)
+		{
+			Vector2 result = Vector2.Zero;
+			int pov = state.GetPointOfView()[0];
+			if(pov != -1)
+			{
+				float fRadian = MathHelper.ToRadians(pov * 0.01f) - MathHelper.PiOver2;
+				result = new Vector2((float)Math.Cos(fRadian), (float)Math.Sin(fRadian));
+			}
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スライダーの入力状態を2次元ベクトルで取得します。</summary>
+		/// 
+		/// <param name="state">入力状態の格納された構造体。</param>
+		/// <returns>入力されたスライダーの2次元ベクトル(-1.0～+1.0)。</returns>
+		public static Vector2 getVector2Slider(this JoystickState state)
+		{
+			return new Vector2(state.X, state.Y);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スライダーの入力状態を3次元ベクトルで取得します。</summary>
+		/// 
+		/// <param name="state">入力状態の格納された構造体。</param>
+		/// <returns>入力されたスライダーの3次元ベクトル(-1.0～+1.0)。</returns>
+		public static Vector3 getVector3Slider(this JoystickState state)
+		{
+			return new Vector3(state.X, state.Y, state.Z);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>入力状態をアナログ値で取得します。</summary>
 		/// <remarks>
 		/// デジタル値でのみ取得できるボタンを指定した場合、戻り値は0.0か1.0となります。
@@ -73,12 +110,9 @@ namespace danmaq.nineball.entity.input.data
 				case (short)EReservedButtonAxisID.povLeft:
 				case (short)EReservedButtonAxisID.povRight:
 					{
-						int pov = state.GetPointOfView()[0];
-						if(pov != -1)
+						Vector2 vector = state.getVectorPOV();
+						if(vector != Vector2.Zero)
 						{
-							float fRadian = MathHelper.ToRadians(pov * 0.01f) - MathHelper.PiOver2;
-							Vector2 vector =
-								new Vector2((float)Math.Cos(fRadian), (float)Math.Sin(fRadian));
 							switch(sButtonID)
 							{
 								case (short)EReservedButtonAxisID.povUp:

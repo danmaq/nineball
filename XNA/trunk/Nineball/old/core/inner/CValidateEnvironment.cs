@@ -129,7 +129,7 @@ Environment.UserInteractive &&
 #if WINDOWS
 				string strSP = Environment.OSVersion.ServicePack;
 				return Environment.OSVersion.Version >= WINDOWS_VERSION_XP &&
-					!(strSP == "" || strSP == "Service Pack 1");
+					!(strSP == string.Empty || strSP == "Service Pack 1");
 #else
 				return ( Environment.OSVersion.Platform == PlatformID.Xbox );
 #endif

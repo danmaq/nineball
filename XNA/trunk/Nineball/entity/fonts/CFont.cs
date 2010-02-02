@@ -80,7 +80,7 @@ namespace danmaq.nineball.entity.fonts
 		public bool isDrawShadow = true;
 
 		/// <summary>表示対象文字列。</summary>
-		private string m_strText = "";
+		private string m_strText = string.Empty;
 
 		/// <summary>描画レイヤ。</summary>
 		private float m_flayer = 0;
@@ -155,7 +155,7 @@ namespace danmaq.nineball.entity.fonts
 			}
 			set
 			{
-				m_strText = (value == null ? "" : value);
+				m_strText = value ?? string.Empty;
 			}
 		}
 
