@@ -12,12 +12,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
+using System.Linq;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.Properties;
-using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.state.input.collection
@@ -39,7 +37,16 @@ namespace danmaq.nineball.state.input.collection
 		/// <summary>
 		/// レガシ ゲーム コントローラ入力制御・管理クラス オブジェクト一覧。
 		/// </summary>
-		private readonly ReadOnlyCollection<CInputLegacy> instanceList;
+		private readonly ReadOnlyCollection<CInputLegacy> instanceList = CInputLegacy.instanceList;
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>POVの入力を検出するかどうか。</summary>
+		public bool detectPOV = true;
+
+		/// <summary>スライダーの入力を検出するかどうか。</summary>
+		public bool detectSlider = true;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -48,18 +55,6 @@ namespace danmaq.nineball.state.input.collection
 		/// <summary>コンストラクタ。</summary>
 		private CStateLegacyDetect()
 		{
-			List<CInputLegacy> inputList = new List<CInputLegacy>();
-			DeviceList controllers =
-				Manager.GetDevices(DeviceClass.GameControl, EnumDevicesFlags.AttachedOnly);
-			foreach(DeviceInstance controller in controllers)
-			{
-				if(!(Regex.IsMatch(controller.ProductName, "Xbox ?360", RegexOptions.IgnoreCase)))
-				{
-					inputList.Add(new CInputLegacy(
-						-1, controller.InstanceGuid, Process.GetCurrentProcess().Handle));
-				}
-			}
-			instanceList = inputList.AsReadOnly();
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -96,9 +91,11 @@ namespace danmaq.nineball.state.input.collection
 		{
 			if(entity.Count == 0)
 			{
-				foreach(CInputLegacy input in instanceList)
+				CInputLegacy input = instanceList.FirstOrDefault(
+					item => item.isPushAnyKey(detectPOV, detectSlider));
+				if(input != null)
 				{
-					// TODO : 作りかけ
+					entity.Add(input);
 				}
 			}
 			if(entity.Count != 0)

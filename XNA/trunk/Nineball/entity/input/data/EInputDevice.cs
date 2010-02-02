@@ -7,21 +7,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace danmaq.nineball.old.core.data
+using System;
+
+namespace danmaq.nineball.entity.input.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイス 列挙体。</summary>
-	public enum EInputDevice
+	[Flags]
+	public enum EInputDevice : byte
 	{
+		/// <summary>無効。</summary>
+		None = 0,
 
 		/// <summary>キーボード。</summary>
-		Keyboard,
+		Keyboard = 1 << 0,
 
-		/// <summary>レガシ ゲームパッド。</summary>
-		LegacyPad,
+		/// <summary>マウス。</summary>
+		Mouse = 1 << 1,
 
-		/// <summary>XBOX360コントローラ。</summary>
-		XBOX360
+		/// <summary>XBOX360ゲーム コントローラ。</summary>
+		XBOX360 = 1 << 2,
+
+		/// <summary>XBOX360チャットパッド。</summary>
+		XBOX360ChatPad = 1 << 3,
+
+		/// <summary>レガシ ゲーム コントローラ。</summary>
+		LegacyPad = 1 << 4,
 	}
 }

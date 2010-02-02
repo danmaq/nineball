@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using danmaq.nineball.Properties;
 #if XBOX360
 using System.Diagnostics;
 #endif
@@ -134,7 +135,7 @@ namespace danmaq.nineball.util
 		public static void add(object obj)
 		{
 			// TODO : 可変引数に対応する
-			string strText = obj == null ? "null" : obj.ToString();
+			string strText = obj == null ? Resources.NULL : obj.ToString();
 			strText = now + (strText.Contains(Environment.NewLine) ?
 				(" > " + Environment.NewLine) : " > ") + strText;
 #if WINDOWS
@@ -176,7 +177,7 @@ namespace danmaq.nineball.util
 		/// <param name="strDest">出力先ファイル名</param>
 		private static string getDestDescription(string strDest)
 		{
-			return (strDest == null ? DESCRIPTION_STDOUT : strDest);
+			return strDest ?? DESCRIPTION_STDOUT;
 		}
 	}
 }

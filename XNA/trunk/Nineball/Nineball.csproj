@@ -103,6 +103,8 @@
     <Compile Include="entity\component\CGuideManager.cs" />
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
     <Compile Include="entity\input\CHelper.cs" />
+    <Compile Include="entity\input\CInputManager.cs" />
+    <Compile Include="entity\input\CInputMouse.cs" />
     <Compile Include="entity\input\data\ButtonsExtension.cs" />
     <Compile Include="entity\input\CInputCollection.cs" />
     <Compile Include="entity\input\CInputEmpty.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="entity\input\data\EAxisLegacy.cs" />
     <Compile Include="entity\input\data\EAxisXBOX360.cs" />
     <Compile Include="entity\input\data\EDirection.cs" />
+    <Compile Include="entity\input\data\EInputDevice.cs" />
     <Compile Include="entity\input\data\EReservedButtonID.cs" />
     <Compile Include="entity\input\CInput.cs" />
     <Compile Include="entity\input\data\GamePadStateExtention.cs" />
@@ -135,7 +138,6 @@
     <Compile Include="old\core\data\CResource.cs" />
     <Compile Include="old\core\data\EDirType.cs" />
     <Compile Include="old\core\data\EForcePreset.cs" />
-    <Compile Include="old\core\data\EInputDevice.cs" />
     <Compile Include="old\core\data\SStarter.cs" />
     <Compile Include="old\core\inner\CGuideManager.cs" />
     <Compile Include="old\core\inner\CValidateDirectX.cs" />
@@ -168,6 +170,9 @@
     <Compile Include="state\input\collection\CStateXBOX360Detect.cs" />
     <Compile Include="state\input\CStateKeyboard.cs" />
     <Compile Include="state\input\legacy\CStateDefaultBase.cs" />
+    <Compile Include="state\input\legacy\CStateNoAxis.cs" />
+    <Compile Include="state\input\legacy\CStatePOV.cs" />
+    <Compile Include="state\input\legacy\CStateSlider.cs" />
     <Compile Include="state\input\xbox360\CStateDefaultBase.cs" />
     <Compile Include="state\input\xbox360\CStateChatPad.cs" />
     <Compile Include="state\input\xbox360\CStateDpad.cs" />
@@ -229,8 +234,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -48,7 +48,7 @@ namespace danmaq.nineball.state.fonts
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
 		{
-			if(entity.sprite != null && entity.font != null)
+			if(entity.sprite != null && entity.font != null && entity.text.Length > 0)
 			{
 				SFontGradationInfo[] _gradation = createGradation(entity);
 				Vector2 origin = getOrigin(entity, _gradation);

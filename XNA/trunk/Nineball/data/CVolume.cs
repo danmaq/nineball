@@ -161,7 +161,7 @@ namespace danmaq.nineball.data
 		/// <returns>文字列化した音量値</returns>
 		public string ToString(bool bSlider)
 		{
-			string strResult = "";
+			string strResult = string.Empty;
 			string strDB = String.Format("{0:+0.0;-0.0;0}dB", dB.ToString());
 			if(bSlider)
 			{

@@ -21,20 +21,47 @@ namespace danmaq.nineball.state.manager
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>FPS保持データ。</summary>
-		public struct SFPSData
+		private struct SFPSData
 		{
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>初期化済み構造体。</summary>
+			public static readonly SFPSData initializedData;
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
-			/// <summary>フェーズ・カウンタ管理クラス</summary>
-			public CPhase m_phaseManager;
+			/// <summary>前回計測時の稼働時間(秒)。</summary>
+			private int m_prevSeconds;
 
-			/// <summary>前回計測時の稼働時間(秒)</summary>
-			public int m_prevSeconds;
+			/// <summary>フェーズ・カウンタ管理クラス。</summary>
+			private CPhase m_mgrPhase;
 
-			/// <summary>FPS実測値</summary>
-			public int m_fps;
+			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* constructor & destructor ───────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>静的なコンストラクタ。</summary>
+			static SFPSData()
+			{
+				initializedData = new SFPSData();
+				initializedData.m_mgrPhase = new CPhase();
+			}
+
+			//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* properties ──────────────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>実測FPSを取得します。</summary>
+			/// 
+			/// <value>FPS実測値。</value>
+			public int fps
+			{
+				get;
+				private set;
+			}
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
@@ -49,13 +76,13 @@ namespace danmaq.nineball.state.manager
 			/// <param name="gameTime">前フレームからの経過時間</param>
 			public void update(GameTime gameTime)
 			{
-				m_phaseManager.count++;
+				m_mgrPhase.count++;
 				int nNowSeconds = gameTime.TotalRealTime.Seconds;
 				if(m_prevSeconds != nNowSeconds)
 				{
 					m_prevSeconds = nNowSeconds;
-					m_fps = m_phaseManager.countPhase;
-					m_phaseManager.phase++;
+					fps = m_mgrPhase.countPhase;
+					m_mgrPhase.phase++;
 				}
 			}
 		}
@@ -67,14 +94,11 @@ namespace danmaq.nineball.state.manager
 		public static readonly CStateFPSCalculator instance =
 			new CStateFPSCalculator();
 
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
 		/// <summary>前回計測時の更新稼働時間(秒)</summary>
-		private SFPSData m_dataUpdate = new SFPSData();
+		private readonly SFPSData dataUpdate = SFPSData.initializedData;
 
 		/// <summary>前回計測時の描画稼働時間(秒)</summary>
-		private SFPSData m_dataDraw = new SFPSData();
+		private readonly SFPSData dataDraw = SFPSData.initializedData;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -83,8 +107,6 @@ namespace danmaq.nineball.state.manager
 		/// <summary>コンストラクタ。</summary>
 		private CStateFPSCalculator()
 		{
-			m_dataUpdate.m_phaseManager = new CPhase();
-			m_dataDraw.m_phaseManager = new CPhase();
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -98,7 +120,7 @@ namespace danmaq.nineball.state.manager
 		{
 			get
 			{
-				return m_dataUpdate.m_fps;
+				return dataUpdate.fps;
 			}
 		}
 
@@ -110,7 +132,7 @@ namespace danmaq.nineball.state.manager
 		{
 			get
 			{
-				return m_dataDraw.m_fps;
+				return dataDraw.fps;
 			}
 		}
 
@@ -124,7 +146,7 @@ namespace danmaq.nineball.state.manager
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			m_dataUpdate.update(gameTime);
+			dataUpdate.update(gameTime);
 			base.update(entity, privateMembers, gameTime);
 		}
 
@@ -138,7 +160,7 @@ namespace danmaq.nineball.state.manager
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			m_dataDraw.update(gameTime);
+			dataDraw.update(gameTime);
 			base.draw(entity, privateMembers, gameTime);
 		}
 	}

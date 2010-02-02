@@ -41,6 +41,17 @@ namespace danmaq.nineball.entity.input
 			EDirectionFlags.right,
 		};
 
+		/// <summary>入力クラスの型に対応する、入力デバイスの列挙体一覧。</summary>
+		private static readonly Dictionary<Type, EInputDevice> devices =
+			new Dictionary<Type,EInputDevice>
+		{
+			{typeof(CInputKeyboard), EInputDevice.Keyboard},
+			{typeof(CInputMouse), EInputDevice.Mouse},
+			{typeof(CInputXBOX360), EInputDevice.XBOX360},
+			{typeof(CInputXBOX360ChatPad), EInputDevice.XBOX360ChatPad},
+			{typeof(CInputLegacy), EInputDevice.LegacyPad},
+		};
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -106,6 +117,21 @@ namespace danmaq.nineball.entity.input
 					flags |= axisFlagsList[i];
 				}
 			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>入力クラスの型から入力デバイス固有の定数を取得します。</summary>
+		/// 
+		/// <param name="type">入力クラスの型。</param>
+		/// <returns>入力デバイス固有の定数。</returns>
+		public static EInputDevice getDeviceEnum(Type type)
+		{
+			EInputDevice result;
+			if(!devices.TryGetValue(type, out result))
+			{
+				result = EInputDevice.None;
+			}
+			return result;
 		}
 	}
 }

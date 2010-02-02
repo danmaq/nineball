@@ -18,6 +18,7 @@ namespace danmaq.nineball.util
 {
 
 	// TODO : Entityにしようかな
+	// TODO : GC対策
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>スプライト描画管理 クラス。</summary>

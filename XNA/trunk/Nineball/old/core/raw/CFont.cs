@@ -75,7 +75,7 @@ namespace danmaq.nineball.old.core.raw
 		public bool isUseGradation = false;
 
 		/// <summary>表示対象文字列。</summary>
-		private string m_strText = "";
+		private string m_strText = string.Empty;
 
 		/// <summary>描画レイヤ。</summary>
 		private float m_flayer = 0;
@@ -116,7 +116,7 @@ namespace danmaq.nineball.old.core.raw
 			}
 			set
 			{
-				m_strText = (value == null ? "" : value);
+				m_strText = value ?? string.Empty;
 			}
 		}
 

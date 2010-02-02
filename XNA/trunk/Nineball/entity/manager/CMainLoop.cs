@@ -153,7 +153,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>初期化処理を実行します。</summary>
 		public override void initialize()
 		{
-			nextState = m_firstState == null ? CStateMainLoopDefault.instance : m_firstState;
+			nextState = m_firstState ?? CStateMainLoopDefault.instance;
 			base.initialize();
 		}
 

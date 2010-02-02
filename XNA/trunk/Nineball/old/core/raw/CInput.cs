@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using danmaq.nineball.data;
+using danmaq.nineball.entity.input.data;
 using danmaq.nineball.old.core.data;
 using danmaq.nineball.old.core.manager;
 using danmaq.nineball.util;
@@ -457,6 +458,7 @@ namespace danmaq.nineball.old.core.raw
 		/// <returns>割り当てに成功した場合、true</returns>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 登録されている数以上のボタン番号を指定した場合。
+		/// または、対応していない入力デバイスを引数に設定した場合。
 		/// </exception>
 		/// <exception cref="Microsoft.DirectX.DirectInput.DeviceNotRegisteredException">
 		/// レガシ ゲームパッドが初期化されていない状態で割り当てをしようとした場合。
@@ -518,6 +520,8 @@ namespace danmaq.nineball.old.core.raw
 					}
 					bAssign = __assignXBOX360(ref assignXBOX360[uType]);
 					break;
+				default:
+					throw new ArgumentOutOfRangeException("device");
 			}
 			return bAssign;
 		}
@@ -530,12 +534,13 @@ namespace danmaq.nineball.old.core.raw
 		private bool __assignXBOX360(ref Buttons rAssign)
 		{
 			GamePadState state = GamePad.GetState(PlayerIndex.One);
-			Buttons[] btns = {
-						Buttons.A, Buttons.B, Buttons.X, Buttons.Y,
-						Buttons.Back, Buttons.Start,
-						Buttons.LeftShoulder, Buttons.LeftTrigger,
-						Buttons.RightShoulder, Buttons.RightTrigger
-					};
+			Buttons[] btns =
+			{
+				Buttons.A, Buttons.B, Buttons.X, Buttons.Y,
+				Buttons.Back, Buttons.Start,
+				Buttons.LeftShoulder, Buttons.LeftTrigger,
+				Buttons.RightShoulder, Buttons.RightTrigger
+			};
 			foreach(Buttons btn in btns)
 			{
 				if(state.IsButtonDown(btn))

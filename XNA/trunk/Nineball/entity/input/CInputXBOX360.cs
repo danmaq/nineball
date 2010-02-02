@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.collection;
 using danmaq.nineball.state.input.xbox360;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -290,10 +291,9 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="playerNumber">設定したいプレイヤー番号。</param>
 		/// <returns>XBOX360ゲーム コントローラ入力制御・管理クラスコレクション。</returns>
-		public static CInputCollection createXBOX360Detector(short playerNumber)
+		public static CInputCollection createDetector(short playerNumber)
 		{
-			return new CInputCollection(
-				playerNumber, state.input.collection.CStateXBOX360Detect.instance);
+			return new CInputCollection(playerNumber, CStateXBOX360Detect.instance);
 		}
 	}
 }

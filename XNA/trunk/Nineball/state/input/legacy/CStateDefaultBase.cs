@@ -11,6 +11,7 @@
 
 using System;
 using danmaq.nineball.entity.input;
+using danmaq.nineball.entity.input.data;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
 
@@ -19,25 +20,28 @@ namespace danmaq.nineball.state.input.legacy
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ既定の入力状態。</summary>
-	public sealed class CStateDefaultBase : CState<CInputLegacy, CInputLegacy.CPrivateMembers>
+	public abstract class CStateDefaultBase : CState<CInputLegacy, CInputLegacy.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateDefaultBase instance = new CStateDefaultBase();
+		/// <summary>使用する方向ボタン。</summary>
+		public readonly EAxisLegacy axisType;
 
 		/// <summary>入力値の幅。</summary>
-		private const int INPUTRANGE = 1000;
+		protected const int INPUTRANGE = 1000;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateDefaultBase()
+		/// 
+		/// <param name="axisType">使用する方向ボタン。</param>
+		protected CStateDefaultBase(EAxisLegacy axisType)
 		{
+			this.axisType = axisType;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -90,14 +94,30 @@ namespace danmaq.nineball.state.input.legacy
 				short sButtonID = entity.assignList[i];
 				if(sButtonID < 0)
 				{
+					privateMembers.buttonStateList[i].refresh(
+						state.getInputState(sButtonID, INPUTRANGE));
 				}
 				else if(sButtonID < totalButtons)
 				{
 					privateMembers.buttonStateList[i].refresh(buttons[sButtonID] != 0);
 				}
 			}
+			refleshAxis(state, entity, privateMembers, gameTime);
 			base.update(entity, privateMembers, gameTime);
 		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンの状態を更新します。</summary>
+		/// 
+		/// <param name="state">最新の入力情報。</param>
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		protected abstract void refleshAxis(
+			JoystickState state, CInputLegacy entity,
+			CInputLegacy.CPrivateMembers privateMembers, GameTime gameTime);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>フォース フィードバックの初期化をします。</summary>

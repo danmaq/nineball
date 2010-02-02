@@ -7,30 +7,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.entity.fonts;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+#if WINDOWS
 
-namespace danmaq.nineball.state.fonts
+using danmaq.nineball.entity.input;
+using danmaq.nineball.entity.input.data;
+using Microsoft.DirectX.DirectInput;
+using Microsoft.Xna.Framework;
+
+namespace danmaq.nineball.state.input.legacy
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>通常のフォント状態。</summary>
-	public sealed class CStateDefault : CState<CFont, object>
+	/// <summary>レガシ ゲーム コントローラ既定の入力状態。</summary>
+	public sealed class CStatePOV : CStateDefaultBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateDefault instance = new CStateDefault();
+		public static readonly CStatePOV instance = new CStatePOV();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateDefault()
+		private CStatePOV()
+			: base(EAxisLegacy.POV)
 		{
 		}
 
@@ -38,47 +42,22 @@ namespace danmaq.nineball.state.fonts
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// 登録されているスプライトフォントを基準に原点を算出します。
-		/// </summary>
+		/// <summary>方向ボタンの状態を更新します。</summary>
+		/// <remarks>この状態では方向ボタンを持たないので、何も処理しません。</remarks>
 		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <returns>原点座標</returns>
-		public static Vector2 getOrigin(CFont entity)
-		{
-			return entity.getOrigin(entity.font.MeasureString(entity.text) * entity.scale);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
+		/// <param name="state">最新の入力情報。</param>
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
+		protected override void refleshAxis(
+			JoystickState state, CInputLegacy entity,
+			CInputLegacy.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			if(entity.sprite != null && entity.font != null && entity.text.Length > 0)
-			{
-				Vector2 origin = getOrigin(entity);
-				float fLayer;
-				float fShadowLayer;
-				entity.getShadowLayer(out fLayer, out fShadowLayer);
-				if(entity.isDrawShadow)
-				{
-					entity.sprite.add(entity.font, entity.text,
-						entity.pos - origin + entity.gapShadow,
-						new Color(Color.Black, (byte)(entity.colorAlpha / 1.5f)),
-						0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fShadowLayer);
-				}
-				entity.sprite.add(entity.font, entity.text, entity.pos - origin,
-					new Color(
-						(byte)entity.colorRed, (byte)entity.colorGreen,
-						(byte)entity.colorBlue, (byte)entity.colorAlpha),
-					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fLayer);
-			}
-			base.draw(entity, privateMembers, gameTime);
+			privateMembers.axisVector = state.getVectorPOV();
 		}
 	}
 }
+
+#endif

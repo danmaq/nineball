@@ -27,7 +27,6 @@ namespace danmaq.nineball.state.input.xbox360
 		/// <summary>使用する方向ボタン。</summary>
 		public readonly EAxisXBOX360 axisType;
 
-
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
