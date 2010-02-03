@@ -56,7 +56,7 @@ namespace danmaq.nineball.old.core.raw
 		/// <summary>
 		/// インデックスをアセット名に変換するためのコールバック用デリゲート。
 		/// </summary>
-		private readonly Func<ushort, string> INDEX2ASERT;
+		private readonly Converter<ushort, string> INDEX2ASERT;
 
 		/// <summary>効果音再生予約一覧。</summary>
 		private readonly LinkedList<ushort> RESERVED_SE = new LinkedList<ushort>();
@@ -110,7 +110,7 @@ namespace danmaq.nineball.old.core.raw
 		/// <param name="fileXWBSE">XACT波形バンク(効果音) ファイル名。</param>
 		/// <param name="fileXWBBGM">XACT波形バンク(BGM) ファイル名。</param>
 		public CAudio(
-			Func<ushort, string> index2assert, ushort loopSEInterval,
+			Converter<ushort, string> index2assert, ushort loopSEInterval,
 			string fileXGS, string fileXSB, string fileXWBSE, string fileXWBBGM
 		)
 		{

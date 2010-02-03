@@ -132,7 +132,7 @@ namespace danmaq.nineball.old.core.data
 			/// <summary>
 			/// インデックスをアセット名に変換するためのコールバック用デリゲート。
 			/// </summary>
-			public Func<ushort, string> index2assert;
+			public Converter<ushort, string> index2assert;
 
 			/// <summary>効果音を繰り返し再生する際の間隔。</summary>
 			public ushort loopSEInterval;
