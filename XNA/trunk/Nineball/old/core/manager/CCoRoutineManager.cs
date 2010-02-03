@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 
 namespace danmaq.nineball.old.core.manager
@@ -14,6 +15,11 @@ namespace danmaq.nineball.old.core.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>コルーチン管理 クラス。</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.entity.managerに同名のクラスがありますので、そちらをを使用してください。")]
 	public sealed class CCoRoutineManager
 	{
 

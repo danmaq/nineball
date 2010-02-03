@@ -103,6 +103,7 @@
     <Compile Include="entity\component\CGuideManager.cs" />
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
     <Compile Include="entity\input\CHelper.cs" />
+    <Compile Include="entity\input\CInputCollectionExtension.cs" />
     <Compile Include="entity\input\CInputManager.cs" />
     <Compile Include="entity\input\CInputMouse.cs" />
     <Compile Include="entity\input\data\ButtonsExtension.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="misc\CStaticRandom.cs" />
     <Compile Include="old\core\data\CDataIOManager.cs" />
     <Compile Include="old\core\data\CResource.cs" />
-    <Compile Include="old\core\data\EDirType.cs" />
     <Compile Include="old\core\data\EForcePreset.cs" />
     <Compile Include="old\core\data\SStarter.cs" />
     <Compile Include="old\core\inner\CGuideManager.cs" />

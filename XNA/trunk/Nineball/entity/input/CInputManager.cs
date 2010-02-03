@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.entity.input.data;
+using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.entity.input
 {
@@ -29,6 +30,24 @@ namespace danmaq.nineball.entity.input
 
 		/// <summary>入力クラス一覧。</summary>
 		private static readonly List<CInputManager> _inputList = new List<CInputManager>(1);
+
+		/// <summary>キーボード用ボタン割り当て一覧。</summary>
+		private readonly List<Keys> _keyboardAssign = new List<Keys>();
+
+		/// <summary>キーボード用方向ボタン割り当て一覧。</summary>
+		private readonly Keys[] _keyboardDirectionAssign =
+		{
+			Keys.Up,
+			Keys.Down,
+			Keys.Left,
+			Keys.Right,
+		};
+
+		/// <summary>XBOX360ゲーム コントローラ用ボタン割り当て一覧。</summary>
+		private readonly List<Buttons> _xbox360Assign = new List<Buttons>();
+
+		/// <summary>レガシ ゲーム コントローラ用ボタン割り当て一覧。</summary>
+		private readonly List<short> _legacyAssign = new List<short>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -52,6 +71,9 @@ namespace danmaq.nineball.entity.input
 		/// <summary>レガシ ゲーム コントローラ用入力制御・管理クラス。</summary>
 		private CInputCollection m_inputLegacy = null;
 #endif
+
+		/// <summary>XBOX360ゲーム コントローラ用の方向ボタン割り当て定数。</summary>
+		private EAxisXBOX360 m_xbox360AxisAssign = EAxisXBOX360.None;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -109,6 +131,134 @@ namespace danmaq.nineball.entity.input
 #endif
 					m_inputDevice = value;
 				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>キーボード用のボタン割り当て一覧を設定/取得します。</summary>
+		/// 
+		/// <value>キーボード用のボタン割り当て一覧。</value>
+		public IList<Keys> keyboardAssign
+		{
+			get
+			{
+				return _keyboardAssign.AsReadOnly();
+			}
+			set
+			{
+				_keyboardAssign.Clear();
+				_keyboardAssign.AddRange(value);
+				if(m_inputKeyboard != null)
+				{
+					m_inputKeyboard.assignList = _keyboardAssign;
+				}
+				if(m_inputXbox360Chatpad != null)
+				{
+					m_inputXbox360Chatpad.assignList = _keyboardAssign;
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>キーボード用の方向ボタン割り当て一覧を設定/取得します。</summary>
+		/// 
+		/// <value>キーボード用の方向ボタン割り当て一覧。</value>
+		public IList<Keys> keyboardDirectionAssign
+		{
+			get
+			{
+				return Array.AsReadOnly<Keys>(_keyboardDirectionAssign);
+			}
+			set
+			{
+				if(value.Count < 4)
+				{
+					throw new ArgumentOutOfRangeException("value");
+				}
+				for(int i = 3; i >= 0; i--)
+				{
+					_keyboardDirectionAssign[i] = value[i];
+				}
+				if(m_inputKeyboard != null)
+				{
+					Array.Copy(_keyboardDirectionAssign, m_inputKeyboard.directionAssignList, 4);
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// XBOX360ゲーム コントローラ用のボタン割り当て一覧を設定/取得します。
+		/// </summary>
+		/// 
+		/// <value>XBOX360ゲーム コントローラ用のボタン割り当て一覧。</value>
+		public IList<Buttons> xbox360Assign
+		{
+			get
+			{
+				return _xbox360Assign.AsReadOnly();
+			}
+			set
+			{
+				_xbox360Assign.Clear();
+				_xbox360Assign.AddRange(value);
+				CInputXBOX360 input = m_inputXbox360.getInstance<CInputXBOX360>();
+				if(input != null)
+				{
+					input.assignList = _xbox360Assign;
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// XBOX360ゲーム コントローラ用の方向ボタン割り当て定数を設定/取得します。
+		/// </summary>
+		/// 
+		/// <value>XBOX360ゲーム コントローラ用の方向ボタン割り当て定数。</value>
+		public EAxisXBOX360 xbox360AxisAssign
+		{
+			get
+			{
+				return m_xbox360AxisAssign;
+			}
+			set
+			{
+				if(m_xbox360AxisAssign != value)
+				{
+					m_xbox360AxisAssign = value;
+					CInputXBOX360 input = m_inputXbox360.getInstance<CInputXBOX360>();
+					if(input != null)
+					{
+						input.useForAxis = value;
+					}
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// レガシ ゲーム コントローラ用のボタン割り当て一覧を設定/取得します。
+		/// </summary>
+		/// 
+		/// <value>レガシ ゲーム コントローラ用のボタン割り当て一覧。</value>
+		public IList<short> legacyAssign
+		{
+			get
+			{
+				return _legacyAssign.AsReadOnly();
+			}
+			set
+			{
+				_legacyAssign.Clear();
+				_legacyAssign.AddRange(value);
+#if WINDOWS
+				CInputLegacy input = m_inputLegacy.getInstance<CInputLegacy>();
+				if(input != null)
+				{
+					input.assignList = _legacyAssign;
+				}
+#endif
 			}
 		}
 
@@ -229,7 +379,10 @@ namespace danmaq.nineball.entity.input
 		/// <returns>キーボード入力制御・管理クラス。</returns>
 		private CInputKeyboard createKeyboardInstance()
 		{
-			return new CInputKeyboard(playerNumber);
+			CInputKeyboard input = new CInputKeyboard(playerNumber);
+			input.assignList = keyboardAssign;
+			Array.Copy(_keyboardDirectionAssign, m_inputKeyboard.directionAssignList, 4);
+			return input;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -257,7 +410,17 @@ namespace danmaq.nineball.entity.input
 		/// </returns>
 		private CInputCollection createXBOX360Instance()
 		{
-			return CInputXBOX360.createDetector(playerNumber);
+			CInputCollection collection = CInputXBOX360.createDetector(playerNumber);
+			collection.changedChildCount += (sender, count) =>
+			{
+				if(count > 0)
+				{
+					CInputXBOX360 input = ((CInputCollection)sender).getInstance<CInputXBOX360>();
+					input.assignList = xbox360Assign;
+					input.useForAxis = xbox360AxisAssign;
+				}
+			};
+			return collection;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -274,8 +437,10 @@ namespace danmaq.nineball.entity.input
 				throw new InvalidOperationException(
 					"XBOX360チャットパッドを使用するためには、まずXBOX360ゲーム コントローラが認識されている必要があります。");
 			}
-			return CInputXBOX360ChatPad.getInstance(
+			CInputXBOX360ChatPad input = CInputXBOX360ChatPad.getInstance(
 				(CInputXBOX360)m_inputXbox360.childList[0], playerNumber);
+			input.assignList = keyboardAssign;
+			return input;
 		}
 
 #if WINDOWS
@@ -290,7 +455,17 @@ namespace danmaq.nineball.entity.input
 		/// </returns>
 		private CInputCollection createLegacyInstance()
 		{
-			return CInputLegacy.createDetector(playerNumber);
+			CInputCollection collection = CInputLegacy.createDetector(playerNumber);
+			collection.changedChildCount += (sender, count) =>
+			{
+				if(count > 0)
+				{
+					CInputLegacy input = ((CInputCollection)sender).getInstance<CInputLegacy>();
+					input.assignList = legacyAssign;
+//					input.useForAxis = xbox360AxisAssign;
+				}
+			};
+			return collection;
 		}
 #endif
 	}

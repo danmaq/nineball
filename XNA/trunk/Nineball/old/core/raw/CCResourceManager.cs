@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using danmaq.nineball.old.core.data;
 using Microsoft.Xna.Framework.Content;
@@ -16,6 +17,11 @@ namespace danmaq.nineball.old.core.raw
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>リソース・キャッシュ</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete]
 	public sealed class CResourceManager<_T> where _T : class
 	{
 

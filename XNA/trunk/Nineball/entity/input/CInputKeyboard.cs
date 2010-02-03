@@ -90,10 +90,10 @@ namespace danmaq.nineball.entity.input
 		/// <summary>方向ボタン割り当て値の一覧。</summary>
 		public readonly Keys[] directionAssignList =
 		{
-			Keys.None,
-			Keys.None,
-			Keys.None,
-			Keys.None
+			Keys.Up,
+			Keys.Down,
+			Keys.Left,
+			Keys.Right,
 		};
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
@@ -179,13 +179,14 @@ namespace danmaq.nineball.entity.input
 		{
 			get
 			{
-				return m_assignList;
+				return m_assignList.AsReadOnly();
 			}
 			set
 			{
 				m_assignList.Clear();
 				m_assignList.AddRange(value);
 				int buttonsNum = ButtonsNum;
+				// TODO : RemoveRangeで置換する
 				while(m_assignList.Count > buttonsNum)
 				{
 					m_assignList.RemoveAt(m_assignList.Count - 1);

@@ -20,7 +20,14 @@ namespace danmaq.nineball.old.core.manager
 	/// <para>タスク進行を管理するクラス。</para>
 	/// <para>このクラスにタスクを登録し、そしてこのクラスを通じ実行させます。</para>
 	/// </summary>
-	/// <remarks>複数のタスクを擬似的なマルチタスクで並列実行します。</remarks>
+	/// <remarks>
+	/// <para>複数のタスクを擬似的なマルチタスクで並列実行します。</para>
+	/// <para>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </para>
+	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。CGameComponentManagerを使用してください。")]
 	public sealed class CTaskManager
 	{
 

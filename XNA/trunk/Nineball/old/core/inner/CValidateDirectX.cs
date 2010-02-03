@@ -19,6 +19,11 @@ namespace danmaq.nineball.old.core.inner
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XNA・ビデオ環境検証クラス。</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。CStateCapsXNAを使用してください。")]
 	class CValidateDirectX : IDisposable
 	{
 

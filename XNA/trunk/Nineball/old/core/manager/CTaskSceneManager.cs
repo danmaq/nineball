@@ -22,9 +22,16 @@ namespace danmaq.nineball.old.core.manager
 	/// <para>このクラスにシーンを登録し、そしてこのクラスを通じ実行させます。</para>
 	/// </summary>
 	/// <remarks>
+	/// <para>
 	/// 複数シーンのスタックを積むことも出来ます。
 	/// (この場合、一番若いシーンが実行されます)
+	/// </para>
+	/// <para>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </para>
 	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。CEntityを使用してください。")]
 	public sealed class CTaskSceneManager : CTaskBase
 	{
 
