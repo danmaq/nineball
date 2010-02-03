@@ -196,7 +196,7 @@ namespace danmaq.nineball.entity.input
 		{
 			get
 			{
-				return m_assignList;
+				return m_assignList.AsReadOnly();
 			}
 			set
 			{

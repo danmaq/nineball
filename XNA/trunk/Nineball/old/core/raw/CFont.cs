@@ -20,6 +20,11 @@ namespace danmaq.nineball.old.core.raw
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>フォント クラス。</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.entity.fontsに同名のクラスがありますので、そちらをを使用してください。")]
 	public sealed class CFont
 	{
 

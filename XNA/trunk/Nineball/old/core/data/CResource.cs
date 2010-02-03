@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework.Content;
 
@@ -15,6 +16,11 @@ namespace danmaq.nineball.old.core.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>リソースとアセットのペア。</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete]
 	public sealed class CResource<_T> where _T : class
 	{
 

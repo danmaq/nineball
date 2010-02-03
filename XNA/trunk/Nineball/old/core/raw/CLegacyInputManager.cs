@@ -21,9 +21,16 @@ namespace danmaq.nineball.old.core.raw
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ デバイス用ゲームパッド入力管理クラス。</summary>
 	/// <remarks>
+	/// <para>
 	/// XNAではXBOX360コントローラしか扱えないので、XNAの前身である
 	/// Managed DirectX1.0を使用してゲームパッドの制御をします。
+	/// </para>
+	/// <para>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </para>
 	/// </remarks>
+	[Obsolete]
 	public sealed class CLegacyInputManager : IDisposable
 	{
 

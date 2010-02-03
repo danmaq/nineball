@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using Microsoft.Xna.Framework;
-using danmaq.nineball.util;
-using danmaq.nineball.old.core.manager;
 using danmaq.nineball.data.phase;
+using danmaq.nineball.old.core.manager;
+using danmaq.nineball.util;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.old.task
 {
@@ -24,6 +24,11 @@ namespace danmaq.nineball.old.task
 	/// このクラスを継承するか、ITaskを実装します。
 	/// </para>
 	/// </summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。GameComponentクラスなどを使用してください。")]
 	public abstract class CTaskBase : ITask
 	{
 

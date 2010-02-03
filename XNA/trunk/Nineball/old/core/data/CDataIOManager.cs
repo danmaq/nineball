@@ -28,6 +28,11 @@ namespace danmaq.nineball.old.core.data
 	/// <para>永続データ管理クラスの共有部分。</para>
 	/// <para>ジェネリックだとstaticが共有されないので分割。</para>
 	/// </summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete]
 	sealed class CDataIOManager : IDisposable
 	{
 
@@ -168,6 +173,7 @@ namespace danmaq.nineball.old.core.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>永続データ管理クラス。</summary>
+	[Obsolete]
 	public sealed class CDataIOManager<_T> : IDisposable where _T : new()
 	{
 

@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.nineball.data.phase;
 using danmaq.nineball.old.core.manager;
 using danmaq.nineball.util;
@@ -23,6 +24,11 @@ namespace danmaq.nineball.old.scene
 	/// このクラスを継承するか、ISceneを実装します。
 	/// </para>
 	/// </summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。CStateを使用してください。")]
 	public abstract class CSceneBase : IScene
 	{
 

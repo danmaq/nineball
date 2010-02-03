@@ -11,10 +11,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using danmaq.nineball.data;
 using danmaq.nineball.entity.input.data;
+using danmaq.nineball.Properties;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
-using danmaq.nineball.Properties;
 
 namespace danmaq.nineball.entity.input
 {
@@ -29,6 +30,12 @@ namespace danmaq.nineball.entity.input
 
 		/// <summary>子入力クラス。</summary>
 		private readonly List<CInput> childs = new List<CInput>(1);
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* events ────────────────────────────────*
+
+		/// <summary>子入力クラスの数が増減した時に呼び出されるイベント。</summary>
+		public event EventHandler<CEventMonoValue<int>> changedChildCount;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -74,7 +81,7 @@ namespace danmaq.nineball.entity.input
 		{
 			get
 			{
-				return Count > 0;
+				return childs.Count > 0;
 			}
 		}
 
@@ -207,6 +214,7 @@ namespace danmaq.nineball.entity.input
 		public override void Dispose()
 		{
 			Clear();
+			changedChildCount = null;
 			base.Dispose();
 		}
 
@@ -251,6 +259,10 @@ namespace danmaq.nineball.entity.input
 			changedButtonsNum += item.onChangedButtonsNum;
 			item.ButtonsNum = ButtonsNum;
 			childs.Add(item);
+			if(changedChildCount != null)
+			{
+				changedChildCount(this, childs.Count);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -262,7 +274,13 @@ namespace danmaq.nineball.entity.input
 		public virtual void Clear()
 		{
 			throwAtReadOnly();
-			childs.ForEach(item => Remove(item));
+			childs.ForEach(item => RemoveWithoutEvent(item));
+			childs.Clear();
+			childs.Capacity = 1;
+			if(changedChildCount != null)
+			{
+				changedChildCount(this, 0);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -299,12 +317,10 @@ namespace danmaq.nineball.entity.input
 		/// </exception>
 		public virtual bool Remove(CInput item)
 		{
-			throwAtReadOnly();
-			bool bResult = childs.Remove(item);
-			if(bResult)
+			bool bResult = RemoveWithoutEvent(item);
+			if(changedChildCount != null)
 			{
-				changedButtonsNum -= item.onChangedButtonsNum;
-				item.Dispose();
+				changedChildCount(this, childs.Count);
 			}
 			return bResult;
 		}
@@ -343,6 +359,26 @@ namespace danmaq.nineball.entity.input
 			{
 				throw new NotSupportedException(Resources.ERR_READONLY);
 			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>管理している子入力クラスを解放します。</summary>
+		/// 
+		/// <param name="item">子入力クラス。</param>
+		/// <returns>解放できた場合、<c>true</c>。</returns>
+		/// <exception cref="System.NotSupportedException">
+		/// 読み取り専用状態でこのメソッドを実行した場合。
+		/// </exception>
+		private bool RemoveWithoutEvent(CInput item)
+		{
+			throwAtReadOnly();
+			bool bResult = childs.Remove(item);
+			if(bResult)
+			{
+				changedButtonsNum -= item.onChangedButtonsNum;
+				item.Dispose();
+			}
+			return bResult;
 		}
 	}
 }

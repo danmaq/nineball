@@ -24,6 +24,11 @@ namespace danmaq.nineball.old.core.raw
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力制御・管理クラス。</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete]
 	public sealed class CInput : IDisposable
 	{
 
@@ -305,10 +310,10 @@ namespace danmaq.nineball.old.core.raw
 			get
 			{
 				return (
-					BUTTON_STATE[(int)EDirType.Up].push ||
-					BUTTON_STATE[(int)EDirType.Down].push ||
-					BUTTON_STATE[(int)EDirType.Left].push ||
-					BUTTON_STATE[(int)EDirType.Right].push);
+					BUTTON_STATE[(int)EDirection.up].push ||
+					BUTTON_STATE[(int)EDirection.down].push ||
+					BUTTON_STATE[(int)EDirection.left].push ||
+					BUTTON_STATE[(int)EDirection.right].push);
 			}
 		}
 
@@ -599,13 +604,13 @@ namespace danmaq.nineball.old.core.raw
 				{
 					Microsoft.DirectX.DirectInput.JoystickState legacystate = legacy.state;
 					byte[] buttons = legacystate.GetButtons();
-					bState[(int)EDirType.Up] = bState[(int)EDirType.Up] || (legacystate.Y < -600);
-					bState[(int)EDirType.Down] = bState[(int)EDirType.Down] || (legacystate.Y > 600);
-					bState[(int)EDirType.Left] = bState[(int)EDirType.Left] || (legacystate.X < -600);
-					bState[(int)EDirType.Right] = bState[(int)EDirType.Right] || (legacystate.X > 600);
-					for(int i = (int)EDirType.__reserved; i < bState.Length; i++)
+					bState[(int)EDirection.up] = bState[(int)EDirection.up] || (legacystate.Y < -600);
+					bState[(int)EDirection.down] = bState[(int)EDirection.down] || (legacystate.Y > 600);
+					bState[(int)EDirection.left] = bState[(int)EDirection.left] || (legacystate.X < -600);
+					bState[(int)EDirection.right] = bState[(int)EDirection.right] || (legacystate.X > 600);
+					for(int i = (int)EDirection.__reserved; i < bState.Length; i++)
 					{
-						int nButtonID = assignLegacy[i - (int)EDirType.__reserved];
+						int nButtonID = assignLegacy[i - (int)EDirection.__reserved];
 						bState[i] = bState[i] ||
 							(buttons.Length > nButtonID && buttons[nButtonID] != 0);
 					}
@@ -620,21 +625,21 @@ namespace danmaq.nineball.old.core.raw
 					if(leftStick.Length() > 0.7f)
 					{
 						double dAngle = Math.Atan2(leftStick.Y, leftStick.X);
-						bState[(int)EDirType.Up] = bState[(int)EDirType.Up] || (dAngle <= MathHelper.PiOver4 * 3.5 && dAngle >= MathHelper.PiOver4 * 0.5);
-						bState[(int)EDirType.Down] = bState[(int)EDirType.Down] || (dAngle >= MathHelper.PiOver4 * -3.5 && dAngle <= MathHelper.PiOver4 * -0.5);
-						bState[(int)EDirType.Left] = bState[(int)EDirType.Left] || Math.Abs(dAngle) >= MathHelper.PiOver4 * 2.5;
-						bState[(int)EDirType.Right] = bState[(int)EDirType.Right] || Math.Abs(dAngle) <= MathHelper.PiOver4 * 1.5;
+						bState[(int)EDirection.up] = bState[(int)EDirection.up] || (dAngle <= MathHelper.PiOver4 * 3.5 && dAngle >= MathHelper.PiOver4 * 0.5);
+						bState[(int)EDirection.down] = bState[(int)EDirection.down] || (dAngle >= MathHelper.PiOver4 * -3.5 && dAngle <= MathHelper.PiOver4 * -0.5);
+						bState[(int)EDirection.left] = bState[(int)EDirection.left] || Math.Abs(dAngle) >= MathHelper.PiOver4 * 2.5;
+						bState[(int)EDirection.right] = bState[(int)EDirection.right] || Math.Abs(dAngle) <= MathHelper.PiOver4 * 1.5;
 					}
 					else
 					{
-						bState[(int)EDirType.Up] = bState[(int)EDirType.Up] || stateButton.IsButtonDown(Buttons.DPadUp);
-						bState[(int)EDirType.Down] = bState[(int)EDirType.Down] || stateButton.IsButtonDown(Buttons.DPadDown);
-						bState[(int)EDirType.Left] = bState[(int)EDirType.Left] || stateButton.IsButtonDown(Buttons.DPadLeft);
-						bState[(int)EDirType.Right] = bState[(int)EDirType.Right] || stateButton.IsButtonDown(Buttons.DPadRight);
+						bState[(int)EDirection.up] = bState[(int)EDirection.up] || stateButton.IsButtonDown(Buttons.DPadUp);
+						bState[(int)EDirection.down] = bState[(int)EDirection.down] || stateButton.IsButtonDown(Buttons.DPadDown);
+						bState[(int)EDirection.left] = bState[(int)EDirection.left] || stateButton.IsButtonDown(Buttons.DPadLeft);
+						bState[(int)EDirection.right] = bState[(int)EDirection.right] || stateButton.IsButtonDown(Buttons.DPadRight);
 					}
-					for(int i = (int)EDirType.__reserved; i < bState.Length; i++)
+					for(int i = (int)EDirection.__reserved; i < bState.Length; i++)
 					{
-						bState[i] = bState[i] || stateButton.IsButtonDown(assignXBOX360[i - (int)EDirType.__reserved]);
+						bState[i] = bState[i] || stateButton.IsButtonDown(assignXBOX360[i - (int)EDirection.__reserved]);
 					}
 				}
 				for(int i = 0; i < bState.Length; i++)

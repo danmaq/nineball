@@ -7,18 +7,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.data.phase;
 using danmaq.nineball.old.core.manager;
 using danmaq.nineball.util;
+using Microsoft.Xna.Framework.Audio;
 
 namespace danmaq.nineball.old.core.raw
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>音響制御・管理クラス。</summary>
+	/// <remarks>
+	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
+	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
+	/// </remarks>
+	[Obsolete]
 	public sealed class CAudio : IDisposable
 	{
 
