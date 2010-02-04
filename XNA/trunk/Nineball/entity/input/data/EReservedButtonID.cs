@@ -7,8 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if WINDOWS
-
 using System;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
@@ -47,6 +45,8 @@ namespace danmaq.nineball.entity.input.data
 		analogRight = -8,
 
 	}
+
+#if WINDOWS
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ状態の拡張機能。</summary>
@@ -163,6 +163,7 @@ namespace danmaq.nineball.entity.input.data
 		}
 
 	}
-}
 
 #endif
+
+}

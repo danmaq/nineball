@@ -25,10 +25,9 @@ namespace danmaq.nineball.entity.input
 	/// <summary>XBOX360ゲーム コントローラ入力制御・管理クラス。</summary>
 	public sealed class CInputXBOX360 : CInput
 	{
-
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		public sealed class CPrivateMembers
+		public sealed class CPrivateMembers : IDisposable
 		{
 
 			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -36,6 +35,9 @@ namespace danmaq.nineball.entity.input
 
 			/// <summary>ボタンの入力状態一覧。</summary>
 			public readonly List<SInputState> buttonStateList;
+
+			/// <summary>フォース フィードバックのためのAI。</summary>
+			public readonly CEntity aiForceFeedback;
 
 			/// <summary>XBOX360ゲーム コントローラ入力制御・管理クラス。</summary>
 			private readonly CInputXBOX360 input;
@@ -49,6 +51,7 @@ namespace danmaq.nineball.entity.input
 			/// <param name="input">XBOX360ゲーム コントローラ入力制御・管理クラス。</param>
 			public CPrivateMembers(CInputXBOX360 input)
 			{
+				aiForceFeedback = new CEntity(input);
 				this.input = input;
 				buttonStateList = input._buttonStateList;
 			}
@@ -85,6 +88,16 @@ namespace danmaq.nineball.entity.input
 				{
 					input.axisFlag = value;
 				}
+			}
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>このオブジェクトの終了処理を行います。</summary>
+			public void Dispose()
+			{
+				aiForceFeedback.Dispose();
 			}
 		}
 
@@ -294,6 +307,42 @@ namespace danmaq.nineball.entity.input
 		public static CInputCollection createDetector(short playerNumber)
 		{
 			return new CInputCollection(playerNumber, CStateXBOX360Detect.instance);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化処理を実行します。</summary>
+		public override void initialize()
+		{
+			_privateMemebers.aiForceFeedback.initialize();
+			base.initialize();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(GameTime gameTime)
+		{
+			_privateMemebers.aiForceFeedback.update(gameTime);
+			base.update(gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(GameTime gameTime)
+		{
+			_privateMemebers.aiForceFeedback.draw(gameTime);
+			base.draw(gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
+		{
+			_privateMemebers.Dispose();
+			base.Dispose();
 		}
 	}
 }
