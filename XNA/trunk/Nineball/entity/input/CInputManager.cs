@@ -25,6 +25,8 @@ namespace danmaq.nineball.entity.input
 	public sealed class CInputManager : CInputCollection
 	{
 
+		// TODO : このクラス、もうちょっとコードが増えすぎている気がするので分割したいな
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
@@ -73,7 +75,10 @@ namespace danmaq.nineball.entity.input
 #endif
 
 		/// <summary>XBOX360ゲーム コントローラ用の方向ボタン割り当て定数。</summary>
-		private EAxisXBOX360 m_xbox360AxisAssign = EAxisXBOX360.None;
+		private EAxisXBOX360 m_xbox360AxisAssign = EAxisXBOX360.DPad;
+
+		/// <summary>レガシ ゲーム コントローラ用の方向ボタン割り当て定数。</summary>
+		private EAxisLegacy m_legacyAxisAssign = EAxisLegacy.Slider;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -259,6 +264,32 @@ namespace danmaq.nineball.entity.input
 					input.assignList = _legacyAssign;
 				}
 #endif
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// レガシ ゲーム コントローラ用の方向ボタン割り当て定数を設定/取得します。
+		/// </summary>
+		/// 
+		/// <value>レガシ ゲーム コントローラ用の方向ボタン割り当て定数。</value>
+		public EAxisLegacy legacyAxisAssign
+		{
+			get
+			{
+				return m_legacyAxisAssign;
+			}
+			set
+			{
+				if(m_legacyAxisAssign != value)
+				{
+					m_legacyAxisAssign = value;
+					CInputLegacy input = m_inputXbox360.getInstance<CInputLegacy>();
+					if(input != null)
+					{
+						input.useForAxis = value;
+					}
+				}
 			}
 		}
 
@@ -462,11 +493,13 @@ namespace danmaq.nineball.entity.input
 				{
 					CInputLegacy input = ((CInputCollection)sender).getInstance<CInputLegacy>();
 					input.assignList = legacyAssign;
-//					input.useForAxis = xbox360AxisAssign;
+					input.useForAxis = legacyAxisAssign;
 				}
 			};
 			return collection;
 		}
+
 #endif
+
 	}
 }
