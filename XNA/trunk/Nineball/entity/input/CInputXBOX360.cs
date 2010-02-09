@@ -25,6 +25,7 @@ namespace danmaq.nineball.entity.input
 	/// <summary>XBOX360ゲーム コントローラ入力制御・管理クラス。</summary>
 	public sealed class CInputXBOX360 : CInput
 	{
+
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		public sealed class CPrivateMembers : IDisposable

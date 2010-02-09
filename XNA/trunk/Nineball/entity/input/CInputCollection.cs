@@ -15,6 +15,7 @@ using danmaq.nineball.data;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.Properties;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.collection;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
@@ -28,11 +29,80 @@ namespace danmaq.nineball.entity.input
 		// TODO : update及びdrawのState化
 		// (axisへのアクセスにprivateMembersクラスをこさえることになり、かなりめどい)
 
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		public sealed class CPrivateMembers
+		{
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>ボタンの入力状態一覧。</summary>
+			public readonly List<SInputState> buttonStateList;
+
+			/// <summary>子入力クラス。</summary>
+			public readonly List<CInput> childs;
+
+			/// <summary>マンマシンI/F入力制御・管理クラスのコレクション。</summary>
+			private readonly CInputCollection collection;
+
+			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* constructor & destructor ───────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>コンストラクタ。</summary>
+			/// 
+			/// <param name="collection">XBOX360ゲーム コントローラ入力制御・管理クラス。</param>
+			public CPrivateMembers(CInputCollection collection)
+			{
+				this.collection = collection;
+				buttonStateList = collection._buttonStateList;
+				childs = collection.childs;
+			}
+
+			//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* properties ──────────────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>方向ボタンの状態をベクトルで設定します。</summary>
+			/// 
+			/// <value>方向ボタンの状態。</value>
+			public Vector2 axisVector
+			{
+				set
+				{
+					collection.axis = value;
+				}
+			}
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>方向ボタンの状態をフラグで設定/取得します。</summary>
+			/// <example>
+			/// bool bDown = (obj.axisFlag &amp; EDirectionFlags.down) != 0;
+			/// </example>
+			/// 
+			/// <value>方向ボタンの状態。</value>
+			public EDirectionFlags axisFlag
+			{
+				get
+				{
+					return collection.axisFlag;
+				}
+				set
+				{
+					collection.axisFlag = value;
+				}
+			}
+		}
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>子入力クラス。</summary>
 		private readonly List<CInput> childs = new List<CInput>(1);
+
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		private readonly CPrivateMembers _privateMemebers;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* events ────────────────────────────────*
@@ -57,7 +127,7 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="playerNumber">プレイヤー番号。</param>
 		public CInputCollection(short playerNumber)
-			: base(playerNumber, CState.empty)
+			: this(playerNumber, CStateDefault.instance)
 		{
 		}
 
@@ -69,6 +139,7 @@ namespace danmaq.nineball.entity.input
 		public CInputCollection(short playerNumber, IState firstState)
 			: base(playerNumber, firstState)
 		{
+			_privateMemebers = new CPrivateMembers(this);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -93,7 +164,7 @@ namespace danmaq.nineball.entity.input
 		/// <exception cref="System.ArgumentNullException">
 		/// 状態として、nullを設定しようとした場合。
 		/// </exception>
-		public new IState<CInputCollection, List<SInputState>> nextState
+		public new IState<CInputCollection, CPrivateMembers> nextState
 		{
 			set
 			{
@@ -158,6 +229,20 @@ namespace danmaq.nineball.entity.input
 			set;
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+		/// </summary>
+		/// 
+		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
+		protected override object privateMembers
+		{
+			get
+			{
+				return _privateMemebers;
+			}
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -167,51 +252,6 @@ namespace danmaq.nineball.entity.input
 		{
 			childs.ForEach(input => input.initialize());
 			base.initialize();
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(GameTime gameTime)
-		{
-			int nLength = _buttonStateList.Count;
-			axisFlag = EDirectionFlags.None;
-			foreach(CInput input in childs)
-			{
-				if(!releaseAwayController || input.connect)
-				{
-					input.update(gameTime);
-					for(int i = nLength; --i >= 0; )
-					{
-						_buttonStateList[i] |= input.buttonStateList[i];
-					}
-					for(int i = 4; --i >= 0; )
-					{
-						dirInputState[i] |= input.dirInputState[i];
-					}
-					float axisLength = axis.Length();
-					axis += input.axisVector;
-					axis.Normalize();
-					axis *= MathHelper.Max(axisLength, input.axisVector.Length());
-					axisFlag |= input.axisFlag;
-				}
-				else
-				{
-					input.Dispose();
-				}
-			}
-			base.update(gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(GameTime gameTime)
-		{
-			childs.ForEach(input => input.draw(gameTime));
-			base.draw(gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
