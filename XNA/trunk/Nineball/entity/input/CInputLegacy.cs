@@ -352,7 +352,7 @@ namespace danmaq.nineball.entity.input
 		/// <returns>レガシ ゲーム コントローラ入力制御・管理クラスコレクション。</returns>
 		public static CInputCollection createDetector(short playerNumber)
 		{
-			return new CInputCollection(playerNumber, CStateLegacyDetect.instance);
+			return new CInputDetector(playerNumber, CStateLegacyDetect.instance);
 		}
 
 		//* -----------------------------------------------------------------------*

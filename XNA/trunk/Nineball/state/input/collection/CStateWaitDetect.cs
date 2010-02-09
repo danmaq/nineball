@@ -11,8 +11,8 @@ using System;
 using System.Collections.Generic;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
-using Microsoft.Xna.Framework;
 using danmaq.nineball.entity.input.data;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.state.input.collection
 {
@@ -21,7 +21,7 @@ namespace danmaq.nineball.state.input.collection
 	/// <summary>
 	/// マンマシンI/F入力制御・管理クラスコレクションの自動認識待機状態。
 	/// </summary>
-	public sealed class CStateWaitDetect : CState<CInputCollection, List<SInputState>>
+	public sealed class CStateWaitDetect : CState<CAI<CInputDetector>, List<SInputState>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -31,7 +31,8 @@ namespace danmaq.nineball.state.input.collection
 		public static readonly CStateWaitDetect instance = new CStateWaitDetect();
 
 		/// <summary>要求する自動認識状態の型。</summary>
-		private readonly Type detectType = typeof(CState<CInputCollection, List<SInputState>>);
+		private readonly Type detectType =
+			typeof(CState<CAI<CInputDetector>, List<SInputState>>);
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -56,7 +57,7 @@ namespace danmaq.nineball.state.input.collection
 		/// <exception cref="System.InvalidOperationException">
 		/// 自動認識発動時に戻るべき状態が見つからない場合。
 		/// </exception>
-		public override void setup(CInputCollection entity, List<SInputState> buttonsState)
+		public override void setup(CAI<CInputDetector> entity, List<SInputState> buttonsState)
 		{
 			Type type = entity.previousState.GetType();
 			if(!(type == detectType || type.IsSubclassOf(detectType)))
@@ -74,13 +75,14 @@ namespace danmaq.nineball.state.input.collection
 		/// <param name="buttonsState">ボタン押下情報一覧。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CInputCollection entity, List<SInputState> buttonsState, GameTime gameTime
+			CAI<CInputDetector> entity, List<SInputState> buttonsState, GameTime gameTime
 		)
 		{
-			if(entity.Count == 0)
+			CInputCollection collection = entity.owner;
+			if(collection.Count == 0)
 			{
 				entity.nextState =
-					(CState<CInputCollection, List<SInputState>>)entity.previousState;
+					(CState<CAI<CInputDetector>, List<SInputState>>)entity.previousState;
 			}
 			base.update(entity, buttonsState, gameTime);
 		}

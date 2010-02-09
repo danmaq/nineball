@@ -56,7 +56,9 @@ namespace danmaq.nineball.state.input
 			IList<Keys> assignList = entity.assignList;
 			for(int i = assignList.Count; --i >= 0; )
 			{
-				privateMembers.buttonStateList[i].refresh(state.IsKeyDown(assignList[i]));
+				SInputState inputState = privateMembers.buttonStateList[i];
+				inputState.refresh(state.IsKeyDown(assignList[i]));
+				privateMembers.buttonStateList[i] = inputState;
 			}
 			for(int i = entity.dirInputState.Length; --i >= 0; )
 			{

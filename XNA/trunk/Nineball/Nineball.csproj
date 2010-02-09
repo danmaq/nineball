@@ -105,6 +105,7 @@
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
     <Compile Include="entity\input\CHelper.cs" />
     <Compile Include="entity\input\CInputCollectionExtension.cs" />
+    <Compile Include="entity\input\CInputDetector.cs" />
     <Compile Include="entity\input\CInputManager.cs" />
     <Compile Include="entity\input\CInputMouse.cs" />
     <Compile Include="entity\input\data\ButtonsExtension.cs" />

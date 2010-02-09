@@ -59,14 +59,16 @@ namespace danmaq.nineball.state.input.xbox360
 				for(int i = entity.assignList.Count; --i >= 0; )
 				{
 					Buttons button = entity.assignList[i];
+					SInputState inputState = privateMembers.buttonStateList[i];
 					if(button.isAvailableAnalogInput())
 					{
-						privateMembers.buttonStateList[i].refresh(state.getInputState(button));
+						inputState.refresh(state.getInputState(button));
 					}
 					else
 					{
-						privateMembers.buttonStateList[i].refresh(state.IsButtonDown(button));
+						inputState.refresh(state.IsButtonDown(button));
 					}
+					privateMembers.buttonStateList[i] = inputState;
 				}
 				refleshAxis(state, entity, privateMembers, gameTime);
 			}

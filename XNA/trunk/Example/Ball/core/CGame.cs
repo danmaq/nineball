@@ -17,6 +17,7 @@ using danmaq.nineball.state.misc;
 using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using danmaq.nineball.entity.input.data;
 
 #if !DEBUG
 using danmaq.nineball.util;
@@ -40,7 +41,7 @@ namespace danmaq.ball.core
 		public readonly GraphicsDeviceManager graphicDeviceManager;
 
 		/// <summary>入力管理クラス。</summary>
-		public readonly CInputKeyboard inputManager = new CInputKeyboard(0);
+		public readonly CInputManager inputManager = CInputManager.create();
 
 		/// <summary>解像度管理クラス。</summary>
 		public readonly CResolution resolution = new CResolution(EResolution.VGA);
@@ -75,9 +76,10 @@ namespace danmaq.ball.core
 			CLogger.add(xnastate.report);
 #endif
 			CStarter.startNineball(this, graphicDeviceManager);
-			new CGameComponent(this, inputManager, true);
 			inputManager.ButtonsNum = 1;
-			inputManager.assignList = new Keys[] { Keys.Space };
+			inputManager.inputDevice = EInputDevice.Keyboard;
+			inputManager.keyboardAssign = new Keys[] { Keys.Space };
+			new CGameComponent(this, inputManager, true);
 			base.Initialize();
 		}
 

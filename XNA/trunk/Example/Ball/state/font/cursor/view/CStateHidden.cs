@@ -12,7 +12,7 @@ namespace danmaq.ball.state.font.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カーソル消灯状態。</summary>
+	/// <summary>カーソル消灯表示状態。</summary>
 	public sealed class CStateHidden : CStateBase
 	{
 

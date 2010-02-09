@@ -19,7 +19,7 @@ namespace danmaq.ball.state.font.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カーソル点灯状態。</summary>
+	/// <summary>カーソル点灯表示状態。</summary>
 	public sealed class CStateVisible : CStateBase
 	{
 

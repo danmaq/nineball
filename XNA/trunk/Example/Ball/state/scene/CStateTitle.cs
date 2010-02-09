@@ -16,6 +16,7 @@ using danmaq.nineball.entity.input.data;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using danmaq.nineball.state;
 
 namespace danmaq.ball.state.scene
 {
@@ -42,6 +43,7 @@ namespace danmaq.ball.state.scene
 		private CStateTitle() : base(Resources.SCENE_TITLE)
 		{
 			cursor.initialize();
+			cursor.locate = new Vector2(6, 16);
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -71,7 +73,6 @@ namespace danmaq.ball.state.scene
 			{
 				localGameComponentManager.addDrawableEntity(print);
 			}
-			cursor.locate = new Vector2(6, 16);
 			localGameComponentManager.addDrawableEntity(cursor);
 		}
 
@@ -86,28 +87,24 @@ namespace danmaq.ball.state.scene
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 //			entity.nextState = CStateGame.instance;
-			if(inputManager.axisFlag == EDirectionFlags.left)
-			{
-				CLogger.add("LEFT");
-			}
-			if(inputManager.dirInputState[(int)EDirection.up].push)
-			{
-				CLogger.add("UP");
-			}
 			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
 		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public override void teardown(IEntity entity, object privateMembers, IState nextState)
 		{
-			base.draw(entity, privateMembers, gameTime);
+			// TODO ： レベル設定をコミットする
+			base.teardown(entity, privateMembers, nextState);
 		}
 	}
 }
