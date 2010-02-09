@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="state\fonts\CStateDefault.cs" />
     <Compile Include="state\fonts\CStateGradation.cs" />
+    <Compile Include="state\input\collection\CStateDefault.cs" />
     <Compile Include="state\input\detector\CStateLegacyDetect.cs" />
     <Compile Include="state\input\detector\CStateWaitDetect.cs" />
     <Compile Include="state\input\detector\CStateXBOX360Detect.cs" />

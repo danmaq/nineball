@@ -80,6 +80,7 @@ namespace danmaq.nineball.entity.input
 		public CInput(short playerNumber, IState firstState)
 			: base(firstState)
 		{
+			for(int i = 4; --i >= 0; dirInputState[i] = new SInputState(this)) ;
 			this.playerNumber = playerNumber;
 		}
 
