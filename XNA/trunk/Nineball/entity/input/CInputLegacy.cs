@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input.collection;
+using danmaq.nineball.state.input.detector;
 using danmaq.nineball.state.input.legacy;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;

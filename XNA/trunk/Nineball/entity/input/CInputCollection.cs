@@ -15,7 +15,6 @@ using danmaq.nineball.data;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.Properties;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input.collection;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
