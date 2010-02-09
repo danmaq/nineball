@@ -9,16 +9,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.ball.entity.font;
+using danmaq.nineball.entity;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.state.font.cursor
+namespace danmaq.ball.state.font.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>カーソル状態基底クラス。</summary>
-	public abstract class CStateBase : CState<CCursor, Matrix>
+	public abstract class CStateBase : CState<CEntity, Matrix>
 	{
 
 		//* -----------------------------------------------------------------------*
@@ -27,7 +27,7 @@ namespace danmaq.ball.state.font.cursor
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
 		/// <param name="world">カーソルの3D位置を示すワールド行列。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CCursor entity, Matrix world, GameTime gameTime)
+		public override void update(CEntity entity, Matrix world, GameTime gameTime)
 		{
 			base.update(entity, world, gameTime);
 			if ((DateTime.Now - entity.lastStateChangeTime).Milliseconds > 500)

@@ -90,6 +90,7 @@ namespace danmaq.nineball.entity.input
 		private CInputManager(short playerNumber)
 			: base(playerNumber)
 		{
+			releaseAwayController = false;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -121,6 +122,7 @@ namespace danmaq.nineball.entity.input
 			{
 				if(m_inputDevice != value)
 				{
+					m_inputDevice = value;
 					applyInputDevice<CInputKeyboard>(
 						EInputDevice.Keyboard, ref m_inputKeyboard, createKeyboardInstance);
 					applyInputDevice<CInputMouse>(
@@ -134,7 +136,6 @@ namespace danmaq.nineball.entity.input
 					applyInputDevice<CInputCollection>(
 						EInputDevice.LegacyPad, ref m_inputLegacy, createLegacyInstance);
 #endif
-					m_inputDevice = value;
 				}
 			}
 		}
@@ -180,7 +181,7 @@ namespace danmaq.nineball.entity.input
 				{
 					throw new ArgumentOutOfRangeException("value");
 				}
-				for(int i = 3; i >= 0; i--)
+				for(int i = 4; --i >= 0; )
 				{
 					_keyboardDirectionAssign[i] = value[i];
 				}
@@ -412,7 +413,7 @@ namespace danmaq.nineball.entity.input
 		{
 			CInputKeyboard input = new CInputKeyboard(playerNumber);
 			input.assignList = keyboardAssign;
-			Array.Copy(_keyboardDirectionAssign, m_inputKeyboard.directionAssignList, 4);
+			Array.Copy(_keyboardDirectionAssign, input.directionAssignList, 4);
 			return input;
 		}
 

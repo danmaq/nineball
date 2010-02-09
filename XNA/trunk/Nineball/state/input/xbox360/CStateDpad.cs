@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.data;
 using Microsoft.Xna.Framework;
@@ -25,6 +26,15 @@ namespace danmaq.nineball.state.input.xbox360
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateDpad instance = new CStateDpad();
+
+		/// <summary>方向ボタン入力判定用の式一覧。</summary>
+		private readonly Predicate<GamePadDPad>[] matchList =
+		{
+			dpad => dpad.Up == ButtonState.Pressed,
+			dpad => dpad.Down == ButtonState.Pressed,
+			dpad => dpad.Left == ButtonState.Pressed,
+			dpad => dpad.Right == ButtonState.Pressed,
+		};
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -53,16 +63,13 @@ namespace danmaq.nineball.state.input.xbox360
 			CInputXBOX360.CPrivateMembers privateMembers, GameTime gameTime)
 		{
 			GamePadDPad dpad = state.DPad;
-			bool[] axis =
+			for(int i = entity.dirInputState.Length; --i >= 0; )
 			{
-				dpad.Up == ButtonState.Pressed,
-				dpad.Down == ButtonState.Pressed,
-				dpad.Left == ButtonState.Pressed,
-				dpad.Right == ButtonState.Pressed,
-			};
+				entity.dirInputState[i].refresh(matchList[i](dpad));
+			}
 			EDirectionFlags axisFlags;
 			Vector2 axisVector;
-			CHelper.createVector(axis, out axisVector, out axisFlags);
+			CHelper.createVector(entity.dirInputState, out axisVector, out axisFlags);
 			privateMembers.axisVector = axisVector;
 			privateMembers.axisFlag = axisFlags;
 		}

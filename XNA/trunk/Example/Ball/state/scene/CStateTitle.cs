@@ -12,6 +12,8 @@ using danmaq.ball.entity.font;
 using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
+using danmaq.nineball.entity.input.data;
+using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -84,6 +86,14 @@ namespace danmaq.ball.state.scene
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 //			entity.nextState = CStateGame.instance;
+			if(inputManager.axisFlag == EDirectionFlags.left)
+			{
+				CLogger.add("LEFT");
+			}
+			if(inputManager.dirInputState[(int)EDirection.up].push)
+			{
+				CLogger.add("UP");
+			}
 			base.update(entity, privateMembers, gameTime);
 		}
 

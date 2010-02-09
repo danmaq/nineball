@@ -89,7 +89,7 @@ namespace danmaq.nineball.state.input.legacy
 			JoystickState state = privateMembers.poll();
 			byte[] buttons = state.GetButtons();
 			int totalButtons = buttons.Length;
-			for(int i = entity.assignList.Count - 1; i >= 0; i--)
+			for(int i = entity.assignList.Count; --i >= 0; )
 			{
 				short sButtonID = entity.assignList[i];
 				if(sButtonID < 0)

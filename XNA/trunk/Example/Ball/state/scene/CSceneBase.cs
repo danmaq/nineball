@@ -51,7 +51,7 @@ namespace danmaq.ball.state.scene
 		protected readonly GraphicsDeviceManager graphicDeviceManager;
 
 		/// <summary>入力管理クラス。</summary>
-		protected readonly CInputCollection inputManager;
+		protected readonly CInput inputManager;
 
 		/// <summary>コンテンツ管理クラス。</summary>
 		protected readonly ContentManager contentManager;

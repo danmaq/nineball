@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.ball.state.font.cursor;
+using danmaq.ball.state.font.cursor.view;
 using danmaq.nineball.entity;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
@@ -29,6 +29,9 @@ namespace danmaq.ball.entity.font
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CCursor instance = new CCursor();
 
+		/// <summary>表示用のAI。</summary>
+		private readonly CAI<CCursor> aiView;
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -43,9 +46,10 @@ namespace danmaq.ball.entity.font
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CCursor() : base(CStateVisible.instance)
+		private CCursor()
 		{
 			locate = Vector2.Zero;
+			aiView = new CAI<CCursor>(this, CStateVisible.instance);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -109,6 +113,42 @@ namespace danmaq.ball.entity.font
 		public static Vector3 getCursorTranslation(Vector2 locate)
 		{
 			return new Vector3(((int)locate.X - 40f) * 8f, (-(int)locate.Y + 11.5f) * 16f, 0);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化処理を実行します。</summary>
+		public override void initialize()
+		{
+			aiView.initialize();
+			base.initialize();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
+		{
+			aiView.Dispose();
+			base.Dispose();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(GameTime gameTime)
+		{
+			aiView.update(gameTime);
+			base.update(gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(GameTime gameTime)
+		{
+			aiView.draw(gameTime);
+			base.draw(gameTime);
 		}
 	}
 }

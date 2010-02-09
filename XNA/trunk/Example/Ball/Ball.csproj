@@ -30,7 +30,7 @@
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>赤い玉 青い玉 競走ゲーム</ProductName>
     <PublisherName>danmaq</PublisherName>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -104,9 +104,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="state\font\CState98.cs" />
-    <Compile Include="state\font\cursor\CStateBase.cs" />
-    <Compile Include="state\font\cursor\CStateHidden.cs" />
-    <Compile Include="state\font\cursor\CStateVisible.cs" />
+    <Compile Include="state\font\cursor\view\CStateBase.cs" />
+    <Compile Include="state\font\cursor\view\CStateHidden.cs" />
+    <Compile Include="state\font\cursor\view\CStateVisible.cs" />
     <Compile Include="state\scene\CSceneBase.cs" />
     <Compile Include="state\scene\CStateCredit.cs" />
     <Compile Include="state\scene\CStateGame.cs" />

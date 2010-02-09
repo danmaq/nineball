@@ -103,6 +103,7 @@ namespace danmaq.nineball.state.misc
 		public override void setup(IEntity entity, object privateMembers)
 		{
 			report = createReport();
+			GC.Collect();
 			base.setup(entity, privateMembers);
 		}
 

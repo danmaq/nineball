@@ -74,7 +74,11 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
+#if DEBUG
+			entity.nextState = CStateTitle.instance;
+#else
 			entity.nextState = CStateCredit.instance;
+#endif
 			base.update(entity, privateMembers, gameTime);
 		}
 	}

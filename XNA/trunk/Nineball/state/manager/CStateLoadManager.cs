@@ -270,7 +270,7 @@ namespace danmaq.nineball.state.manager
 		{
 			if(counter % interval == interval - 1)
 			{
-				for(int i = loadPerFrame - 1; i >= 0 && loadQueueList.Count > 0; i--)
+				for(int i = loadPerFrame; --i >= 0 && loadQueueList.Count > 0; )
 				{
 					SData data = loadQueueList.Dequeue();
 					Func<string, object> loader;

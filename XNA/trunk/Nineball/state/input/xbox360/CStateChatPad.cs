@@ -56,7 +56,7 @@ namespace danmaq.nineball.state.input.xbox360
 			IList<Keys> assignList = entity.assignList;
 			if(entity.connect)
 			{
-				for(int i = assignList.Count - 1; i >= 0; i--)
+				for(int i = assignList.Count; --i >= 0; )
 				{
 					buttonsState[i].refresh(state.IsKeyDown(assignList[i]));
 				}

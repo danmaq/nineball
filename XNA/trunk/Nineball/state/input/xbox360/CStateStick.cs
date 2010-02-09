@@ -31,17 +31,8 @@ namespace danmaq.nineball.state.input.xbox360
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateStick right = new CStateStick(EAxisXBOX360.RightStick);
 
-		/// <summary>上ボタンに対応する定数。</summary>
-		private readonly Buttons upButton;
-
-		/// <summary>下ボタンに対応する定数。</summary>
-		private readonly Buttons downButton;
-
-		/// <summary>左ボタンに対応する定数。</summary>
-		private readonly Buttons leftButton;
-
-		/// <summary>右ボタンに対応する定数。</summary>
-		private readonly Buttons rightButton;
+		/// <summary>方向ボタンに対応する定数一覧。</summary>
+		private readonly Buttons[] buttons;
 
 		/// <summary>ベクトルを取得する関数。</summary>
 		private readonly Func<GamePadThumbSticks, Vector2> vectorGetter;
@@ -53,23 +44,32 @@ namespace danmaq.nineball.state.input.xbox360
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="axisType">使用する方向ボタン。</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// 使用する方向ボタンに右スティックまたは左スティック以外の値を設定した場合。
+		/// </exception>
 		private CStateStick(EAxisXBOX360 axisType)
 			: base(axisType)
 		{
 			switch(axisType)
 			{
 				case EAxisXBOX360.LeftStick:
-					upButton = Buttons.LeftThumbstickUp;
-					downButton = Buttons.LeftThumbstickDown;
-					leftButton = Buttons.LeftThumbstickLeft;
-					rightButton = Buttons.LeftThumbstickRight;
+					buttons = new Buttons[]
+					{
+						Buttons.LeftThumbstickUp,
+						Buttons.LeftThumbstickDown,
+						Buttons.LeftThumbstickLeft,
+						Buttons.LeftThumbstickRight,
+					};
 					vectorGetter = thumb => thumb.Left;
 					break;
 				case EAxisXBOX360.RightStick:
-					upButton = Buttons.RightThumbstickUp;
-					downButton = Buttons.RightThumbstickDown;
-					leftButton = Buttons.RightThumbstickLeft;
-					rightButton = Buttons.RightThumbstickRight;
+					buttons = new Buttons[]
+					{
+						Buttons.RightThumbstickUp,
+						Buttons.RightThumbstickDown,
+						Buttons.RightThumbstickLeft,
+						Buttons.RightThumbstickRight,
+					};
 					vectorGetter = thumb => thumb.Right;
 					break;
 				default:
@@ -94,15 +94,12 @@ namespace danmaq.nineball.state.input.xbox360
 			CInputXBOX360.CPrivateMembers privateMembers, GameTime gameTime)
 		{
 			privateMembers.axisVector = vectorGetter(state.ThumbSticks);
-			List<bool> axis = new List<bool>
+			for(int i = buttons.Length; --i >= 0; )
 			{
-				state.IsButtonDown(upButton),
-				state.IsButtonDown(downButton),
-				state.IsButtonDown(leftButton),
-				state.IsButtonDown(rightButton),
-			};
+				entity.dirInputState[i].refresh(state.IsButtonDown(buttons[i]));
+			}
 			EDirectionFlags axisFlags;
-			CHelper.createVector(axis, out axisFlags);
+			CHelper.createVector(entity.dirInputState, out axisFlags);
 			privateMembers.axisFlag = axisFlags;
 		}
 	}

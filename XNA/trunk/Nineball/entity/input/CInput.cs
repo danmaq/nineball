@@ -28,8 +28,31 @@ namespace danmaq.nineball.entity.input
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>方向ボタンの入力状態一覧。</summary>
+		public readonly SInputState[] dirInputState = new SInputState[4];
+
 		/// <summary>ボタンの入力状態一覧。</summary>
 		protected readonly List<SInputState> _buttonStateList = new List<SInputState>(1);
+
+		/// <summary>方向ボタンフラグの一覧。</summary>
+		protected readonly ReadOnlyCollection<EDirectionFlags> axisFlagValueList =
+			new List<EDirectionFlags>
+		{
+			EDirectionFlags.up,
+			EDirectionFlags.down,
+			EDirectionFlags.left,
+			EDirectionFlags.right,
+		}.AsReadOnly();
+
+		/// <summary>ベクトルから方向ボタンを抽出する式の一覧。</summary>
+		private readonly ReadOnlyCollection<Func<Vector2, float>> axisConvertList =
+			new List<Func<Vector2, float>>
+		{
+			vector => -MathHelper.Min(vector.Y, 0),
+			vector => MathHelper.Max(vector.Y, 0),
+			vector => -MathHelper.Min(vector.X, 0),
+			vector => MathHelper.Max(vector.X, 0),
+		}.AsReadOnly();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -109,7 +132,7 @@ namespace danmaq.nineball.entity.input
 				}
 				while(value > ButtonsNum)
 				{
-					_buttonStateList.Add(new SInputState());
+					_buttonStateList.Add(new SInputState(this));
 				}
 				if(bChanged && changedButtonsNum != null)
 				{
@@ -143,23 +166,12 @@ namespace danmaq.nineball.entity.input
 				value.Normalize();
 				axis = value;
 				axisFlag = EDirectionFlags.None;
-				if(value.Length() >= analogThreshold)
+				for(int i = dirInputState.Length; --i >= 0; )
 				{
-					if(-MathHelper.Min(value.Y, 0) > analogThreshold)
+					dirInputState[i].refresh(axisConvertList[i](value));
+					if(dirInputState[i].press)
 					{
-						axisFlag |= EDirectionFlags.up;
-					}
-					if(MathHelper.Max(value.Y, 0) > analogThreshold)
-					{
-						axisFlag |= EDirectionFlags.down;
-					}
-					if(-MathHelper.Min(value.X, 0) > analogThreshold)
-					{
-						axisFlag |= EDirectionFlags.left;
-					}
-					if(MathHelper.Max(value.X, 0) > analogThreshold)
-					{
-						axisFlag |= EDirectionFlags.right;
+						axisFlag |= axisFlagValueList[i];
 					}
 				}
 			}
