@@ -104,6 +104,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="state\font\CState98.cs" />
+    <Compile Include="state\font\cursor\CStateCursor.cs" />
     <Compile Include="state\font\cursor\view\CStateBase.cs" />
     <Compile Include="state\font\cursor\view\CStateHidden.cs" />
     <Compile Include="state\font\cursor\view\CStateVisible.cs" />

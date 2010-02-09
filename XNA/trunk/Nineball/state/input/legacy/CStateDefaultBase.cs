@@ -92,15 +92,16 @@ namespace danmaq.nineball.state.input.legacy
 			for(int i = entity.assignList.Count; --i >= 0; )
 			{
 				short sButtonID = entity.assignList[i];
+				SInputState inputState = privateMembers.buttonStateList[i];
 				if(sButtonID < 0)
 				{
-					privateMembers.buttonStateList[i].refresh(
-						state.getInputState(sButtonID, INPUTRANGE));
+					inputState.refresh(state.getInputState(sButtonID, INPUTRANGE));
 				}
 				else if(sButtonID < totalButtons)
 				{
-					privateMembers.buttonStateList[i].refresh(buttons[sButtonID] != 0);
+					inputState.refresh(buttons[sButtonID] != 0);
 				}
+				privateMembers.buttonStateList[i] = inputState;
 			}
 			refleshAxis(state, entity, privateMembers, gameTime);
 			base.update(entity, privateMembers, gameTime);

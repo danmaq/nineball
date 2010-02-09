@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.ball.state.font.cursor;
 using danmaq.ball.state.font.cursor.view;
 using danmaq.nineball.entity;
 using danmaq.nineball.state;
@@ -47,6 +48,7 @@ namespace danmaq.ball.entity.font
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		private CCursor()
+			: base(CStateCursor.instance)
 		{
 			locate = Vector2.Zero;
 			aiView = new CAI<CCursor>(this, CStateVisible.instance);

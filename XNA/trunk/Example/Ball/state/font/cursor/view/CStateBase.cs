@@ -17,7 +17,7 @@ namespace danmaq.ball.state.font.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カーソル状態基底クラス。</summary>
+	/// <summary>カーソル表示状態基底クラス。</summary>
 	public abstract class CStateBase : CState<CEntity, Matrix>
 	{
 

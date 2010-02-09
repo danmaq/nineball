@@ -15,6 +15,7 @@ using danmaq.nineball.data;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.Properties;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.collection;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
@@ -24,6 +25,9 @@ namespace danmaq.nineball.entity.input
 	/// <summary>マンマシンI/F入力制御・管理クラスのコレクション。</summary>
 	public class CInputCollection : CInput, ICollection<CInput>
 	{
+
+		// TODO : update及びdrawのState化
+		// (axisへのアクセスにprivateMembersクラスをこさえることになり、かなりめどい)
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -63,9 +67,7 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="playerNumber">プレイヤー番号。</param>
 		/// <param name="firstState">初期状態。</param>
-		public CInputCollection(
-			short playerNumber, IState<CInputCollection, List<SInputState>> firstState
-		)
+		public CInputCollection(short playerNumber, IState firstState)
 			: base(playerNumber, firstState)
 		{
 		}
