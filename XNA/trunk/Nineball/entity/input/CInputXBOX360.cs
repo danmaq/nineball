@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input.collection;
+using danmaq.nineball.state.input.detector;
 using danmaq.nineball.state.input.xbox360;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;

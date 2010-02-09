@@ -19,7 +19,7 @@ using danmaq.nineball.entity.input.data;
 using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.input.collection
+namespace danmaq.nineball.state.input.detector
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

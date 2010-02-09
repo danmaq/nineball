@@ -10,7 +10,6 @@
 using System.Collections.Generic;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input.collection;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
