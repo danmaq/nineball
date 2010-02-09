@@ -54,18 +54,17 @@ namespace danmaq.nineball.state.input
 		{
 			KeyboardState state = Keyboard.GetState();
 			IList<Keys> assignList = entity.assignList;
-			for(int i = assignList.Count - 1; i >= 0; i--)
+			for(int i = assignList.Count; --i >= 0; )
 			{
 				privateMembers.buttonStateList[i].refresh(state.IsKeyDown(assignList[i]));
 			}
-			List<bool> axis = new List<bool>(4);
-			foreach(Keys key in entity.directionAssignList)
+			for(int i = entity.dirInputState.Length; --i >= 0; )
 			{
-				axis.Add(state.IsKeyDown(key));
+				entity.dirInputState[i].refresh(state.IsKeyDown(entity.directionAssignList[i]));
 			}
 			EDirectionFlags axisFlags;
 			Vector2 axisVector;
-			CHelper.createVector(axis, out axisVector, out axisFlags);
+			CHelper.createVector(entity.dirInputState, out axisVector, out axisFlags);
 			privateMembers.axisVector = axisVector;
 			privateMembers.axisFlag = axisFlags;
 			base.update(entity, privateMembers, gameTime);

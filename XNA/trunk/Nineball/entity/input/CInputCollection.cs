@@ -181,9 +181,13 @@ namespace danmaq.nineball.entity.input
 				if(!releaseAwayController || input.connect)
 				{
 					input.update(gameTime);
-					for(int i = nLength - 1; i >= 0; i--)
+					for(int i = nLength; --i >= 0; )
 					{
 						_buttonStateList[i] |= input.buttonStateList[i];
+					}
+					for(int i = 4; --i >= 0; )
+					{
+						dirInputState[i] |= input.dirInputState[i];
 					}
 					float axisLength = axis.Length();
 					axis += input.axisVector;

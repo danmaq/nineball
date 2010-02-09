@@ -23,6 +23,13 @@ namespace danmaq.nineball.entity.input.data
 	public struct SInputState
 	{
 
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>この入力状態を管理しているクラス。</summary>
+		[NonSerialized]
+		private readonly CInput owner;
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -32,8 +39,18 @@ namespace danmaq.nineball.entity.input.data
 		/// <summary>押しっぱなしで連続入力となるフレーム時間間隔。</summary>
 		public static ushort loopInterval = 5;
 
-		/// <summary>アナログ入力を認識する閾値。</summary>
-		public static float analogThreshold = 0.12f;
+		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="owner">この入力状態を管理しているクラス。</param>
+		public SInputState(CInput owner)
+			: this()
+		{
+			this.owner = owner;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -76,7 +93,7 @@ namespace danmaq.nineball.entity.input.data
 		{
 			get
 			{
-				return analogValue < analogThreshold ? 0 : analogValue;
+				return analogValue < owner.analogThreshold ? 0 : analogValue;
 			}
 		}
 
@@ -140,7 +157,7 @@ namespace danmaq.nineball.entity.input.data
 		/// <returns>合成されたボタン状態。</returns>
 		public static SInputState operator |(SInputState a, SInputState b)
 		{
-			SInputState result = new SInputState();
+			SInputState result = new SInputState(a.owner ?? b.owner);
 			result.press = a.press || b.press;
 			result.count = Math.Min(a.count, b.count);
 			result.analogValue = MathHelper.Max(a.analogValue, b.analogValue);
@@ -158,7 +175,7 @@ namespace danmaq.nineball.entity.input.data
 		/// <returns>合成されたボタン状態。</returns>
 		public static SInputState operator &(SInputState a, SInputState b)
 		{
-			SInputState result = new SInputState();
+			SInputState result = new SInputState(a.owner ?? b.owner);
 			result.press = a.press && b.press;
 			result.count = Math.Max(a.count, b.count);
 			result.analogValue = MathHelper.Min(a.analogValue, b.analogValue);
@@ -174,26 +191,6 @@ namespace danmaq.nineball.entity.input.data
 		{
 			return b.press;
 		}
-
-#if XBOX360
-		//* -----------------------------------------------------------------------*
-		/// <summary>ゲーマー情報を参考にアナログ入力を認識する閾値を自動設定します。</summary>
-		/// 
-		/// <param name="cs">ゲーマー設定のアナログ入力感度。</param>
-		public static void setAnalogThreshold( ControllerSensitivity cs ) {
-			switch( cs ) {
-				case ControllerSensitivity.High:
-					analogThreshold = 0.06f;
-					break;
-				case ControllerSensitivity.Medium:
-					analogThreshold = 0.12f;
-					break;
-				case ControllerSensitivity.Low:
-					analogThreshold = 0.2f;
-					break;
-			}
-		}
-#endif
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ボタン状態の更新をします。</summary>
@@ -219,9 +216,10 @@ namespace danmaq.nineball.entity.input.data
 		/// <param name="fAnalogValue">最新のアナログボタン状態</param>
 		public void refresh(float fAnalogValue)
 		{
+			float fThreshold = owner.analogThreshold;
 			if(
-				(press && fAnalogValue >= analogThreshold) ||
-				(!press && fAnalogValue < analogThreshold)
+				(press && fAnalogValue >= fThreshold) ||
+				(!press && fAnalogValue < fThreshold)
 			)
 			{
 				count++;

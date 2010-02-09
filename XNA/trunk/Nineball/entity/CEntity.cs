@@ -159,7 +159,7 @@ namespace danmaq.nineball.entity
 			{
 				m_owner = value;
 				Type typeExpr = value.GetType();
-				Type typeExpect = typeof(CState);
+				Type typeExpect = typeof(CEntity);
 				m_bOwnerIsCEntity = value != null &&
 					(typeExpr == typeExpect || typeExpr.IsSubclassOf(typeExpect));
 			}
@@ -235,6 +235,13 @@ namespace danmaq.nineball.entity
 		{
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトに空の状態を設定します。</summary>
+		public virtual void setEmptyState()
+		{
+			nextState = CState.empty;
+		}
+	
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public virtual void Dispose()

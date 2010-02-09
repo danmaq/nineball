@@ -56,7 +56,7 @@ namespace danmaq.nineball.state.input.xbox360
 			GamePadState state = GamePad.GetState(entity.playerIndex);
 			if(state.IsConnected)
 			{
-				for(int i = entity.assignList.Count - 1; i >= 0; i--)
+				for(int i = entity.assignList.Count; --i >= 0; )
 				{
 					Buttons button = entity.assignList[i];
 					if(button.isAvailableAnalogInput())

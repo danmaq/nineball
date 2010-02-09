@@ -80,6 +80,31 @@ namespace danmaq.nineball.entity.input
 		/// <param name="vector">方向ボタンのベクトル。</param>
 		/// <param name="flags">方向ボタンの合成されたフラグ。</param>
 		public static void createVector(
+			IList<SInputState> axis, out Vector2 vector, out EDirectionFlags flags)
+		{
+			if(axis.Count < 4)
+			{
+				throw new ArgumentOutOfRangeException("axis");
+			}
+			vector = Vector2.Zero;
+			flags = EDirectionFlags.None;
+			for(int i = 4; --i >= 0; )
+			{
+				if(axis[i])
+				{
+					flags |= axisFlagsList[i];
+					vector += axisVectorList[i];
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンのベクトルを計算します。</summary>
+		/// 
+		/// <param name="axis">方向ボタンの入力状態。</param>
+		/// <param name="vector">方向ボタンのベクトル。</param>
+		/// <param name="flags">方向ボタンの合成されたフラグ。</param>
+		public static void createVector(
 			IList<bool> axis, out Vector2 vector, out EDirectionFlags flags)
 		{
 			if(axis.Count < 4)
@@ -88,12 +113,33 @@ namespace danmaq.nineball.entity.input
 			}
 			vector = Vector2.Zero;
 			flags = EDirectionFlags.None;
-			for(int i = 3; i >= 0; i--)
+			for(int i = 4; --i >= 0; )
 			{
 				if(axis[i])
 				{
 					flags |= axisFlagsList[i];
 					vector += axisVectorList[i];
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>方向ボタンのベクトルを計算します。</summary>
+		/// 
+		/// <param name="axis">方向ボタンの入力状態。</param>
+		/// <param name="flags">方向ボタンの合成されたフラグ。</param>
+		public static void createVector(IList<SInputState> axis, out EDirectionFlags flags)
+		{
+			if(axis.Count < 4)
+			{
+				throw new ArgumentOutOfRangeException("axis");
+			}
+			flags = EDirectionFlags.None;
+			for(int i = 4; --i >= 0; )
+			{
+				if(axis[i])
+				{
+					flags |= axisFlagsList[i];
 				}
 			}
 		}
@@ -110,7 +156,7 @@ namespace danmaq.nineball.entity.input
 				throw new ArgumentOutOfRangeException("axis");
 			}
 			flags = EDirectionFlags.None;
-			for(int i = 3; i >= 0; i--)
+			for(int i = 4; --i >= 0; )
 			{
 				if(axis[i])
 				{

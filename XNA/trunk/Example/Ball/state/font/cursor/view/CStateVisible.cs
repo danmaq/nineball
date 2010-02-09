@@ -9,13 +9,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using danmaq.ball.core;
-using danmaq.ball.entity.font;
 using danmaq.ball.Properties;
+using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.font.cursor
+namespace danmaq.ball.state.font.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -72,7 +72,7 @@ namespace danmaq.ball.state.font.cursor
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
 		/// <param name="world">カーソルの3D位置を示すワールド行列。</param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CCursor entity, Matrix world, GameTime gameTime)
+		public override void draw(CEntity entity, Matrix world, GameTime gameTime)
 		{
 			effect.Parameters["World"].SetValue(world);
 			effect.Begin();
