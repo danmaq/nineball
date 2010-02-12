@@ -79,6 +79,8 @@ namespace danmaq.ball.core
 			inputManager.ButtonsNum = 1;
 			inputManager.inputDevice = EInputDevice.Keyboard;
 			inputManager.keyboardAssign = new Keys[] { Keys.Space };
+			inputManager.xbox360Assign = new Buttons[] { Buttons.A };
+			inputManager.xbox360AxisAssign = EAxisXBOX360.RightStick;
 			new CGameComponent(this, inputManager, true);
 			base.Initialize();
 		}

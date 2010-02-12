@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.collection;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
@@ -35,7 +36,7 @@ namespace danmaq.nineball.entity.input
 		/// <param name="playerNumber">プレイヤー番号。</param>
 		/// <param name="aiState">自動認識状態。</param>
 		public CInputDetector(short playerNumber, IState aiState)
-			: this(playerNumber, CState.empty, aiState)
+			: this(playerNumber, CStateDefault.instance, aiState)
 		{
 		}
 

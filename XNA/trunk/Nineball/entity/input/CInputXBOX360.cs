@@ -127,7 +127,7 @@ namespace danmaq.nineball.entity.input
 		//* fields ────────────────────────────────*
 
 		/// <summary>方向ボタンとして使用するボタン種類。</summary>
-		private EAxisXBOX360 m_useForAxis = EAxisXBOX360.DPad;
+		private EAxisXBOX360 m_useForAxis;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -307,7 +307,7 @@ namespace danmaq.nineball.entity.input
 		/// <returns>XBOX360ゲーム コントローラ入力制御・管理クラスコレクション。</returns>
 		public static CInputCollection createDetector(short playerNumber)
 		{
-			return new CInputDetector(playerNumber, CStateXBOX360Detect.instance);
+			return new CInputDetector(playerNumber, CStateXBOX360.instance);
 		}
 
 		//* -----------------------------------------------------------------------*

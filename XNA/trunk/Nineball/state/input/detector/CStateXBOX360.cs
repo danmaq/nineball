@@ -8,38 +8,35 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.data;
+using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input.detector
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
-	/// マンマシンI/F入力制御・管理クラスコレクションの自動認識待機状態。
+	/// マンマシンI/F入力制御・管理クラスコレクション用XBOX360ゲーム コントローラ自動認識状態。
 	/// </summary>
-	public sealed class CStateWaitDetect : CState<CAI<CInputDetector>, List<SInputState>>
+	public sealed class CStateXBOX360 : CState<CAI<CInputDetector>, CInputCollection.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateWaitDetect instance = new CStateWaitDetect();
-
-		/// <summary>要求する自動認識状態の型。</summary>
-		private readonly Type detectType =
-			typeof(CState<CAI<CInputDetector>, List<SInputState>>);
+		public static readonly CStateXBOX360 instance = new CStateXBOX360();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateWaitDetect()
+		private CStateXBOX360()
 		{
 		}
 
@@ -53,38 +50,69 @@ namespace danmaq.nineball.state.input.detector
 		/// </summary>
 		/// 
 		/// <param name="entity">この状態を適用されたオブジェクト。</param>
-		/// <param name="buttonsState">ボタン押下情報一覧。</param>
-		/// <exception cref="System.InvalidOperationException">
-		/// 自動認識発動時に戻るべき状態が見つからない場合。
-		/// </exception>
-		public override void setup(CAI<CInputDetector> entity, List<SInputState> buttonsState)
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		public override void setup(
+			CAI<CInputDetector> entity, CInputCollection.CPrivateMembers privateMembers)
 		{
-			Type type = entity.previousState.GetType();
-			if(!(type == detectType || type.IsSubclassOf(detectType)))
-			{
-				throw new InvalidOperationException(
-					"戻るべき自動認識状態を見つけることができませんでした。");
-			}
-			base.setup(entity, buttonsState);
+			CInputCollection collection = entity.owner;
+			setCapacity(collection);
+			collection.releaseAwayController = true;
+			base.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="buttonsState">ボタン押下情報一覧。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CAI<CInputDetector> entity, List<SInputState> buttonsState, GameTime gameTime
+			CAI<CInputDetector> entity, CInputCollection.CPrivateMembers privateMembers, GameTime gameTime
 		)
 		{
 			CInputCollection collection = entity.owner;
 			if(collection.Count == 0)
 			{
-				entity.nextState =
-					(CState<CAI<CInputDetector>, List<SInputState>>)entity.previousState;
+				foreach(PlayerIndex playerIndex in CInputXBOX360.allPlayerIndex)
+				{
+					GamePadState state = GamePad.GetState(playerIndex);
+					if(state.IsConnected && state.getPress() != 0)
+					{
+						collection.Add(CInputXBOX360.getInstance(
+							playerIndex, collection.playerNumber));
+						break;
+					}
+				}
 			}
-			base.update(entity, buttonsState, gameTime);
+			if(collection.Count != 0)
+			{
+				setCapacity(collection);
+				entity.nextState = CStateWait.instance;
+			}
+			base.update(entity, privateMembers, gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>子入力クラスとして受け入れる最大値を初期化します。</summary>
+		/// 
+		/// <param name="collection">この状態を終了したオブジェクト。</param>
+		/// <exception cref="System.InvalidOperationException">
+		/// 現在の保有個数が2個以上の場合。
+		/// </exception>
+		private void setCapacity(CInputCollection collection)
+		{
+			try
+			{
+				collection.capacity = 1;
+			}
+			catch(Exception e)
+			{
+				throw new InvalidOperationException(Resources.ERR_INPUT_DETECT_DUPLICATION, e);
+			}
 		}
 	}
 }

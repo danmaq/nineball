@@ -26,9 +26,6 @@ namespace danmaq.nineball.entity.input
 	public class CInputCollection : CInput, ICollection<CInput>
 	{
 
-		// TODO : update及びdrawのState化
-		// (axisへのアクセスにprivateMembersクラスをこさえることになり、かなりめどい)
-
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		public sealed class CPrivateMembers
