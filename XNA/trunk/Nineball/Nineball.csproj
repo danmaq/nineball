@@ -97,6 +97,7 @@
     <Compile Include="CStarter.cs" />
     <Compile Include="data\CVolume.cs" />
     <Compile Include="data\EAlign.cs" />
+    <Compile Include="data\SSpriteDrawInfo.cs" />
     <Compile Include="entity\CAI.cs" />
     <Compile Include="entity\fonts\CFont.cs" />
     <Compile Include="entity\fonts\SFontGradationInfo.cs" />
