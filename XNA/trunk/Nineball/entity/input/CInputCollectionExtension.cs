@@ -35,24 +35,27 @@ namespace danmaq.nineball.entity.input
 		public static _T getInstance<_T>(this CInputCollection collection) where _T : CInput
 		{
 			_T input = null;
-			int nTotal = collection.Count;
-			if(collection != null && nTotal > 0)
+			if(collection != null)
 			{
-				Type typeExpect = typeof(_T);
-				if(nTotal == 0)
+				int nTotal = collection.Count;
+				if(nTotal > 0)
 				{
-					CInput _input = collection.childList[0];
-					Type typeGot = _input.GetType();
-					if(typeExpect == typeGot || typeExpect.IsSubclassOf(typeGot))
+					Type typeExpect = typeof(_T);
+					if(nTotal == 1)
 					{
-						input = (_T)_input;
+						CInput _input = collection.childList[0];
+						Type typeGot = _input.GetType();
+						if(typeExpect == typeGot || typeExpect.IsSubclassOf(typeGot))
+						{
+							input = (_T)_input;
+						}
 					}
-				}
-				else
-				{
-					input = (_T)collection.FirstOrDefault(_input =>
-						_input.GetType() == typeExpect ||
-						typeExpect.IsSubclassOf(_input.GetType()));
+					else
+					{
+						input = (_T)collection.FirstOrDefault(_input =>
+							_input.GetType() == typeExpect ||
+							typeExpect.IsSubclassOf(_input.GetType()));
+					}
 				}
 			}
 			return input;
