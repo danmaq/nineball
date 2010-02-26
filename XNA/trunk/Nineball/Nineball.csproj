@@ -196,6 +196,7 @@
     <Compile Include="util\CLogger.cs" />
     <Compile Include="util\CMessageBox.cs" />
     <Compile Include="util\collection\CFlyweight.cs" />
+    <Compile Include="util\collection\CFlyweightNewDisposable.cs" />
     <Compile Include="util\collection\CGameComponentManager.cs" />
     <Compile Include="util\CSprite.cs" />
     <Compile Include="util\collection\CPartialCollection.cs" />

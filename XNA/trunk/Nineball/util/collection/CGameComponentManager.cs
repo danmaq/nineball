@@ -52,7 +52,7 @@ namespace danmaq.nineball.util.collection
 		{
 			set
 			{
-				partial.ForEach(item => item.Enabled = value);
+				ForEach(item => item.Enabled = value);
 			}
 		}
 
