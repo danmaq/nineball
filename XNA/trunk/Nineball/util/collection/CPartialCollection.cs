@@ -241,6 +241,18 @@ namespace danmaq.nineball.util.collection
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>管理している要素に対し、一括処理を実行します。</summary>
+		/// 
+		/// <param name="action">各要素に対して実行するデリゲート。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="action"/>が<c>null</c>である場合。
+		/// </exception>
+		public void ForEach(Action<_P> action)
+		{
+			partial.ForEach(action);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>読み取り専用状態かどうかを判断して、例外を発生します。</summary>
 		/// 
 		/// <exception cref="System.NotSupportedException">

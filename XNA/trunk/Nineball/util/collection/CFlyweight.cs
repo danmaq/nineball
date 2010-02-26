@@ -29,7 +29,7 @@ namespace danmaq.nineball.util.collection
 #if WINDOWS
 		[DebuggerDisplay("Active={m_bActive}, Instance={m_instance}")]
 #endif
-		private struct SData
+		protected struct SData
 		{
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -73,7 +73,7 @@ namespace danmaq.nineball.util.collection
 		//* constants ──────────────────────────────-*
 
 		/// <summary>インスタンス一覧。</summary>
-		private readonly List<SData> list = new List<SData>();
+		protected readonly List<SData> list = new List<SData>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -100,7 +100,7 @@ namespace danmaq.nineball.util.collection
 		/// </summary>
 		/// 
 		/// <value>デリゲート。nullの場合、空のラムダ式が設定されます。</value>
-		public Action<_T> onDisposeAction
+		public virtual Action<_T> onDisposeAction
 		{
 			get
 			{
@@ -135,7 +135,7 @@ namespace danmaq.nineball.util.collection
 		///	<returns>
 		///	未使用のインスタンス。存在しないか、全て使用中の場合、<c>null</c>。
 		///	</returns>
-		public _T get()
+		public virtual _T get()
 		{
 			_T result = default(_T);
 			int nIndex = list.FindIndex(info => !info.m_bActive);
@@ -159,7 +159,7 @@ namespace danmaq.nineball.util.collection
 		///	<exception cref="System.ArgumentNullException">
 		///	<paramref name="instance"/>が既に登録されている場合。
 		///	</exception>
-		public void Add(_T instance)
+		public virtual void Add(_T instance)
 		{
 			if(instance == default(_T))
 			{
@@ -177,7 +177,7 @@ namespace danmaq.nineball.util.collection
 		/// 
 		///	<param name="instance">インスタンス。</param>
 		///	<returns>インスタンスが休眠した場合、<c>true</c>。</returns>
-		public bool sleep(_T instance)
+		public virtual bool sleep(_T instance)
 		{
 			int nIndex = list.FindIndex(info => info.m_instance == instance);
 			bool bResult = nIndex >= 0;
@@ -195,14 +195,14 @@ namespace danmaq.nineball.util.collection
 		/// 
 		///	<param name="instance">インスタンス。</param>
 		///	<returns>インスタンスを削除出来た場合、<c>true</c>。</returns>
-		public bool Remove(_T instance)
+		public virtual bool Remove(_T instance)
 		{
 			return list.RemoveAll(info => info.m_instance == instance) > 0;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このクラスを解放します。</summary>
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			list.ForEach(info => onDisposeAction(info.m_instance));
 			list.Clear();
