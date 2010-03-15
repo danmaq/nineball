@@ -18,7 +18,6 @@ namespace danmaq.nineball.util
 {
 
 	// TODO : Entityにしようかな
-	// TODO : GC対策
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>スプライト描画管理 クラス。</summary>
@@ -44,7 +43,7 @@ namespace danmaq.nineball.util
 		public int reserveLimit = 10000;
 
 		/// <summary>描画情報リスト。</summary>
-		private readonly List<SSpriteDrawInfo> drawCache = new List<SSpriteDrawInfo>(350);
+		private readonly List<SSpriteDrawInfo> drawCache = new List<SSpriteDrawInfo>(1);
 
 		/// <summary>CResolutionAspectFixの型情報。</summary>
 		private readonly Type typeResAF = typeof(CResolutionAspectFix);

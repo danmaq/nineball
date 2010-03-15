@@ -27,7 +27,10 @@ namespace danmaq.nineball.misc
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>静的なコンストラクタ。</summary>
+		/// <remarks>
+		/// 既定のシード値を生成するために、乱数オブジェクトを1個余分に生成します。
+		/// </remarks>
 		static CStaticRandom()
 		{
 			reset();
@@ -73,7 +76,7 @@ namespace danmaq.nineball.misc
 		/// <returns>擬似乱数系列の開始値を計算するために使用する数値。</returns>
 		public static int reset()
 		{
-			reset(new Random().Next());
+			reset((random ?? new Random()).Next());
 			return seed;
 		}
 
