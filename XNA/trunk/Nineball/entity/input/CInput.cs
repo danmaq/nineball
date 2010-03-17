@@ -164,7 +164,10 @@ namespace danmaq.nineball.entity.input
 			}
 			protected set
 			{
-				value.Normalize();
+				if(value != Vector2.Zero)
+				{
+					value.Normalize();
+				}
 				axis = value;
 				axisFlag = EDirectionFlags.None;
 				for(int i = dirInputState.Length; --i >= 0; )

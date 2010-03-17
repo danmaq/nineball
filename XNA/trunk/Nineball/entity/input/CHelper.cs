@@ -69,7 +69,10 @@ namespace danmaq.nineball.entity.input
 			float fVelocity = 0;
 			srcList.ForEach(expr => fVelocity = MathHelper.Max(fVelocity, Math.Abs(expr)));
 			Vector2 result = new Vector2(-left, -up) + new Vector2(right, down);
-			result.Normalize();
+			if(result != Vector2.Zero)
+			{
+				result.Normalize();
+			}
 			return result * fVelocity;
 		}
 
