@@ -13,11 +13,11 @@ using danmaq.ball.state.scene;
 using danmaq.nineball;
 using danmaq.nineball.entity.component;
 using danmaq.nineball.entity.input;
+using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state.misc;
 using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using danmaq.nineball.entity.input.data;
 
 #if !DEBUG
 using danmaq.nineball.util;
@@ -77,10 +77,10 @@ namespace danmaq.ball.core
 #endif
 			CStarter.startNineball(this, graphicDeviceManager);
 			inputManager.ButtonsNum = 1;
-			inputManager.inputDevice = EInputDevice.Keyboard;
+			inputManager.inputDevice = EInputDevice.XBOX360 | EInputDevice.Keyboard;
 			inputManager.keyboardAssign = new Keys[] { Keys.Space };
 			inputManager.xbox360Assign = new Buttons[] { Buttons.A };
-			inputManager.xbox360AxisAssign = EAxisXBOX360.RightStick;
+			inputManager.xbox360AxisAssign = EAxisXBOX360.DPad;
 			new CGameComponent(this, inputManager, true);
 			base.Initialize();
 		}

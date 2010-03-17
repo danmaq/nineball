@@ -123,6 +123,7 @@
     <Compile Include="entity\input\data\EReservedButtonID.cs" />
     <Compile Include="entity\input\CInput.cs" />
     <Compile Include="entity\input\data\GamePadStateExtention.cs" />
+    <Compile Include="entity\input\data\SDirArray.cs" />
     <Compile Include="entity\input\data\SInputState.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />

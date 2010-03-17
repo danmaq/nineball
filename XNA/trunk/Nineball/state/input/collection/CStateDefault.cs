@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.data;
 using Microsoft.Xna.Framework;
@@ -25,15 +24,6 @@ namespace danmaq.nineball.state.input.collection
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateDefault instance = new CStateDefault();
-
-		/// <summary>方向ボタンフラグのバッファ。</summary>
-		private readonly float[] dirFlagBuffer = new float[4];
-
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>ボタンフラグのバッファ。</summary>
-		private bool[] m_buttonFlagBuffer = new bool[1];
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -55,8 +45,12 @@ namespace danmaq.nineball.state.input.collection
 		public override void update(CInputCollection entity,
 			CInputCollection.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			int nLength = initializeBuffer(privateMembers);
+			int nLength = privateMembers.buttonStateList.Count;
+			// HACK : GC対策をする
+			bool[] buttonFlagBuffer = new bool[nLength];
+			SDirArray dirFlagBuffer = new SDirArray();
 			privateMembers.axisFlag = EDirectionFlags.None;
+			privateMembers.axisVector = Vector2.Zero;
 			foreach(CInput input in privateMembers.childs)
 			{
 				if(!entity.releaseAwayController || input.connect)
@@ -64,8 +58,8 @@ namespace danmaq.nineball.state.input.collection
 					input.update(gameTime);
 					for(int i = nLength; --i >= 0; )
 					{
-						m_buttonFlagBuffer[i] =
-							m_buttonFlagBuffer[i] || input.buttonStateList[i].press;
+						buttonFlagBuffer[i] =
+							buttonFlagBuffer[i] || input.buttonStateList[i].press;
 					}
 					for(int i = 4; --i >= 0; )
 					{
@@ -75,7 +69,10 @@ namespace danmaq.nineball.state.input.collection
 					Vector2 axis = entity.axisVector;
 					float axisLength = axis.Length();
 					axis += input.axisVector;
-					axis.Normalize();
+					if(axis != Vector2.Zero)
+					{
+						axis.Normalize();
+					}
 					axis *= MathHelper.Max(axisLength, input.axisVector.Length());
 					privateMembers.axisVector = axis;
 					privateMembers.axisFlag |= input.axisFlag;
@@ -88,7 +85,7 @@ namespace danmaq.nineball.state.input.collection
 			for(int i = nLength; --i >= 0; )
 			{
 				SInputState inputState = privateMembers.buttonStateList[i];
-				inputState.refresh(m_buttonFlagBuffer[i]);
+				inputState.refresh(buttonFlagBuffer[i]);
 				privateMembers.buttonStateList[i] = inputState;
 			}
 			for(int i = 4; --i >= 0; )
@@ -111,25 +108,6 @@ namespace danmaq.nineball.state.input.collection
 		{
 			privateMembers.childs.ForEach(input => input.draw(gameTime));
 			base.draw(entity, privateMembers, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>バッファを初期化します。</summary>
-		/// 
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <returns>初期化されているバッファのサイズ。</returns>
-		private int initializeBuffer(CInputCollection.CPrivateMembers privateMembers)
-		{
-			int nLength = privateMembers.buttonStateList.Count;
-			if(nLength > m_buttonFlagBuffer.Length)
-			{
-				m_buttonFlagBuffer = new bool[nLength];
-			}
-			Array.Clear(dirFlagBuffer, 0, 4);
-			Array.Clear(m_buttonFlagBuffer, 0, nLength);
-			return nLength;
 		}
 	}
 }
