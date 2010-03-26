@@ -22,8 +22,6 @@ namespace danmaq.ball.entity.font
 	public sealed class CCursor : CEntity
 	{
 
-		// TODO : 表示だけでなく、中身も実装する。
-
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
