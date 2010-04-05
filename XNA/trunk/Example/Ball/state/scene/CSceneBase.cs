@@ -38,9 +38,6 @@ namespace danmaq.ball.state.scene
 		/// <summary>ゲーム オブジェクト。</summary>
 		protected readonly CGame game = CGame.instance;
 
-		/// <summary>フェーズ・カウンタ管理クラス。</summary>
-		protected readonly CPhase localPhaseManager = new CPhase();
-
 		/// <summary>ゲーム コンポーネント管理クラス。</summary>
 		protected readonly CGameComponentManager localGameComponentManager;
 
@@ -58,6 +55,12 @@ namespace danmaq.ball.state.scene
 
 		/// <summary>メインループ用の既定の状態。</summary>
 		private readonly CStateMainLoopDefault stateMainLoop = CStateMainLoopDefault.instance;
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>フェーズ・カウンタ管理クラス。</summary>
+		protected SPhase phaseManager = SPhase.initialized;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -77,18 +80,6 @@ namespace danmaq.ball.state.scene
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ゲーム共通のフェーズ・カウンタ管理クラスを取得します。</summary>
-		/// 
-		/// <value>ゲーム共通のフェーズ・カウンタ管理クラス。</value>
-		protected CPhase systemPhaseManager
-		{
-			get
-			{
-				return stateMainLoop.phase;
-			}
-		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ゲーム共通のスプライト バッチ管理クラスを取得します。</summary>
@@ -147,7 +138,7 @@ namespace danmaq.ball.state.scene
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 			localCoRoutineManager.update(gameTime);
-			localPhaseManager.count++;
+			phaseManager.count++;
 			base.update(entity, privateMembers, gameTime);
 		}
 
@@ -165,7 +156,7 @@ namespace danmaq.ball.state.scene
 		public override void teardown(IEntity entity, object privateMembers, IState nextState)
 		{
 			localCoRoutineManager.Dispose();
-			localPhaseManager.reset();
+			phaseManager.reset();
 			localGameComponentManager.Dispose();
 			GC.Collect();
 			base.teardown(entity, privateMembers, nextState);

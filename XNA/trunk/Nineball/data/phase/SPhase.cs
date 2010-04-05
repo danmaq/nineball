@@ -13,15 +13,18 @@ namespace danmaq.nineball.data.phase
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>フェーズ進行・カウンタ進行の管理をするクラス。</summary>
+	/// <summary>フェーズ進行・カウンタ進行の管理をする構造体。</summary>
 	/// <remarks>
 	/// <c>count++</c>を毎フレーム呼ぶことでフレームカウンタとして使うと便利です。
 	/// </remarks>
-	public sealed class CPhase : ICloneable
+	public struct SPhase
 	{
 
 		// TODO : phaseのスタック積みできないかなぁ
 		// TODO : リードオンリ版対応
+
+		/// <summary>初期化された構造体。</summary>
+		public static readonly SPhase initialized;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -39,11 +42,12 @@ namespace danmaq.nineball.data.phase
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
-		/// <remarks>内部データのリセットを行います。</remarks>
-		public CPhase()
+		/// <summary>静的なコンストラクタ。</summary>
+		static SPhase()
 		{
-			reset();
+			SPhase phase = new SPhase();
+			phase.reset();
+			initialized = phase;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -144,7 +148,7 @@ namespace danmaq.nineball.data.phase
 		/// 
 		/// <param name="p">フェーズ・カウンタ管理クラス</param>
 		/// <returns>現在のフェーズ値</returns>
-		public static implicit operator int(CPhase p)
+		public static implicit operator int(SPhase p)
 		{
 			return p.phase;
 		}
@@ -159,30 +163,6 @@ namespace danmaq.nineball.data.phase
 			phase = 0;
 			reserveNextPhase = false;
 			nextPhase = -1;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary><c>CPhaseManager</c>オブジェクトの複製を取得します。</summary>
-		/// 
-		/// <returns><c>CPhaseManager</c>オブジェクトのコピー。</returns>
-		public CPhase Clone()
-		{
-			CPhase phaseManager = new CPhase();
-			phaseManager.m_nPhase = m_nPhase;
-			phaseManager.m_nCount = m_nCount;
-			phaseManager.nextPhase = nextPhase;
-			phaseManager.phaseStartTime = phaseStartTime;
-			phaseManager.prevPhase = prevPhase;
-			return phaseManager;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary><c>CPhaseManager</c>オブジェクトの複製を取得します。</summary>
-		/// 
-		/// <returns><c>CPhaseManager</c>オブジェクトのコピー。</returns>
-		object ICloneable.Clone()
-		{
-			return Clone();
 		}
 	}
 }

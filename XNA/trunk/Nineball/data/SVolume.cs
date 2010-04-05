@@ -8,8 +8,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using Microsoft.Xna.Framework;
 using danmaq.nineball.misc;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.data
 {
@@ -21,8 +21,17 @@ namespace danmaq.nineball.data
 	/// またSingle型とほぼ同じ感覚に扱えます。
 	/// </remarks>
 	[Serializable]
-	public sealed class CVolume
+	public struct SVolume
 	{
+
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>ミュート状態を示す定数。</summary>
+		public static readonly SVolume Zero = new SVolume();
+
+		/// <summary>既定状態(1dB)を示す定数。</summary>
+		public static readonly SVolume One = new SVolume(1);
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -36,21 +45,13 @@ namespace danmaq.nineball.data
 		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// <para>コンストラクタ。</para>
-		/// <para>初期音量は0dBです。</para>
-		/// </summary>
-		public CVolume() : this(1)
-		{
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>コンストラクタ。</para>
 		/// <para>初期音量が設定できます。</para>
 		/// </summary>
 		/// 
 		/// <param name="fVolume">初期音量</param>
-		public CVolume(float fVolume)
+		public SVolume(float fVolume)
 		{
+			m_fVolume = 0f;
 			volume = fVolume;
 		}
 
@@ -95,7 +96,7 @@ namespace danmaq.nineball.data
 		/// 
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <returns>音量値</returns>
-		public static implicit operator float(CVolume v)
+		public static implicit operator float(SVolume v)
 		{
 			return v.volume;
 		}
@@ -105,9 +106,9 @@ namespace danmaq.nineball.data
 		/// 
 		/// <param name="f">音量値</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static implicit operator CVolume(float f)
+		public static implicit operator SVolume(float f)
 		{
-			return new CVolume(f);
+			return new SVolume(f);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -115,7 +116,7 @@ namespace danmaq.nineball.data
 		/// 
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static CVolume operator ++(CVolume v)
+		public static SVolume operator ++(SVolume v)
 		{
 			v.volume += 0.1f;
 			return v;
@@ -126,7 +127,7 @@ namespace danmaq.nineball.data
 		/// 
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static CVolume operator --(CVolume v)
+		public static SVolume operator --(SVolume v)
 		{
 			v.volume -= 0.1f;
 			return v;
@@ -138,9 +139,9 @@ namespace danmaq.nineball.data
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <param name="f">加算値</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static CVolume operator +(CVolume v, float f)
+		public static SVolume operator +(SVolume v, float f)
 		{
-			return new CVolume((float)v + f);
+			return new SVolume((float)v + f);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -149,9 +150,9 @@ namespace danmaq.nineball.data
 		/// <param name="v">音量クラス オブジェクト</param>
 		/// <param name="f">減算値</param>
 		/// <returns>音量クラス オブジェクト</returns>
-		public static CVolume operator -(CVolume v, float f)
+		public static SVolume operator -(SVolume v, float f)
 		{
-			return new CVolume((float)v - f);
+			return new SVolume((float)v - f);
 		}
 
 		//* -----------------------------------------------------------------------*

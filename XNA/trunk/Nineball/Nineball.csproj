@@ -95,7 +95,7 @@
   <ItemGroup>
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
-    <Compile Include="data\CVolume.cs" />
+    <Compile Include="data\SVolume.cs" />
     <Compile Include="data\EAlign.cs" />
     <Compile Include="data\SSpriteDrawInfo.cs" />
     <Compile Include="entity\CAI.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="misc\CInterpolate.cs" />
     <Compile Include="misc\CMath.cs" />
     <Compile Include="misc\CMisc.cs" />
-    <Compile Include="data\phase\CPhase.cs" />
+    <Compile Include="data\phase\SPhase.cs" />
     <Compile Include="misc\CSingleton.cs" />
     <Compile Include="misc\CStaticRandom.cs" />
     <Compile Include="old\core\data\CDataIOManager.cs" />

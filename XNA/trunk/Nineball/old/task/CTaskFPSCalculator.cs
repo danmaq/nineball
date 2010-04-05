@@ -34,7 +34,7 @@ namespace danmaq.nineball.old.task
 			//* fields ────────────────────────────────*
 
 			/// <summary>フェーズ・カウンタ管理クラス</summary>
-			public CPhase m_phaseManager;
+			public SPhase m_phaseManager;
 
 			/// <summary>前回計測時の稼働時間(秒)</summary>
 			public int m_prevSeconds;
@@ -167,8 +167,8 @@ namespace danmaq.nineball.old.task
 		/// <summary>コンストラクタ。</summary>
 		public CTaskFPSCalculator()
 		{
-			m_dataUpdate.m_phaseManager = new CPhase();
-			m_dataDraw.m_phaseManager = new CPhase();
+			m_dataUpdate.m_phaseManager = SPhase.initialized;
+			m_dataDraw.m_phaseManager = SPhase.initialized;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
