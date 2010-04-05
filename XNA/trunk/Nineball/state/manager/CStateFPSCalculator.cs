@@ -37,7 +37,7 @@ namespace danmaq.nineball.state.manager
 			private int m_prevSeconds;
 
 			/// <summary>フェーズ・カウンタ管理クラス。</summary>
-			private CPhase m_mgrPhase;
+			private SPhase m_mgrPhase;
 
 			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* constructor & destructor ───────────────────────*
@@ -47,7 +47,7 @@ namespace danmaq.nineball.state.manager
 			static SFPSData()
 			{
 				initializedData = new SFPSData();
-				initializedData.m_mgrPhase = new CPhase();
+				initializedData.m_mgrPhase = SPhase.initialized;
 			}
 
 			//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

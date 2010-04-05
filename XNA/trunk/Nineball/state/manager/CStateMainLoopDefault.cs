@@ -61,18 +61,6 @@ namespace danmaq.nineball.state.manager
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>フェーズ・カウンタ進行管理クラスを取得します。</summary>
-		/// 
-		/// <value>フェーズ・カウンタ進行管理クラス。</value>
-		public CPhase phase
-		{
-			get
-			{
-				return _private.phase;
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>グラフィック デバイスの構成・管理クラスを取得します。</summary>
 		/// 
 		/// <value>グラフィック デバイスの構成・管理クラス。</value>
@@ -187,7 +175,7 @@ namespace danmaq.nineball.state.manager
 		)
 		{
 			scene.update(gameTime);
-			phase.count++;
+			entity.phase.count++;
 			base.update(entity, privateMembers, gameTime);
 		}
 

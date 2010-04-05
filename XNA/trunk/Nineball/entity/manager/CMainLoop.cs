@@ -31,9 +31,6 @@ namespace danmaq.nineball.entity.manager
 			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* constants ──────────────────────────────-*
 
-			/// <summary>フェーズ・カウンタ進行管理クラス。</summary>
-			public readonly CPhase phase = new CPhase();
-
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
@@ -75,6 +72,9 @@ namespace danmaq.nineball.entity.manager
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
+
+		/// <summary>フェーズ・カウンタ進行管理クラス。</summary>
+		public SPhase phase = SPhase.initialized;
 
 		/// <summary>Nineball終了時にアプリケーションも終了するかどうか。</summary>
 		public bool exitOnDispose = true;

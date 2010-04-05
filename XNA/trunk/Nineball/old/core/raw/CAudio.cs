@@ -67,9 +67,6 @@ namespace danmaq.nineball.old.core.raw
 		/// <summary>効果音の墓場(GC防止用)</summary>
 		private readonly Queue<Cue> GRAVE_SE = new Queue<Cue>();
 
-		/// <summary>フェーズ・カウント管理クラス。</summary>
-		private readonly CPhase PHASE_MANAGER = new CPhase();
-
 		/// <summary>マイクロスレッド管理 クラス。</summary>
 		private readonly CCoRoutineManager MICROTHREAD_MANAGER = new CCoRoutineManager();
 
@@ -93,6 +90,9 @@ namespace danmaq.nineball.old.core.raw
 
 		/// <summary>BGMファイルのキュー。</summary>
 		private Cue cueBGM = null;
+
+		/// <summary>フェーズ・カウント管理クラス。</summary>
+		private SPhase phaseManager = SPhase.initialized;
 
 		/// <summary>BGMのインデックス。</summary>
 		private ushort m_indexBGM = ushort.MaxValue;
@@ -307,7 +307,7 @@ namespace danmaq.nineball.old.core.raw
 				engine.Update();
 			}
 			MICROTHREAD_MANAGER.update();
-			PHASE_MANAGER.count++;
+			phaseManager.count++;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -341,7 +341,7 @@ namespace danmaq.nineball.old.core.raw
 				{
 					yield return null;
 				}
-				int nCount = PHASE_MANAGER.count;
+				int nCount = phaseManager.count;
 				foreach(ushort index in RESERVED_SE)
 				{
 					CSE cueSE;

@@ -35,14 +35,14 @@ namespace danmaq.nineball.old.task
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>フェーズ・カウンタ管理クラス オブジェクト。</summary>
-		public readonly CPhase phaseManager = new CPhase();
-
 		/// <summary>コルーチン管理クラス オブジェクト。</summary>
 		protected readonly CCoRoutineManager coRoutineManager = new CCoRoutineManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
+
+		/// <summary>フェーズ・カウンタ管理クラス オブジェクト。</summary>
+		public SPhase phaseManager = SPhase.initialized;
 
 		/// <summary>タスク管理クラス オブジェクト。</summary>
 		private CTaskManager m_manager = null;
