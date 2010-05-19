@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace danmaq.nineball.util.collection
 {
@@ -61,10 +62,10 @@ namespace danmaq.nineball.util.collection
 		//* constants ──────────────────────────────-*
 
 		/// <summary>責任を持つオブジェクト一覧。</summary>
-		protected readonly List<_P> partial = new List<_P>();
+		protected readonly List<_P> m_partial = new List<_P>();
 
 		/// <summary>部分的に責任を持つ対象のリスト。</summary>
-		protected readonly ICollection<_T> collection;
+		protected readonly ICollection<_T> m_collection;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -82,7 +83,7 @@ namespace danmaq.nineball.util.collection
 			{
 				throw new ArgumentException("collection");
 			}
-			this.collection = collection;
+			this.m_collection = collection;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -103,7 +104,15 @@ namespace danmaq.nineball.util.collection
 		{
 			get
 			{
-				return partial.Count;
+				return m_partial.Count;
+			}
+		}
+
+		public ReadOnlyCollection<_P> partial
+		{
+			get
+			{
+				return m_partial.AsReadOnly();
 			}
 		}
 
@@ -137,8 +146,8 @@ namespace danmaq.nineball.util.collection
 		public virtual void Add(_P item)
 		{
 			throwAtReadOnly();
-			collection.Add(item);
-			partial.Add(item);
+			m_collection.Add(item);
+			m_partial.Add(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -150,7 +159,7 @@ namespace danmaq.nineball.util.collection
 		public virtual void Clear()
 		{
 			throwAtReadOnly();
-			partial.ForEach(item => collection.Remove(item));
+			m_partial.ForEach(item => m_collection.Remove(item));
 			castoff();
 		}
 
@@ -165,7 +174,7 @@ namespace danmaq.nineball.util.collection
 		public virtual bool Remove(_P item)
 		{
 			throwAtReadOnly();
-			return castoff(item) && collection.Remove(item);
+			return castoff(item) && m_collection.Remove(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -175,7 +184,7 @@ namespace danmaq.nineball.util.collection
 		/// <returns>存在する場合、<c>true</c>。</returns>
 		public virtual bool Contains(_P item)
 		{
-			return partial.Contains(item);
+			return m_partial.Contains(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -189,7 +198,7 @@ namespace danmaq.nineball.util.collection
 		/// </param>
 		public virtual void CopyTo(_P[] array, int arrayIndex)
 		{
-			partial.CopyTo(array, arrayIndex);
+			m_partial.CopyTo(array, arrayIndex);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -200,7 +209,7 @@ namespace danmaq.nineball.util.collection
 		/// <returns>列挙するオブジェクトの型。</returns>
 		public virtual IEnumerator<_P> GetEnumerator()
 		{
-			return partial.GetEnumerator();
+			return m_partial.GetEnumerator();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -211,7 +220,7 @@ namespace danmaq.nineball.util.collection
 		/// <returns>列挙するオブジェクトの型。</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return ((IEnumerable)partial).GetEnumerator();
+			return ((IEnumerable)m_partial).GetEnumerator();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -223,7 +232,7 @@ namespace danmaq.nineball.util.collection
 		public virtual void castoff()
 		{
 			throwAtReadOnly();
-			partial.Clear();
+			m_partial.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -237,7 +246,7 @@ namespace danmaq.nineball.util.collection
 		public virtual bool castoff(_P item)
 		{
 			throwAtReadOnly();
-			return partial.Remove(item);
+			return m_partial.Remove(item);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -249,7 +258,7 @@ namespace danmaq.nineball.util.collection
 		/// </exception>
 		public void ForEach(Action<_P> action)
 		{
-			partial.ForEach(action);
+			m_partial.ForEach(action);
 		}
 
 		//* -----------------------------------------------------------------------*
