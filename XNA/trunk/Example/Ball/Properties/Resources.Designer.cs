@@ -133,6 +133,15 @@ namespace danmaq.ball.Properties {
         }
         
         /// <summary>
+        ///   カウントダウン画面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SCENE_COUNTDOWN {
+            get {
+                return ResourceManager.GetString("SCENE_COUNTDOWN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   クレジット画面 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SCENE_CREDIT {

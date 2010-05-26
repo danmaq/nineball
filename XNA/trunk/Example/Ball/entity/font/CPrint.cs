@@ -25,6 +25,13 @@ namespace danmaq.ball.entity.font
 	public sealed class CPrint : CFont
 	{
 
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>よゆ風固定ピッチフォント リソース。</summary>
+		private static readonly SpriteFont font98 =
+			CGame.instance.Content.Load<SpriteFont>(Resources.FONT_98);
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -49,7 +56,7 @@ namespace danmaq.ball.entity.font
 			: base(strText)
 		{
 			nextState = CState98.instance;
-			font = CGame.instance.Content.Load<SpriteFont>(Resources.FONT_98);
+			font = font98;
 			sprite = CStateMainLoopDefault.instance.sprite;
 			this.pos = pos;
 			alignHorizontal = hAlign;

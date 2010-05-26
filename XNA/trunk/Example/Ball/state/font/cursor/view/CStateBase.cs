@@ -21,6 +21,9 @@ namespace danmaq.ball.state.font.cursor.view
 	public abstract class CStateBase : CState<CEntity, Matrix>
 	{
 
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 

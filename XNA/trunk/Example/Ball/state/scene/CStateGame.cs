@@ -11,6 +11,7 @@
 using danmaq.ball.Properties;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace danmaq.ball.state.scene
 {
@@ -26,6 +27,12 @@ namespace danmaq.ball.state.scene
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateGame instance = new CStateGame();
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>ゲーム難易度。</summary>
+		public ushort level = 0;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -40,6 +47,25 @@ namespace danmaq.ball.state.scene
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>状態が開始された時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を適用されたオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		public override void setup(IEntity entity, object privateMembers)
+		{
+			base.setup(entity, privateMembers);
+			if (entity.previousState != CStateCountDown.instance)
+			{
+				entity.nextState = CStateCountDown.instance;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
@@ -49,7 +75,6 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-//			entity.nextState = CStateTitle.instance;
 			base.update(entity, privateMembers, gameTime);
 		}
 

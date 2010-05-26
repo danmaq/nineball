@@ -149,6 +149,10 @@
     <value>logo</value>
     <comment>danmaq Productsロゴ</comment>
   </data>
+  <data name="SCENE_COUNTDOWN" xml:space="preserve">
+    <value>カウントダウン画面</value>
+    <comment>カウントダウン画面実行時のトレース情報</comment>
+  </data>
   <data name="SCENE_CREDIT" xml:space="preserve">
     <value>クレジット画面</value>
     <comment>クレジット画面実行時のトレース情報</comment>

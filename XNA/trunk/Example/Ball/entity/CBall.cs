@@ -9,46 +9,44 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using danmaq.nineball.data.phase;
 using danmaq.nineball.entity;
 using danmaq.nineball.misc;
-using Microsoft.Xna.Framework.Graphics;
+using danmaq.nineball.state;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.ball.entity
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>玉オブジェクト。</summary>
-	public abstract class CBall : CEntity
+	public sealed class CBall : CEntity
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		// TODO : マジックナンバーのResource化。
-		/// <summary>玉の基準速度。</summary>
-		private const float SPEED = 1f;
+		/// <summary>玉の最大速度。</summary>
+		private const float MAX_SPEED = 1f;
 
-		/// <summary>加速度グラフ。</summary>
-		private static readonly float[] accelerateGraph;
+		/// <summary>加速度グラフのアタック・サスティン・リリース時間。</summary>
+		private static readonly int[] accelerateTime = { 5, 5, 10 };
 
-		/// <summary>フェーズ・カウンタ管理クラス。</summary>
-		protected readonly SPhase phaseManager = SPhase.initialized;
+		/// <summary>加速度グラフ情報。</summary>
+		private static readonly ReadOnlyCollection<float> accelerateGraph;
 
-		// TODO : 移動キューはGCに悪影響を与えるため、XBOX360で動かすためには修正が必要。
 		/// <summary>移動キュー。</summary>
-		private readonly Queue<int> moveQueueList = new Queue<int>(1);
-
-		/// <summary>Y座標。</summary>
-		private readonly float y;
-
-		/// <summary>玉の色。</summary>
-		private readonly Color color;
+		private readonly int[] moveRequest = new int[accelerateGraph.Count];
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>現在の速度。</summary>
+		/// <summary>位置。</summary>
+		public Vector2 position = Vector2.Zero;
+
+		/// <summary>速度。</summary>
 		private float m_fSpeed = 0f;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -56,42 +54,101 @@ namespace danmaq.ball.entity
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>静的なコンストラクタ。</summary>
+		/// <remarks>ここで加速度グラフ情報を作成します。</remarks>
 		static CBall()
 		{
-			// TODO : マジックナンバーのResource化。
-			List<float> accelerateGraph = new List<float>(20);
-			ushort[] timeLimit = { 5, 5, 10 };
+			List<float> graph = new List<float>();
 			float fPrevSpeed = 0f;
-			for(SPhase phase = SPhase.initialized; phase.phase < 3; phase.count++)
+			for (SPhase phase = SPhase.initialized; phase < 3; phase.count++)
 			{
 				int nPCount = phase.countPhase;
-				ushort uPLimit = timeLimit[phase.phase];
-				float fSpeed = SPEED;
-				switch(phase.phase)
+				int nPLimit = accelerateTime[phase];
+				float fSpeed = MAX_SPEED;
+				switch (phase)
 				{
 					case 0:
-						fSpeed = CInterpolate._clampSlowFastSlow(0, SPEED, nPCount, uPLimit);
+						fSpeed = CInterpolate._clampSlowFastSlow(0, MAX_SPEED, nPCount, nPLimit);
 						break;
 					case 2:
-						fSpeed = CInterpolate._clampAccelerate(SPEED, 0, nPCount, uPLimit);
+						fSpeed = CInterpolate._clampAccelerate(MAX_SPEED, 0, nPCount, nPLimit);
 						break;
 				}
-				accelerateGraph.Add(fSpeed - fPrevSpeed);
+				graph.Add(fSpeed - fPrevSpeed);
 				fPrevSpeed = fSpeed;
-				phase.reserveNextPhase = nPCount >= uPLimit;
+				phase.reserveNextPhase = nPCount >= nPLimit;
 			}
-			CBall.accelerateGraph = accelerateGraph.ToArray();
+			accelerateGraph = graph.AsReadOnly();
+		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>次に変化する状態を設定します。</summary>
+		/// 
+		/// <value>次に変化する状態。</value>
+		/// <exception cref="System.ArgumentNullException">
+		/// 状態として、nullを設定しようとした場合。
+		/// </exception>
+		public new IState<CBall, object> nextState
+		{
+			set
+			{
+				base.nextState = value;
+			}
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(GameTime gameTime)
+		{
+			base.update(gameTime);
+			calcSpeed();
+			position.X += m_fSpeed;
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="color">玉の色。</param>
-		/// <param name="y">表示されるY座標。</param>
-		private CBall(Color color, float y)
+		/// <summary>玉を移動します。</summary>
+		public void move()
 		{
-			this.color = color;
-			this.y = y;
+			for (int i = moveRequest.Length; --i >= 0; )
+			{
+				if (moveRequest[i] == 0)
+				{
+					moveRequest[i] = counter;
+					break;
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在速度を更新します。</summary>
+		private void calcSpeed()
+		{
+			for (int i = moveRequest.Length; --i >= 0; )
+			{
+				int qc = moveRequest[i];
+				if (qc > 0)
+				{
+					if (qc >= accelerateGraph.Count)
+					{
+						moveRequest[i] = 0;
+					}
+					else
+					{
+						m_fSpeed += accelerateGraph[qc];
+					}
+				}
+			}
+			if (m_fSpeed < 0f)
+			{
+				m_fSpeed = 0f;
+			}
 		}
 	}
 }

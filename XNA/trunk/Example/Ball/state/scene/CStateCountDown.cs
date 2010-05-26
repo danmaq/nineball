@@ -8,49 +8,63 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.ball.core;
 using danmaq.ball.entity.font;
-using danmaq.ball.state.scene;
-using danmaq.nineball;
-using danmaq.nineball.entity.input;
-using danmaq.nineball.entity.input.data;
-using danmaq.nineball.state;
+using danmaq.ball.Properties;
+using danmaq.nineball.data;
+using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.font.cursor
+namespace danmaq.ball.state.scene
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カーソル制御状態クラス。</summary>
-	public sealed class CStateCursor : CState<CCursor, object>
+	/// <summary>ゲーム開始前カウントダウンのシーン。</summary>
+	public sealed class CStateCountDown : CSceneBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateCursor instance = new CStateCursor();
+		public static readonly CStateCountDown instance = new CStateCountDown();
 
-		/// <summary>入力管理クラス。</summary>
-		private readonly CInput inputManager = CGame.instance.inputManager;
+		/// <summary>カウントダウン表示用フォント。</summary>
+		private readonly CPrint count =
+			new CPrint(3.ToString(), new Vector2(39, 12), EAlign.LeftTop, Color.Green);
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>ゲーム難易度。</summary>
-		private short m_sLevel = 0;
+		public ushort level = 0;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCursor()
+		private CStateCountDown()
+			: base(Resources.SCENE_COUNTDOWN)
 		{
 		}
 
-		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* methods ───────────────────────────────-*
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>状態が開始された時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を適用されたオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		public override void setup(IEntity entity, object privateMembers)
+		{
+			base.setup(entity, privateMembers);
+			localGameComponentManager.addDrawableEntity(count);
+			phaseManager.reset();
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
@@ -60,32 +74,21 @@ namespace danmaq.ball.state.font.cursor
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CCursor entity, object privateMembers, GameTime gameTime)
+		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			bool bLeftInput = inputManager.dirInputState[(int)EDirection.left].pushLoop;
-			bool bRightInput = inputManager.dirInputState[(int)EDirection.right].pushLoop;
-			if(bLeftInput || bRightInput)
+			switch (phaseManager.count)
 			{
-				Vector2 locate = entity.locate;
-				short sGap = (short)(bLeftInput ? -1 : 1);
-				m_sLevel += sGap;
-				locate.X += 8 * sGap;
-				if(locate.X < 6)
-				{
-					locate.X = 70;
-					m_sLevel = 8;
-				}
-				else if(locate.X > 70)
-				{
-					locate.X = 6;
-					m_sLevel = 0;
-				}
-				entity.locate = locate;
-			}
-			if(inputManager.buttonStateList[0].push)
-			{
-				CStateGame.instance.level = (ushort)m_sLevel;
-				CStarter.scene.nextState = CStateGame.instance;
+				case 60:
+					count.text = 2.ToString();
+					count.color = Color.Yellow;
+					break;
+				case 120:
+					count.text = 1.ToString();
+					count.color = Color.Red;
+					break;
+				case 180:
+					entity.nextState = entity.previousState;
+					break;
 			}
 			base.update(entity, privateMembers, gameTime);
 		}

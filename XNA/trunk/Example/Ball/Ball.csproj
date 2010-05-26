@@ -30,7 +30,7 @@
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>赤い玉 青い玉 競走ゲーム</ProductName>
     <PublisherName>danmaq</PublisherName>
-    <ApplicationRevision>11</ApplicationRevision>
+    <ApplicationRevision>12</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -103,12 +103,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\ball\CStateEnemy.cs" />
     <Compile Include="state\font\CState98.cs" />
     <Compile Include="state\font\cursor\CStateCursor.cs" />
     <Compile Include="state\font\cursor\view\CStateBase.cs" />
     <Compile Include="state\font\cursor\view\CStateHidden.cs" />
     <Compile Include="state\font\cursor\view\CStateVisible.cs" />
     <Compile Include="state\scene\CSceneBase.cs" />
+    <Compile Include="state\scene\CStateCountDown.cs" />
     <Compile Include="state\scene\CStateCredit.cs" />
     <Compile Include="state\scene\CStateGame.cs" />
     <Compile Include="state\scene\CStateInitialize.cs" />
@@ -164,9 +166,6 @@
       <Project>{B61980C5-7B01-4BEA-A1B5-629A25F72661}</Project>
       <Name>Nineball</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="state\ball\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

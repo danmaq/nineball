@@ -108,6 +108,10 @@ namespace danmaq.nineball.util.collection
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>責任を持つオブジェクト一覧を取得します。</summary>
+		/// 
+		/// <value>責任を持つオブジェクトのリスト。</value>
 		public ReadOnlyCollection<_P> partial
 		{
 			get
