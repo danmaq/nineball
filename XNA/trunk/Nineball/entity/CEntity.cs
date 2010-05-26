@@ -166,35 +166,13 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>次に変化する状態を設定します。</summary>
+		/// <summary>次に変化する状態を予約します。</summary>
 		/// 
 		/// <value>次に変化する状態。</value>
-		/// <exception cref="System.ArgumentNullException">
-		/// <para>状態として、nullを設定しようとした場合。</para>
-		/// <para>
-		/// 何もしない状態を設定したい場合、<c>CState.empty</c>を使用します。
-		/// </para>
-		/// </exception>
 		public IState nextState
 		{
-			set
-			{
-				if(value == null)
-				{
-					throw new ArgumentNullException("value");
-				}
-				currentState.teardown(this, privateMembers, value);
-				IState oldPrevious = previousState;
-				IState oldCurrent = currentState;
-				previousState = currentState;
-				currentState = value;
-				lastStateChangeTime = DateTime.Now;
-				currentState.setup(this, privateMembers);
-				if(changedState != null)
-				{
-					changedState(this, new CEventChangedState(oldPrevious, oldCurrent, value));
-				}
-			}
+			private get;
+			set;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -257,6 +235,10 @@ namespace danmaq.nineball.entity
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public virtual void update(GameTime gameTime)
 		{
+			if (nextState != null)
+			{
+				commitNextState();
+			}
 			currentState.update(this, privateMembers, gameTime);
 			counter++;
 		}
@@ -268,6 +250,33 @@ namespace danmaq.nineball.entity
 		public virtual void draw(GameTime gameTime)
 		{
 			currentState.draw(this, privateMembers, gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>予約していた次の状態を確定します。</summary>
+		private void commitNextState()
+		{
+			if (!(nextState == null || currentState == nextState))
+			{
+				IState _nextState = this.nextState;
+				nextState = null;
+				currentState.teardown(this, privateMembers, _nextState);
+				IState oldPrevious = previousState;
+				IState oldCurrent = currentState;
+				previousState = currentState;
+				currentState = _nextState;
+				lastStateChangeTime = DateTime.Now;
+				currentState.setup(this, privateMembers);
+				if (changedState != null)
+				{
+					changedState(this, new CEventChangedState(oldPrevious, oldCurrent, _nextState));
+				}
+				if (nextState != null)
+				{
+					commitNextState();
+				}
+			}
+			nextState = null;
 		}
 	}
 }

@@ -8,38 +8,82 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.ball.misc;
-using danmaq.nineball.data;
-using danmaq.nineball.entity.fonts;
+using danmaq.ball.entity;
+using danmaq.ball.state.scene;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.font
+namespace danmaq.ball.state.ball
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>よゆ風固定ピッチフォント用の状態。</summary>
-	public sealed class CState98 : CState<CFont, object>
+	/// <summary>敵の玉の状態。</summary>
+	public sealed class CStateEnemy : CState<CBall, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CState98 instance = new CState98();
+		public static readonly CStateEnemy instance = new CStateEnemy();
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>ゲーム難易度。</summary>
+		private ushort m_wLevel = 0;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CState98()
+		private CStateEnemy()
 		{
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>状態が開始された時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を適用されたオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		public override void setup(CBall entity, object privateMembers)
+		{
+			entity.position.Y = 200;
+			m_wLevel = CStateGame.instance.level;
+			base.setup(entity, privateMembers);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(CBall entity, object privateMembers, GameTime gameTime)
+		{
+			switch (entity.counter)
+			{
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+					break;
+			}
+			base.update(entity, privateMembers, gameTime);
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
@@ -49,43 +93,9 @@ namespace danmaq.ball.state.font
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
+		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
 		{
-			if(entity.sprite != null && entity.font != null)
-			{
-				Vector2 pos = entity.pos;
-				pos.X -= getOriginX(entity);
-				entity.sprite.add(entity.font, entity.text, CMisc.Cursor2VGA(pos),
-					new Color(
-						(byte)entity.colorRed, (byte)entity.colorGreen,
-						(byte)entity.colorBlue, (byte)entity.colorAlpha),
-					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, entity.layer);
-			}
 			base.draw(entity, privateMembers, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>フォント情報より原点X座標を算出します。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <returns>原点X座標</returns>
-		private int getOriginX(CFont entity)
-		{
-			int nResult = 0;
-			int nWidth = (int)(entity.font.MeasureString(entity.text) / 8).X;
-			switch(entity.alignHorizontal)
-			{
-				case EAlign.LeftTop:
-					nResult = 0;
-					break;
-				case EAlign.Center:
-					nResult = nWidth / 2;
-					break;
-				case EAlign.RightBottom:
-					nResult = nWidth;
-					break;
-			}
-			return nResult;
 		}
 	}
 }

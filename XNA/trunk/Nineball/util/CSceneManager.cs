@@ -9,20 +9,26 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
 using System.Collections.ObjectModel;
+using danmaq.nineball.util.collection;
+using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.util.collection
+namespace danmaq.nineball.util
 {
-	public sealed class CSceneManager : DrawableGameComponent
+
+	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+	/// <summary>シーン管理クラス。</summary>
+	/// <remarks>
+	/// このクラスを使って、ゲーム コンポーネントをシーンのように使うことができます。
+	/// </remarks>
+	public sealed class SceneManager : IDisposable
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		private readonly CDisposablePartialCollection<IGameComponent, DrawableGameComponent> collection;
+		/// <summary>部分責任コレクション。</summary>
+		private readonly CDisposablePartialCollection<IGameComponent, GameComponent> collection;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -30,22 +36,22 @@ namespace danmaq.nineball.util.collection
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CSceneManager(Game game)
-			: base(game)
+		/// <param name="collection">ゲームコンポーネント管理コレクション。</param>
+		public SceneManager(ICollection<IGameComponent> collection)
 		{
-			game.Components.Add(this);
-			collection = new CDisposablePartialCollection<IGameComponent, DrawableGameComponent>(game.Components);
+			this.collection = new CDisposablePartialCollection<IGameComponent, GameComponent>(collection);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
-		public DrawableGameComponent now
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在のシーン。</summary>
+		public GameComponent now
 		{
 			get
 			{
-				ReadOnlyCollection<DrawableGameComponent> partial = collection.partial;
+				ReadOnlyCollection<GameComponent> partial = collection.partial;
 				int nLength = partial.Count;
 				return nLength == 0 ? null : partial[nLength - 1];
 			}
@@ -77,25 +83,9 @@ namespace danmaq.nineball.util.collection
 		//* -----------------------------------------------------------------------*
 		/// <summary>管理している要素を全て解放します。</summary>
 		/// 
-		protected override void Dispose(bool disposing)
+		public void Dispose()
 		{
 			collection.Dispose();
-			base.Dispose(disposing);
-		}
-
-		public void Push(DrawableGameComponent component)
-		{
-			collection.Add(component);
-		}
-
-		public DrawableGameComponent Pop()
-		{
-			DrawableGameComponent now = this.now;
-			if (now != null)
-			{
-				collection.Remove(now);
-			}
-			return now;
 		}
 	}
 }
