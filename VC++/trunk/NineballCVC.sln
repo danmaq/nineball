@@ -1,7 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nineball", "Nineball\Nineball.vcproj", "{BC64C169-B41C-4F96-A3D1-2F18B9F230E8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC64C169-B41C-4F96-A3D1-2F18B9F230E8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC64C169-B41C-4F96-A3D1-2F18B9F230E8}.Debug|Win32.Build.0 = Debug|Win32
+		{BC64C169-B41C-4F96-A3D1-2F18B9F230E8}.Release|Win32.ActiveCfg = Release|Win32
+		{BC64C169-B41C-4F96-A3D1-2F18B9F230E8}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
