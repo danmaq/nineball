@@ -8,46 +8,38 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.ball.Properties;
-using danmaq.nineball.entity;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
+using danmaq.ball.core;
 using danmaq.ball.entity;
-using danmaq.ball.state.ball;
+using danmaq.nineball.entity.input;
+using danmaq.nineball.state;
+using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.state.scene
+namespace danmaq.ball.state.ball
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>ゲーム画面シーン。</summary>
-	public sealed class CStateGame
-		: CSceneBase
+	/// <summary>プレイヤーの玉の状態。</summary>
+	public sealed class CStatePlayer
+		: CState<CBall, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateGame instance = new CStateGame();
+		public static readonly CStatePlayer instance = new CStatePlayer();
 
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>ゲーム難易度。</summary>
-		public ushort level = 0;
+		/// <summary>入力管理クラス。</summary>
+		private readonly CInput inputManager = CGame.instance.inputManager;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateGame()
-			: base(Resources.SCENE_GAME)
+		private CStatePlayer()
 		{
 		}
-
-		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -59,18 +51,10 @@ namespace danmaq.ball.state.scene
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(IEntity entity, object privateMembers)
+		public override void setup(CBall entity, object privateMembers)
 		{
+			entity.position.Y = 100;
 			base.setup(entity, privateMembers);
-			if (entity.previousState != CStateCountDown.instance)
-			{
-				entity.nextState = CStateCountDown.instance;
-			}
-			else
-			{
-				localGameComponentManager.addEntity(new CBall(CStateEnemy.instance));
-				localGameComponentManager.addEntity(new CBall(CStatePlayer.instance));
-			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -81,8 +65,12 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void update(CBall entity, object privateMembers, GameTime gameTime)
 		{
+			if (inputManager.buttonStateList[0].push)
+			{
+				entity.move();
+			}
 			base.update(entity, privateMembers, gameTime);
 		}
 
@@ -94,7 +82,7 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
 		{
 			base.draw(entity, privateMembers, gameTime);
 		}

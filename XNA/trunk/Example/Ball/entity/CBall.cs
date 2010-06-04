@@ -21,7 +21,8 @@ namespace danmaq.ball.entity
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>玉オブジェクト。</summary>
-	public sealed class CBall : CEntity
+	public sealed class CBall
+		: CEntity
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -78,6 +79,18 @@ namespace danmaq.ball.entity
 				phase.reserveNextPhase = nPCount >= nPLimit;
 			}
 			accelerateGraph = graph.AsReadOnly();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>指定の状態で初期化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="state">状態。</param>
+		public CBall(IState state)
+			: base(state)
+		{
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
