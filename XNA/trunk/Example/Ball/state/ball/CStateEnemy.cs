@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.ball.entity;
 using danmaq.ball.state.scene;
+using danmaq.nineball.misc;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
-using System;
-using danmaq.nineball.misc;
 
 namespace danmaq.ball.state.ball
 {
