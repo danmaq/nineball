@@ -93,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="data\EAlign.cs" />
@@ -100,7 +101,9 @@
     <Compile Include="data\SGradation.cs" />
     <Compile Include="data\SSpriteDrawInfo.cs" />
     <Compile Include="data\SVolume.cs" />
+    <Compile Include="entity\CEntity.cs" />
     <Compile Include="entity\fonts\SFontGradationInfo.cs" />
+    <Compile Include="entity\IEntity.cs" />
     <Compile Include="entity\input\data\EDirection.cs" />
     <Compile Include="entity\input\data\EInputDevice.cs" />
     <Compile Include="old\core\data\CDataIOManager.cs" />
@@ -131,6 +134,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\CState.cs" />
+    <Compile Include="state\CStateGenerics.cs" />
+    <Compile Include="state\IState.cs" />
+    <Compile Include="state\IStateGenerics.cs" />
     <Compile Include="util\caps\CCapsExtension.cs" />
     <Compile Include="util\CLogger.cs" />
     <Compile Include="util\CMessageBox.cs" />
@@ -194,9 +201,6 @@
     <Content Include="README.txt" />
     <Content Include="_resources\nineball.ico" />
     <Content Include="_resources\nineball.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="state\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
