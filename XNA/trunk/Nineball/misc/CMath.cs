@@ -10,12 +10,12 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.util.math
+namespace danmaq.nineball.misc
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>三角関数系の演算関数集クラス。</summary>
-	public static class CTriangle
+	public static class CMath
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

@@ -71,8 +71,7 @@ namespace danmaq.nineball.util
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="spriteBatch">スプライトバッチ</param>
-		public CSprite(SpriteBatch spriteBatch)
-			: this()
+		public CSprite(SpriteBatch spriteBatch) : this()
 		{
 			this.spriteBatch = spriteBatch;
 		}

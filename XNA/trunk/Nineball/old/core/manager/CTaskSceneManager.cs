@@ -49,8 +49,7 @@ namespace danmaq.nineball.old.core.manager
 		/// <para>コンストラクタ。</para>
 		/// <para>空のシーンスタックで初期化されます。</para>
 		/// </summary>
-		public CTaskSceneManager()
-			: this(new Stack<IScene>())
+		public CTaskSceneManager() : this(new Stack<IScene>())
 		{
 		}
 
@@ -61,8 +60,7 @@ namespace danmaq.nineball.old.core.manager
 		/// </summary>
 		/// 
 		/// <param name="sceneFirst">最初のシーン オブジェクト</param>
-		public CTaskSceneManager(IScene sceneFirst)
-			: this()
+		public CTaskSceneManager(IScene sceneFirst) : this()
 		{
 			nowScene = sceneFirst;
 		}

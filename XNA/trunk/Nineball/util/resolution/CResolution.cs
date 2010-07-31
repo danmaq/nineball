@@ -40,8 +40,7 @@ namespace danmaq.nineball.util.resolution
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CResolution()
-			: this(null)
+		public CResolution() : this(null)
 		{
 		}
 
@@ -75,8 +74,7 @@ namespace danmaq.nineball.util.resolution
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="r">解像度定数</param>
-		public CResolution(EResolution r)
-			: this()
+		public CResolution(EResolution r) : this()
 		{
 			now = r;
 		}

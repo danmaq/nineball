@@ -87,5 +87,6 @@ namespace danmaq.nineball.state
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		void teardown(_E entity, _M privateMembers);
+
 	}
 }
