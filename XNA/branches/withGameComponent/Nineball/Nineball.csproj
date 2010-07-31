@@ -133,12 +133,12 @@
     <Compile Include="entity\component\CGameComponent.cs" />
     <Compile Include="entity\IEntity.cs" />
     <Compile Include="entity\manager\CCoRoutineManager.cs" />
-    <Compile Include="misc\CInterpolate.cs" />
-    <Compile Include="misc\CMath.cs" />
-    <Compile Include="misc\CMisc.cs" />
+    <Compile Include="util\math\CInterpolate.cs" />
+    <Compile Include="util\math\CMath.cs" />
+    <Compile Include="util\math\CMisc.cs" />
     <Compile Include="data\phase\SPhase.cs" />
-    <Compile Include="misc\CSingleton.cs" />
-    <Compile Include="misc\CStaticRandom.cs" />
+    <Compile Include="util\CSingleton.cs" />
+    <Compile Include="util\math\CStaticRandom.cs" />
     <Compile Include="old\core\data\CDataIOManager.cs" />
     <Compile Include="old\core\data\CResource.cs" />
     <Compile Include="old\core\data\EForcePreset.cs" />

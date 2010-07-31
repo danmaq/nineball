@@ -35,7 +35,8 @@ namespace danmaq.nineball.util.collection
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CPartialCollection(ICollection<_T> collection) : base(collection)
+		public CPartialCollection(ICollection<_T> collection)
+			: base(collection)
 		{
 		}
 
