@@ -155,7 +155,7 @@ namespace danmaq.nineball.state
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public virtual void teardown(IEntity entity, object privateMembers, IState nextState)
 		{
-			if (nextState == CState.empty)
+			if(nextState == CState.empty)
 			{
 				teardown((_E)entity, (_M)privateMembers);
 			}

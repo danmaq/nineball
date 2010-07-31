@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.nineball.util.math;
+using danmaq.nineball.misc;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.data

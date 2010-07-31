@@ -141,7 +141,7 @@ namespace danmaq.nineball.util
 #if WINDOWS
 			Console.WriteLine(strText);
 #else
-			Trace.WriteLine(strText);
+			Trace.WriteLine( strText );
 #endif
 		}
 
@@ -161,7 +161,7 @@ namespace danmaq.nineball.util
 #if WINDOWS
 			Console.WriteLine(strText);
 #else
-			Trace.WriteLine(strText);
+			Trace.WriteLine( strText );
 #endif
 		}
 
