@@ -131,7 +131,8 @@ namespace danmaq.nineball.util.resolution
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CResolutionAspectFix() : this(null)
+		public CResolutionAspectFix()
+			: this(null)
 		{
 		}
 
@@ -150,7 +151,8 @@ namespace danmaq.nineball.util.resolution
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="r">解像度定数</param>
-		public CResolutionAspectFix(EResolution r) : base(r)
+		public CResolutionAspectFix(EResolution r)
+			: base(r)
 		{
 		}
 

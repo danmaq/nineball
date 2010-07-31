@@ -10,7 +10,6 @@
 using System;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
-using danmaq.nineball.misc;
 
 namespace danmaq.nineball.entity.input.data
 {

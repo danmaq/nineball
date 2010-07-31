@@ -9,7 +9,7 @@
 
 using System;
 
-namespace danmaq.nineball.data
+namespace danmaq.nineball.util
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
