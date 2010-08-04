@@ -122,7 +122,6 @@ namespace danmaq.nineball.state.manager
 			set;
 		}
 
-
 		//* -----------------------------------------------------------------------*
 		/// <summary>深度バッファへ書き込みを行うかどうかを設定/取得します。</summary>
 		/// 
@@ -131,6 +130,16 @@ namespace danmaq.nineball.state.manager
 		{
 			get;
 			set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化されたかどうかを取得します。</summary>
+		/// 
+		/// <value>初期化された場合、<c>true</c>。</value>
+		public bool isSetupped
+		{
+			get;
+			private set;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -159,6 +168,7 @@ namespace danmaq.nineball.state.manager
 			sprite = new CSprite(new SpriteBatch(game.GraphicsDevice));
 			game.Content.RootDirectory = "Content";
 			scene.initialize();
+			isSetupped = true;
 			base.setup(entity, privateMembers);
 		}
 
@@ -214,6 +224,7 @@ namespace danmaq.nineball.state.manager
 		public override void teardown(IEntity entity, object privateMembers, IState nextState)
 		{
 			scene.Dispose();
+			isSetupped = false;
 			base.teardown(entity, privateMembers, nextState);
 		}
 	}

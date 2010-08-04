@@ -12,7 +12,7 @@ using System.Collections;
 using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
-using danmaq.nineball.misc;
+using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
