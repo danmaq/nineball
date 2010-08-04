@@ -53,6 +53,7 @@ namespace danmaq.nineball.state.input.collection
 			privateMembers.axisVector = Vector2.Zero;
 			foreach(CInput input in privateMembers.childs)
 			{
+				// 毎回isConnectするのは大変な気がするが……。
 				if(!entity.releaseAwayController || input.connect)
 				{
 					input.update(gameTime);

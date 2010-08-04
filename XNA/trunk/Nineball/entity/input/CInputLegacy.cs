@@ -220,7 +220,9 @@ namespace danmaq.nineball.entity.input
 		{
 			get
 			{
-				throw new System.NotImplementedException();
+				return true;
+				// FIXME : 真面目に実装する
+//				throw new NotImplementedException();
 			}
 		}
 
@@ -340,6 +342,20 @@ namespace danmaq.nineball.entity.input
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+		/// </summary>
+		/// 
+		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
+		protected override object privateMembers
+		{
+			get
+			{
+				return _privateMembers;
+			}
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -368,8 +384,9 @@ namespace danmaq.nineball.entity.input
 		/// 
 		/// <param name="pov">POVの操作も判定するかどうか。</param>
 		/// <param name="slider">スライダーの操作も判定するかどうか。</param>
+		/// <param name="playerNumber">判定に成功した場合、置き換えられるプレイヤー番号。</param>
 		/// <returns>任意のボタンが押された場合、<c>true</c>。</returns>
-		public bool isPushAnyKey(bool pov, bool slider)
+		public bool isPushAnyKey(bool pov, bool slider, short? playerNumber)
 		{
 			JoystickState state = _privateMembers.poll();
 			byte[] buttons = state.GetButtons();
@@ -381,6 +398,10 @@ namespace danmaq.nineball.entity.input
 			if(!bResult && slider)
 			{
 				bResult = state.getVector3Slider().Length() >= analogThreshold;
+			}
+			if(bResult && playerNumber.HasValue)
+			{
+				this.playerNumber = playerNumber.Value;
 			}
 			return bResult;
 		}
