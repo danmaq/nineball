@@ -35,6 +35,9 @@ namespace danmaq.nineball.entity.input.data
 		/// <summary>レガシ ゲーム コントローラ。</summary>
 		LegacyPad = 1 << 4,
 
+		/// <summary>ゲーム コントローラ。</summary>
+		Pad = (XBOX360 | LegacyPad),
+
 		/// <summary>キーボードとマウス。</summary>
 		KeyboardAndMouse = (Keyboard | Mouse),
 

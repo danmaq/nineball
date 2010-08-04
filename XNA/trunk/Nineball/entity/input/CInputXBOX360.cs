@@ -121,7 +121,7 @@ namespace danmaq.nineball.entity.input
 		private readonly List<Buttons> m_assignList = new List<Buttons>();
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		private readonly CPrivateMembers _privateMemebers;
+		private readonly CPrivateMembers _privateMembers;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -152,7 +152,7 @@ namespace danmaq.nineball.entity.input
 			: base(-1, CState.empty)
 		{
 			this.playerIndex = playerIndex;
-			_privateMemebers = new CPrivateMembers(this);
+			_privateMembers = new CPrivateMembers(this);
 			useForAxis = EAxisXBOX360.DPad;
 		}
 
@@ -268,7 +268,7 @@ namespace danmaq.nineball.entity.input
 		{
 			get
 			{
-				return _privateMemebers;
+				return _privateMembers;
 			}
 		}
 
@@ -314,7 +314,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>初期化処理を実行します。</summary>
 		public override void initialize()
 		{
-			_privateMemebers.aiForceFeedback.initialize();
+			_privateMembers.aiForceFeedback.initialize();
 			base.initialize();
 		}
 
@@ -324,7 +324,7 @@ namespace danmaq.nineball.entity.input
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(GameTime gameTime)
 		{
-			_privateMemebers.aiForceFeedback.update(gameTime);
+			_privateMembers.aiForceFeedback.update(gameTime);
 			base.update(gameTime);
 		}
 
@@ -334,7 +334,7 @@ namespace danmaq.nineball.entity.input
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(GameTime gameTime)
 		{
-			_privateMemebers.aiForceFeedback.draw(gameTime);
+			_privateMembers.aiForceFeedback.draw(gameTime);
 			base.draw(gameTime);
 		}
 
@@ -342,7 +342,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
-			_privateMemebers.Dispose();
+			_privateMembers.Dispose();
 			base.Dispose();
 		}
 	}

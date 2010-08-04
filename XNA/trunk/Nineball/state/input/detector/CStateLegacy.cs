@@ -93,7 +93,7 @@ namespace danmaq.nineball.state.input.detector
 			if(collection.Count == 0)
 			{
 				CInputLegacy input = instanceList.FirstOrDefault(
-					item => item.isPushAnyKey(detectPOV, detectSlider));
+					item => item.isPushAnyKey(detectPOV, detectSlider, collection.playerNumber));
 				if(input != null)
 				{
 					collection.Add(input);
