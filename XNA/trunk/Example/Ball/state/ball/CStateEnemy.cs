@@ -11,8 +11,8 @@
 using System;
 using danmaq.ball.entity;
 using danmaq.ball.state.scene;
-using danmaq.nineball.misc;
 using danmaq.nineball.state;
+using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.ball.state.ball
