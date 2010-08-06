@@ -73,7 +73,7 @@ namespace danmaq.nineball.util
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>静的なコンストラクタ。</summary>
 		static CSingleton()
 		{
 			// HACK : XBOX360版でもCreateInstanceできんかなぁ……orz
