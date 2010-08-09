@@ -88,12 +88,26 @@ namespace danmaq.nineball.data.content
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>値を取得します。</summary>
+		/// 
+		/// <param name="r">値オブジェクト。</param>
+		/// <returns>値。</returns>
+		public static implicit operator _T(CCache<_T> r)
+		{
+			return r.get();
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>コンテンツ本体を取得します。</summary>
 		/// 
 		/// <returns>コンテンツ本体オブジェクト。</returns>
 		public _T get()
 		{
-			return this;
+			if(!isLoaded)
+			{
+				preload();
+			}
+			return value;
 		}
 
 		//* -----------------------------------------------------------------------*
