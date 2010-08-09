@@ -17,15 +17,15 @@ namespace danmaq.nineball.data
 	/// <summary>参照可能な値ラッパー。</summary>
 	/// <remarks>ポインタ配列を作る時などに役立ちます。</remarks>
 	/// 
-	/// <typeparam name="_T">値</typeparam>
+	/// <typeparam name="_T">値の型。</typeparam>
 	[Serializable]
-	public sealed class CValue<_T>
+	public class CValue<_T>
 	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>値</summary>
+		/// <summary>値。</summary>
 		public _T value;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -40,8 +40,9 @@ namespace danmaq.nineball.data
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="v">値</param>
+		/// <param name="v">値。</param>
 		public CValue(_T v)
+			: this()
 		{
 			this.value = v;
 		}
@@ -52,8 +53,8 @@ namespace danmaq.nineball.data
 		//* -----------------------------------------------------------------------*
 		/// <summary>値から直接オブジェクトを作成します。</summary>
 		/// 
-		/// <param name="r">値</param>
-		/// <returns>値オブジェクト</returns>
+		/// <param name="r">値。</param>
+		/// <returns>値オブジェクト。</returns>
 		public static implicit operator CValue<_T>(_T r)
 		{
 			return new CValue<_T>(r);
@@ -62,8 +63,8 @@ namespace danmaq.nineball.data
 		//* -----------------------------------------------------------------------*
 		/// <summary>値を取得します。</summary>
 		/// 
-		/// <param name="r">値オブジェクト</param>
-		/// <returns>値</returns>
+		/// <param name="r">値オブジェクト。</param>
+		/// <returns>値。</returns>
 		public static implicit operator _T(CValue<_T> r)
 		{
 			return r.value;
@@ -72,7 +73,7 @@ namespace danmaq.nineball.data
 		//* -----------------------------------------------------------------------*
 		/// <summary>値の文字列表現を取得します。</summary>
 		/// 
-		/// <returns>値の文字列表現</returns>
+		/// <returns>値の文字列表現。</returns>
 		public override string ToString()
 		{
 			return value == null ? Resources.NULL : value.ToString();

@@ -11,17 +11,19 @@ using System;
 using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
+using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.state.manager
+namespace danmaq.nineball.old.state.manager
 {
 
 	// TODO : object以外も返せるようにしなきゃ
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>ローディング画面の基底クラスです。</summary>
+	[Obsolete("このクラスは今後サポートされません。CContentLoaderクラスなどを使用してください。")]
 	public abstract class CStateLoadManager : CState
 	{
 
