@@ -129,6 +129,10 @@
     <value>エラーが発生しました。</value>
     <comment>何らかのエラーが発生した時のタイトル</comment>
   </data>
+  <data name="ERR_NULL_MGR_CONTENT" xml:space="preserve">
+    <value>コンテンツ マネージャが初期化されていません。</value>
+    <comment>コンテンツ キャッシュにコンテンツ マネージャが設定されていない状態で読み込みを開始した場合</comment>
+  </data>
   <data name="ERR_READONLY" xml:space="preserve">
     <value>設定・書き込みはサポートしません。</value>
     <comment>読み取り専用状態のクラス等の状態を変更しようとした場合。</comment>

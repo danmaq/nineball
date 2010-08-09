@@ -93,6 +93,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\content\CCache.cs" />
+    <Compile Include="data\content\ICache.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="data\SVolume.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="entity\input\data\GamePadStateExtention.cs" />
     <Compile Include="entity\input\data\SDirArray.cs" />
     <Compile Include="entity\input\data\SInputState.cs" />
+    <Compile Include="entity\manager\CContentLoader.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="entity\component\CGameComponent.cs" />
     <Compile Include="entity\IEntity.cs" />
     <Compile Include="entity\manager\CCoRoutineManager.cs" />
+    <Compile Include="state\manager\CStateContentLoader.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
     <Compile Include="util\math\CMath.cs" />
     <Compile Include="util\math\CMisc.cs" />
@@ -184,7 +188,7 @@
     <Compile Include="state\input\xbox360\CStateNoAxis.cs" />
     <Compile Include="state\input\xbox360\CStateStick.cs" />
     <Compile Include="state\IStateGenerics.cs" />
-    <Compile Include="state\manager\CStateLoadManager.cs" />
+    <Compile Include="old\state\manager\CStateLoadManager.cs" />
     <Compile Include="state\manager\CStateMainLoopDefault.cs" />
     <Compile Include="state\CState.cs" />
     <Compile Include="state\CStateGenerics.cs" />
