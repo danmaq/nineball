@@ -34,7 +34,6 @@ namespace danmaq.nineball.entity.input.data
 		/// 旧バージョンとの互換のために残してあります。
 		/// 近い将来、この定数は削除されます。
 		/// </remarks>
-		[Obsolete("この定数は過去のバージョンとの互換のみのために残してあります。今後は使用することができません。", true)]
 		__reserved = 4
 	}
 
