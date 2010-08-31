@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
-<includeClasses/>
+<includeClasses>
+<classEntry path="danmaq.nineball.old.task.scene.CSceneBase"/>
+<classEntry path="danmaq.nineball.state.CState"/>
+<classEntry path="danmaq.nineball.old.data.font.CFontTransformBit"/>
+<classEntry path="danmaq.nineball.old.core.IDisposed"/>
+<classEntry path="danmaq.nineball.entity.IEntity"/>
+<classEntry path="danmaq.nineball.old.task.CTaskBPMCounter"/>
+<classEntry path="danmaq.nineball.old.core.ITask"/>
+<classEntry path="danmaq.nineball.misc.CMisc"/>
+<classEntry path="danmaq.nineball.old.data.CVirtualInput"/>
+<classEntry path="danmaq.nineball.old.task.CTaskBase"/>
+<classEntry path="danmaq.nineball.entity.CEntity"/>
+<classEntry path="danmaq.nineball.misc.CBitmapSplitter"/>
+<classEntry path="danmaq.nineball.old.task.CTaskFont"/>
+<classEntry path="danmaq.nineball.misc.math.CHyperbolic"/>
+<classEntry path="danmaq.nineball.old.core.CMainLoop"/>
+<classEntry path="danmaq.nineball.old.data.font.CFontTransform"/>
+<classEntry path="danmaq.nineball.old.task.CTaskBGM"/>
+<classEntry path="danmaq.nineball.old.data.CDisplayObject"/>
+<classEntry path="danmaq.nineball.old.data.font.CFontResource"/>
+<classEntry path="danmaq.nineball.old.task.CTaskFPSTimer"/>
+<classEntry path="danmaq.nineball.old.task.CTaskFade"/>
+<classEntry path="danmaq.nineball.state.IState"/>
+<classEntry path="danmaq.nineball.old.task.scene.IScene"/>
+<classEntry path="danmaq.nineball.old.task.CTaskExclusiveSE"/>
+<classEntry path="danmaq.nineball.misc.math.CInterpolate"/>
+<classEntry path="danmaq.nineball.old.constant.CSentence"/>
+<classEntry path="danmaq.nineball.misc.math.CMisc"/>
+<classEntry path="danmaq.nineball.old.task.CTaskVirtualInput"/>
+<classEntry path="danmaq.nineball.old.data.CGradation"/>
+<classEntry path="danmaq.nineball.old.task.CTaskFPSView"/>
+<classEntry path="danmaq.nineball.constant.CSentence"/>
+<classEntry path="danmaq.nineball.old.constant.CKeyboardEx"/>
+<classEntry path="danmaq.nineball.data.CPhase"/>
+<classEntry path="danmaq.nineball.old.task.CTaskInterpolate"/>
+<classEntry path="danmaq.nineball.old.data.CInitializeData"/>
+<classEntry path="danmaq.nineball.misc.math.CTrignometric"/>
+<classEntry path="danmaq.nineball.old.core.CTaskManager"/>
+<classEntry path="danmaq.nineball.old.task.scene.CTaskSceneManager"/>
+<classEntry path="danmaq.nineball.old.data.CBGMPreset"/>
+<classEntry path="danmaq.nineball.old.data.font.CFontBit"/>
+</includeClasses>
 <includeResources/>
 <namespaceManifests/>
 </flexLibProperties>
