@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
+<meta content="ITask,danmaq.nineball.old.core.ITask,isAvailablePause,layer,manager,dispose,initialize,update" name="keywords">
+<title>danmaq.nineball.old.core.ITask</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'ITask - danmaq Nineball Library';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">danmaq Nineball Library</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../all-classes.html')" href="../../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../../index-list.html')" href="../../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../../index.html?danmaq/nineball/old/core/ITask.html&amp;danmaq/nineball/old/core/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Interface&nbsp;ITask</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Interface ITask"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">danmaq.nineball.old.core</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Interface</td><td class="classSignature">public interface ITask</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Implementors</td><td><a href="../task/CTaskBase.html">CTaskBase</a>, <a href="../task/CTaskBGM.html">CTaskBGM</a>, <a href="../task/CTaskBPMCounter.html">CTaskBPMCounter</a>, <a href="../task/CTaskExclusiveSE.html">CTaskExclusiveSE</a>, <a href="../task/CTaskFade.html">CTaskFade</a>, <a href="../task/CTaskFont.html">CTaskFont</a>, <a href="../task/CTaskFPSTimer.html">CTaskFPSTimer</a>, <a href="../task/CTaskInterpolate.html">CTaskInterpolate</a>, <a href="../task/CTaskVirtualInput.html">CTaskVirtualInput</a></td>
+</tr>
+</table>
+<p></p>
+  タスクの基底となるインターフェイスです。
+  タスク管理クラスCTaskManagerに登録するタスクを作成するためには、
+  このクラスを実装するか、CTaskBaseを継承します。
+  
+  <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#isAvailablePause">isAvailablePause</a> : Boolean<div class="summaryTableDescription">[read-only]
+   一時停止に対応しているかどうかを取得します。
+   
+   <p>
+   一時停止に対応しているタスクは、登録されている管理クラスにおいて
+   pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+   </p>
+   
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#layer">layer</a> : uint<div class="summaryTableDescription">[read-only]
+   レイヤ値を取得します。
+   
+   <p>
+   レイヤ値の若い方から順に処理されます。
+   同一値が複数ある場合、登録された順に処理されます。
+   </p>
+   <p>
+   !!注意!!：管理クラス登録後はレイヤ変更しないでください。
+   </p>
+   
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#manager">manager</a> : <a href="../core/CTaskManager.html">CTaskManager</a>
+<div class="summaryTableDescription">[write-only]
+   タスク管理クラスを設定します。
+   
+   <p>
+   このタスクを管理クラスに登録すると、
+   自動的にこのプロパティに代入されます。
+   </p>
+   
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#dispose()">dispose</a>():void</div>
+<div class="summaryTableDescription">
+   タスクの解放処理を記述してください。
+   
+   <p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#initialize()">initialize</a>():void</div>
+<div class="summaryTableDescription">
+   タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。
+   
+   <p>
+   直前にmanagerプロパティが自動的に代入されるので、
+   タスク管理クラスが必要な初期化処理などの用途に便利です。
+   </p>
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#update()">update</a>():Boolean</div>
+<div class="summaryTableDescription">
+   シーンの動作処理を記述してください。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">ITask</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="isAvailablePause"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">isAvailablePause</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>isAvailablePause:Boolean</code>&nbsp;&nbsp;[read-only]<p>
+   一時停止に対応しているかどうかを取得します。
+   
+   </p><p>
+   一時停止に対応しているタスクは、登録されている管理クラスにおいて
+   pauseプロパティがtrueの間、updateメソッドに制御が移りません。
+   </p>
+   
+   <span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get isAvailablePause():Boolean</code>
+<br>
+</div>
+<a name="layer"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">layer</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>layer:uint</code>&nbsp;&nbsp;[read-only]<p>
+   レイヤ値を取得します。
+   
+   </p><p>
+   レイヤ値の若い方から順に処理されます。
+   同一値が複数ある場合、登録された順に処理されます。
+   </p>
+   <p>
+   !!注意!!：管理クラス登録後はレイヤ変更しないでください。
+   </p>
+   
+   <span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get layer():uint</code>
+<br>
+</div>
+<a name="manager"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">manager</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>manager:<a href="../core/CTaskManager.html">CTaskManager</a></code>&nbsp;&nbsp;[write-only]<p>
+   タスク管理クラスを設定します。
+   
+   </p><p>
+   このタスクを管理クラスに登録すると、
+   自動的にこのプロパティに代入されます。
+   </p>
+   
+   <span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set manager(value:<a href="../core/CTaskManager.html">CTaskManager</a>):void</code>
+<br>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="dispose()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function dispose():void</code><p>
+   タスクの解放処理を記述してください。
+   
+   </p><p>
+   解放時に管理クラスから呼び出され、
+   事実上のデストラクタとして機能します。
+   </p>
+   </div>
+<a name="initialize()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">initialize</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function initialize():void</code><p>
+   タスクが管理クラスに登録された直後に、1度だけ自動的に呼ばれます。
+   
+   </p><p>
+   直前にmanagerプロパティが自動的に代入されるので、
+   タスク管理クラスが必要な初期化処理などの用途に便利です。
+   </p>
+   </div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function update():Boolean</code><p>
+   シーンの動作処理を記述してください。
+   
+   </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; 次のフレームもこのタスクが存続する場合、true
+   </td>
+</tr>
+</table>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->
