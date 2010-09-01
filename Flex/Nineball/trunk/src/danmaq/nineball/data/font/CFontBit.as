@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-package danmaq.nineball.old.data.font
+package danmaq.nineball.data.font
 {
 
 	import danmaq.nineball.data.CScreen;
@@ -29,7 +29,7 @@ package danmaq.nineball.old.data.font
 	 * @see danmaq.nineball.task.CTaskFont
 	 * @author Mc(danmaq)
 	 */
-	public class CFontBit implements IDisposed
+	public class CFontBit
 	{
 
 		////////// FIELDS //////////
@@ -43,9 +43,6 @@ package danmaq.nineball.old.data.font
 		/**	画像を格納する画面管理クラスが格納されます。 */
 		private var m_doc:DisplayObjectContainer = null;
 
-		/**	解放されたかどうかが格納されます。 */
-		private var m_bDisposed:Boolean = false;
-		
 		/**	表示するテキストが格納されます。 */
 		private var m_strText:String = "";
 
@@ -59,16 +56,6 @@ package danmaq.nineball.old.data.font
 		private var m_size:Point = new Point();
 		
 		////////// PROPERTIES //////////
-
-		/**
-		 * 解放したかどうかを取得します。
-		 * 
-		 * @return 解放している場合、true
-		 */
-		public function get disposed():Boolean
-		{
-			return m_bDisposed;
-		}
 
 		/**
 		 * 現在表示されているかどうかを取得します。
@@ -208,7 +195,6 @@ package danmaq.nineball.old.data.font
 		public function dispose():void
 		{
 			view = false;
-			m_bDisposed = true;
 		}
 
 		/**

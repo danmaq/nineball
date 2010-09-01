@@ -25,13 +25,6 @@ package danmaq.nineball.entity
 		////////// PROPERTIES //////////
 
 		/**
-		 * このオブジェクトを所有する親オブジェクトを取得します。
-		 * 
-		 * @return 親オブジェクト。
-		 */
-		function get owner():IEntity;
-		
-		/**
 		 * 最後に変化する前の状態を取得します。
 		 * 
 		 * @return 最後に変化する前の状態。初期値はCState.empty。

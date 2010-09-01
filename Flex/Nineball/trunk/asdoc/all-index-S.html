@@ -41,7 +41,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("S�
 <td width="20"></td><td> A キーのキーコード値 (83) に関連付けられた定数です。 </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/font/class-list.html');" href="danmaq/nineball/old/data/font/CFontTransformBit.html#scale">scale</a> &mdash; Constant property in class danmaq.nineball.old.data.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/font/class-list.html');" href="danmaq/nineball/old/data/font/CFontTransformBit.html">CFontTransformBit</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/data/font/class-list.html');" href="danmaq/nineball/data/font/CFontTransformBit.html#scale">scale</a> &mdash; Constant property in class danmaq.nineball.data.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/data/font/class-list.html');" href="danmaq/nineball/data/font/CFontTransformBit.html">CFontTransformBit</a></td>
 </tr>
 <tr>
 <td width="20"></td><td> 拡大率が格納されます。 </td>
@@ -149,6 +149,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("S�
    </td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/state/class-list.html');" href="danmaq/nineball/state/CStateVirtualInput.html#setup()">setup</a>(entity:<a href="danmaq/nineball/entity/IEntity.html" onclick="javascript:loadClassListFrame('danmaq/nineball/entity./class-list.html');">danmaq.nineball.entity:IEntity</a>, privateMembers) &mdash; Method in class danmaq.nineball.state.<a onclick="javascript:loadClassListFrame('danmaq/nineball/state/class-list.html');" href="danmaq/nineball/state/CStateVirtualInput.html">CStateVirtualInput</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   状態が開始された時に呼び出されます。
+   このメソッドは、遷移元のteardownよりも後に呼び出されます。
+   
+   </td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/state/class-list.html');" href="danmaq/nineball/state/IState.html#setup()">setup</a>(entity:<a href="danmaq/nineball/entity/IEntity.html" onclick="javascript:loadClassListFrame('danmaq/nineball/entity./class-list.html');">danmaq.nineball.entity:IEntity</a>, privateMembers) &mdash; Method in interface danmaq.nineball.state.<a onclick="javascript:loadClassListFrame('danmaq/nineball/state/class-list.html');" href="danmaq/nineball/state/IState.html">IState</a></td>
 </tr>
 <tr>
@@ -170,7 +180,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("S�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/font/class-list.html');" href="danmaq/nineball/old/data/font/CFontBit.html#size">size</a> &mdash; Property in class danmaq.nineball.old.data.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/font/class-list.html');" href="danmaq/nineball/old/data/font/CFontBit.html">CFontBit</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/data/font/class-list.html');" href="danmaq/nineball/data/font/CFontBit.html#size">size</a> &mdash; Property in class danmaq.nineball.data.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/data/font/class-list.html');" href="danmaq/nineball/data/font/CFontBit.html">CFontBit</a></td>
 </tr>
 <tr>
 <td width="20"></td><td>
@@ -203,6 +213,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("S�
    </td>
 </tr>
 <tr>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/data/class-list.html');" href="danmaq/nineball/data/CGradation.html#smooth()">smooth</a>(nNow, uSize) &mdash; Method in class danmaq.nineball.data.<a onclick="javascript:loadClassListFrame('danmaq/nineball/data/class-list.html');" href="danmaq/nineball/data/CGradation.html">CGradation</a></td>
+</tr>
+<tr>
+<td width="20"></td><td>
+   グラデーション計算をし、補完値を算出します。
+   
+   </td>
+</tr>
+<tr>
 <td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/misc/math/class-list.html');" href="danmaq/nineball/misc/math/CInterpolate.html#smooth()">smooth</a>(fStart, fEnd, fNow, fLimit) &mdash; Static method in class danmaq.nineball.misc.math.<a onclick="javascript:loadClassListFrame('danmaq/nineball/misc/math/class-list.html');" href="danmaq/nineball/misc/math/CInterpolate.html">CInterpolate</a></td>
 </tr>
 <tr>
@@ -212,16 +231,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("S�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/class-list.html');" href="danmaq/nineball/old/data/CGradation.html#smooth()">smooth</a>(nNow, uSize) &mdash; Method in class danmaq.nineball.old.data.<a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/class-list.html');" href="danmaq/nineball/old/data/CGradation.html">CGradation</a></td>
-</tr>
-<tr>
-<td width="20"></td><td>
-   グラデーション計算をし、補完値を算出します。
-   
-   </td>
-</tr>
-<tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/font/class-list.html');" href="danmaq/nineball/old/data/font/CFontTransformBit.html#smoothing">smoothing</a> &mdash; Property in class danmaq.nineball.old.data.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/font/class-list.html');" href="danmaq/nineball/old/data/font/CFontTransformBit.html">CFontTransformBit</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/data/font/class-list.html');" href="danmaq/nineball/data/font/CFontTransformBit.html#smoothing">smoothing</a> &mdash; Property in class danmaq.nineball.data.font.<a onclick="javascript:loadClassListFrame('danmaq/nineball/data/font/class-list.html');" href="danmaq/nineball/data/font/CFontTransformBit.html">CFontTransformBit</a></td>
 </tr>
 <tr>
 <td width="20"></td><td> アンチエイリアスを施すかどうかが格納されます。 </td>
@@ -256,7 +266,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("S�
    </td>
 </tr>
 <tr>
-<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/class-list.html');" href="danmaq/nineball/old/data/CGradation.html#start">start</a> &mdash; Property in class danmaq.nineball.old.data.<a onclick="javascript:loadClassListFrame('danmaq/nineball/old/data/class-list.html');" href="danmaq/nineball/old/data/CGradation.html">CGradation</a></td>
+<td colspan="2" class="idxrow"><a onclick="javascript:loadClassListFrame('danmaq/nineball/data/class-list.html');" href="danmaq/nineball/data/CGradation.html#start">start</a> &mdash; Property in class danmaq.nineball.data.<a onclick="javascript:loadClassListFrame('danmaq/nineball/data/class-list.html');" href="danmaq/nineball/data/CGradation.html">CGradation</a></td>
 </tr>
 <tr>
 <td width="20"></td><td> 初期値が格納されます。 </td>

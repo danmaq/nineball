@@ -49,12 +49,6 @@ package danmaq.nineball.old.constant
 		/**	文章：管理クラス登録後はレイヤ番号の変更は出来ません。 */
 		public static const LAYER_CHANGE:String = "管理クラス登録後はレイヤ番号の変更は出来ません。";
 		
-		/**	文章：引数は1文字でなければなりません。 */
-		public static const ARGS_NOT_CHAR:String = "引数は1文字でなければなりません。";
-		
-		/**	文章：画面オブジェクト管理クラス(danmaq.nineball.struct.CScreen)のルートクラスが画面オブジェクトとして登録されている必要があります。 */
-		public static const ILLEGAL_SCREEN:String = "画面オブジェクト管理クラス(danmaq.nineball.struct.CScreen)のルートクラスが画面オブジェクトとして登録されている必要があります。";
-		
 		/**	文章：自分自身を次タスクとして連結することは出来ません。 */
 		public static const TASK_LOOP:String = "自分自身を次タスクとして連結することは出来ません。";
 		

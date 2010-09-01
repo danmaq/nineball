@@ -11,8 +11,8 @@ package danmaq.nineball.old.task
 {
 
 	import danmaq.nineball.data.CScreen;
+	import danmaq.nineball.data.font.*;
 	import danmaq.nineball.old.core.*;
-	import danmaq.nineball.old.data.font.*;
 
 	/**
 	 * FPS表示タスクです。

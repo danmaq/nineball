@@ -7,10 +7,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-package danmaq.nineball.old.data.font
+package danmaq.nineball.data.font
 {
 
-	import danmaq.nineball.old.constant.CSentence;
+	import danmaq.nineball.constant.CSentence;
 	
 	import flash.display.*;
 	import flash.errors.IllegalOperationError;

@@ -9,9 +9,6 @@
 
 package danmaq.nineball.data
 {
-
-	import danmaq.nineball.old.core.IDisposed;
-	import danmaq.nineball.old.data.CDisplayObject;
 	
 	import flash.display.*;
 	import flash.events.Event;
@@ -25,7 +22,7 @@ package danmaq.nineball.data
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public final class CScreen implements IDisposed
+	public final class CScreen
 	{
 
 		////////// CONSTANTS //////////
@@ -89,16 +86,6 @@ package danmaq.nineball.data
 		public static function get size():Point
 		{
 			return posSize.clone();
-		}
-
-		/**
-		 * 解放したかどうかを取得します。
-		 * 
-		 * @return 解放している場合、true
-		 */
-		public function get disposed():Boolean
-		{
-			return m_bDisposed;
 		}
 
 		/**
@@ -194,7 +181,6 @@ package danmaq.nineball.data
 			if(parent != this)
 			{
 				parent.remove(screen);
-				m_bDisposed = true;
 			}
 		}
 
