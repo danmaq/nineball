@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CEntity,danmaq.nineball.entity.CEntity,m_currentState,m_previousState,currentState,owner,previousState,nextState,update" name="keywords">
+<meta content="CEntity,danmaq.nineball.entity.CEntity,m_counter,m_currentState,m_previousState,counter,currentState,nextState,previousState,privateMembers,commitNextState,release,update" name="keywords">
 <title>danmaq.nineball.entity.CEntity</title>
 </head>
 <body>
@@ -38,10 +38,10 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="classHeaderTableLabel">Class</td><td class="classSignature">public class CEntity</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">CEntity <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
+<td class="classHeaderTableLabel">Implements</td><td><a href="IEntity.html">IEntity</a></td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Implements</td><td><a href="IEntity.html">IEntity</a></td>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../entity/CVirtualInputManager.html">CVirtualInputManager</a></td>
 </tr>
 </table>
 <p></p>
@@ -63,23 +63,34 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#counter">counter</a> : uint<div class="summaryTableDescription">[read-only]
+   汎用フレームカウンタを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CEntity</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#currentState">currentState</a> : <a href="../state/IState.html">IState</a>
-<div class="summaryTableDescription">[read-only]</div>
+<div class="summaryTableDescription">[read-only]
+   現在の状態を取得します。
+   
+   </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#nextState">nextState</a> : <a href="../state/IState.html">IState</a>
-<div class="summaryTableDescription">[write-only]</div>
-</td><td class="summaryTableOwnerCol">CEntity</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#owner">owner</a> : <a href="../entity/IEntity.html">IEntity</a>
-<div class="summaryTableDescription">[read-only]</div>
+<div class="summaryTableDescription">
+   予約されている次の状態を取得します。
+   
+   </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#previousState">previousState</a> : <a href="../state/IState.html">IState</a>
-<div class="summaryTableDescription">[read-only]</div>
+<div class="summaryTableDescription">[read-only]
+   最後に変化する前の状態を取得します。
+   
+   </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
 </table>
@@ -92,13 +103,25 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#m_counter">m_counter</a> : uint = 0<div class="summaryTableDescription"> 汎用フレームカウンタ。 </div>
+</td><td class="summaryTableOwnerCol">CEntity</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#m_currentState">m_currentState</a> : <a href="../state/IState.html">IState</a>
-<div class="summaryTableDescription"> 現在の状態を取得します。 </div>
+<div class="summaryTableDescription"> 現在の状態。 </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#m_previousState">m_previousState</a> : <a href="../state/IState.html">IState</a>
-<div class="summaryTableDescription"> 最後に変化する前の状態を取得します。 </div>
+<div class="summaryTableDescription"> 最後に変化する前の状態。 </div>
+</td><td class="summaryTableOwnerCol">CEntity</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#privateMembers">privateMembers</a> : Object<div class="summaryTableDescription">[read-only]
+   オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+   特に何も定義していない場合、nullを取得します。
+   
+   </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
 </table>
@@ -113,9 +136,19 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CEntity()">CEntity</a>(firstState:<a href="../state/IState.html">IState</a> = null, owner:<a href="IEntity.html">IEntity</a> = null)</div>
+<a class="signatureLink" href="#CEntity()">CEntity</a>(firstState:<a href="../state/IState.html">IState</a> = null)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CEntity</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#release()">release</a>():void</div>
+<div class="summaryTableDescription">
+   オブジェクトを初期化します。
    </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
@@ -123,7 +156,30 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#update()">update</a>():void</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   1フレーム分の更新処理をします。
+   </div>
+</td><td class="summaryTableOwnerCol">CEntity</td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<table id="summaryTableProtectedMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#commitNextState()">commitNextState</a>():void</div>
+<div class="summaryTableDescription">
+   予約された次の状態を確定します。
+   本来update開始時に予約が確認されたら自動でこの処理に入るため、通常このメソッドを
+   意図して呼ぶ必要はありませんが、あるタイミングで強制的に予約を確定したい場合などに、
+   この処理を呼ぶことで実現できます。
+   </div>
 </td><td class="summaryTableOwnerCol">CEntity</td>
 </tr>
 </table>
@@ -135,18 +191,44 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
-<a name="currentState"></a>
+<a name="counter"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">currentState</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">counter</td><td class="detailHeaderType">property</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>currentState:<a href="../state/IState.html">IState</a></code>&nbsp;&nbsp;[read-only]<span class="label">Implementation</span>
+<code>counter:uint</code>&nbsp;&nbsp;[read-only]<p>
+   汎用フレームカウンタを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get counter():uint</code>
+<br>
+</div>
+<a name="currentState"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">currentState</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>currentState:<a href="../state/IState.html">IState</a></code>&nbsp;&nbsp;[read-only]<p>
+   現在の状態を取得します。
+   
+   </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get currentState():<a href="../state/IState.html">IState</a></code>
 <br>
 </div>
+<a name="m_counter"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">m_counter</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected var m_counter:uint = 0</code><p> 汎用フレームカウンタ。 </p></div>
 <a name="m_currentState"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -154,7 +236,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var m_currentState:<a href="../state/IState.html">IState</a></code><p> 現在の状態を取得します。 </p></div>
+<code>protected var m_currentState:<a href="../state/IState.html">IState</a></code><p> 現在の状態。 </p></div>
 <a name="m_previousState"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -162,7 +244,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var m_previousState:<a href="../state/IState.html">IState</a></code><p> 最後に変化する前の状態を取得します。 </p></div>
+<code>protected var m_previousState:<a href="../state/IState.html">IState</a></code><p> 最後に変化する前の状態。 </p></div>
 <a name="nextState"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -170,21 +252,14 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>nextState:<a href="../state/IState.html">IState</a></code>&nbsp;&nbsp;[write-only]<span class="label">Implementation</span>
+<code>nextState:<a href="../state/IState.html">IState</a></code>&nbsp;&nbsp;[read-write]<p>
+   予約されている次の状態を取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get nextState():<a href="../state/IState.html">IState</a></code>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set nextState(value:<a href="../state/IState.html">IState</a>):void</code>
-<br>
-</div>
-<a name="owner"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">owner</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>owner:<a href="../entity/IEntity.html">IEntity</a></code>&nbsp;&nbsp;[read-only]<span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get owner():<a href="../entity/IEntity.html">IEntity</a></code>
 <br>
 </div>
 <a name="previousState"></a>
@@ -194,9 +269,28 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>previousState:<a href="../state/IState.html">IState</a></code>&nbsp;&nbsp;[read-only]<span class="label">Implementation</span>
+<code>previousState:<a href="../state/IState.html">IState</a></code>&nbsp;&nbsp;[read-only]<p>
+   最後に変化する前の状態を取得します。
+   
+   </p><span class="label">Implementation</span>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get previousState():<a href="../state/IState.html">IState</a></code>
+<br>
+</div>
+<a name="privateMembers"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">privateMembers</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>privateMembers:Object</code>&nbsp;&nbsp;[read-only]<p>
+   オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+   特に何も定義していない場合、nullを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get privateMembers():Object</code>
 <br>
 </div>
 <a name="constructorDetail"></a>
@@ -208,32 +302,52 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CEntity(firstState:<a href="../state/IState.html">IState</a> = null, owner:<a href="IEntity.html">IEntity</a> = null)</code><p>
+<code>public function CEntity(firstState:<a href="../state/IState.html">IState</a> = null)</code><p>
    コンストラクタ。
+   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">firstState</span>:<a href="../state/IState.html">IState</a></code> (default = <code>null</code>)<code></code></td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">owner</span>:<a href="IEntity.html">IEntity</a></code> (default = <code>null</code>)<code></code></td>
+<td width="20px"></td><td><code><span class="label">firstState</span>:<a href="../state/IState.html">IState</a></code> (default = <code>null</code>)<code></code> &mdash; 最初の状態。
+   </td>
 </tr>
 </table>
 </div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Method detail</div>
-<a name="update()"></a>
+<a name="commitNextState()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+<td class="detailHeaderName">commitNextState</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public function update():void</code>
-</div>
+<code>protected function commitNextState():void</code><p>
+   予約された次の状態を確定します。
+   本来update開始時に予約が確認されたら自動でこの処理に入るため、通常このメソッドを
+   意図して呼ぶ必要はありませんが、あるタイミングで強制的に予約を確定したい場合などに、
+   この処理を呼ぶことで実現できます。
+   </p></div>
+<a name="release()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">release</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function release():void</code><p>
+   オブジェクトを初期化します。
+   </p></div>
+<a name="update()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">update</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function update():void</code><p>
+   1フレーム分の更新処理をします。
+   </p></div>
 <br>
 <br>
 <hr>

@@ -25,8 +25,14 @@ package danmaq.nineball.constant
 
 		////////// CONSTANTS //////////
 		
+		/**	文章：引数は1文字でなければなりません。 */
+		public static const ARGS_NOT_CHAR:String = "引数は1文字でなければなりません。";
+		
 		/**	文章：引数{0}にnullを設定出来ません。 */
 		public static const NOT_NULL:String = "引数{0}にnullを設定出来ません。";
+		
+		/**	文章：画面オブジェクト管理クラス(danmaq.nineball.struct.CScreen)のルートクラスが画面オブジェクトとして登録されている必要があります。 */
+		public static const ILLEGAL_SCREEN:String = "画面オブジェクト管理クラス(danmaq.nineball.struct.CScreen)のルートクラスが画面オブジェクトとして登録されている必要があります。";
 		
 	}
 }

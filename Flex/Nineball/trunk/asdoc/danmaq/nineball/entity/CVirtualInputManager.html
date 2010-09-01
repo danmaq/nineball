@@ -1,0 +1,601 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
+<link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
+<meta content="CVirtualInputManager,danmaq.nineball.entity.CVirtualInputManager,inputTable,privateMembers,addVI,forceKeyChange,forceMouseChange,forceVIChange,getVI,onKeyDown,onKeyUp,onMouseDown,onMouseUp,resetVI" name="keywords">
+<title>danmaq.nineball.entity.CVirtualInputManager</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript" src="../../../asdoc.js"></script><script type="text/javascript" language="javascript" src="../../../cookies.js"></script><script type="text/javascript" language="javascript">
+<!--
+				asdocTitle = 'CVirtualInputManager - danmaq Nineball Library';
+				var baseRef = '../../../';
+				window.onload = configPage;
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">danmaq Nineball Library</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../all-classes.html')" href="../../../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../../../index-list.html')" href="../../../all-index-A.html">Index</a>&nbsp;|&nbsp;<a href="../../../index.html?danmaq/nineball/entity/CVirtualInputManager.html&amp;danmaq/nineball/entity/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="Adobe Logo" title="Adobe Logo" class="logoImage" src="../../../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;CVirtualInputManager</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<script type="text/javascript" language="javascript">
+<!--
+if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Class CVirtualInputManager"); titleBar_setSubNav(false,true,false,false,false,false,true,false,false,false,false,false,false,false);}
+--></script>
+<div class="MainContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable">
+<tr>
+<td class="classHeaderTableLabel">Package</td><td><a onclick="javascript:loadClassListFrame('class-list.html')" href="package-detail.html">danmaq.nineball.entity</a></td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Class</td><td class="classSignature">public final  class CVirtualInputManager</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">CVirtualInputManager <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../images/inherit-arrow.gif"> <a href="CEntity.html">CEntity</a></td>
+</tr>
+</table>
+<p></p>
+  仮想ボタン入力を管理するクラスです。
+  
+  <p></p>
+<br>
+<hr>
+</div>
+<a name="propertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProperty" id="hideInheritedProperty">
+<a onclick="javascript:setInheritedVisible(false,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Properties</a>
+</div>
+<div class="showInheritedProperty" id="showInheritedProperty">
+<a onclick="javascript:setInheritedVisible(true,'Property');" href="#propertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Properties</a>
+</div>
+</div>
+<table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#counter">counter</a> : uint<div class="summaryTableDescription">
+   汎用フレームカウンタを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#currentState">currentState</a> : <a href="../state/IState.html">IState</a>
+<div class="summaryTableDescription">
+   現在の状態を取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#inputTable">inputTable</a> : Vector<div class="summaryTableDescription">[read-only]
+   仮想ボタン入力状態の一覧を取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#nextState">nextState</a> : <a href="../state/IState.html">IState</a>
+<div class="summaryTableDescription">
+   予約されている次の状態を取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#previousState">previousState</a> : <a href="../state/IState.html">IState</a>
+<div class="summaryTableDescription">
+   最後に変化する前の状態を取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+</table>
+</div>
+<a name="protectedPropertySummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Properties</div>
+<div class="showHideLinks">
+<div class="hideInheritedProtectedProperty" id="hideInheritedProtectedProperty">
+<a onclick="javascript:setInheritedVisible(false,'ProtectedProperty');" href="#protectedPropertySummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Protected Properties</a>
+</div>
+<div class="showInheritedProtectedProperty" id="showInheritedProtectedProperty">
+<a onclick="javascript:setInheritedVisible(true,'ProtectedProperty');" href="#protectedPropertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Properties</a>
+</div>
+</div>
+<table id="summaryTableProtectedProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProtectedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#m_counter">m_counter</a> : uint = 0<div class="summaryTableDescription"> 汎用フレームカウンタ。 </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="hideInheritedProtectedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#m_currentState">m_currentState</a> : <a href="../state/IState.html">IState</a>
+<div class="summaryTableDescription"> 現在の状態。 </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="hideInheritedProtectedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#m_previousState">m_previousState</a> : <a href="../state/IState.html">IState</a>
+<div class="summaryTableDescription"> 最後に変化する前の状態。 </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#privateMembers">privateMembers</a> : Object<div class="summaryTableDescription">[read-only]
+   オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+</table>
+</div>
+<a name="methodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Public Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedMethod" id="hideInheritedMethod">
+<a onclick="javascript:setInheritedVisible(false,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Public Methods</a>
+</div>
+<div class="showInheritedMethod" id="showInheritedMethod">
+<a onclick="javascript:setInheritedVisible(true,'Method');" href="#methodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Public Methods</a>
+</div>
+</div>
+<table id="summaryTableMethod" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#CVirtualInputManager()">CVirtualInputManager</a>(firstState:<a href="../state/IState.html">IState</a> = null)</div>
+<div class="summaryTableDescription">
+   コンストラクタ。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addVI()">addVI</a>(viData:<a href="../data/CVirtualInput.html">CVirtualInput</a>):uint</div>
+<div class="summaryTableDescription">
+   仮想ボタンを追加します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#forceKeyChange()">forceKeyChange</a>(uKeyCode:uint, bPush:Boolean):void</div>
+<div class="summaryTableDescription">
+   強制的にキーを押下または解放させます。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#forceMouseChange()">forceMouseChange</a>(pos:Point, bPush:Boolean):void</div>
+<div class="summaryTableDescription">
+   強制的に所定位置にマウスボタンを押下または解放させます。
+   カーソル自体は移動しません。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#forceVIChange()">forceVIChange</a>(uVIID:uint, bPush:Boolean):void</div>
+<div class="summaryTableDescription">
+   強制的に仮想ボタンを押下または解放させます。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#getVI()">getVI</a>(uVIID:uint):<a href="../data/CVirtualInput.html">CVirtualInput</a>
+</div>
+<div class="summaryTableDescription">
+   仮想ボタンを取得します。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onKeyDown()">onKeyDown</a>(event:KeyboardEvent):void</div>
+<div class="summaryTableDescription">
+   キーを押すイベントが発生した時にコールバックされます。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onKeyUp()">onKeyUp</a>(event:KeyboardEvent):void</div>
+<div class="summaryTableDescription">
+   キーを離すイベントが発生した時にコールバックされます。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onMouseDown()">onMouseDown</a>(event:MouseEvent):void</div>
+<div class="summaryTableDescription">
+   マウスボタンを押すイベントが発生した時にコールバックされます。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#onMouseUp()">onMouseUp</a>(event:MouseEvent):void</div>
+<div class="summaryTableDescription">
+   マウスボタンを離すイベントが発生した時にコールバックされます。
+   
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CEntity.html#release()">release</a>():void</div>
+<div class="summaryTableDescription">
+   オブジェクトを初期化します。
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#resetVI()">resetVI</a>():void</div>
+<div class="summaryTableDescription">
+   仮想ボタンを初期状態に戻します。
+   </div>
+</td><td class="summaryTableOwnerCol">CVirtualInputManager</td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CEntity.html#update()">update</a>():void</div>
+<div class="summaryTableDescription">
+   1フレーム分の更新処理をします。
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+</table>
+</div>
+<a name="protectedMethodSummary"></a>
+<div class="summarySection">
+<div class="summaryTableTitle">Protected Methods</div>
+<div class="showHideLinks">
+<div class="hideInheritedProtectedMethod" id="hideInheritedProtectedMethod">
+<a onclick="javascript:setInheritedVisible(false,'ProtectedMethod');" href="#protectedMethodSummary" class="showHideLink"><img src="../../../images/expanded.gif" class="showHideLinkImage"> Hide Inherited Protected Methods</a>
+</div>
+<div class="showInheritedProtectedMethod" id="showInheritedProtectedMethod">
+<a onclick="javascript:setInheritedVisible(true,'ProtectedMethod');" href="#protectedMethodSummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Methods</a>
+</div>
+</div>
+<table id="summaryTableProtectedMethod" class="summaryTable hideInheritedProtectedMethod" cellpadding="3" cellspacing="0">
+<tr>
+<th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="CEntity.html#commitNextState()">commitNextState</a>():void</div>
+<div class="summaryTableDescription">
+   予約された次の状態を確定します。
+   本来update開始時に予約が確認されたら自動でこの処理に入るため、通常このメソッドを
+   意図して呼ぶ必要はありませんが、あるタイミングで強制的に予約を確定したい場合などに、
+   この処理を呼ぶことで実現できます。
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
+</tr>
+</table>
+</div>
+<script type="text/javascript" language="javascript">
+<!--
+showHideInherited();
+--></script>
+<div class="MainContent">
+<a name="propertyDetail"></a>
+<div class="detailSectionHeader">Property detail</div>
+<a name="inputTable"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">inputTable</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>inputTable:Vector</code>&nbsp;&nbsp;[read-only]<p>
+   仮想ボタン入力状態の一覧を取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get inputTable():Vector</code>
+<br>
+</div>
+<a name="privateMembers"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">privateMembers</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>privateMembers:Object</code>&nbsp;&nbsp;[read-only]<p>
+   オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get privateMembers():Object</code>
+<br>
+</div>
+<a name="constructorDetail"></a>
+<div class="detailSectionHeader">Constructor detail</div>
+<a name="CVirtualInputManager()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">CVirtualInputManager</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">constructor</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function CVirtualInputManager(firstState:<a href="../state/IState.html">IState</a> = null)</code><p>
+   コンストラクタ。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">firstState</span>:<a href="../state/IState.html">IState</a></code> (default = <code>null</code>)<code></code> &mdash; 最初の状態。
+   </td>
+</tr>
+</table>
+</div>
+<a name="methodDetail"></a>
+<div class="detailSectionHeader">Method detail</div>
+<a name="addVI()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addVI</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addVI(viData:<a href="../data/CVirtualInput.html">CVirtualInput</a>):uint</code><p>
+   仮想ボタンを追加します。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">viData</span>:<a href="../data/CVirtualInput.html">CVirtualInput</a></code> &mdash; 仮想ボタン情報構造体
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>uint</code> &mdash; 仮想ボタンID
+   </td>
+</tr>
+</table>
+</div>
+<a name="forceKeyChange()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">forceKeyChange</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function forceKeyChange(uKeyCode:uint, bPush:Boolean):void</code><p>
+   強制的にキーを押下または解放させます。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">uKeyCode</span>:uint</code> &mdash; キーコード
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">bPush</span>:Boolean</code> &mdash; 押下かどうか
+   </td>
+</tr>
+</table>
+</div>
+<a name="forceMouseChange()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">forceMouseChange</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function forceMouseChange(pos:Point, bPush:Boolean):void</code><p>
+   強制的に所定位置にマウスボタンを押下または解放させます。
+   カーソル自体は移動しません。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">pos</span>:Point</code> &mdash; 座標
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">bPush</span>:Boolean</code> &mdash; 押下かどうか
+   </td>
+</tr>
+</table>
+</div>
+<a name="forceVIChange()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">forceVIChange</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function forceVIChange(uVIID:uint, bPush:Boolean):void</code><p>
+   強制的に仮想ボタンを押下または解放させます。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">uVIID</span>:uint</code> &mdash; 仮想ボタンID
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">bPush</span>:Boolean</code> &mdash; 押下かどうか
+   </td>
+</tr>
+</table>
+</div>
+<a name="getVI()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getVI</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function getVI(uVIID:uint):<a href="../data/CVirtualInput.html">CVirtualInput</a></code><p>
+   仮想ボタンを取得します。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">uVIID</span>:uint</code> &mdash; 仮想ボタンID
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../data/CVirtualInput.html">CVirtualInput</a></code> &mdash; 
+                        仮想ボタン情報構造体
+   
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="onKeyDown()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onKeyDown</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onKeyDown(event:KeyboardEvent):void</code><p>
+   キーを押すイベントが発生した時にコールバックされます。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:KeyboardEvent</code> &mdash; キーボードイベント パラメータ
+   </td>
+</tr>
+</table>
+</div>
+<a name="onKeyUp()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onKeyUp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onKeyUp(event:KeyboardEvent):void</code><p>
+   キーを離すイベントが発生した時にコールバックされます。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:KeyboardEvent</code> &mdash; キーボードイベント パラメータ
+   </td>
+</tr>
+</table>
+</div>
+<a name="onMouseDown()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onMouseDown</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onMouseDown(event:MouseEvent):void</code><p>
+   マウスボタンを押すイベントが発生した時にコールバックされます。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; キーボードイベント パラメータ
+   </td>
+</tr>
+</table>
+</div>
+<a name="onMouseUp()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">onMouseUp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function onMouseUp(event:MouseEvent):void</code><p>
+   マウスボタンを離すイベントが発生した時にコールバックされます。
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">event</span>:MouseEvent</code> &mdash; キーボードイベント パラメータ
+   </td>
+</tr>
+</table>
+</div>
+<a name="resetVI()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">resetVI</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function resetVI():void</code><p>
+   仮想ボタンを初期状態に戻します。
+   </p></div>
+<br>
+<br>
+<hr>
+<br>
+<p></p>
+<center class="copyright"> 
+</center>
+</div>
+</body>
+</html>
+<!-- -->

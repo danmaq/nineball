@@ -11,7 +11,7 @@ package danmaq.nineball.old.task
 {
 
 	import danmaq.nineball.old.core.*;
-	import danmaq.nineball.old.data.font.*;
+	import danmaq.nineball.data.font.*;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Point;

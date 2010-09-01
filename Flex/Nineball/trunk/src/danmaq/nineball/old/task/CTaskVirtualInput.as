@@ -9,10 +9,9 @@
 
 package danmaq.nineball.old.task
 {
-	import danmaq.nineball.data.CScreen;
-	import danmaq.nineball.old.constant.CSentence;
+	import danmaq.nineball.data.*;
+	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.old.core.*;
-	import danmaq.nineball.old.data.CVirtualInput;
 	
 	import flash.events.*;
 	import flash.geom.Point;
