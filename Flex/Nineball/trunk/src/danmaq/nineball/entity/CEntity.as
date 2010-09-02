@@ -22,7 +22,7 @@ package danmaq.nineball.entity
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public class CEntity implements IEntity
+	public class CEntity extends EventDispatcher implements IEntity
 	{
 
 		////////// FIELDS //////////
