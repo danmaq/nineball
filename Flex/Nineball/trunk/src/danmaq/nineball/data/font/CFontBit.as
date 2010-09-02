@@ -10,9 +10,9 @@
 package danmaq.nineball.data.font
 {
 
+	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.data.CScreen;
 	import danmaq.nineball.misc.CMisc;
-	import danmaq.nineball.old.core.IDisposed;
 	
 	import flash.display.*;
 	import flash.errors.IllegalOperationError;
@@ -76,7 +76,7 @@ package danmaq.nineball.data.font
 		{
 			if(m_image == null)
 			{
-				throw new IllegalOperationError("表示すべき画像が準備されていません。");
+				throw new IllegalOperationError(CSentence.ARGS_NOT_IMAGE);
 			}
 			if(m_bView != value)
 			{
@@ -155,9 +155,7 @@ package danmaq.nineball.data.font
 			}
 			else
 			{
-				throw new IllegalOperationError(
-					"画面管理クラスはDisplayObjectContainerのサブクラス、または" + 
-					"CScreenクラスのインスタンスで無ければなりません。");
+				throw new IllegalOperationError(CSentence.ARGS_NOT_SCREEN);
 			}
 		}
 
@@ -181,7 +179,7 @@ package danmaq.nineball.data.font
 				var imgByte:Bitmap = fontResource.getImage(strByte);
 				if(imgByte == null)
 				{
-					throw new IllegalOperationError("指定の文字は割り当てられていません。:" + strByte);
+					throw new IllegalOperationError(CSentence.ILLEGAL_CHARACTER + strByte);
 				}
 				m_image = imgByte;
 				m_size = new Point(m_image.width, m_image.height);

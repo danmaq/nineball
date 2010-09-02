@@ -1,19 +1,22 @@
 package danmaq.nineball.state
 {
-	import __AS3__.vec.Vector;
-	
 	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.data.CScreen;
 	import danmaq.nineball.entity.*;
 	
 	import flash.events.*;
 	
+	/**
+	 * キー入力管理クラスの既定の状態。
+	 * 
+	 * @author Mc(danmaq)
+	 */
 	public final class CStateVirtualInput implements IState
 	{
 		
 		////////// CONSTANTS //////////
 
-		/**	実装された、既定の空の状態。 */
+		/**	インスタンス。 */
 		public static const instance:CStateVirtualInput = new CStateVirtualInput();
 
 		////////// METHODS //////////

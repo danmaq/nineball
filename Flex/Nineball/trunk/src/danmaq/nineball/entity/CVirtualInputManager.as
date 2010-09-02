@@ -14,14 +14,14 @@ package danmaq.nineball.entity
 	public final class CVirtualInputManager extends CEntity
 	{
 
-		////////// FIELDS //////////
+		////////// CONSTANTS //////////
 
 		/**	オブジェクトと状態クラスのみがアクセス可能なフィールド。 */
-		private var m_privateMembers:Object = 
+		private const m_privateMembers:Object = 
 		{
 			addedEventListener: false,
 			viData: null,
-			buffer: new Array()
+			buffer: new Vector.<Object>()
 			
 		};
 
@@ -56,6 +56,8 @@ package danmaq.nineball.entity
 
 		/**
 		 * コンストラクタ。
+		 * 最初の状態が設定できますが、何も指定しない場合は既定の状態
+		 * (CStateVirtualInput.instance)となります。
 		 * 
 		 * @param firstState 最初の状態。
 		 */
@@ -74,7 +76,7 @@ package danmaq.nineball.entity
 		public function resetVI():void
 		{
 			privateMembers.viData = new Vector.<CVirtualInput>();
-			privateMembers.buffer = new Array();
+			privateMembers.buffer = new new Vector.<Object>();
 		}
 		
 		/**

@@ -134,8 +134,8 @@ package danmaq.nineball.old.task
 		 * @param uLayer レイヤ番号
 		 * @param uReflesh FPS可変更新フレーム間隔
 		 * @param uTheoretical FPS理論値
-		 * @param uLowLimit 実測FPS最低理論値
-		 * @param uLowCount 実測FPSの最低許容値を下回る許容回数
+		 * @param uSlowdownLimit 実測FPS最低理論値
+		 * @param uSlowdownCount 実測FPSの最低許容値を下回る許容回数
 		 */
 		public function CTaskFPSTimer(
 			uLayer:uint = 0, uReflesh:uint = 0, uTheoretical:uint = 60,
