@@ -124,7 +124,6 @@ package danmaq.nineball.data.font
 			result.text = text;
 			result.render(_transform);
 			result.autoRender = true;
-			trace(result.x, result.y);
 			return result;
 		}
 
