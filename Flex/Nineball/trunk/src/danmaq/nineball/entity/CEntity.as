@@ -39,16 +39,21 @@ package danmaq.nineball.entity
 		/**	次の状態。 */
 		private var m_nextState:IState = null;
 
+		/**	オブジェクトと状態クラスのみがアクセス可能なフィールド。 */
+		private var m_privateMembers:Object = null;
+
 		////////// CONSTRUCTOR //////////
 
 		/**
 		 * コンストラクタ。
 		 * 
 		 * @param firstState 最初の状態。
+		 * @param privateMembers オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		 */
-		public function CEntity(firstState:IState = null)
+		public function CEntity(firstState:IState = null, privateMembers:Object = null)
 		{
 			nextState = firstState;
+			m_privateMembers = privateMembers;
 		}
 
 		////////// PROPERTIES //////////
@@ -111,7 +116,7 @@ package danmaq.nineball.entity
 		 */
 		protected function get privateMembers():Object
 		{
-			return null;
+			return m_privateMembers;
 		}
 		
 		////////// METHODS //////////

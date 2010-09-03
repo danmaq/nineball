@@ -1,7 +1,7 @@
 package danmaq.nineball.entity
 {
 
-	import danmaq.nineball.state.IState;
+	import danmaq.nineball.state.*;
 
 	/**
 	 * タスク管理クラスです。
@@ -10,16 +10,6 @@ package danmaq.nineball.entity
 	 */
 	public final class CTaskManager extends CEntity
 	{
-
-		////////// CONSTANTS //////////
-
-		/**	オブジェクトと状態クラスのみがアクセス可能なフィールド。 */
-		private const m_privateMembers:Object = 
-		{
-			tasks: new Vector.<Object>(),
-			addList: new Vector.<Object>(),
-			delList: new Vector.<Object>()
-		};
 
 		////////// PROPERTIES //////////
 		
@@ -33,22 +23,28 @@ package danmaq.nineball.entity
 			return privateMembers.tasks.length;
 		}
 
-		/**
-		 * オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-		 * 
-		 * @return オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		 */
-		protected override function get privateMembers():Object
-		{
-			return m_privateMembers;
-		}
-		
 		////////// METHODS //////////
 		
-
+		/**
+		 * コンストラクタ。
+		 * 最初の状態が設定できますが、何も指定しない場合は既定の状態
+		 * (CStateTaskManager.instance)となります。
+		 * 
+		 * @param firstState 最初の状態。
+		 */
 		public function CTaskManager(firstState:IState = null)
 		{
-			super(firstState);
+			var privateMembers:Object = 
+			{
+				tasks: new Vector.<Object>(),
+				addList: new Vector.<Object>(),
+				delList: new Vector.<Object>()
+			};
+			if(firstState == null)
+			{
+				firstState = CStateTaskManager.instance;
+			}
+			super(firstState, privateMembers);
 		}
 		
 		/**
@@ -57,7 +53,7 @@ package danmaq.nineball.entity
 		 * @param task 登録するタスク
 		 * @param _priority 処理優先度
 		 */
-		public function add(task:IEntity, _priority:uint = 0):void
+		public function add(task:ITask, _priority:uint = 0):void
 		{
 			var item:Object =
 			{
@@ -92,7 +88,7 @@ package danmaq.nineball.entity
 		 * 
 		 * @param task 抹消対象のタスク オブジェクト
 		 */
-		public function eraseTask(task:IEntity):void
+		public function eraseTask(task:ITask):void
 		{
 			var item:Object =
 			{
@@ -111,10 +107,10 @@ package danmaq.nineball.entity
 		 * @return 検出したタスク一覧。 
 		 */
 		public function erasePriority(
-			_priority:uint, callback:Function = null):Vector.<IEntity>
+			_priority:uint, callback:Function = null):Vector.<ITask>
 		{
-			var result:Vector.<IEntity> = find(_priority);
-			for each(var task:IEntity in result)
+			var result:Vector.<ITask> = find(_priority);
+			for each(var task:ITask in result)
 			{
 				var item:Object =
 				{
@@ -151,14 +147,14 @@ package danmaq.nineball.entity
 		 * @param uLayer 検索対象のレイヤ番号
 		 * @return 指定レイヤのタスク一覧配列
 		 */
-		public function find(_priority:uint):Vector.<IEntity>
+		public function find(_priority:uint):Vector.<ITask>
 		{
 			var test:Function = function(item:Object, index:int, vector:Vector.<Object>):Boolean
 			{
 				return item.priority == _priority;
 			};
 			var target:Vector.<Object> = privateMembers.tasks.filter(test, this);
-			var result:Vector.<IEntity> = new Vector.<IEntity>();
+			var result:Vector.<ITask> = new Vector.<ITask>();
 			for each(var item:Object in target)
 			{
 				result.push(item.item);
@@ -186,7 +182,7 @@ package danmaq.nineball.entity
 			var _length:uint = list.length;
 			if(_length > 0)
 			{
-				list.forEach(func, this);
+				list.forEach(func, null);
 				list.splice(0, _length);
 			}
 		}
