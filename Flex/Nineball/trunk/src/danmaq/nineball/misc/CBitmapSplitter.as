@@ -69,9 +69,11 @@ package danmaq.nineball.misc
 		 * 
 		 * @param src ソースとなるビットマップ画像
 		 * @param info 切り出し情報リスト
+		 * @param smoothing ビットマップを拡大 / 縮小するときにスムージングするかどうか
 		 * @return ビットマップ画像のリスト
 		 */
-		public static function autoSplitter(src:BitmapData, info:Vector.<CBitmapSplitter>):Object
+		public static function autoSplitter(
+			src:BitmapData, info:Vector.<CBitmapSplitter>, smoothing:Boolean = false):Object
 		{
 			var objResult:Object = null;
 			if(info != null && info.length > 0)
@@ -91,7 +93,7 @@ package danmaq.nineball.misc
 					var dic:Dictionary = new Dictionary();
 					for each(item in info)
 					{
-						dic[item.key] = clipBitmap(src, item.rect);
+						dic[item.key] = clipBitmap(src, item.rect, smoothing);
 					}
 					objResult = dic;
 				}
@@ -100,7 +102,7 @@ package danmaq.nineball.misc
 					var vec:Vector.<Bitmap> = new Vector.<Bitmap>();
 					for each(item in info)
 					{
-						vec.push(clipBitmap(src, item.rect));
+						vec.push(clipBitmap(src, item.rect, smoothing));
 					}
 					objResult = vec;
 				}
@@ -113,15 +115,17 @@ package danmaq.nineball.misc
 		 * 
 		 * @param src ソースとなるビットマップ画像
 		 * @param rect クリッピング範囲
+		 * @param smoothing ビットマップを拡大 / 縮小するときにスムージングするかどうか
 		 * @return クリッピングされたビットマップ画像
 		 */
-		public static function clipBitmap(src:BitmapData, rect:Rectangle):Bitmap
+		public static function clipBitmap(
+			src:BitmapData, rect:Rectangle, smoothing:Boolean = false):Bitmap
 		{
 			var __rect:Rectangle = new Rectangle(0, 0, rect.width, rect.height);
 			var dst:BitmapData = new BitmapData(rect.width, rect.height, true, 0);
 			var matrix:Matrix = new Matrix();
 			matrix.translate(-rect.x, -rect.y);
-			dst.draw(src, matrix, new ColorTransform(), null, __rect);
+			dst.draw(src, matrix, null, null, __rect, smoothing);
 			return new Bitmap(dst);
 		}
 

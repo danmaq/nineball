@@ -202,8 +202,12 @@ package danmaq.nineball.data.font
 		 */
 		public function render(info:CFontTransformBit):void
 		{
-			var color:ColorTransform = new ColorTransform();
-			color.color = info.color;
+			var c:uint = info.color;
+			var color:ColorTransform = new ColorTransform(
+				1.0, 1.0, 1.0, 1.0,
+				((c & 0xFF0000) >> 16) - 0xFF,
+				((c & 0xFF00) >> 8) - 0xFF,
+				c & 0xFF - 0xFF);
 			m_image.transform.colorTransform = color;
 			m_image.alpha = info.alpha;
 			m_image.smoothing = info.smoothing;
