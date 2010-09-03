@@ -14,6 +14,8 @@ package danmaq.nineball.entity
 	import danmaq.nineball.state.*;
 	
 	import flash.utils.Timer;
+	
+	import mx.events.PropertyChangeEvent;
 
 	/**
 	 * フレームレート制御クラスです。

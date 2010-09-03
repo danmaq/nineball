@@ -88,7 +88,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#autoSplitter()">autoSplitter</a>(src:BitmapData, info:Vector):Object</div>
+<a class="signatureLink" href="#autoSplitter()">autoSplitter</a>(src:BitmapData, info:Vector, smoothing:Boolean = false):Object</div>
 <div class="summaryTableDescription">[static]
    切り出し情報に従って画像を切り出します。
    
@@ -103,7 +103,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#clipBitmap()">clipBitmap</a>(src:BitmapData, rect:Rectangle):Bitmap</div>
+<a class="signatureLink" href="#clipBitmap()">clipBitmap</a>(src:BitmapData, rect:Rectangle, smoothing:Boolean = false):Bitmap</div>
 <div class="summaryTableDescription">[static]
    ビットマップ画像をクリッピングします。
    
@@ -185,7 +185,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function autoSplitter(src:BitmapData, info:Vector):Object</code><p>
+<code>public static function autoSplitter(src:BitmapData, info:Vector, smoothing:Boolean = false):Object</code><p>
    切り出し情報に従って画像を切り出します。
    
    </p><p>
@@ -206,6 +206,13 @@ showHideInherited();
 <td width="20px"></td><td><code><span class="label">info</span>:Vector</code> &mdash; 切り出し情報リスト
    </td>
 </tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">smoothing</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; ビットマップを拡大 / 縮小するときにスムージングするかどうか
+   </td>
+</tr>
 </table>
 <p></p>
 <span class="label">Returns</span>
@@ -223,7 +230,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function clipBitmap(src:BitmapData, rect:Rectangle):Bitmap</code><p>
+<code>public static function clipBitmap(src:BitmapData, rect:Rectangle, smoothing:Boolean = false):Bitmap</code><p>
    ビットマップ画像をクリッピングします。
    
    </p><span class="label">Parameters</span>
@@ -237,6 +244,13 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">rect</span>:Rectangle</code> &mdash; クリッピング範囲
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">smoothing</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; ビットマップを拡大 / 縮小するときにスムージングするかどうか
    </td>
 </tr>
 </table>

@@ -2,6 +2,7 @@ package danmaq.nineball.data.font
 {
 	import danmaq.nineball.constant.CSentence;
 	
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Point;
@@ -24,9 +25,6 @@ package danmaq.nineball.data.font
 		
 		/** テキスト入力時に自動レンダリングするかどうかが格納されます。 */
 		public var autoRender:Boolean = false;
-
-		/**	現在表示されているかどうかが格納されます。 */
-		public var view:Boolean = false;
 
 		/**	フォントリソースが格納されます。 */
 		private var m_fontResource:CFontResource;
@@ -112,6 +110,25 @@ package danmaq.nineball.data.font
 		////////// METHODS //////////
 
 		/**
+		 * 文字列スプライトを作成します。
+		 * 
+		 * @param text 本文
+		 * @param resource フォント リソース
+		 * @param _transform 描画調整情報
+		 */
+		public static function quickCreate(
+			text:String, resource:CFontResource, _transform:CFontTransform = null):CFont
+		{
+			var result:CFont = new CFont(resource);
+			result.autoRender = false;
+			result.text = text;
+			result.render(_transform);
+			result.autoRender = true;
+			trace(result.x, result.y);
+			return result;
+		}
+
+		/**
 		 * コンストラクタ。
 		 * 
 		 * @param fontResource フォントリソース
@@ -160,7 +177,7 @@ package danmaq.nineball.data.font
 				infoBit.pos.x = fX;
 				infoBit.pos.y = fY;
 				bit.render(infoBit);
-				bit.view = view;
+				bit.view = true;
 				fX += fHWidth * info.kerning;
 			}
 		}
