@@ -19,7 +19,7 @@ package danmaq.nineball.entity
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public interface IEntity
+	public interface IEntity extends ITask
 	{
 		
 		////////// PROPERTIES //////////
@@ -44,12 +44,5 @@ package danmaq.nineball.entity
 		 * @return 次に変化する状態。
 		 */
 		function set nextState(value:IState):void;
-
-		////////// METHODS //////////
-
-		/**
-		 * 1フレーム分の更新処理を実行します。
-		 */
-		function update():void;
 	}
 }

@@ -25,19 +25,6 @@ package danmaq.nineball.entity
 	public final class CFPSTimer extends CEntity
 	{
 
-		////////// CONSTANTS //////////
-
-		/**	オブジェクトと状態クラスのみがアクセス可能なフィールド。 */
-		private const m_privateMembers:Object = 
-		{
-			phase: new CPhase(),
-			variable: 0,
-			prevSeconds: 0,
-			real: 0,
-			slowdownCount: 0,
-			penaltyCount: 0
-		};
-
 		////////// FIELDS //////////
 
 		/**	FPS理論値が格納されます。 */
@@ -78,16 +65,6 @@ package danmaq.nineball.entity
 			return privateMembers.real;
 		}
 
-		/**
-		 * オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-		 * 
-		 * @return オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		 */
-		protected override function get privateMembers():Object
-		{
-			return m_privateMembers;
-		}
-		
 		////////// METHODS //////////
 
 		/**
@@ -99,11 +76,20 @@ package danmaq.nineball.entity
 		 */
 		public function CFPSTimer(firstState:IState = null)
 		{
+			var privateMembers:Object = 
+			{
+				phase: new CPhase(),
+				variable: 0,
+				prevSeconds: 0,
+				real: 0,
+				slowdownCount: 0,
+				penaltyCount: 0
+			};
 			if(firstState == null)
 			{
 				firstState = CStateFPSTimer.instance;
 			}
-			super(firstState);
+			super(firstState, privateMembers);
 			resetCalibration();
 		}
 		

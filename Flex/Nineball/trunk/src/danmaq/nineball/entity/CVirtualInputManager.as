@@ -14,17 +14,6 @@ package danmaq.nineball.entity
 	public final class CVirtualInputManager extends CEntity
 	{
 
-		////////// CONSTANTS //////////
-
-		/**	オブジェクトと状態クラスのみがアクセス可能なフィールド。 */
-		private const m_privateMembers:Object = 
-		{
-			addedEventListener: false,
-			viData: null,
-			buffer: new Vector.<Object>()
-			
-		};
-
 		////////// PROPERTIES //////////
 
 		/**
@@ -41,17 +30,7 @@ package danmaq.nineball.entity
 			}
 			return result;
 		}
-		
-		/**
-		 * オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-		 * 
-		 * @return オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		 */
-		protected override function get privateMembers():Object
-		{
-			return m_privateMembers;
-		}
-		
+
 		////////// METHODS //////////
 
 		/**
@@ -63,11 +42,18 @@ package danmaq.nineball.entity
 		 */
 		public function CVirtualInputManager(firstState:IState = null)
 		{
+			var privateMembers:Object = 
+			{
+				addedEventListener: false,
+				viData: null,
+				buffer: null
+			};
 			if(firstState == null)
 			{
 				firstState = CStateVirtualInput.instance;
 			}
-			super(firstState);
+			super(firstState, privateMembers);
+			resetVI();
 		}
 		
 		/**
@@ -76,7 +62,7 @@ package danmaq.nineball.entity
 		public function resetVI():void
 		{
 			privateMembers.viData = new Vector.<CVirtualInput>();
-			privateMembers.buffer = new new Vector.<Object>();
+			privateMembers.buffer = new Vector.<Object>();
 		}
 		
 		/**
