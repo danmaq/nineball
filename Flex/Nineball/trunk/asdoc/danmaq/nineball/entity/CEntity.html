@@ -139,7 +139,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#CEntity()">CEntity</a>(firstState:<a href="../state/IState.html">IState</a> = null)</div>
+<a class="signatureLink" href="#CEntity()">CEntity</a>(firstState:<a href="../state/IState.html">IState</a> = null, privateMembers:Object = null)</div>
 <div class="summaryTableDescription">
    コンストラクタ。
    
@@ -305,13 +305,20 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CEntity(firstState:<a href="../state/IState.html">IState</a> = null)</code><p>
+<code>public function CEntity(firstState:<a href="../state/IState.html">IState</a> = null, privateMembers:Object = null)</code><p>
    コンストラクタ。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">firstState</span>:<a href="../state/IState.html">IState</a></code> (default = <code>null</code>)<code></code> &mdash; 最初の状態。
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">privateMembers</span>:Object</code> (default = <code>null</code>)<code></code> &mdash; オブジェクトと状態クラスのみがアクセス可能なフィールド。
    </td>
 </tr>
 </table>

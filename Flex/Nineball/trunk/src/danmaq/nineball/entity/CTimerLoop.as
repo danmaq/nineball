@@ -22,6 +22,7 @@ package danmaq.nineball.entity
 	 */
 	public class CTimerLoop extends CEntity
 	{
+
 		////////// CONSTANTS //////////
 
 		/**	フレームレート管理クラスが格納されます。 */
@@ -44,6 +45,14 @@ package danmaq.nineball.entity
 		 */
 		public function start():void
 		{
+			refreshTimer();
+		}
+		
+		/**
+		 * ループのためのタイマを初期化します。
+		 */
+		protected function refreshTimer():void
+		{
 			var t:Timer = fpsTimer.timer;
 			t.addEventListener(TimerEvent.TIMER, onTimer);
 			t.start();
@@ -57,9 +66,10 @@ package danmaq.nineball.entity
 		private function onTimer(e:TimerEvent):void
 		{
 			update();
+			fpsTimer.update();
 			if(counter % fpsTimer.refleshInterval == 0)
 			{
-				start();
+				refreshTimer();
 			}
 		}
 	}

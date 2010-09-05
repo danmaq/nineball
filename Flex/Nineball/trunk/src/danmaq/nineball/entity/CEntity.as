@@ -139,7 +139,7 @@ package danmaq.nineball.entity
 		 */
 		public function release():void
 		{
-			nextState = CState.empty;
+			m_nextState = CState.empty;
 			commitNextState();
 			m_previousState = CState.empty;
 			m_counter = 0;

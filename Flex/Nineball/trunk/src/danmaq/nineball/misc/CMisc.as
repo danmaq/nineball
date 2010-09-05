@@ -127,19 +127,7 @@ package danmaq.nineball.misc
 		 */
 		public static function isRelate(cls:Class, objInstance:Object):Boolean
 		{
-			var bResult:Boolean = true;
-			try
-			{
-				if(objInstance as cls == null)
-				{
-					throw new Error();
-				}
-			}
-			catch(e:Error)
-			{
-				bResult = false;
-			}
-			return bResult;
+			return !(objInstance == null || cls == null || (objInstance as cls) == null);
 		}
 	}
 }

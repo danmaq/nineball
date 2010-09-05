@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="CTaskManager,danmaq.nineball.entity.CTaskManager,length,privateMembers,add,commit,eraseImmediately,eraseLayerBand,erasePriority,eraseTask,find" name="keywords">
+<meta content="CTaskManager,danmaq.nineball.entity.CTaskManager,length,add,commit,eraseImmediately,eraseLayerBand,erasePriority,eraseTask,find" name="keywords">
 <title>danmaq.nineball.entity.CTaskManager</title>
 </head>
 <body>
@@ -114,7 +114,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a onclick="javascript:setInheritedVisible(true,'ProtectedProperty');" href="#protectedPropertySummary" class="showHideLink"><img src="../../../images/collapsed.gif" class="showHideLinkImage"> Show Inherited Protected Properties</a>
 </div>
 </div>
-<table id="summaryTableProtectedProperty" class="summaryTable " cellpadding="3" cellspacing="0">
+<table id="summaryTableProtectedProperty" class="summaryTable hideInheritedProtectedProperty" cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
@@ -132,12 +132,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summaryTableDescription"> 最後に変化する前の状態。 </div>
 </td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
 </tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#privateMembers">privateMembers</a> : Object<div class="summaryTableDescription">[read-only]
+<tr class="hideInheritedProtectedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="CEntity.html#privateMembers">privateMembers</a> : Object<div class="summaryTableDescription">
    オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
+   特に何も定義していない場合、nullを取得します。
    
    </div>
-</td><td class="summaryTableOwnerCol">CTaskManager</td>
+</td><td class="summaryTableOwnerCol"><a href="CEntity.html">CEntity</a></td>
 </tr>
 </table>
 </div>
@@ -160,13 +161,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#CTaskManager()">CTaskManager</a>(firstState:<a href="../state/IState.html">IState</a> = null)</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   コンストラクタ。
+   最初の状態が設定できますが、何も指定しない場合は既定の状態
+   (CStateTaskManager.instance)となります。
+   
+   </div>
 </td><td class="summaryTableOwnerCol">CTaskManager</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#add()">add</a>(task:<a href="IEntity.html">IEntity</a>, _priority:uint = 0):void</div>
+<a class="signatureLink" href="#add()">add</a>(task:<a href="ITask.html">ITask</a>, _priority:uint = 0):void</div>
 <div class="summaryTableDescription">
    タスク追加の予約を追加します。
    
@@ -216,7 +222,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#eraseTask()">eraseTask</a>(task:<a href="IEntity.html">IEntity</a>):void</div>
+<a class="signatureLink" href="#eraseTask()">eraseTask</a>(task:<a href="ITask.html">ITask</a>):void</div>
 <div class="summaryTableDescription">
    特定のタスク抹消の予約を追加します。
    
@@ -304,21 +310,6 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get length():uint</code>
 <br>
 </div>
-<a name="privateMembers"></a>
-<table cellspacing="0" cellpadding="0" class="detailHeader">
-<tr>
-<td class="detailHeaderName">privateMembers</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
-</tr>
-</table>
-<div class="detailBody">
-<code>privateMembers:Object</code>&nbsp;&nbsp;[read-only]<p>
-   オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-   
-   </p><span class="label">Implementation</span>
-<br>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;protected function get privateMembers():Object</code>
-<br>
-</div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
 <a name="CTaskManager()"></a>
@@ -328,10 +319,16 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function CTaskManager(firstState:<a href="../state/IState.html">IState</a> = null)</code><span class="label">Parameters</span>
+<code>public function CTaskManager(firstState:<a href="../state/IState.html">IState</a> = null)</code><p>
+   コンストラクタ。
+   最初の状態が設定できますが、何も指定しない場合は既定の状態
+   (CStateTaskManager.instance)となります。
+   
+   </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">firstState</span>:<a href="../state/IState.html">IState</a></code> (default = <code>null</code>)<code></code></td>
+<td width="20px"></td><td><code><span class="label">firstState</span>:<a href="../state/IState.html">IState</a></code> (default = <code>null</code>)<code></code> &mdash; 最初の状態。
+   </td>
 </tr>
 </table>
 </div>
@@ -344,13 +341,13 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function add(task:<a href="IEntity.html">IEntity</a>, _priority:uint = 0):void</code><p>
+<code>public function add(task:<a href="ITask.html">ITask</a>, _priority:uint = 0):void</code><p>
    タスク追加の予約を追加します。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">task</span>:<a href="IEntity.html">IEntity</a></code> &mdash; 登録するタスク
+<td width="20px"></td><td><code><span class="label">task</span>:<a href="ITask.html">ITask</a></code> &mdash; 登録するタスク
    </td>
 </tr>
 <tr>
@@ -474,13 +471,13 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function eraseTask(task:<a href="IEntity.html">IEntity</a>):void</code><p>
+<code>public function eraseTask(task:<a href="ITask.html">ITask</a>):void</code><p>
    特定のタスク抹消の予約を追加します。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">task</span>:<a href="IEntity.html">IEntity</a></code> &mdash; 抹消対象のタスク オブジェクト
+<td width="20px"></td><td><code><span class="label">task</span>:<a href="ITask.html">ITask</a></code> &mdash; 抹消対象のタスク オブジェクト
    </td>
 </tr>
 </table>
