@@ -72,7 +72,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <a class="signatureLink" href="#teardown()">teardown</a>(entity:<a href="../entity/IEntity.html">IEntity</a>, privateMembers:Object, nextState:<a href="IState.html">IState</a>):void</div>
 <div class="summaryTableDescription">
    オブジェクトが別の状態へ移行する時に呼び出されます。
-   このメソッドは、遷移元のteardownよりも後に呼び出されます。
+   このメソッドは、遷移先のsetupよりも先に呼び出されます。
    
    </div>
 </td><td class="summaryTableOwnerCol">CStateInterpolate</td>
@@ -145,7 +145,7 @@ showHideInherited();
 <div class="detailBody">
 <code>public function teardown(entity:<a href="../entity/IEntity.html">IEntity</a>, privateMembers:Object, nextState:<a href="IState.html">IState</a>):void</code><p>
    オブジェクトが別の状態へ移行する時に呼び出されます。
-   このメソッドは、遷移元のteardownよりも後に呼び出されます。
+   このメソッドは、遷移先のsetupよりも先に呼び出されます。
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">

@@ -76,7 +76,7 @@ package danmaq.nineball.state
 		
 		/**
 		 * オブジェクトが別の状態へ移行する時に呼び出されます。
-		 * このメソッドは、遷移元のteardownよりも後に呼び出されます。
+		 * このメソッドは、遷移先のsetupよりも先に呼び出されます。
 		 * 
 		 * @param entity この状態を適用されたオブジェクト。
 		 * @param privateMembers オブジェクトと状態クラスのみがアクセス可能なフィールド。
