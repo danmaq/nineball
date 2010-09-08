@@ -184,7 +184,7 @@ package danmaq.nineball.old.task
 				m_fNextBeatTime = (60000 / bpm) * (phaseManager.phase + 2);
 			}
 			m_fNextBeatAmount = m_fNextBeatTime - fNow;
-			m_uNextBeatCount = int(m_fNextBeatAmount / fGap);
+			m_uNextBeatCount = ((m_fNextBeatAmount / fGap) >> 0);
 			m_fPrevTime = fNow;
 			phaseManager.count++;
 			return true;

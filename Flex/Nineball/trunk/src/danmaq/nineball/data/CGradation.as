@@ -10,6 +10,7 @@
 package danmaq.nineball.data
 {
 	import danmaq.nineball.misc.math.*;
+	import danmaq.nineball.misc.math.interpolate.smooth;
 
 	/**
 	 * グラデーション情報を格納するクラスです。
@@ -46,7 +47,7 @@ package danmaq.nineball.data
 			{
 				return limit1;
 			}
-			return CMisc.clamp(start, Math.min(limit1, limit2), Math.max(limit1, limit2));
+			return clamp(start, Math.min(limit1, limit2), Math.max(limit1, limit2));
 		}
 
 		////////// METHODS //////////
@@ -99,7 +100,7 @@ package danmaq.nineball.data
 			{
 				return limit1;
 			}
-			return CMisc.clamp(CInterpolate.smooth(start, end, nNow, uSize),
+			return clamp(danmaq.nineball.misc.math.interpolate.smooth(start, end, nNow, uSize),
 				Math.min(limit1, limit2), Math.max(limit1, limit2));
 		}
 

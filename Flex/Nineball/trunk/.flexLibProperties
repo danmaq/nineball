@@ -20,7 +20,6 @@
 <classEntry path="danmaq.nineball.constant.CSentence"/>
 <classEntry path="danmaq.nineball.data.CPhase"/>
 <classEntry path="danmaq.nineball.data.CInterpolateInfo"/>
-<classEntry path="danmaq.nineball.misc.math.CTrignometric"/>
 <classEntry path="danmaq.nineball.entity.CVirtualInputManager"/>
 <classEntry path="danmaq.nineball.data.CGradation"/>
 <classEntry path="danmaq.nineball.data.CDisplayObject"/>
@@ -31,7 +30,6 @@
 <classEntry path="danmaq.nineball.old.core.IDisposed"/>
 <classEntry path="danmaq.nineball.entity.IEntity"/>
 <classEntry path="danmaq.nineball.old.core.ITask"/>
-<classEntry path="danmaq.nineball.misc.CMisc"/>
 <classEntry path="danmaq.nineball.old.task.CTaskBase"/>
 <classEntry path="danmaq.nineball.entity.CEntity"/>
 <classEntry path="danmaq.nineball.misc.CBitmapSplitter"/>
@@ -41,10 +39,8 @@
 <classEntry path="danmaq.nineball.old.task.CTaskFade"/>
 <classEntry path="danmaq.nineball.state.IState"/>
 <classEntry path="danmaq.nineball.old.task.CTaskExclusiveSE"/>
-<classEntry path="danmaq.nineball.misc.math.CInterpolate"/>
 <classEntry path="danmaq.nineball.data.CVirtualInput"/>
 <classEntry path="danmaq.nineball.old.constant.CSentence"/>
-<classEntry path="danmaq.nineball.misc.math.CMisc"/>
 <classEntry path="danmaq.nineball.old.task.CTaskFPSView"/>
 <classEntry path="danmaq.nineball.old.constant.CKeyboardEx"/>
 <classEntry path="danmaq.nineball.old.task.CTaskInterpolate"/>

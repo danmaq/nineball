@@ -10,7 +10,7 @@
 package danmaq.nineball.data
 {
 	
-	import danmaq.nineball.misc.math.CInterpolate;
+	import danmaq.nineball.misc.math.interpolate.smooth;
 
 	/**
 	 * プログラマブル内分カウンタ クラスの情報。
@@ -50,7 +50,7 @@ package danmaq.nineball.data
 			this.start = start;
 			this.end = end;
 			this.interval = interval;
-			this.interpolate = (interpolate == null ? CInterpolate.smooth : interpolate);
+			this.interpolate = (interpolate == null ? smooth : interpolate);
 		}
 	}
 }

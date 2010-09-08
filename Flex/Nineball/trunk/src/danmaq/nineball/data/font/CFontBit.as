@@ -12,7 +12,7 @@ package danmaq.nineball.data.font
 
 	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.data.CScreen;
-	import danmaq.nineball.misc.CMisc;
+	import danmaq.nineball.misc.*;
 	
 	import flash.display.*;
 	import flash.errors.IllegalOperationError;
@@ -44,16 +44,16 @@ package danmaq.nineball.data.font
 		private var m_doc:DisplayObjectContainer = null;
 
 		/**	表示するテキストが格納されます。 */
-		private var m_strText:String = "";
+		private var m_strText:String;
 
 		/**	現在表示されているかどうかが格納されます。 */
 		private var m_bView:Boolean = false;
 
 		/**	画像が格納されます。 */
-		private var m_image:Bitmap = null;
+		private var m_image:Bitmap;
 
 		/**	初期サイズが格納されます。 */
-		private var m_size:Point = new Point();
+		private var m_size:Point;
 		
 		////////// PROPERTIES //////////
 
@@ -145,11 +145,11 @@ package danmaq.nineball.data.font
 		 */
 		private function set screen(value:Object):void
 		{
-			if(CMisc.isRelate(CScreen, value))
+			if(isRelate(CScreen, value))
 			{
 				m_screen = value as CScreen;
 			}
-			else if(CMisc.isRelate(DisplayObjectContainer, value))
+			else if(isRelate(DisplayObjectContainer, value))
 			{
 				m_doc = value as DisplayObjectContainer;
 			}
@@ -211,7 +211,7 @@ package danmaq.nineball.data.font
 			m_image.transform.colorTransform = color;
 			m_image.alpha = info.alpha;
 			m_image.smoothing = info.smoothing;
-			CMisc.setMatrix(m_image, info.scale, info.rotate, info.pos);
+			setMatrix(m_image, info.scale, info.rotate, info.pos);
 		}
 	}
 }

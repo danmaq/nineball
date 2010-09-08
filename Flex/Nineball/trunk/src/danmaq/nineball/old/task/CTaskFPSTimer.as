@@ -201,7 +201,7 @@ package danmaq.nineball.old.task
 				else
 				{
 					m_uTimerValue = Math.max(1,
-						m_uTimerValue + int((m_uTheoretical - int(m_uReal)) * 0.8));
+						m_uTimerValue + (((m_uTheoretical - ((m_uReal) >> 0)) * 0.8) >> 0));
 				}
 				phaseManager.isReserveNextPhase = true;
 			}

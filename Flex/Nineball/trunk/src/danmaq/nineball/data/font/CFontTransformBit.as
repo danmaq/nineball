@@ -10,7 +10,7 @@
 package danmaq.nineball.data.font
 {
 
-	import danmaq.nineball.misc.math.CMisc;
+	import danmaq.nineball.misc.math.clamp;
 	
 	import flash.geom.Point;
 	
@@ -115,7 +115,7 @@ package danmaq.nineball.data.font
 		 */
 		public function set alpha(value:Number):void
 		{
-			m_fAlpha = CMisc.clamp(value, 0, 1);
+			m_fAlpha = clamp(value, 0, 1);
 		}
 
 		/**

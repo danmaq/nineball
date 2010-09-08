@@ -193,17 +193,18 @@ package danmaq.nineball.data
 		public function add(child:DisplayObject, nLayer:int = int.MIN_VALUE):void
 		{
 			var struct:CDisplayObject = new CDisplayObject(child, nLayer);
-			var uLength:uint = displayObjectList.length;
+			var dol:Vector.<CDisplayObject> = displayObjectList;
+			var uLength:uint = dol.length;
 			for(var i:int = 0; i < uLength; i++)
 			{
-				if(displayObjectList[i].layer > nLayer)
+				if(dol[i].layer > nLayer)
 				{
-					displayObjectList.splice(i, 0, struct);
+					dol.splice(i, 0, struct);
 					addChildAtReverse(child, i);
 					return;
 				}
 			}
-			displayObjectList.push(struct);
+			dol.push(struct);
 			screen.addChildAt(child, 0);
 		}
 
@@ -216,12 +217,13 @@ package danmaq.nineball.data
 		public function remove(child:DisplayObject):void
 		{
 			screen.removeChild(child);
-			var uLength:uint = displayObjectList.length;
+			var dol:Vector.<CDisplayObject> = displayObjectList;
+			var uLength:uint = dol.length;
 			for(var i:int = 0; i < uLength; i++)
 			{
-				if(displayObjectList[i].obj === child)
+				if(dol[i].obj === child)
 				{
-					displayObjectList.splice(i, 1);
+					dol.splice(i, 1);
 					return;
 				}
 			}
