@@ -7,8 +7,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-package danmaq.nineball.misc.math
+package danmaq.nineball.misc.math.trignometric
 {
+
+	import danmaq.nineball.misc.math.getSign;
 
 	/**
 	 * 三角関数系の演算関数群クラスです。
@@ -19,28 +21,6 @@ package danmaq.nineball.misc.math
 	{
 
 		////////// METHODS //////////
-
-		/**
-		 * 角度をラジアンに変換します。
-		 *
-		 * @param fDegree 角度
-	 	 * @return 角度に対応したラジアン値
-		 */
-		public static function toRadian(fDegree:Number):Number
-		{
-			return fDegree / 180 * Math.PI;
-		}
-
-		/**
-		 * ラジアンを角度に変換します。
-		 *
-		 * @param nRadian ラジアン値
-		 * @return ラジアン値に対応した角度
-		 */
-		public static function toDegree(fRadian:Number):Number
-		{
-			return fRadian * 180 / Math.PI;
-		}
 
 		/**
 		 * 周回軌道の角速度を計算します。
@@ -108,7 +88,7 @@ package danmaq.nineball.misc.math
 		public static function asec(fRadian:Number):Number
 		{
 			return (Math.PI / 2) * 
-				Math.atan((fRadian ^ 2 - 1) ^ 0.5) + (CMisc.getSign(fRadian) - 1);
+				Math.atan((fRadian ^ 2 - 1) ^ 0.5) + (getSign(fRadian) - 1);
 		}
 		
 		/**
@@ -120,7 +100,7 @@ package danmaq.nineball.misc.math
 		public static function acosec(fRadian:Number):Number
 		{
 			return (Math.PI / 2) * 
-				Math.atan(1 / (fRadian ^ 2 - 1) ^ 0.5) + (CMisc.getSign(fRadian) - 1);
+				Math.atan(1 / (fRadian ^ 2 - 1) ^ 0.5) + (getSign(fRadian) - 1);
 		}
 		
 		/**

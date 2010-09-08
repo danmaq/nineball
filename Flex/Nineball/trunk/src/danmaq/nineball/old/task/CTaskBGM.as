@@ -10,7 +10,7 @@
 package danmaq.nineball.old.task
 {
 	import danmaq.nineball.data.CPhase;
-	import danmaq.nineball.misc.math.CInterpolate;
+	import danmaq.nineball.misc.math.interpolate.slowdown;
 	import danmaq.nineball.old.core.*;
 	import danmaq.nineball.old.data.CBGMPreset;
 	
@@ -220,7 +220,7 @@ package danmaq.nineball.old.task
 				break;
 			case PHASE_END:
 				phaseManager.isReserveNextPhase = (uPhase == m_uFadeTime);
-				m_fMaxVolume = CInterpolate.slowdown(1, 0, uPCount, m_uFadeTime);
+				m_fMaxVolume = slowdown(1, 0, uPCount, m_uFadeTime);
 				m_bgmch.soundTransform = new SoundTransform(m_fMaxVolume);
 				break;
 			}

@@ -10,10 +10,10 @@
 package danmaq.nineball.data
 {
 
-	import danmaq.nineball.misc.CMisc;
-
+	import danmaq.nineball.misc.getClassName;
+	
 	import flash.display.DisplayObject;
-
+	
 	import mx.utils.StringUtil;
 	
 	/**
@@ -80,7 +80,7 @@ package danmaq.nineball.data
 		public function toString():String
 		{
 			return StringUtil.substitute("Obj:{0},Layer:{1}",
-				CMisc.getClassName(obj), layer);
+				getClassName(obj), layer);
 		}
 	}
 }

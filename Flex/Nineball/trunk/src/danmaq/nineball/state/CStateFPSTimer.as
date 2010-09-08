@@ -67,7 +67,7 @@ package danmaq.nineball.state
 				else
 				{
 					privateMembers.variable = Math.max(1, privateMembers.variable +
-							int((timer.theoretical - int(privateMembers.real)) * 0.8));
+							(((timer.theoretical - ((privateMembers.real) >> 0)) * 0.8) >> 0));
 				}
 				privateMembers.phase.isReserveNextPhase = true;
 			}

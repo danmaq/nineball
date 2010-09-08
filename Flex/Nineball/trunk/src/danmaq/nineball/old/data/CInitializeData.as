@@ -10,7 +10,7 @@
 package danmaq.nineball.old.data
 {
 
-	import danmaq.nineball.misc.CMisc;
+	import danmaq.nineball.misc.getClassName;
 	import danmaq.nineball.old.constant.CSentence;
 	import danmaq.nineball.old.core.CMainLoop;
 	
@@ -147,7 +147,7 @@ package danmaq.nineball.old.data
 				"初回実行シーン            : {6}\n" +
 				"メインループ              : {8}\n" +
 				fpsReflesh, fps, fpsLowLimit, fpsLowCount, systemTaskLayer, seResolution,
-				CMisc.getClassName(sceneFirst), mainLoop == null ? "未生成" : "生成"
+				getClassName(sceneFirst), mainLoop == null ? "未生成" : "生成"
 			);
 		}
 	}

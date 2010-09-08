@@ -1,6 +1,8 @@
 package danmaq.nineball.entity
 {
 
+	import __AS3__.vec.Vector;
+	
 	import danmaq.nineball.state.*;
 
 	/**
@@ -110,6 +112,7 @@ package danmaq.nineball.entity
 			_priority:uint, callback:Function = null):Vector.<ITask>
 		{
 			var result:Vector.<ITask> = find(_priority);
+			var delList:Vector.<Object> = privateMembers.delList;
 			for each(var task:ITask in result)
 			{
 				var item:Object =
@@ -117,7 +120,7 @@ package danmaq.nineball.entity
 					item: task,
 					func: callback
 				};
-				privateMembers.delList.push(item);
+				delList.push(item);
 			}
 			return result;
 		}

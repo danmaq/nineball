@@ -10,10 +10,10 @@
 package danmaq.nineball.old.data
 {
 
-	import danmaq.nineball.misc.CMisc;	
-
+	import danmaq.nineball.misc.getClassName;
+	
 	import flash.media.Sound;
-
+	
 	import mx.utils.StringUtil;
 
 	/**
@@ -97,7 +97,7 @@ package danmaq.nineball.old.data
 		public function toString():String
 		{
 			return StringUtil.substitute("BGM:{0},Loop[Start:{1},End:{2}]",
-				CMisc.getClassName(bgm), loopStart, loopEnd);
+				getClassName(bgm), loopStart, loopEnd);
 		}
 	}
 }

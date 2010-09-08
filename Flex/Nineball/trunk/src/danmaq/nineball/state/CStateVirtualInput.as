@@ -2,6 +2,7 @@ package danmaq.nineball.state
 {
 	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.data.CScreen;
+	import danmaq.nineball.data.CVirtualInput;
 	import danmaq.nineball.entity.*;
 	
 	import flash.events.*;
@@ -58,9 +59,10 @@ package danmaq.nineball.state
 				prev[data.id] = data.push;
 			}
 			var uLength:uint = privateMembers.viData.length;
+			var viData:Vector.<CVirtualInput> = privateMembers.viData;
 			for(var i:uint = 0; i < uLength; i++)
 			{
-				privateMembers.viData[i].update(prev[i]);
+				viData[i].update(prev[i]);
 			}
 		}
 		

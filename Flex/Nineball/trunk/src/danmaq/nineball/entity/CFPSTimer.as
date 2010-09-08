@@ -27,20 +27,20 @@ package danmaq.nineball.entity
 
 		////////// FIELDS //////////
 
-		/**	FPS理論値が格納されます。 */
 		[Bindable]
+		/**	FPS理論値が格納されます。 */
 		public var theoretical:uint = 60;
 
-		/**	FPS更新フレーム間隔が格納されます。 */
 		[Bindable]
+		/**	FPS更新フレーム間隔が格納されます。 */
 		public var refleshInterval:uint = 0;
 		
-		/**	実測内部FPSの最低許容値が格納されます。 */
 		[Bindable]
+		/**	実測内部FPSの最低許容値が格納されます。 */
 		public var slowdownLimit:uint = 0;
 		
-		/**	実測内部FPSの最低許容値を下回る許容回数が格納されます。 */
 		[Bindable]
+		/**	実測内部FPSの最低許容値を下回る許容回数が格納されます。 */
 		public var slowdownCountLimit:uint = 0;
 
 		////////// PROPERTIES //////////

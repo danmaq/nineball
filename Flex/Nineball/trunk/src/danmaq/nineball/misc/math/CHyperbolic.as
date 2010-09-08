@@ -140,7 +140,7 @@ package danmaq.nineball.misc.math
 		public static function Hacosec(fRadian:Number):Number
 		{
 			return Math.log(
-				(CMisc.getSign(fRadian) * (fRadian ^ 2 + 1) ^ 0.5 + 1) / fRadian);
+				(getSign(fRadian) * (fRadian ^ 2 + 1) ^ 0.5 + 1) / fRadian);
 		}
 		
 		/**

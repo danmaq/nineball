@@ -47,12 +47,12 @@ package danmaq.nineball.data.font
 			return m_strText;
 		}
 
+		[Bindable]
 		/**
 		 * 表示するテキストを設定します。
 		 * 
 		 * @param value 表示するテキスト
 		 */
-		[Bindable]
 		public function set text(value:String):void
 		{
 			if(value == null)

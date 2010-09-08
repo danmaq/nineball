@@ -9,7 +9,7 @@
 
 package danmaq.nineball.old.task
 {
-	import danmaq.nineball.misc.math.CInterpolate;
+	import danmaq.nineball.misc.math.interpolate.*;
 	import danmaq.nineball.old.constant.CSentence;
 	import danmaq.nineball.old.core.*;
 	
@@ -166,11 +166,11 @@ package danmaq.nineball.old.task
 			m_uLayer = uLayer;
 			switch(uType)
 			{
-			case TYPE_SMOOTH:		m_fnInterpolate = CInterpolate.smooth;		break;
-			case TYPE_ACCELERATE:	m_fnInterpolate = CInterpolate.accelerate;	break;
-			case TYPE_SLOWDOWN:		m_fnInterpolate = CInterpolate.slowdown;	break;
-			case TYPE_SFS:			m_fnInterpolate = CInterpolate.splineSFS;	break;
-			case TYPE_FSF:			m_fnInterpolate = CInterpolate.splineFSF;	break;
+			case TYPE_SMOOTH:		m_fnInterpolate = smooth;		break;
+			case TYPE_ACCELERATE:	m_fnInterpolate = accelerate;	break;
+			case TYPE_SLOWDOWN:		m_fnInterpolate = slowdown;	break;
+			case TYPE_SFS:			m_fnInterpolate = splineSFS;	break;
+			case TYPE_FSF:			m_fnInterpolate = splineFSF;	break;
 			default:
 				throw new IllegalOperationError(CSentence.ILLEGAL_INTERPOLATE);
 				break;

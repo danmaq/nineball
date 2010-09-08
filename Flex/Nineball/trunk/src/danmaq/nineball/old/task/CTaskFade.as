@@ -9,9 +9,9 @@
 
 package danmaq.nineball.old.task
 {
-	import danmaq.nineball.misc.math.CInterpolate;
 	import danmaq.nineball.constant.CSentence;
 	import danmaq.nineball.data.CScreen;
+	import danmaq.nineball.misc.math.interpolate.*;
 	import danmaq.nineball.old.core.*;
 	
 	import flash.display.*;
@@ -187,8 +187,8 @@ package danmaq.nineball.old.task
 		public function update():Boolean
 		{
 			var fDepth:Number = m_bIn ?
-				CInterpolate.accelerate(1, 0, m_uCount, m_uLimit) :
-				CInterpolate.slowdown(0, 1, m_uCount, m_uLimit);
+				accelerate(1, 0, m_uCount, m_uLimit) :
+				slowdown(0, 1, m_uCount, m_uLimit);
 			fill.transform.colorTransform = new ColorTransform(fDepth, fDepth, fDepth);
 			m_uCount++;
 			return (m_uCount <= m_uLimit);
