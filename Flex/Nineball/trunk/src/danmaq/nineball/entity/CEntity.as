@@ -142,6 +142,14 @@ package danmaq.nineball.entity
 			m_nextState = CState.empty;
 			commitNextState();
 			m_previousState = CState.empty;
+			resetCounter();
+		}
+		
+		/**
+		 * 汎用フレームカウンタを初期化します。
+		 */
+		public function resetCounter():void
+		{
 			m_counter = 0;
 		}
 
