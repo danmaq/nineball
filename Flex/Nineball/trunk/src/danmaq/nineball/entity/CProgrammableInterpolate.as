@@ -59,7 +59,7 @@ package danmaq.nineball.entity
 		{
 			var privateMembers:Object = 
 			{
-				result: 0.0
+				result: 0.0	// 最新の計算結果
 			};
 			if(firstState == null)
 			{
