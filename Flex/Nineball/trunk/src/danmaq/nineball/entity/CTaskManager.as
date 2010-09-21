@@ -199,11 +199,18 @@ package danmaq.nineball.entity
 		 */
 		private function commitErase(item:Object, index:int, vector:Vector.<Object>):void
 		{
-			var i:int = privateMembers.tasks.indexOf(item.item);
-			if(i >= 0)
+			var tasks:Vector.<Object> = privateMembers.tasks;
+			for(var i:uint = tasks.length; --i >= 0; )
 			{
-				item.func(item.item);
-				privateMembers.tasks.splice(i, 1);
+				if(tasks[i].item == item.item)
+				{
+					if(item.func != null)
+					{
+						item.func(item.item);
+					}
+					tasks.splice(i, 1);
+					return;
+				}
 			}
 		}
 		

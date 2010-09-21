@@ -78,7 +78,7 @@ package danmaq.nineball.entity
 		{
 			var privateMembers:Object = 
 			{
-				phase: new CPhase(),
+				phase: new CPhase(),	// TODO : counterと機能が被ってるし、なんか無駄な気がする
 				variable: 0,
 				prevSeconds: 0,
 				real: 0,

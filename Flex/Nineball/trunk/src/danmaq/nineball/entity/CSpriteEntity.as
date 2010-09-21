@@ -77,7 +77,7 @@ package danmaq.nineball.entity
 		
 		/**
 		 * コンストラクタ。
-		 * privateMembersには、自動的にbuttonプロパティにこのインスタンスが設定されます。
+		 * privateMembersには、自動的にownerプロパティにこのインスタンスが設定されます。
 		 * 
 		 * @param firstState 最初のAIの状態。
 		 * @param privateMembers AIのためのプライベート メンバ。
