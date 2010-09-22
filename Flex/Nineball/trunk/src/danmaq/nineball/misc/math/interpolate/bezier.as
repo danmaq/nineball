@@ -21,11 +21,11 @@ package danmaq.nineball.misc.math.interpolate
 	 * @return 初期値～(中間値)～最終値に対し0～到達時間の現在時間に相当する値
 	 */
 	public function bezier(
-		fStart:Number, fMiddle:Number, fEnd:Number, fNow:Number, fLimit:Number):Number
+		fStart:Number, fMiddle:Number, fEnd:Number, target:Number, fLimit:Number):Number
 	{
-		if(fNow >= fLimit || fStart == fEnd || fLimit <= 0){ return fEnd; }
-		if(fNow <= 0){ return fStart; }
-		var fTimePoint:Number = fNow / fLimit * 2;
+		if(target >= fLimit || fStart == fEnd || fLimit <= 0){ return fEnd; }
+		if(target <= 0){ return fStart; }
+		var fTimePoint:Number = target / fLimit * 2;
 		var fResidual:Number = (1 - fTimePoint);
 		return (fResidual ^ 2 * fStart) +
 			(2 * fResidual * fTimePoint * fMiddle) + (fTimePoint ^ 2 * fEnd);

@@ -39,9 +39,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Pa
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#lerp()">lerp</a>(fStart:Number, fEnd:Number, fRate:Number):Number</div>
+<a class="signatureLink" href="#amountSmooth()">amountSmooth</a>(target:Number, fLimit:Number):Number</div>
 <div class="summaryTableDescription">
-  2つの値の間を線形補間します。
+  補間ポイントを等速変化で算出します。
   
   </div>
 </td><td class="summaryTableOwnerCol">danmaq.nineball.misc.math.interpolate</td>
@@ -50,34 +50,27 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Pa
 </div>
 <a name="methodDetail"></a>
 <div class="detailSectionHeader">Function detail</div>
-<a name="lerp()"></a>
+<a name="amountSmooth()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">lerp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td>
+<td class="detailHeaderName">amountSmooth</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public function lerp(fStart:Number, fEnd:Number, fRate:Number):Number</code><p>
-  2つの値の間を線形補間します。
+<code>public function amountSmooth(target:Number, fLimit:Number):Number</code><p>
+  補間ポイントを等速変化で算出します。
   
   </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">fStart</span>:Number</code> &mdash; ソース値1
+<td width="20px"></td><td><code><span class="label">target</span>:Number</code> &mdash; 現在時間
   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">fEnd</span>:Number</code> &mdash; ソース値2
-  </td>
-</tr>
-<tr>
-<td class="paramSpacer">&nbsp;</td>
-</tr>
-<tr>
-<td width="20px"></td><td><code><span class="label">fRate</span>:Number</code> &mdash; 重みを示す0～1の範囲の値。
+<td width="20px"></td><td><code><span class="label">fLimit</span>:Number</code> &mdash; fEndに到達する時間
   </td>
 </tr>
 </table>
@@ -85,7 +78,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Pa
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code>Number</code> &mdash; 補間された値。
+<td width="20"></td><td><code>Number</code> &mdash; 0からfLimitまでのtargetに相当する0.0から1.0までの値
   </td>
 </tr>
 </table>

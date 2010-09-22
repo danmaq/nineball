@@ -11,18 +11,14 @@ package danmaq.nineball.misc.math.interpolate
 {
 
 	/**
-	 * 減速変化する内分カウンタです。
+	 * 補間ポイントを減速変化で算出します。
 	 * 
-	 * @param fStart targetが0と等しい場合の値
-	 * @param fEnd targetがfLimitと等しい場合の値
 	 * @param target 現在時間
 	 * @param fLimit fEndに到達する時間
-	 * @return 0からfLimitまでのtargetに相当するfStartからfEndまでの値
+	 * @return 0からfLimitまでのtargetに相当する0.0から1.0までの値
 	 */
-	public function slowdown(fStart:Number, fEnd:Number, target:Number, fLimit:Number):Number
+	public function amountSlowdown(target:Number, fLimit:Number):Number
 	{
-		if(target <= 0){ return fStart; }
-		if(target >= fLimit){ return fEnd; }
-		return lerp(fStart, fEnd, amountSlowdown(target, fLimit));
+		return 1 - Math.pow(1 - target / fLimit, 2);
 	}
 }
