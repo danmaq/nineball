@@ -21,11 +21,11 @@ package danmaq.nineball.misc.math.interpolate
 	 * @return 初期値～(中間値)～最終値に対し0～到達時間の現在時間に相当する値
 	 */
 	public function neville(
-		fStart:Number, fMiddle:Number, fEnd:Number, fNow:Number, fLimit:Number):Number
+		fStart:Number, fMiddle:Number, fEnd:Number, target:Number, fLimit:Number):Number
 	{
-		if(fNow >= fLimit || fStart == fEnd || fLimit <= 0){ return fEnd; }
-		if(fNow <= 0){ return fStart; }
-		var fTimePoint:Number = fNow / fLimit * 2;
+		if(target >= fLimit || fStart == fEnd || fLimit <= 0){ return fEnd; }
+		if(target <= 0){ return fStart; }
+		var fTimePoint:Number = target / fLimit * 2;
 		fMiddle = fEnd + (fEnd - fMiddle) * (fTimePoint - 2);
 		return fMiddle + (fMiddle - (fMiddle + (fMiddle - fStart) * (fTimePoint - 1))) *
 			(fTimePoint - 2) * 0.5;

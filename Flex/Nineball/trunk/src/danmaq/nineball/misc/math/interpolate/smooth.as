@@ -13,16 +13,16 @@ package danmaq.nineball.misc.math.interpolate
 	/**
 	 * 等速変化する内分カウンタです。
 	 * 
-	 * @param fStart fNowが0と等しい場合の値
-	 * @param fEnd fNowがfLimitと等しい場合の値
-	 * @param fNow 現在時間
+	 * @param fStart targetが0と等しい場合の値
+	 * @param fEnd targetがfLimitと等しい場合の値
+	 * @param target 現在時間
 	 * @param fLimit fEndに到達する時間
-	 * @return 0からfLimitまでのfNowに相当するfStartからfEndまでの値
+	 * @return 0からfLimitまでのtargetに相当するfStartからfEndまでの値
 	 */
-	public function smooth(fStart:Number, fEnd:Number, fNow:Number, fLimit:Number):Number
+	public function smooth(fStart:Number, fEnd:Number, target:Number, fLimit:Number):Number
 	{
-		if(fNow <= 0){ return fStart; }
-		if(fNow >= fLimit){ return fEnd; }
-		return lerp(fStart, fEnd, fNow / fLimit);
+		if(target <= 0){ return fStart; }
+		if(target >= fLimit){ return fEnd; }
+		return lerp(fStart, fEnd, amountSmooth(target, fLimit));
 	}
 }
