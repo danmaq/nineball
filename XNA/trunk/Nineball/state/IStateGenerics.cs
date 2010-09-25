@@ -71,22 +71,7 @@ namespace danmaq.nineball.state
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		void teardown(_E entity, _M privateMembers, IState<_E, _M> nextState);
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが<c>CState.empty</c>へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// <remarks>
-		/// このメソッドが呼び出された時は、通常オブジェクトが終了したことを意味します。
-		/// </remarks>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		void teardown(_E entity, _M privateMembers);
+		void teardown(_E entity, _M privateMembers, IState nextState);
 
 	}
 }

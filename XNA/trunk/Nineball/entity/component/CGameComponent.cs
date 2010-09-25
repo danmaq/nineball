@@ -108,18 +108,6 @@ namespace danmaq.nineball.entity.component
 			}
 		}
 
-		//* -----------------------------------------------------------------------*
-		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
-		/// 
-		/// <value>親オブジェクト。</value>
-		public IEntity owner
-		{
-			get
-			{
-				return entity.owner;
-			}
-		}
-
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 

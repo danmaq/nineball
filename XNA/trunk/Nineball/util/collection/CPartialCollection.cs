@@ -24,33 +24,6 @@ namespace danmaq.nineball.util.collection
 	/// </para>
 	/// </summary>
 	/// 
-	/// <typeparam name="_T">コレクション内の要素の型。</typeparam>
-	public class CPartialCollection<_T> : CPartialCollection<_T, _T>
-	{
-
-		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* constructor & destructor ───────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="collection">部分的に責任を持つ対象のリスト。</param>
-		public CPartialCollection(ICollection<_T> collection)
-			: base(collection)
-		{
-		}
-
-	}
-
-	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>
-	/// <para>部分責任コレクション。</para>
-	/// <para>
-	/// このクラスを通じてコレクションに格納された要素は、
-	/// このクラスを破棄することで道連れにされます。
-	/// </para>
-	/// </summary>
-	/// 
 	/// <typeparam name="_T">対象コレクション内の要素の基本型。</typeparam>
 	/// <typeparam name="_P">
 	/// 部分責任コレクション内の要素の型。

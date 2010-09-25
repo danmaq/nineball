@@ -36,15 +36,6 @@ namespace danmaq.nineball.entity
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>このオブジェクトを所有する親オブジェクト。</summary>
-		private IEntity m_owner = null;
-
-		/// <summary>
-		/// このオブジェクトを所有する親オブジェクトが
-		/// <c>CEntity</c>または<c>CEntity</c>を継承したクラスであるかどうか。
-		/// </summary>
-		private bool m_bOwnerIsCEntity = false;
-
 		/// <summary>型名のキャッシュ。</summary>
 		private string m_strTypeName = null;
 
@@ -57,49 +48,39 @@ namespace danmaq.nineball.entity
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
 		public CEntity()
+			: this(null)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>指定の状態で初期化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="firstState">初期の状態。</param>
+		public CEntity(IState firstState)
+			: this(firstState, null)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>指定の状態で初期化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="firstState">初期の状態。</param>
+		/// <param name="privateMembers">
+		///	オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		///	</param>
+		public CEntity(IState firstState, object privateMembers)
 		{
 			previousState = CState.empty;
 			currentState = CState.empty;
 			lastStateChangeTime = DateTime.Now;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>コンストラクタ。</para>
-		/// <para>既定の状態で初期化します。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">親オブジェクト。</param>
-		public CEntity(IEntity entity) : this()
-		{
-			owner = entity;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>コンストラクタ。</para>
-		/// <para>指定の状態で初期化します。</para>
-		/// </summary>
-		/// 
-		/// <param name="state">状態。</param>
-		public CEntity(IState state) : this()
-		{
-			nextState = state;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>コンストラクタ。</para>
-		/// <para>指定の状態で初期化します。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">親オブジェクト。</param>
-		/// <param name="state">状態。</param>
-		public CEntity(IEntity entity, IState state)
-			: this()
-		{
-			owner = entity;
-			nextState = state;
+			nextState = firstState;
+			this.privateMembers = privateMembers;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -146,26 +127,6 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>このオブジェクトを所有する親オブジェクトを取得します。</summary>
-		/// 
-		/// <value>親オブジェクト。</value>
-		public IEntity owner
-		{
-			get
-			{
-				return m_owner;
-			}
-			protected set
-			{
-				m_owner = value;
-				Type typeExpr = value.GetType();
-				Type typeExpect = typeof(CEntity);
-				m_bOwnerIsCEntity = value != null &&
-					(typeExpr == typeExpect || typeExpr.IsSubclassOf(typeExpect));
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>次に変化する状態を予約します。</summary>
 		/// 
 		/// <value>次に変化する状態。</value>
@@ -183,10 +144,8 @@ namespace danmaq.nineball.entity
 		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
 		protected virtual object privateMembers
 		{
-			get
-			{
-				return m_bOwnerIsCEntity ? ((CEntity)owner).privateMembers : null;
-			}
+			get;
+			private set;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
