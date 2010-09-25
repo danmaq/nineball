@@ -12,12 +12,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using danmaq.nineball.data;
-using danmaq.nineball.entity.input.data;
 using danmaq.nineball.old.core.data;
 using danmaq.nineball.old.core.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using danmaq.nineball.entity.input.data;
 
 namespace danmaq.nineball.old.core.raw
 {

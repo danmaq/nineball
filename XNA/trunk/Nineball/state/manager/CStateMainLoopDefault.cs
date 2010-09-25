@@ -169,7 +169,6 @@ namespace danmaq.nineball.state.manager
 			game.Content.RootDirectory = "Content";
 			scene.initialize();
 			isSetupped = true;
-			base.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -186,7 +185,6 @@ namespace danmaq.nineball.state.manager
 		{
 			scene.update(gameTime);
 			entity.phase.count++;
-			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -207,7 +205,6 @@ namespace danmaq.nineball.state.manager
 			device.RenderState.DepthBufferEnable = isUseDepthBuffer;
 			device.RenderState.DepthBufferWriteEnable = isWriteDepthBuffer;
 			sprite.draw();
-			base.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -221,11 +218,10 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(IEntity entity, object privateMembers, IState nextState)
+		public override void teardown(CMainLoop entity, CMainLoop.CPrivateMembers privateMembers, IState nextState)
 		{
 			scene.Dispose();
 			isSetupped = false;
-			base.teardown(entity, privateMembers, nextState);
 		}
 	}
 }
