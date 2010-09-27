@@ -73,6 +73,16 @@ package danmaq.nineball.entity
 			ai.nextState = value;
 		}
 
+		/**
+		 * 汎用フレームカウンタを取得します。
+		 * 
+		 * @return 汎用フレームカウンタ。
+		 */
+		public function get counter():uint
+		{
+			return ai.counter;
+		}
+		
 		////////// METHODS //////////
 		
 		/**
