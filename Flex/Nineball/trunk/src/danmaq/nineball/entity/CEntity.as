@@ -26,6 +26,9 @@ package danmaq.nineball.entity
 	{
 
 		////////// FIELDS //////////
+
+		/**	カウンタ ステップ。 */
+		public var counterStep:uint = 1;
 		
 		/**	最後に変化する前の状態。 */
 		protected var m_previousState:IState = CState.empty;
@@ -131,7 +134,7 @@ package danmaq.nineball.entity
 				commitNextState();
 			}
 			currentState.update(this, privateMembers);
-			m_counter++;
+			m_counter += counterStep;
 		}
 
 		/**
