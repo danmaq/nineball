@@ -77,6 +77,7 @@ namespace danmaq.nineball.util
 		static CSingleton()
 		{
 			// HACK : XBOX360版でもCreateInstanceできんかなぁ……orz
+			// TODO : Activator.CreateInstance<T>はどうよ？
 #if WINDOWS
 			// private？でもそんなの関係ねぇ！
 			instance = (_T)Activator.CreateInstance(typeof(_T), true);
