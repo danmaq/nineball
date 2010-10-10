@@ -122,6 +122,8 @@
     <Compile Include="entity\component\CGameComponent.cs" />
     <Compile Include="entity\IEntity.cs" />
     <Compile Include="entity\manager\CCoRoutineManager.cs" />
+    <Compile Include="entity\manager\CTaskManager.cs" />
+    <Compile Include="entity\manager\ITask.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
     <Compile Include="util\math\CMath.cs" />

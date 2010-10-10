@@ -68,7 +68,7 @@ namespace danmaq.nineball.entity.manager
 		//* constants ──────────────────────────────-*
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		private readonly CPrivateMembers _private = new CPrivateMembers();
+		private readonly CPrivateMembers _private;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -93,7 +93,9 @@ namespace danmaq.nineball.entity.manager
 		/// グラフィック デバイスの構成・管理クラス。
 		/// </param>
 		public CMainLoop(Game game, GraphicsDeviceManager graphicsDeviceManager)
+			: base(null, new CPrivateMembers())
 		{
+			_private = (CPrivateMembers)privateMembers;
 			_private.game = game;
 			_private.graphicsDeviceManager = graphicsDeviceManager;
 			_private.registedGameComponentList = new CGameComponentManager(game);
@@ -129,20 +131,6 @@ namespace danmaq.nineball.entity.manager
 			set
 			{
 				base.nextState = value;
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-		/// </summary>
-		/// 
-		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
-		protected override object privateMembers
-		{
-			get
-			{
-				return _private;
 			}
 		}
 
