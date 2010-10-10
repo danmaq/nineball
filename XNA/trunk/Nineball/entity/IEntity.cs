@@ -9,8 +9,8 @@
 
 using System;
 using danmaq.nineball.data;
+using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
-using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity
 {
@@ -23,7 +23,7 @@ namespace danmaq.nineball.entity
 	/// 状態を持つオブジェクトを作ることができます。
 	/// </para>
 	/// </summary>
-	public interface IEntity : IDisposable
+	public interface IEntity : ITask, IDisposable
 	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -68,17 +68,5 @@ namespace danmaq.nineball.entity
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
 		void initialize();
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void update(GameTime gameTime);
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		void draw(GameTime gameTime);
 	}
 }

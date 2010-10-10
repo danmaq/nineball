@@ -51,7 +51,7 @@ namespace danmaq.nineball.entity.manager
 		//* constants ──────────────────────────────-*
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		private readonly CPrivateMembers _private = new CPrivateMembers();
+		private readonly CPrivateMembers _private;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -61,6 +61,17 @@ namespace danmaq.nineball.entity.manager
 
 		/// <summary>1読み込みターン毎に読み込むファイル数。</summary>
 		public ushort loadPerFrame = 1;
+
+		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		public CContentLoader()
+			: base(null, new CPrivateMembers())
+		{
+			_private = (CPrivateMembers)privateMembers;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -90,20 +101,6 @@ namespace danmaq.nineball.entity.manager
 			set
 			{
 				base.nextState = value;
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-		/// </summary>
-		/// 
-		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
-		protected override object privateMembers
-		{
-			get
-			{
-				return _private;
 			}
 		}
 

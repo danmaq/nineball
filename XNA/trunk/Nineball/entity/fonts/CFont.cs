@@ -91,8 +91,8 @@ namespace danmaq.nineball.entity.fonts
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		public CFont()
+			: base(CStateDefault.instance)
 		{
-			nextState = CStateDefault.instance;
 		}
 
 		//* -----------------------------------------------------------------------*
