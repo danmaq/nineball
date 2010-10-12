@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.old.task
 {
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>FPS計測・計算クラス。</summary>
 	/// <remarks>
