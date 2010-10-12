@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using danmaq.nineball.state;
+using danmaq.nineball.state.manager;
 
 namespace danmaq.nineball.entity.manager
 {
@@ -84,6 +85,35 @@ namespace danmaq.nineball.entity.manager
 				add.Clear();
 				remove.Clear();
 			}
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>タスク管理に使用したメモリを切り詰めます。</summary>
+			public void TrimExcess()
+			{
+				tasks.TrimExcess();
+				add.TrimExcess();
+				remove.TrimExcess();
+			}
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>タスク追加・削除の予約を確定します。</summary>
+			public void commit()
+			{
+				remove.ForEach(commitRemove);
+				tasks.AddRange(add);
+				remove.Clear();
+				add.Clear();
+			}
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>タスク削除の予約を確定するときに使用するデリゲートです。</summary>
+			private void commitRemove(SRemoveInfo info)
+			{
+				if (tasks.Remove(info.task))
+				{
+					info.callback(info.task);
+				}
+			}
 		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -107,7 +137,7 @@ namespace danmaq.nineball.entity.manager
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
 		public CTaskManager()
-			: this(null)
+			: this(CStateTaskManager.instance)
 		{
 		}
 
@@ -155,6 +185,28 @@ namespace danmaq.nineball.entity.manager
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
+		{
+			_private.Dispose();
+			base.Dispose();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>タスク管理に使用したメモリを切り詰めます。</summary>
+		public void TrimExcess()
+		{
+			_private.TrimExcess();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>タスク追加・削除の予約を確定します。</summary>
+		public void commit()
+		{
+			(m_allClear ? (Action)_private.Dispose : (Action)_private.commit)();
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>タスク追加の予約をします。</summary>
 		/// 
 		/// <param name="item">タスク。</param>
@@ -199,7 +251,7 @@ namespace danmaq.nineball.entity.manager
 		/// <returns>存在する場合、<c>true</c>。</returns>
 		public bool Contains(ITask item)
 		{
-			throw new NotImplementedException();
+			return _private.tasks.Contains(item);
 		}
 
 		//* -----------------------------------------------------------------------*

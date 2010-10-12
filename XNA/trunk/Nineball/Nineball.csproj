@@ -125,6 +125,7 @@
     <Compile Include="entity\manager\CTaskManager.cs" />
     <Compile Include="entity\manager\ITask.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
+    <Compile Include="state\manager\CStateTaskManager.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
     <Compile Include="util\math\CMath.cs" />
     <Compile Include="util\math\CMisc.cs" />
