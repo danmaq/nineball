@@ -96,6 +96,7 @@ namespace danmaq.nineball.old.core.inner
 			{
 				strResult +=
 					adapter.createCapsReport(out bCurrent, out ps, out vs) + Environment.NewLine;
+				isAvaliablePS11 = ps != ShaderProfile.Unknown;
 			}
 			try
 			{
