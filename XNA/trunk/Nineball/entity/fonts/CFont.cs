@@ -19,7 +19,8 @@ namespace danmaq.nineball.entity.fonts
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>フォント クラス。</summary>
-	public class CFont : CEntity
+	public class CFont
+		: CEntity
 	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -238,7 +239,7 @@ namespace danmaq.nineball.entity.fonts
 		{
 			get
 			{
-				return currentState == CStateDefault.instance;
+				return currentState != CStateDefault.instance;
 			}
 			set
 			{
