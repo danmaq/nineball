@@ -24,7 +24,8 @@ namespace danmaq.nineball.entity
 	/// </para>
 	/// <para>また、このクラスに直接状態を持たせて使用することもできます。</para>
 	/// </summary>
-	public class CEntity : IEntity
+	public class CEntity
+		: IEntity
 	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -35,6 +36,9 @@ namespace danmaq.nineball.entity
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
+
+		/// <summary>汎用カウンタの1フレーム辺りの進行量。</summary>
+		public int counterStep = 1;
 
 		/// <summary>型名のキャッシュ。</summary>
 		private string m_strTypeName = null;
@@ -132,7 +136,7 @@ namespace danmaq.nineball.entity
 		/// <value>次に変化する状態。</value>
 		public IState nextState
 		{
-			private get;
+			get;
 			set;
 		}
 
@@ -173,6 +177,13 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>カウンタをリセットします。</summary>
+		public virtual void resetCounter()
+		{
+			counter = 0;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトに空の状態を設定します。</summary>
 		public virtual void setEmptyState()
 		{
@@ -183,6 +194,7 @@ namespace danmaq.nineball.entity
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public virtual void Dispose()
 		{
+			resetCounter();
 			nextState = CState.empty;
 			previousState = CState.empty;
 			changedState = null;
@@ -199,7 +211,7 @@ namespace danmaq.nineball.entity
 				commitNextState();
 			}
 			currentState.update(this, privateMembers, gameTime);
-			counter++;
+			counter += counterStep;
 		}
 
 		//* -----------------------------------------------------------------------*
