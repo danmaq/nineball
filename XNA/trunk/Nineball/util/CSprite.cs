@@ -271,9 +271,11 @@ namespace danmaq.nineball.util
 		/// <param name="scale">拡大率</param>
 		/// <param name="effects">反転効果</param>
 		/// <param name="fLayer">レイヤ番号</param>
+		/// <param name="blend">合成モード</param>
 		public void add(
 			SpriteFont spriteFont, string text, Vector2 pos, Color color, float fRotate,
-			Vector2 origin, Vector2 scale, SpriteEffects effects, float fLayer
+			Vector2 origin, Vector2 scale, SpriteEffects effects, float fLayer,
+			SpriteBlendMode blend
 		)
 		{
 			SSpriteDrawInfo info = new SSpriteDrawInfo();
@@ -284,6 +286,7 @@ namespace danmaq.nineball.util
 			info.color = color;
 			info.fRotation = fRotate;
 			info.origin = origin;
+			info.blendMode = blend;
 			if(resolution == null)
 			{
 				info.scale = scale;

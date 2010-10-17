@@ -88,11 +88,11 @@ namespace danmaq.nineball.state.fonts
 					if(entity.isDrawShadow)
 					{
 						entity.sprite.add(entity.font, info.strByte, _pos + entity.gapShadow,
-							info.argbShadow, info.rotate, Vector2.Zero,
-							info.scale, SpriteEffects.None, fShadowLayer);
+							info.argbShadow, info.rotate, Vector2.Zero, info.scale,
+							SpriteEffects.None, fShadowLayer, entity.blend);
 					}
-					entity.sprite.add(entity.font, info.strByte, _pos, info.argbText,
-						info.rotate, Vector2.Zero, info.scale, SpriteEffects.None, fLayer);
+					entity.sprite.add(entity.font, info.strByte, _pos, info.argbText, info.rotate,
+						Vector2.Zero, info.scale, SpriteEffects.None, fLayer, entity.blend);
 				}
 			}
 		}
@@ -153,9 +153,10 @@ namespace danmaq.nineball.state.fonts
 				result[i].rotate = entity.rotate.smooth(i, nSize);
 				result[i].strByte = szText[i].ToString();
 				result[i].charSize = entity.font.MeasureString(result[i].strByte);
-				result[i].argbText = new Color(
-					(byte)entity.colorRed.smooth(i, nSize), (byte)entity.colorGreen.smooth(i, nSize),
-					(byte)entity.colorBlue.smooth(i, nSize), (byte)fAlpha);
+				byte r = (byte)entity.colorRed.smooth(i, nSize);
+				byte g = (byte)entity.colorGreen.smooth(i, nSize);
+				byte b = (byte)entity.colorBlue.smooth(i, nSize);
+				result[i].argbText = new Color(r, g, b, (byte)fAlpha);
 				if(entity.isDrawShadow)
 				{
 					result[i].argbShadow = new Color(0, 0, 0, (byte)(fAlpha / 1.5f));

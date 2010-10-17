@@ -73,6 +73,9 @@ namespace danmaq.nineball.old.core.raw
 		/// <summary>垂直位置揃え情報。</summary>
 		public EAlign alignVertical = EAlign.Center;
 
+		/// <summary>合成モード。</summary>
+		public SpriteBlendMode blend = SpriteBlendMode.AlphaBlend;
+
 		/// <summary>影を描画するかどうか。</summary>
 		public bool isDrawShadow = true;
 
@@ -84,7 +87,6 @@ namespace danmaq.nineball.old.core.raw
 
 		/// <summary>描画レイヤ。</summary>
 		private float m_flayer = 0;
-
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -260,16 +262,15 @@ namespace danmaq.nineball.old.core.raw
 			Vector2 origin = getOrigin();
 			if(isDrawShadow)
 			{
-				sprite.add(font.resource, text,
-					pos - origin + gapShadow,
-					new Color(0, 0, 0, (byte)(colorAlpha / 1.5f)),
-					0.0f, Vector2.Zero, scale, SpriteEffects.None, layer + 0.0001f);
+				sprite.add(font.resource, text, pos - origin + gapShadow,
+					new Color(0, 0, 0, (byte)(colorAlpha / 1.5f)), 0.0f, Vector2.Zero, scale,
+					SpriteEffects.None, layer + 0.0001f, blend);
 			}
 			sprite.add(font.resource, text, pos - origin,
 				new Color(
 					(byte)colorRed, (byte)colorGreen,
 					(byte)colorBlue, (byte)colorAlpha),
-				0.0f, Vector2.Zero, scale, SpriteEffects.None, layer);
+				0.0f, Vector2.Zero, scale, SpriteEffects.None, layer, blend);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -287,11 +288,11 @@ namespace danmaq.nineball.old.core.raw
 				_pos = pos + g.pos - origin;
 				if(isDrawShadow)
 				{
-					sprite.add(font.resource, g.strByte, _pos + gapShadow,
-						g.argbShadow, g.rotate, Vector2.Zero, g.scale, SpriteEffects.None, layer + 0.0001f);
+					sprite.add(font.resource, g.strByte, _pos + gapShadow, g.argbShadow, g.rotate,
+						Vector2.Zero, g.scale, SpriteEffects.None, layer + 0.0001f, blend);
 				}
-				sprite.add(font.resource, g.strByte, _pos,
-					g.argbText, g.rotate, Vector2.Zero, g.scale, SpriteEffects.None, layer);
+				sprite.add(font.resource, g.strByte, _pos, g.argbText, g.rotate, Vector2.Zero,
+					g.scale, SpriteEffects.None, layer, blend);
 			}
 		}
 
