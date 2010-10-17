@@ -95,14 +95,15 @@ namespace danmaq.nineball.state.fonts
 				{
 					entity.sprite.add(entity.font, entity.text,
 						entity.pos - origin + entity.gapShadow,
-						new Color(Color.Black, (byte)(entity.colorAlpha / 1.5f)),
-						0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fShadowLayer);
+						new Color(Color.Black, (byte)(entity.colorAlpha / 1.5f)), 0.0f,
+						Vector2.Zero, entity.scale, SpriteEffects.None, fShadowLayer,
+						entity.blend);
 				}
 				entity.sprite.add(entity.font, entity.text, entity.pos - origin,
 					new Color(
 						(byte)entity.colorRed, (byte)entity.colorGreen,
 						(byte)entity.colorBlue, (byte)entity.colorAlpha),
-					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fLayer);
+					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fLayer, entity.blend);
 			}
 		}
 

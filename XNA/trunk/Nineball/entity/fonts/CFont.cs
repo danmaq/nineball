@@ -77,6 +77,9 @@ namespace danmaq.nineball.entity.fonts
 		/// <summary>垂直位置揃え情報。</summary>
 		public EAlign alignVertical = EAlign.Center;
 
+		/// <summary>合成モード。</summary>
+		public SpriteBlendMode blend = SpriteBlendMode.AlphaBlend;
+
 		/// <summary>影を描画するかどうか。</summary>
 		public bool isDrawShadow = true;
 
