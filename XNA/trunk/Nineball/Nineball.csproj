@@ -31,13 +31,14 @@
     </StartupObject>
     <Thumbnail>_resources\nineball.png</Thumbnail>
     <ApplicationIcon>_resources\nineball.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\x86\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DISABLE_LEGACY;WINDOWS</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
@@ -52,7 +53,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\x86\Release</OutputPath>
-    <DefineConstants>TRACE;DISABLE_LEGACY;WINDOWS</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
@@ -126,7 +127,8 @@
     <Compile Include="entity\manager\ITask.cs" />
     <Compile Include="old\task\CTaskLoader.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
-    <Compile Include="state\manager\CStateTaskManager.cs" />
+    <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
+    <Compile Include="state\manager\taskmgr\CStateAutoReject.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
     <Compile Include="util\math\CMath.cs" />
     <Compile Include="util\math\CMisc.cs" />

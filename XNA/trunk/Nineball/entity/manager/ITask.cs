@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.manager
@@ -14,7 +15,7 @@ namespace danmaq.nineball.entity.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>タスク本体のインターフェイス。</summary>
-	public interface ITask
+	public interface ITask : IDisposable
 	{
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
