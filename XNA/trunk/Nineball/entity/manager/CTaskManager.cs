@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using danmaq.nineball.state;
-using danmaq.nineball.state.manager;
+using danmaq.nineball.state.manager.taskmgr;
 
 namespace danmaq.nineball.entity.manager
 {
@@ -25,37 +25,9 @@ namespace danmaq.nineball.entity.manager
 	/// それを回避したい場合はこのクラスを使うとよいでしょう。
 	/// </para>
 	/// </summary>
-	public sealed class CTaskManager : CEntity, ICollection<ITask>
+	public sealed class CTaskManager
+		: CEntity, ICollection<ITask>
 	{
-
-		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-		/// <summary>タスク登録情報。</summary>
-		public struct SRemoveInfo
-		{
-
-			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-			//* constants ──────────────────────────────-*
-
-			/// <summary>タスク本体。</summary>
-			public readonly ITask task;
-
-			/// <summary>削除時に呼び出される関数。</summary>
-			public readonly Action<ITask> callback;
-
-			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-			//* constructor & destructor ───────────────────────*
-
-			//* -----------------------------------------------------------------------*
-			/// <summary>コンストラクタ。</summary>
-			/// 
-			/// <param name="task">タスク本体。</param>
-			/// <param name="callback">削除時に呼び出される関数。</param>
-			public SRemoveInfo(ITask task, Action<ITask> callback)
-			{
-				this.task = task;
-				this.callback = callback;
-			}
-		}
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
@@ -72,7 +44,7 @@ namespace danmaq.nineball.entity.manager
 			public readonly List<ITask> add = new List<ITask>();
 
 			/// <summary>削除予約されているタスク一覧。</summary>
-			public readonly List<SRemoveInfo> remove = new List<SRemoveInfo>();
+			public readonly List<ITask> remove = new List<ITask>();
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
@@ -96,6 +68,19 @@ namespace danmaq.nineball.entity.manager
 			}
 
 			//* -----------------------------------------------------------------------*
+			/// <summary>登録されているタスクを全削除します。</summary>
+			/// 
+			/// <param name="callback">削除時に呼ばれるコールバック。</param>
+			public void Clear(Action<ITask> callback)
+			{
+				// TODO : ちょっとお行儀悪いかな？
+				tasks.ForEach(callback);
+				tasks.ForEach(task => task.Dispose());
+				tasks.Clear();
+				remove.Clear();
+			}
+
+			//* -----------------------------------------------------------------------*
 			/// <summary>タスク追加・削除の予約を確定します。</summary>
 			public void commit()
 			{
@@ -106,13 +91,13 @@ namespace danmaq.nineball.entity.manager
 			}
 
 			//* -----------------------------------------------------------------------*
-			/// <summary>タスク削除の予約を確定するときに使用するデリゲートです。</summary>
-			private void commitRemove(SRemoveInfo info)
+			/// <summary>タスクを即時削除します。</summary>
+			/// 
+			/// <param name="task">削除対象のタスク</param>
+			private void commitRemove(ITask task)
 			{
-				if (tasks.Remove(info.task))
-				{
-					info.callback(info.task);
-				}
+				tasks.Remove(task);
+				task.Dispose();
 			}
 		}
 
@@ -128,6 +113,9 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>全削除フラグ。</summary>
 		private bool m_allClear = false;
 
+		/// <summary>全削除時に呼ばれるコールバック。</summary>
+		private Action<ITask> m_callBackOnClear = null;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -137,7 +125,7 @@ namespace danmaq.nineball.entity.manager
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
 		public CTaskManager()
-			: this(CStateTaskManager.instance)
+			: this(CStateDefault.instance)
 		{
 		}
 
@@ -203,7 +191,15 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>タスク追加・削除の予約を確定します。</summary>
 		public void commit()
 		{
-			(m_allClear ? (Action)_private.Dispose : (Action)_private.commit)();
+			if (m_allClear)
+			{
+				m_allClear = false;
+				_private.Clear(m_callBackOnClear);
+			}
+			else
+			{
+				_private.commit();
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -222,26 +218,37 @@ namespace danmaq.nineball.entity.manager
 		/// <returns><c>true</c>。</returns>
 		public bool Remove(ITask task)
 		{
-			return Remove(task, null);
+			_private.remove.Add(task);
+			return true;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>タスク削除の予約をします。</summary>
 		/// 
-		/// <param name="task">タスク。</param>
-		/// <param name="callback">削除直前に実行されるアクション。</param>
-		/// <returns><c>true</c>。</returns>
-		public bool Remove(ITask task, Action<ITask> callback)
+		/// <param name="match">削除条件。</param>
+		/// <returns>検出されたタスク一覧。</returns>
+		public List<ITask> Remove(Predicate<ITask> match)
 		{
-			_private.remove.Add(new SRemoveInfo(task, callback));
-			return true;
+			List<ITask> result = _private.tasks.FindAll(match);
+			_private.remove.AddRange(result);
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>管理しているタスクを全て解放するための予約を入れます。</summary>
 		public void Clear()
 		{
+			Clear(null);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>管理しているタスクを全て解放するための予約を入れます。</summary>
+		/// 
+		/// <param name="callback">全削除時に実行されるコールバック</param>
+		public void Clear(Action<ITask> callback)
+		{
 			m_allClear = true;
+			m_callBackOnClear = callback;
 		}
 
 		//* -----------------------------------------------------------------------*

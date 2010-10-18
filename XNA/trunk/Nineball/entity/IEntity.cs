@@ -23,7 +23,7 @@ namespace danmaq.nineball.entity
 	/// 状態を持つオブジェクトを作ることができます。
 	/// </para>
 	/// </summary>
-	public interface IEntity : ITask, IDisposable
+	public interface IEntity : ITask
 	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
