@@ -114,6 +114,7 @@
     <Compile Include="entity\input\data\EReservedButtonID.cs" />
     <Compile Include="entity\input\data\GamePadStateExtention.cs" />
     <Compile Include="entity\input\data\SDirArray.cs" />
+    <Compile Include="entity\manager\CAnimationSprite.cs" />
     <Compile Include="entity\manager\CContentLoader.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />

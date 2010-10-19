@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.data.phase;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
@@ -16,7 +15,8 @@ namespace danmaq.nineball.state.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>FPS計測・計算クラス。</summary>
-	public sealed class CStateFPSCalculator : CState
+	public sealed class CStateFPSCalculator
+		: CState
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -36,8 +36,8 @@ namespace danmaq.nineball.state.manager
 			/// <summary>前回計測時の稼働時間(秒)。</summary>
 			private int m_prevSeconds;
 
-			/// <summary>フェーズ・カウンタ管理クラス。</summary>
-			private SPhase m_mgrPhase;
+			/// <summary>フレーム カウンタ。</summary>
+			private int counter;
 
 			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* constructor & destructor ───────────────────────*
@@ -47,7 +47,6 @@ namespace danmaq.nineball.state.manager
 			static SFPSData()
 			{
 				initializedData = new SFPSData();
-				initializedData.m_mgrPhase = SPhase.initialized;
 			}
 
 			//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -76,13 +75,13 @@ namespace danmaq.nineball.state.manager
 			/// <param name="gameTime">前フレームからの経過時間</param>
 			public void update(GameTime gameTime)
 			{
-				m_mgrPhase.count++;
+				counter++;
 				int nNowSeconds = gameTime.TotalRealTime.Seconds;
 				if(m_prevSeconds != nNowSeconds)
 				{
 					m_prevSeconds = nNowSeconds;
-					fps = m_mgrPhase.countPhase;
-					m_mgrPhase.phase++;
+					fps = counter;
+					counter = 0;
 				}
 			}
 		}
@@ -95,10 +94,10 @@ namespace danmaq.nineball.state.manager
 			new CStateFPSCalculator();
 
 		/// <summary>前回計測時の更新稼働時間(秒)</summary>
-		private readonly SFPSData dataUpdate = SFPSData.initializedData;
+		private SFPSData dataUpdate = SFPSData.initializedData;
 
 		/// <summary>前回計測時の描画稼働時間(秒)</summary>
-		private readonly SFPSData dataDraw = SFPSData.initializedData;
+		private SFPSData dataDraw = SFPSData.initializedData;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
