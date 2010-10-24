@@ -126,6 +126,8 @@
     <Compile Include="entity\manager\CCoRoutineManager.cs" />
     <Compile Include="entity\manager\CTaskManager.cs" />
     <Compile Include="entity\manager\ITask.cs" />
+    <Compile Include="old\core\raw\CResolution.cs" />
+    <Compile Include="old\core\raw\CResolutionAspectFix.cs" />
     <Compile Include="old\task\CTaskLoader.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
     <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
