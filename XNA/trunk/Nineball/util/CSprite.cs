@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.data;
-using danmaq.nineball.util.resolution;
+using danmaq.nineball.old.core.raw;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
