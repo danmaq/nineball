@@ -7,32 +7,33 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
-using danmaq.nineball.data.content;
-using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
+using danmaq.nineball.entity.manager;
+using danmaq.nineball.data;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.nineball.state.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>コンテンツ ローダー用の既定の状態です。</summary>
-	public sealed class CStateContentLoader
-		: CState<CContentLoader, CContentLoader.CPrivateMembers>
+	/// <summary>アニメーション スプライト用の既定の状態です。</summary>
+	public sealed class CStateAnimationSprite
+		 : CState<CAnimationSprite, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateContentLoader instance = new CStateContentLoader();
+		public static readonly IState<CAnimationSprite, object> instance
+			= new CStateAnimationSprite();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateContentLoader()
+		private CStateAnimationSprite()
 		{
 		}
 
@@ -49,8 +50,12 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CContentLoader entity, CContentLoader.CPrivateMembers privateMembers)
+		public override void setup(CAnimationSprite entity, object privateMembers)
 		{
+			if (entity.program.Count == 0)
+			{
+				entity.setDefaultProgram(true);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -62,18 +67,12 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CContentLoader entity,
-			CContentLoader.CPrivateMembers privateMembers,
-			GameTime gameTime)
+			CAnimationSprite entity, object privateMembers, GameTime gameTime)
 		{
-			Queue<ICache> contents = privateMembers.contents;
-			if(contents.Count > 0)
+			if (entity.counter % entity.interval == 0)
 			{
-				contents.Dequeue().preload();
-			}
-			else
-			{
-				entity.setEmptyState();
+				// TODO : whileに相当する機能がほしいなぁ
+				entity.index += entity.program[entity.index];
 			}
 		}
 
@@ -85,8 +84,15 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CContentLoader entity, CContentLoader.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void draw(
+			CAnimationSprite entity, object privateMembers, GameTime gameTime)
 		{
+			if (entity.sprite != null)
+			{
+				entity.sprite.add(entity.texture, entity.position,
+					entity.alignHorizontal, entity.alignVertical,
+					entity.now, entity.color, 0f, entity.blendMode);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -100,7 +106,8 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(CContentLoader entity, CContentLoader.CPrivateMembers privateMembers, IState nextState)
+		public override void teardown(
+			CAnimationSprite entity, object privateMembers, IState nextState)
 		{
 		}
 	}

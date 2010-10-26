@@ -129,6 +129,7 @@
     <Compile Include="old\core\raw\CResolution.cs" />
     <Compile Include="old\core\raw\CResolutionAspectFix.cs" />
     <Compile Include="old\task\CTaskLoader.cs" />
+    <Compile Include="state\manager\CStateAnimationSprite.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
     <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
     <Compile Include="state\manager\taskmgr\CStateAutoReject.cs" />
