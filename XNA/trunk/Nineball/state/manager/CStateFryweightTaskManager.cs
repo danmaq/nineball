@@ -7,32 +7,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.nineball.entity;
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.nineball.state.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>アニメーション スプライト用の既定の状態です。</summary>
-	public sealed class CStateAnimationSprite
-		 : CState<CAnimationSprite, object>
+	/// <summary>タスク管理クラス用の既定の状態です。</summary>
+	/// 
+	/// <typeparam name="_T">再利用する型。</typeparam>
+	public sealed class CStateFryweightTaskManager<_T>
+		: CState<CFryweightTaskManager<_T>, object> where _T : IEntity, new()
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CAnimationSprite, object> instance
-			= new CStateAnimationSprite();
+		public static readonly IState<CFryweightTaskManager<_T>, object> instance =
+			new CStateFryweightTaskManager<_T>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateAnimationSprite()
+		private CStateFryweightTaskManager()
 		{
 		}
 
@@ -49,7 +51,7 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CAnimationSprite entity, object privateMembers)
+		public override void setup(CFryweightTaskManager<_T> entity, object privateMembers)
 		{
 		}
 
@@ -62,13 +64,9 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CAnimationSprite entity, object privateMembers, GameTime gameTime)
+			CFryweightTaskManager<_T> entity, object privateMembers, GameTime gameTime)
 		{
-			if (entity.counter % entity.interval == 0 && entity.data.Count > 0)
-			{
-				// TODO : whileに相当する機能がほしいなぁ。最低でもif～gotoがあれば
-				entity.index += entity.now.next;
-			}
+			entity.tasks.ForEach(task => task.update(gameTime));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -80,16 +78,9 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
-			CAnimationSprite entity, object privateMembers, GameTime gameTime)
+			CFryweightTaskManager<_T> entity, object privateMembers, GameTime gameTime)
 		{
-			if (entity.sprite != null && entity.data.Count > 0)
-			{
-				CAnimationSprite.SData data = entity.now;
-				entity.sprite.add(entity.texture, entity.position,
-					entity.alignHorizontal, entity.alignVertical,
-					data.srcRect, data.color, entity.rotate, entity.scale, entity.effect,
-					entity.layer, data.blendMode);
-			}
+			entity.tasks.ForEach(task => task.draw(gameTime));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -104,7 +95,7 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CAnimationSprite entity, object privateMembers, IState nextState)
+			CFryweightTaskManager<_T> entity, object privateMembers, IState nextState)
 		{
 		}
 	}
