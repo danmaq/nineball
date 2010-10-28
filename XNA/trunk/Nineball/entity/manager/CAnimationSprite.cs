@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.state;
+using danmaq.nineball.state.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,14 +24,33 @@ namespace danmaq.nineball.entity.manager
 		: CEntity
 	{
 
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>アニメーション定義構造体。</summary>
+		public struct SData
+		{
+
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
+
+			/// <summary>切り出し座標。</summary>
+			public Rectangle srcRect;
+
+			/// <summary>乗算色。</summary>
+			public Color color;
+
+			/// <summary>合成モード。</summary>
+			public SpriteBlendMode blendMode;
+
+			/// <summary>次に移動するフレーム(現在位置からの相対指定)。</summary>
+			public int next;
+
+		}
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>切り出し座標一覧。</summary>
-		public readonly List<Rectangle> rectList = new List<Rectangle>();
-
-		/// <summary>アニメーション プログラム。</summary>
-		public readonly List<int> program = new List<int>();
+		/// <summary>アニメーション定義一覧。</summary>
+		public readonly List<SData> data = new List<SData>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -47,17 +67,23 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>垂直位置揃え情報。</summary>
 		public EAlign alignVertical = EAlign.Center;
 
-		/// <summary>乗算色。</summary>
-		public Color color = Color.White;
-
-		/// <summary>合成モード。</summary>
-		public SpriteBlendMode blendMode = SpriteBlendMode.AlphaBlend;
-
 		/// <summary>インデックス ポインタ。</summary>
 		public int index = 0;
 
 		/// <summary>アニメーション速度。</summary>
 		public int interval = 1;
+
+		/// <summary>描画レイヤ。</summary>
+		public float layer = 0f;
+
+		/// <summary>回転。</summary>
+		public float rotate = 0f;
+
+		/// <summary>拡大率。</summary>
+		public Vector2 scale = Vector2.One;
+
+		/// <summary>反転効果。</summary>
+		public SpriteEffects effect = SpriteEffects.None;
 
 		/// <summary>スプライト管理クラス。</summary>
 		public CSprite sprite;
@@ -71,7 +97,7 @@ namespace danmaq.nineball.entity.manager
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
 		public CAnimationSprite()
-			: base(null)
+			: base(CStateAnimationSprite.instance)
 		{
 		}
 
@@ -109,11 +135,11 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>現在の切り出し位置を取得します。</summary>
 		/// 
 		/// <value>現在の切り出し位置。</value>
-		public Rectangle now
+		public SData now
 		{
 			get
 			{
-				return rectList[index];
+				return data[index];
 			}
 		}
 
@@ -126,9 +152,17 @@ namespace danmaq.nineball.entity.manager
 		/// <param name="loop">アニメーションをループするかどうか。</param>
 		public void setDefaultProgram(bool loop)
 		{
-			program.Clear();
-			rectList.ForEach(r => program.Add(1));
-			program.Add(-program.Count);
+			int length = data.Count;
+			SData _data;
+			for (int i = length; --i >= 0; )
+			{
+				_data = data[i];
+				_data.next = 1;
+				data[i] = _data;
+			}
+			_data = data[length - 1];
+			_data.next = loop ? 0 : -length;
+			data[length - 1] = _data;
 		}
 	}
 }
