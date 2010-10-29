@@ -86,6 +86,15 @@ namespace danmaq.nineball.old.core.raw
 				}
 			}
 
+			/// <summary>現在のフレームでボタンが離されたかどうか。</summary>
+			public bool release
+			{
+				get
+				{
+					return (!press && count == 0);
+				}
+			}
+
 			/// <summary><c>push</c>の押しっぱなしループ対応版。</summary>
 			public bool pushLoop
 			{
