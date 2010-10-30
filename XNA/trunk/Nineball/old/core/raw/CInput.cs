@@ -12,12 +12,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using danmaq.nineball.data;
+using danmaq.nineball.entity.input.data;
+using danmaq.nineball.entity.manager;
 using danmaq.nineball.old.core.data;
-using danmaq.nineball.old.core.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using danmaq.nineball.entity.input.data;
 
 namespace danmaq.nineball.old.core.raw
 {
@@ -244,7 +244,7 @@ namespace danmaq.nineball.old.core.raw
 			{
 				BUTTON_STATE[i] = new SButtonState(keyLoopStart, keyLoopInterval);
 			}
-			MICROTHREAD_MANAGER.add(threadStateReflesh());
+			MICROTHREAD_MANAGER.Add(threadStateReflesh());
 			CLogger.add("入力処理・XBOX360コントローラの初期化完了。");
 		}
 
@@ -333,17 +333,17 @@ namespace danmaq.nineball.old.core.raw
 				switch(value)
 				{
 					case EForcePreset.Square:
-						MICROTHREAD_MANAGER.add(threadForceFeedback(0.1f, 0.25f, 70, 70));
+						MICROTHREAD_MANAGER.Add(threadForceFeedback(0.1f, 0.25f, 70, 70));
 						break;
 					case EForcePreset.Short:
-						MICROTHREAD_MANAGER.add(threadForceFeedback(0, new SGradation(0.2f, 0, 0, 1), 0, 5));
+						MICROTHREAD_MANAGER.Add(threadForceFeedback(0, new SGradation(0.2f, 0, 0, 1), 0, 5));
 						break;
 					case EForcePreset.Mild:
-						MICROTHREAD_MANAGER.add(threadForceFeedback(
+						MICROTHREAD_MANAGER.Add(threadForceFeedback(
 							new SGradation(0.3f, 0, 0, 1), new SGradation(0.7f, 0, 0, 1), 120, 80));
 						break;
 					case EForcePreset.Hard:
-						MICROTHREAD_MANAGER.add(threadForceFeedback(
+						MICROTHREAD_MANAGER.Add(threadForceFeedback(
 							new SGradation(2, 0, 0, 1), new SGradation(2, 0, 0, 1), 160, 240));
 						break;
 				}
@@ -454,7 +454,7 @@ namespace danmaq.nineball.old.core.raw
 		/// <remarks>毎フレーム実行してください。</remarks>
 		public void update()
 		{
-			MICROTHREAD_MANAGER.update();
+			MICROTHREAD_MANAGER.update(null);
 			if(isUseXBOX360GamePad)
 			{
 				GamePad.SetVibration(PlayerIndex.One, forceLeft, forceRight);

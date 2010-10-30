@@ -132,6 +132,7 @@
     <Compile Include="old\task\CTaskLoader.cs" />
     <Compile Include="state\manager\CStateAnimationSprite.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
+    <Compile Include="state\manager\CStateCoRoutineManager.cs" />
     <Compile Include="state\manager\CStateFryweightTaskManager.cs" />
     <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
     <Compile Include="state\manager\taskmgr\CStateAutoReject.cs" />

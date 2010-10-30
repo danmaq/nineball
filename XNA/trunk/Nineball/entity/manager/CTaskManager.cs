@@ -85,8 +85,8 @@ namespace danmaq.nineball.entity.manager
 			public void commit()
 			{
 				remove.ForEach(commitRemove);
-				tasks.AddRange(add);
 				remove.Clear();
+				tasks.AddRange(add);
 				add.Clear();
 			}
 
@@ -160,32 +160,17 @@ namespace danmaq.nineball.entity.manager
 		//* -----------------------------------------------------------------------*
 		/// <summary>この管理クラスが読み取り専用かどうかを取得します。</summary>
 		/// 
-		/// <value>この管理クラスが読み取り専用である場合、<c>true</c>。</value>
-		public bool IsReadOnly
+		/// <value><c>false</c>。</value>
+		bool ICollection<ITask>.IsReadOnly
 		{
 			get
 			{
-				return ((ICollection<ITask>)_private.tasks).IsReadOnly;
+				return false;
 			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>このオブジェクトの終了処理を行います。</summary>
-		public override void Dispose()
-		{
-			_private.Dispose();
-			base.Dispose();
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>タスク管理に使用したメモリを切り詰めます。</summary>
-		public void TrimExcess()
-		{
-			_private.TrimExcess();
-		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>タスク追加・削除の予約を確定します。</summary>
@@ -203,12 +188,38 @@ namespace danmaq.nineball.entity.manager
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>登録されたタスクに対して、指定の処理を即時実行します。</summary>
+		/// 
+		/// <param name="action">登録されたタスクに対して実行されるデリゲート。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
+		public void ForEach(Action<ITask> action)
+		{
+			_private.tasks.ForEach(action);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>タスク管理に使用したメモリを切り詰めます。</summary>
+		public void TrimExcess()
+		{
+			_private.TrimExcess();
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>タスク追加の予約をします。</summary>
 		/// 
-		/// <param name="item">タスク。</param>
-		public void Add(ITask item)
+		/// <param name="task">タスク。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
+		public void Add(ITask task)
 		{
-			_private.add.Add(item);
+			if (task == null)
+			{
+				throw new ArgumentNullException("task");
+			}
+			_private.add.Add(task);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -216,8 +227,15 @@ namespace danmaq.nineball.entity.manager
 		/// 
 		/// <param name="task">タスク。</param>
 		/// <returns><c>true</c>。</returns>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
 		public bool Remove(ITask task)
 		{
+			if (task == null)
+			{
+				throw new ArgumentNullException("task");
+			}
 			_private.remove.Add(task);
 			return true;
 		}
@@ -227,6 +245,9 @@ namespace danmaq.nineball.entity.manager
 		/// 
 		/// <param name="match">削除条件。</param>
 		/// <returns>検出されたタスク一覧。</returns>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
 		public List<ITask> Remove(Predicate<ITask> match)
 		{
 			List<ITask> result = _private.tasks.FindAll(match);
@@ -254,18 +275,18 @@ namespace danmaq.nineball.entity.manager
 		//* -----------------------------------------------------------------------*
 		/// <summary>特定の値が格納されているかどうかを判断します。</summary>
 		/// 
-		/// <param name="item">検索するオブジェクト。</param>
+		/// <param name="task">検索するオブジェクト。</param>
 		/// <returns>存在する場合、<c>true</c>。</returns>
-		public bool Contains(ITask item)
+		public bool Contains(ITask task)
 		{
-			return _private.tasks.Contains(item);
+			return _private.tasks.Contains(task);
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>要素を配列にコピーします。</summary>
+		/// <summary>タスク一覧を配列にコピーします。</summary>
 		/// 
 		/// <param name="array">
-		/// 要素がコピーされる1次元かつ0から始まるインデックス番号の配列。
+		/// タスク一覧がコピーされる1次元かつ0から始まるインデックス番号の配列。
 		/// </param>
 		/// <param name="arrayIndex">
 		/// コピーの開始位置となる、配列の0から始まるインデックス番号。
@@ -295,6 +316,15 @@ namespace danmaq.nineball.entity.manager
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return ((IEnumerable)_private.tasks).GetEnumerator();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
+		{
+			_private.Dispose();
+			TrimExcess();
+			base.Dispose();
 		}
 	}
 }

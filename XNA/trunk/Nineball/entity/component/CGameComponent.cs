@@ -102,6 +102,10 @@ namespace danmaq.nineball.entity.component
 		/// <value>次に変化する状態。</value>
 		public IState nextState
 		{
+			get
+			{
+				return entity.nextState;
+			}
 			set
 			{
 				entity.nextState = value;

@@ -49,7 +49,8 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CContentLoader entity, CContentLoader.CPrivateMembers privateMembers)
+		public override void setup(
+			CContentLoader entity, CContentLoader.CPrivateMembers privateMembers)
 		{
 		}
 
@@ -62,8 +63,7 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CContentLoader entity,
-			CContentLoader.CPrivateMembers privateMembers,
+			CContentLoader entity, CContentLoader.CPrivateMembers privateMembers,
 			GameTime gameTime)
 		{
 			Queue<ICache> contents = privateMembers.contents;
@@ -85,7 +85,9 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CContentLoader entity, CContentLoader.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void draw(
+			CContentLoader entity, CContentLoader.CPrivateMembers privateMembers,
+			GameTime gameTime)
 		{
 		}
 
@@ -100,7 +102,8 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(CContentLoader entity, CContentLoader.CPrivateMembers privateMembers, IState nextState)
+		public override void teardown(
+			CContentLoader entity, CContentLoader.CPrivateMembers privateMembers, IState nextState)
 		{
 		}
 	}

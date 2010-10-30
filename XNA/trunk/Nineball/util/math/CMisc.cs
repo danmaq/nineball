@@ -97,5 +97,30 @@ namespace danmaq.nineball.util.math
 				(int)(result.Height * fScaleHalf));
 			return result;
 		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを回転した結果を取得します。</summary>
+		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
+		/// 
+		/// <param name="source">元のベクトル。</param>
+		/// <param name="angle">角度(ラジアン)。</param>
+		/// <returns>回転されたベクトル。</returns>
+		public static Vector2 rotate(this Vector2 source, float angle)
+		{
+			return Vector2.Transform(source, Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle));
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを回転した結果を取得します。</summary>
+		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
+		/// 
+		/// <param name="source">元のベクトル。</param>
+		/// <param name="axis">回転軸。</param>
+		/// <param name="angle">角度(ラジアン)。</param>
+		/// <returns>回転されたベクトル。</returns>
+		public static Vector3 rotate(this Vector3 source, Vector3 axis, float angle)
+		{
+			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
+		}
 	}
 }

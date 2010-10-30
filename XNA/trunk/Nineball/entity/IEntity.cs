@@ -59,6 +59,7 @@ namespace danmaq.nineball.entity
 		/// <value>次に変化する状態。</value>
 		IState nextState
 		{
+			get;
 			set;
 		}
 

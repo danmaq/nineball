@@ -7,6 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using danmaq.nineball.state;
 using danmaq.nineball.state.manager;
@@ -16,17 +18,24 @@ namespace danmaq.nineball.entity.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>再利用を前提としたタスク管理クラス。</summary>
-	/// 
-	/// <typeparam name="_T">再利用する型。</typeparam>
-	public sealed class CFryweightTaskManager<_T>
-		: CEntity where _T : IEntity, new()
+	public sealed class CFryweightTaskManager
+		: CEntity, IEnumerable<IEntity>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>登録されているタスク一覧。</summary>
-		public readonly List<_T> tasks = new List<_T>();
+		private readonly List<IEntity> tasks;
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>
+		/// <para>インスタンスを作成する関数のデリゲート。</para>
+		/// <para><c>Add()</c>メソッドを呼び出す際に内部から呼び出されます。</para>
+		/// </summary>
+		public Func<IEntity> createInstance = () => new CEntity();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -37,7 +46,7 @@ namespace danmaq.nineball.entity.manager
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
 		public CFryweightTaskManager()
-			: this(CStateFryweightTaskManager<_T>.instance)
+			: this(CStateFryweightTaskManager.instance)
 		{
 		}
 
@@ -49,24 +58,24 @@ namespace danmaq.nineball.entity.manager
 		/// 
 		/// <param name="firstState">初期の状態。</param>
 		public CFryweightTaskManager(IState firstState)
-			: base(firstState, null)
+			: base(firstState, new List<IEntity>())
 		{
+			tasks = (List<IEntity>)privateMembers;
 		}
 
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>コンストラクタ。</para>
-		/// <para>指定の状態で初期化します。</para>
-		/// </summary>
+		/// <summary>登録されているタスクの総数を取得します。</summary>
 		/// 
-		/// <param name="firstState">初期の状態。</param>
-		/// <param name="privateMembers">
-		///	オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		///	</param>
-		public CFryweightTaskManager(IState firstState, object privateMembers)
-			: base(firstState, privateMembers)
+		/// <value>登録されているタスクの総数。</value>
+		public int Count
 		{
+			get
+			{
+				return tasks.Count;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -82,17 +91,23 @@ namespace danmaq.nineball.entity.manager
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>タスクを追加します。</summary>
+		/// <summary>
+		/// <para>タスクを追加します。</para>
+		/// <para>
+		/// また、このメソッドに<c>CState.Empty</c>を指定することで、
+		/// 空のタスクを備蓄することができます。
+		/// </para>
+		/// </summary>
 		/// 
 		/// <param name="state">追加する状態。</param>
 		/// <returns>実際に追加されたタスク オブジェクト。</returns>
-		public _T Add(IState state)
+		public IEntity Add(IState state)
 		{
-			_T task;
-			task = tasks.Find(item => item.currentState == CState.empty);
+			IEntity task;
+			task = tasks.Find(item => item.currentState == CState.empty && item.nextState == null);
 			if (task == null)
 			{
-				task = new _T();
+				task = createInstance();
 				task.nextState = state;
 				tasks.Add(task);
 			}
@@ -101,6 +116,70 @@ namespace danmaq.nineball.entity.manager
 				task.nextState = state;
 			}
 			return task;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>タスクをまとめて追加します。</summary>
+		/// <remarks>このメソッドではFryweightな再利用はできません。</remarks>
+		/// 
+		/// <param name="collection">追加するタスク一覧。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
+		public void AddRange(IEnumerable<IEntity> collection)
+		{
+			tasks.AddRange(collection);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>特定の値が格納されているかどうかを判断します。</summary>
+		/// 
+		/// <param name="task">検索するオブジェクト。</param>
+		/// <returns>存在する場合、<c>true</c>。</returns>
+		public bool Contains(IEntity task)
+		{
+			return tasks.Contains(task);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>管理しているタスクを全て削除します。</summary>
+		public void Clear()
+		{
+			tasks.Clear();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>登録されたタスクに対して、指定の処理を実行します。</summary>
+		/// 
+		/// <param name="action">登録されたタスクに対して実行されるデリゲート。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
+		public void ForEach(Action<IEntity> action)
+		{
+			tasks.ForEach(action);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 指定した型のコレクションに対する単純な反復処理をサポートする列挙子を公開します。
+		/// </summary>
+		/// 
+		/// <returns>列挙するオブジェクトの型。</returns>
+		public IEnumerator<IEntity> GetEnumerator()
+		{
+			return tasks.GetEnumerator();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 非ジェネリック コレクションに対する反復処理をサポートする列挙子を公開します。
+		/// </summary>
+		/// 
+		/// <returns>列挙するオブジェクトの型。</returns>
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return ((IEnumerable)tasks).GetEnumerator();
 		}
 	}
 }

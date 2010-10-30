@@ -40,6 +40,9 @@ namespace danmaq.nineball.entity
 		/// <summary>汎用カウンタの1フレーム辺りの進行量。</summary>
 		public int counterStep = 1;
 
+		/// <summary>状態遷移を遅らせるフレーム時間数。</summary>
+		public int delayChangeState = 0;
+
 		/// <summary>型名のキャッシュ。</summary>
 		private string m_strTypeName = null;
 
@@ -206,7 +209,7 @@ namespace danmaq.nineball.entity
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public virtual void update(GameTime gameTime)
 		{
-			if (nextState != null)
+			if (nextState != null && delayChangeState-- <= 0)
 			{
 				commitNextState();
 			}
@@ -224,12 +227,16 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>予約していた次の状態を確定します。</summary>
-		private void commitNextState()
+		/// <summary>予約していた次の状態を強制的に確定します。</summary>
+		protected virtual void commitNextState()
 		{
-			if (!(nextState == null || currentState == nextState))
+			if (nextState == currentState)
 			{
-				IState _nextState = this.nextState;
+				nextState = null;
+			}
+			if (nextState != null)
+			{
+				IState _nextState = nextState;
 				nextState = null;
 				currentState.teardown(this, privateMembers, _nextState);
 				IState oldPrevious = previousState;
@@ -242,12 +249,7 @@ namespace danmaq.nineball.entity
 				{
 					changedState(this, new CEventChangedState(oldPrevious, oldCurrent, _nextState));
 				}
-				if (nextState != null)
-				{
-					commitNextState();
-				}
 			}
-			nextState = null;
 		}
 	}
 }
