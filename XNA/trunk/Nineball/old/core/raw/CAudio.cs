@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.data.phase;
-using danmaq.nineball.old.core.manager;
+using danmaq.nineball.entity.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework.Audio;
 
@@ -122,8 +122,8 @@ namespace danmaq.nineball.old.core.raw
 				waveBankSE = new WaveBank(engine, fileXWBSE);
 				waveBankBGM = new WaveBank(engine, fileXWBBGM, 0, 32767);
 				soundBank = new SoundBank(engine, fileXSB);
-				MICROTHREAD_MANAGER.add(threadPlaySE());
-				MICROTHREAD_MANAGER.add(threadGC());
+				MICROTHREAD_MANAGER.Add(threadPlaySE());
+				MICROTHREAD_MANAGER.Add(threadGC());
 			}
 			catch(Exception e)
 			{
@@ -305,7 +305,7 @@ namespace danmaq.nineball.old.core.raw
 			{
 				engine.Update();
 			}
-			MICROTHREAD_MANAGER.update();
+			MICROTHREAD_MANAGER.update(null);
 			phaseManager.count++;
 		}
 

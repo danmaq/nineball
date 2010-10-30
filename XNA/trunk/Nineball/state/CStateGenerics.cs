@@ -86,7 +86,7 @@ namespace danmaq.nineball.state
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public void setup(IEntity entity, object privateMembers)
+		void IState.setup(IEntity entity, object privateMembers)
 		{
 			setup((_E)entity, (_M)privateMembers);
 		}
@@ -99,7 +99,7 @@ namespace danmaq.nineball.state
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void update(IEntity entity, object privateMembers, GameTime gameTime)
+		void IState.update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 			update((_E)entity, (_M)privateMembers, gameTime);
 		}
@@ -112,7 +112,7 @@ namespace danmaq.nineball.state
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		void IState.draw(IEntity entity, object privateMembers, GameTime gameTime)
 		{
 			draw((_E)entity, (_M)privateMembers, gameTime);
 		}
@@ -128,7 +128,7 @@ namespace danmaq.nineball.state
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public void teardown(IEntity entity, object privateMembers, IState nextState)
+		void IState.teardown(IEntity entity, object privateMembers, IState nextState)
 		{
 			teardown((_E)entity, (_M)privateMembers, nextState);
 		}

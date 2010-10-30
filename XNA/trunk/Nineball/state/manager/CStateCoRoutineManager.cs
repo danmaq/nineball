@@ -7,33 +7,33 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.entity;
+using System.Collections;
+using System.Collections.Generic;
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
 namespace danmaq.nineball.state.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>タスク管理クラス用の既定の状態です。</summary>
-	public sealed class CStateFryweightTaskManager
-		: CState<CFryweightTaskManager, List<IEntity>>
+	/// <summary>コルーチン管理クラス専用の既定の状態です。</summary>
+	public sealed class CStateCoRoutineManager
+		: CState<CCoRoutineManager, List<IEnumerator>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CFryweightTaskManager, List<IEntity>> instance =
-			new CStateFryweightTaskManager();
+		public static readonly IState<CCoRoutineManager, List<IEnumerator>> instance =
+			new CStateCoRoutineManager();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFryweightTaskManager()
+		private CStateCoRoutineManager()
 		{
 		}
 
@@ -50,7 +50,7 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CFryweightTaskManager entity, List<IEntity> privateMembers)
+		public override void setup(CCoRoutineManager entity, List<IEnumerator> privateMembers)
 		{
 		}
 
@@ -63,9 +63,18 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
+			CCoRoutineManager entity, List<IEnumerator> privateMembers, GameTime gameTime)
 		{
-			privateMembers.ForEach(task => task.update(gameTime));
+			entity.commit();
+			for (int i = privateMembers.Count; --i >= 0; )
+			{
+				IEnumerator co = privateMembers[i];
+				if (!co.MoveNext())
+				{
+					entity.Remove(co);
+				}
+			}
+			entity.commit();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -77,9 +86,8 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
+			CCoRoutineManager entity, List<IEnumerator> privateMembers, GameTime gameTime)
 		{
-			privateMembers.ForEach(task => task.draw(gameTime));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -94,7 +102,7 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, IState nextState)
+			CCoRoutineManager entity, List<IEnumerator> privateMembers, IState nextState)
 		{
 		}
 	}

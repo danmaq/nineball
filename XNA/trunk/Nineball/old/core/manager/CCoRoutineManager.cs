@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 
 namespace danmaq.nineball.old.core.manager
 {
@@ -19,15 +19,16 @@ namespace danmaq.nineball.old.core.manager
 	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
 	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
 	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.entity.manager.CCoRoutineManagerを使用してください。")]
 	public sealed class CCoRoutineManager
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>コルーチンを動かすためのイテレータ。</summary>
-		private readonly LinkedList<IEnumerator<object>> coRoutines =
-			new LinkedList<IEnumerator<object>>();
+		/// <summary>接続先。</summary>
+		private readonly entity.manager.CCoRoutineManager bridge =
+			new entity.manager.CCoRoutineManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -46,19 +47,7 @@ namespace danmaq.nineball.old.core.manager
 		/// <returns>スレッドの件数</returns>
 		public static implicit operator int(CCoRoutineManager m)
 		{
-			return m.coRoutines.Count;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>無限ループ用スレッドです。</summary>
-		/// 
-		/// <returns>スレッドが実行される間、<c>null</c></returns>
-		public static IEnumerator<object> threadEternalWait()
-		{
-			while(true)
-			{
-				yield return null;
-			}
+			return m.bridge.Count;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -67,55 +56,49 @@ namespace danmaq.nineball.old.core.manager
 		/// <returns>まだ全てのスレッドが完了していない場合、<c>true</c></returns>
 		public bool update()
 		{
-			LinkedListNode<IEnumerator<object>> nodeNext;
-			for(
-				LinkedListNode<IEnumerator<object>> node = coRoutines.First; node != null; node = nodeNext
-			)
+			bridge.update(null);
+			if (reserveAllRemove)
 			{
-				nodeNext = node.Next;
-				if(node.Value == null || !node.Value.MoveNext())
-				{
-					coRoutines.Remove(node);
-				}
-			}
-			if(reserveAllRemove)
-			{
-				remove();
+				bridge.Clear();
 				reserveAllRemove = false;
 			}
-			return (coRoutines.Count > 0);
+			return bridge.Count > 0;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを全て削除します。</summary>
 		public void remove()
 		{
-			coRoutines.Clear();
+			bridge.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを削除します。</summary>
 		/// 
-		/// <param name="thread">コルーチン</param>
+		/// <param name="co">コルーチン</param>
 		/// <returns>コルーチンを削除できた場合、<c>true</c></returns>
-		public bool remove(IEnumerator<object> thread)
+		public bool remove(IEnumerator co)
 		{
-			return coRoutines.Remove(thread);
+			return bridge.Remove(co);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを登録します。</summary>
 		/// 
-		/// <param name="thread">コルーチン</param>
+		/// <param name="co">コルーチン</param>
 		/// <returns>コルーチンを登録できた場合、<c>true</c></returns>
-		public bool add(IEnumerator<object> thread)
+		public bool add(IEnumerator co)
 		{
-			bool bResult = (thread != null && coRoutines.Find(thread) == null);
-			if(bResult)
+			bool result = true;
+			try
 			{
-				coRoutines.AddLast(thread);
+				bridge.Add(co);
 			}
-			return bResult;
+			catch (Exception)
+			{
+				result = false;
+			}
+			return result;
 		}
 	}
 }

@@ -29,6 +29,8 @@ namespace danmaq.nineball.entity.manager
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
+			// TODO : ここはGC対策上あまり重要じゃないが、
+			// それでもQueueは使うのは避けたほうがいいかも
 			/// <summary>読込対象のコンテンツ一覧。</summary>
 			public Queue<ICache> contents;
 

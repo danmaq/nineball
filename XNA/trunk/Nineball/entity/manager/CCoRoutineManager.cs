@@ -10,122 +10,80 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+using danmaq.nineball.state;
+using danmaq.nineball.state.manager;
 
 namespace danmaq.nineball.entity.manager
 {
 
-	// TODO : コルーチン ハンドル作った方がいいかも。removeの引数設定が紛らわしい
-	// 特に引数を持つコルーチンの場合どうすんの、とか
-	// TODO : 制御をステート側へ移行する
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>コルーチン管理 クラス。</summary>
-	public sealed class CCoRoutineManager : CEntity
+	public sealed class CCoRoutineManager
+		: CEntity, ICollection<IEnumerator>
 	{
-
-		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-		/// <summary>コルーチン追加/削除用キューのデータ。</summary>
-		private struct SQueue
-		{
-
-			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-			//* constants ──────────────────────────────-*
-
-			/// <summary>コルーチンの全削除のためのキュー。</summary>
-			public static readonly SQueue removeAll = new SQueue(false);
-
-			/// <summary>追加するかどうか。</summary>
-			public readonly bool add;
-
-			/// <summary>コルーチン本体。</summary>
-			public readonly IEnumerator coRoutine;
-
-			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-			//* constructor & destructor ───────────────────────*
-
-			//* -----------------------------------------------------------------------*
-			/// <summary>コンストラクタ。</summary>
-			/// 
-			/// <param name="add">追加するかどうか。</param>
-			/// <param name="coRoutine">コルーチン本体。</param>
-			/// <exception cref="System.ArgumentNullException">
-			/// コルーチン本体にnullを設定しようとした場合。
-			/// </exception>
-			public SQueue(bool add, IEnumerator coRoutine)
-			{
-				if(coRoutine == null)
-				{
-					throw new ArgumentNullException("coRoutine");
-				}
-				this.add = add;
-				this.coRoutine = coRoutine;
-			}
-
-			//* -----------------------------------------------------------------------*
-			/// <summary>コンストラクタ。</summary>
-			/// 
-			/// <param name="add">追加するかどうか。</param>
-			private SQueue(bool add)
-			{
-				this.add = add;
-				this.coRoutine = null;
-			}
-		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>登録されているコルーチン一覧。</summary>
-		private readonly LinkedList<IEnumerator> coRoutines =
-			new LinkedList<IEnumerator>();
+		/// <summary>コルーチン一覧。</summary>
+		private readonly List<IEnumerator> coRoutines;
 
-		/// <summary>一覧操作用のキュー。</summary>
-		private readonly Queue<SQueue> operationQueue = new Queue<SQueue>();
+		/// <summary>コルーチン追加一覧。</summary>
+		private readonly List<IEnumerator> addList = new List<IEnumerator>();
+
+		/// <summary>コルーチン削除一覧。</summary>
+		private readonly List<IEnumerator> removeList = new List<IEnumerator>();
+
+		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>既定の状態で初期化します。</para>
+		/// </summary>
+		public CCoRoutineManager()
+			: this(CStateCoRoutineManager.instance)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>指定の状態で初期化します。</para>
+		/// </summary>
+		/// 
+		/// <param name="firstState">初期の状態。</param>
+		public CCoRoutineManager(IState firstState)
+			: base(firstState, new List<IEnumerator>())
+		{
+			coRoutines = (List<IEnumerator>)privateMembers;
+		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>無限ループ用コルーチンです。</summary>
+		/// <summary>登録されているタスクの総数を取得します。</summary>
 		/// 
-		/// <returns>null</returns>
-		public static IEnumerator coEternalWait
+		/// <value>登録されているタスクの総数。</value>
+		public int Count
 		{
 			get
 			{
-				while(true)
-				{
-					yield return null;
-				}
+				return coRoutines.Count;
 			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチンの件数を取得します。</summary>
+		/// <summary>この管理クラスが読み取り専用かどうかを取得します。</summary>
 		/// 
-		/// <value>コルーチンの件数</value>
-		public int count
+		/// <value><c>false</c>。</value>
+		bool ICollection<IEnumerator>.IsReadOnly
 		{
 			get
 			{
-				int nResult = coRoutines.Count;
-				foreach(SQueue item in operationQueue)
-				{
-					if(item.add)
-					{
-						nResult++;
-					}
-					else if(item.coRoutine == null)
-					{
-						nResult = 0;
-					}
-					else
-					{
-						nResult--;
-					}
-				}
-				return Math.Max(0, nResult);
+				return false;
 			}
 		}
 
@@ -133,94 +91,132 @@ namespace danmaq.nineball.entity.manager
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチンの件数を取得します。</summary>
+		/// <summary>無限ループ用コルーチンです。</summary>
 		/// 
-		/// <param name="m">コルーチン管理クラス</param>
-		/// <returns>コルーチンの件数</returns>
-		public static implicit operator int(CCoRoutineManager m)
+		/// <returns>コルーチン。実行時は常時<c>null</c>。</returns>
+		public static IEnumerator coEternalWait()
 		{
-			return m.count;
+			while (true)
+			{
+				yield return null;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチンの全削除を予約します。</summary>
-		public override void Dispose()
+		/// <summary>コルーチン追加・削除の予約を確定します。</summary>
+		public void commit()
 		{
-			remove();
-			commitQueue();
-			base.Dispose();
+			removeList.ForEach(co => coRoutines.Remove(co));
+			removeList.Clear();
+			coRoutines.AddRange(addList);
+			addList.Clear();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コルーチン管理に使用したメモリを切り詰めます。</summary>
+		public void TrimExcess()
+		{
+			coRoutines.TrimExcess();
+			addList.TrimExcess();
+			removeList.TrimExcess();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コルーチン追加の予約をします。</summary>
+		/// 
+		/// <param name="co">コルーチン。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
+		public void Add(IEnumerator co)
+		{
+			if (co == null)
+			{
+				throw new ArgumentNullException("co");
+			}
+			addList.Add(co);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>タスク削除の予約をします。</summary>
+		/// 
+		/// <param name="co">コルーチン。</param>
+		/// <returns><c>true</c>。</returns>
+		/// <exception cref="System.ArgumentNullException">
+		/// 引数が<c>null</c>の場合。
+		/// </exception>
+		public bool Remove(IEnumerator co)
+		{
+			if (co == null)
+			{
+				throw new ArgumentNullException("co");
+			}
+			removeList.Add(co);
+			return true;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>管理しているコルーチンをすべて即時破棄します。</summary>
+		public void Clear()
+		{
+			coRoutines.Clear();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>特定の値が格納されているかどうかを判断します。</summary>
+		/// 
+		/// <param name="co">検索するオブジェクト。</param>
+		/// <returns>存在する場合、<c>true</c>。</returns>
+		public bool Contains(IEnumerator co)
+		{
+			return coRoutines.Contains(co);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コルーチン一覧を配列にコピーします。</summary>
+		/// 
+		/// <param name="array">
+		/// コルーチン一覧がコピーされる1次元かつ0から始まるインデックス番号の配列。
+		/// </param>
+		/// <param name="arrayIndex">
+		/// コピーの開始位置となる、配列の0から始まるインデックス番号。
+		/// </param>
+		public void CopyTo(IEnumerator[] array, int arrayIndex)
+		{
+			coRoutines.CopyTo(array, arrayIndex);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
-		/// <para>コルーチンを1ループ分実行します。</para>
-		/// <para>実行の前後にて、登録/削除の予約を実行します。</para>
+		/// 指定した型のコレクションに対する単純な反復処理をサポートする列挙子を公開します。
 		/// </summary>
 		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(GameTime gameTime)
+		/// <returns>列挙するオブジェクトの型。</returns>
+		public IEnumerator<IEnumerator> GetEnumerator()
 		{
-			commitQueue();
-			LinkedListNode<IEnumerator> nodeNext;
-			for(
-				LinkedListNode<IEnumerator> node = coRoutines.First; node != null; node = nodeNext
-			)
-			{
-				nodeNext = node.Next;
-				if(node.Value == null || !node.Value.MoveNext())
-				{
-					remove(node.Value);
-				}
-			}
-			commitQueue();
-			base.update(gameTime);
+			return coRoutines.GetEnumerator();
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチンの全削除を予約します。</summary>
-		public void remove()
-		{
-			operationQueue.Enqueue(SQueue.removeAll);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチンの削除を予約します。</summary>
+		/// <summary>
+		/// 非ジェネリック コレクションに対する反復処理をサポートする列挙子を公開します。
+		/// </summary>
 		/// 
-		/// <param name="coRoutine">コルーチン</param>
-		public void remove(IEnumerator coRoutine)
+		/// <returns>列挙するオブジェクトの型。</returns>
+		IEnumerator IEnumerable.GetEnumerator()
 		{
-			operationQueue.Enqueue(new SQueue(false, coRoutine));
+			return ((IEnumerable)coRoutines).GetEnumerator();
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチンの登録を予約します。</summary>
-		/// 
-		/// <param name="coRoutine">コルーチン</param>
-		public void add(IEnumerator coRoutine)
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
 		{
-			operationQueue.Enqueue(new SQueue(true, coRoutine));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>コルーチン操作キューをリストへ反映します。</summary>
-		private void commitQueue()
-		{
-			while(operationQueue.Count > 0)
-			{
-				SQueue data = operationQueue.Dequeue();
-				if(data.add)
-				{
-					coRoutines.AddLast(data.coRoutine);
-				}
-				else if(data.coRoutine == null)
-				{
-					coRoutines.Clear();
-				}
-				else
-				{
-					coRoutines.Remove(data.coRoutine);
-				}
-			}
+			coRoutines.Clear();
+			addList.Clear();
+			removeList.Clear();
+			TrimExcess();
+			base.Dispose();
 		}
 	}
 }
