@@ -7,8 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
-using danmaq.nineball.entity;
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
 
@@ -16,24 +14,24 @@ namespace danmaq.nineball.state.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>タスク管理クラス用の既定の状態です。</summary>
-	public sealed class CStateFryweightTaskManager
-		: CState<CFryweightTaskManager, List<IEntity>>
+	/// <summary>カメラパス管理クラス用の既定の状態です。</summary>
+	public sealed class CStateCameraPath
+		 : CState<CCameraPath, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CFryweightTaskManager, List<IEntity>> instance =
-			new CStateFryweightTaskManager();
+		public static readonly IState<CCameraPath, object> instance
+			= new CStateCameraPath();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFryweightTaskManager()
+		private CStateCameraPath()
 		{
 		}
 
@@ -50,8 +48,9 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CFryweightTaskManager entity, List<IEntity> privateMembers)
+		public override void setup(CCameraPath entity, object privateMembers)
 		{
+			entity.resetCounter();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -62,10 +61,14 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
+		public override void update(CCameraPath entity, object privateMembers, GameTime gameTime)
 		{
-			privateMembers.ForEach(task => task.update(gameTime));
+			CCameraPath.SData now = entity.nowScene;
+			if (entity.counter >= now.interval)
+			{
+				entity.resetCounter();
+				entity.index += now.next;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -76,10 +79,8 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
+		public override void draw(CCameraPath entity, object privateMembers, GameTime gameTime)
 		{
-			privateMembers.ForEach(task => task.draw(gameTime));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -93,8 +94,7 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, IState nextState)
+		public override void teardown(CCameraPath entity, object privateMembers, IState nextState)
 		{
 		}
 	}

@@ -64,14 +64,38 @@ namespace danmaq.nineball.entity.manager
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>登録されているタスクの総数を取得します。</summary>
+		/// <summary>登録されているコルーチンの総数を取得します。</summary>
 		/// 
-		/// <value>登録されているタスクの総数。</value>
+		/// <value>登録されているコルーチンの総数。</value>
 		public int Count
 		{
 			get
 			{
 				return coRoutines.Count;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>登録が予約されているコルーチンの総数を取得します。</summary>
+		/// 
+		/// <value>登録が予約されているコルーチンの総数。</value>
+		public int addReservedCount
+		{
+			get
+			{
+				return addList.Count;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>削除が予約されているタスクの総数を取得します。</summary>
+		/// 
+		/// <value>削除が予約されているタスクの総数。</value>
+		public int removeReservedCount
+		{
+			get
+			{
+				return removeList.Count;
 			}
 		}
 
