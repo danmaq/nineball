@@ -198,8 +198,9 @@ namespace danmaq.nineball.entity
 		public virtual void Dispose()
 		{
 			resetCounter();
-			nextState = CState.empty;
+			currentState = CState.empty;
 			previousState = CState.empty;
+			nextState = null;
 			changedState = null;
 		}
 

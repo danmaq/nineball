@@ -199,11 +199,11 @@ namespace danmaq.nineball.state.manager
 			CMainLoop entity, CMainLoop.CPrivateMembers privateMembers, GameTime gameTime
 		)
 		{
-			scene.draw(gameTime);
 			GraphicsDevice device = game.GraphicsDevice;
 			device.Clear(colorBack);
 			device.RenderState.DepthBufferEnable = isUseDepthBuffer;
 			device.RenderState.DepthBufferWriteEnable = isWriteDepthBuffer;
+			scene.draw(gameTime);
 			sprite.draw();
 		}
 

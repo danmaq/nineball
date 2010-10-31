@@ -98,6 +98,9 @@
     <Compile Include="data\content\ICache.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
+    <Compile Include="entity\manager\CCameraPath.cs" />
+    <Compile Include="state\manager\CStateCameraPath.cs" />
+    <Compile Include="util\math\EInterpolate.cs" />
     <Compile Include="data\SVolume.cs" />
     <Compile Include="data\EAlign.cs" />
     <Compile Include="data\SSpriteDrawInfo.cs" />

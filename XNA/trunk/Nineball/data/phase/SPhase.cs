@@ -18,6 +18,7 @@ namespace danmaq.nineball.data.phase
 	/// <c>count++</c>を毎フレーム呼ぶことでフレームカウンタとして使うと便利です。
 	/// </remarks>
 	public struct SPhase
+		: IDisposable
 	{
 
 		// TODO : phaseのスタック積みできないかなぁ
@@ -46,7 +47,7 @@ namespace danmaq.nineball.data.phase
 		static SPhase()
 		{
 			SPhase phase = new SPhase();
-			phase.reset();
+			phase.Dispose();
 			initialized = phase;
 		}
 
@@ -157,7 +158,7 @@ namespace danmaq.nineball.data.phase
 		/// <summary>
 		/// フェーズやカウントなど、内部データのリセットをします。
 		/// </summary>
-		public void reset()
+		public void Dispose()
 		{
 			m_nCount = 0;
 			phase = 0;

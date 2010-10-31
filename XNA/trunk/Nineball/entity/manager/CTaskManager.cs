@@ -16,6 +16,8 @@ using danmaq.nineball.state.manager.taskmgr;
 namespace danmaq.nineball.entity.manager
 {
 
+	// TODO : 拡張に拡張を重ねすぎてグチャグチャになりつつある。いったん整理すべし
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>
 	/// <para>タスク管理クラス。</para>
@@ -53,6 +55,8 @@ namespace danmaq.nineball.entity.manager
 			/// <summary>フィールドのオブジェクトを解放します。</summary>
 			public void Dispose()
 			{
+				tasks.ForEach(task => task.Dispose());
+				add.ForEach(task => task.Dispose());
 				tasks.Clear();
 				add.Clear();
 				remove.Clear();
@@ -263,6 +267,13 @@ namespace danmaq.nineball.entity.manager
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>管理しているタスクを全て即時解放します。</summary>
+		public void ClearImmediately()
+		{
+			_private.Dispose();
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>管理しているタスクを全て解放するための予約を入れます。</summary>
 		/// 
 		/// <param name="callback">全削除時に実行されるコールバック</param>
@@ -322,7 +333,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
-			_private.Dispose();
+			ClearImmediately();
 			TrimExcess();
 			base.Dispose();
 		}

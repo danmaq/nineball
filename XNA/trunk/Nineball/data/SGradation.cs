@@ -15,7 +15,7 @@ namespace danmaq.nineball.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>グラデーション用情報を格納するクラス。</summary>
+	/// <summary>グラデーション用情報を格納する構造体。</summary>
 	[Serializable]
 	public struct SGradation
 	{
@@ -23,17 +23,20 @@ namespace danmaq.nineball.data
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>初期値</summary>
+		/// <summary>初期値。</summary>
 		public float start;
 
-		/// <summary>最終値</summary>
+		/// <summary>最終値。</summary>
 		public float end;
 
-		/// <summary>限界値1</summary>
+		/// <summary>限界値1。</summary>
 		public float limit1;
 
-		/// <summary>限界値2</summary>
+		/// <summary>限界値2。</summary>
 		public float limit2;
+
+		/// <summary>内分カウンタ。</summary>
+		public EInterpolate interpolate;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -47,12 +50,13 @@ namespace danmaq.nineball.data
 		/// </summary>
 		/// 
 		/// <param name="fExpr">値</param>
-		private SGradation(float fExpr)
+		public SGradation(float fExpr)
 		{
 			start = fExpr;
 			end = fExpr;
 			limit1 = fExpr;
 			limit2 = fExpr;
+			interpolate = EInterpolate.clampSmooth;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -73,6 +77,7 @@ namespace danmaq.nineball.data
 			end = fEnd;
 			limit1 = fLimit1;
 			limit2 = fLimit2;
+			interpolate = EInterpolate.clampSmooth;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -188,7 +193,7 @@ namespace danmaq.nineball.data
 			{
 				return limit1;
 			}
-			return MathHelper.Clamp(CInterpolate._clampSmooth(start, end, nNow, nSize),
+			return MathHelper.Clamp(interpolate.interpolate(start, end, nNow, nSize),
 				MathHelper.Min(limit1, limit2), MathHelper.Max(limit1, limit2));
 		}
 
