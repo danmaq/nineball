@@ -114,9 +114,18 @@ namespace danmaq.nineball.data.content
 		/// <summary>コンテンツを読み込みます。</summary>
 		public void preload()
 		{
-			if(!isLoaded)
+			preload(false);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンテンツを読み込みます。</summary>
+		/// 
+		/// <param name="force">強制的にリロードするかどうか。</param>
+		public void preload(bool force)
+		{
+			if (!isLoaded || force)
 			{
-				if(mgrContent == null)
+				if (mgrContent == null)
 				{
 					throw new InvalidOperationException(Resources.ERR_NULL_MGR_CONTENT);
 				}
