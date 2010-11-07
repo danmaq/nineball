@@ -99,7 +99,9 @@
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="entity\manager\CCameraPath.cs" />
+    <Compile Include="entity\manager\CMapJudgeManager.cs" />
     <Compile Include="state\manager\CStateCameraPath.cs" />
+    <Compile Include="state\manager\CStateMapJudgeManager.cs" />
     <Compile Include="util\math\EInterpolate.cs" />
     <Compile Include="data\SVolume.cs" />
     <Compile Include="data\EAlign.cs" />
