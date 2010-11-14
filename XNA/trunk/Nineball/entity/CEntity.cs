@@ -43,6 +43,9 @@ namespace danmaq.nineball.entity
 		/// <summary>状態遷移を遅らせるフレーム時間数。</summary>
 		public int delayChangeState = 0;
 
+		/// <summary>同じ状態同志で遷移することを認めるかどうか。</summary>
+		public bool allowSameState = false;
+
 		/// <summary>型名のキャッシュ。</summary>
 		private string m_strTypeName = null;
 
@@ -212,7 +215,7 @@ namespace danmaq.nineball.entity
 		{
 			if (nextState != null && delayChangeState-- <= 0)
 			{
-				commitNextState();
+				commitNextState(allowSameState);
 			}
 			currentState.update(this, privateMembers, gameTime);
 			counter += counterStep;
@@ -229,9 +232,13 @@ namespace danmaq.nineball.entity
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>予約していた次の状態を強制的に確定します。</summary>
-		protected virtual void commitNextState()
+		/// 
+		/// <param name="allowSameState">
+		/// 同じ状態同志で遷移することを認めるかどうか。
+		/// </param>
+		protected virtual void commitNextState(bool allowSameState)
 		{
-			if (nextState == currentState)
+			if (nextState == currentState && !allowSameState)
 			{
 				nextState = null;
 			}
