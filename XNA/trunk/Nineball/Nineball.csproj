@@ -98,6 +98,10 @@
     <Compile Include="data\content\ICache.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
+    <Compile Include="entity\audio\CAudioBase.cs" />
+    <Compile Include="entity\audio\CBGM.cs" />
+    <Compile Include="entity\audio\CSE.cs" />
+    <Compile Include="entity\audio\EMultiplePlay.cs" />
     <Compile Include="entity\manager\CCameraPath.cs" />
     <Compile Include="entity\manager\CMapJudgeManager.cs" />
     <Compile Include="state\manager\CStateCameraPath.cs" />

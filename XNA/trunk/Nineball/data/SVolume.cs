@@ -50,8 +50,8 @@ namespace danmaq.nineball.data
 		/// 
 		/// <param name="fVolume">初期音量</param>
 		public SVolume(float fVolume)
+			: this()
 		{
-			m_fVolume = 0f;
 			volume = fVolume;
 		}
 
