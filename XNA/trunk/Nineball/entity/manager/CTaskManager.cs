@@ -55,8 +55,14 @@ namespace danmaq.nineball.entity.manager
 			/// <summary>フィールドのオブジェクトを解放します。</summary>
 			public void Dispose()
 			{
-				tasks.ForEach(task => task.Dispose());
-				add.ForEach(task => task.Dispose());
+				for (int i = tasks.Count; --i >= 0; )
+				{
+					tasks[i].Dispose();
+				}
+				for (int i = add.Count; --i >= 0; )
+				{
+					add[i].Dispose();
+				}
 				tasks.Clear();
 				add.Clear();
 				remove.Clear();
@@ -78,8 +84,12 @@ namespace danmaq.nineball.entity.manager
 			public void Clear(Action<ITask> callback)
 			{
 				// TODO : ちょっとお行儀悪いかな？
-				tasks.ForEach(callback);
-				tasks.ForEach(task => task.Dispose());
+				for (int i = tasks.Count; --i >= 0; )
+				{
+					ITask task = tasks[i];
+					callback(task);
+					task.Dispose();
+				}
 				tasks.Clear();
 				remove.Clear();
 			}
@@ -88,20 +98,18 @@ namespace danmaq.nineball.entity.manager
 			/// <summary>タスク追加・削除の予約を確定します。</summary>
 			public void commit()
 			{
-				remove.ForEach(commitRemove);
+				for (int i = remove.Count; --i >= 0; )
+				{
+					ITask task = remove[i];
+					tasks.Remove(task);
+					task.Dispose();
+				}
 				remove.Clear();
-				tasks.AddRange(add);
+				if (add.Count > 0)
+				{
+					tasks.AddRange(add);
+				}
 				add.Clear();
-			}
-
-			//* -----------------------------------------------------------------------*
-			/// <summary>タスクを即時削除します。</summary>
-			/// 
-			/// <param name="task">削除対象のタスク</param>
-			private void commitRemove(ITask task)
-			{
-				tasks.Remove(task);
-				task.Dispose();
 			}
 		}
 
@@ -200,7 +208,11 @@ namespace danmaq.nineball.entity.manager
 		/// </exception>
 		public void ForEach(Action<ITask> action)
 		{
-			_private.tasks.ForEach(action);
+			List<ITask> tasks = _private.tasks;
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				action(tasks[i]);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*

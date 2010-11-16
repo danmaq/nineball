@@ -144,7 +144,10 @@ namespace danmaq.nineball.entity.audio
 		public void Dispose()
 		{
 			reservedList.Clear();
-			cueList.ForEach(c => c.Dispose());
+			for (int i = cueList.Count; --i >= 0; )
+			{
+				cueList[i].Dispose();
+			}
 			cueList.Clear();
 			if (!soundBank.IsDisposed)
 			{

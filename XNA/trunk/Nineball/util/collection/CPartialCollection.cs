@@ -137,7 +137,10 @@ namespace danmaq.nineball.util.collection
 		public virtual void Clear()
 		{
 			throwAtReadOnly();
-			m_partial.ForEach(item => m_collection.Remove(item));
+			for (int i = m_partial.Count; --i >= 0; )
+			{
+				m_collection.Remove(m_partial[i]);
+			}
 			castoff();
 		}
 
@@ -236,7 +239,10 @@ namespace danmaq.nineball.util.collection
 		/// </exception>
 		public void ForEach(Action<_P> action)
 		{
-			m_partial.ForEach(action);
+			for (int i = m_partial.Count; --i >= 0; )
+			{
+				action(m_partial[i]);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*

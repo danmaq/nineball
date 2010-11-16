@@ -85,7 +85,10 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
-			tasks.ForEach(task => task.Dispose());
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				tasks[i].Dispose();
+			}
 			tasks.Clear();
 			base.Dispose();
 		}
@@ -157,7 +160,10 @@ namespace danmaq.nineball.entity.manager
 		/// </exception>
 		public void ForEach(Action<IEntity> action)
 		{
-			tasks.ForEach(action);
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				action(tasks[i]);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*

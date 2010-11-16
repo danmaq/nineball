@@ -91,7 +91,10 @@ namespace danmaq.nineball.util.collection
 		/// <summary>このクラスを解放します。</summary>
 		public override void Dispose()
 		{
-			list.ForEach(info => info.m_instance.Dispose());
+			for (int i = list.Count; --i >= 0; )
+			{
+				list[i].m_instance.Dispose();
+			}
 			base.Dispose();
 		}
 	}

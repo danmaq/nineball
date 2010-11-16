@@ -65,7 +65,10 @@ namespace danmaq.nineball.state.manager
 		public override void update(
 			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
-			privateMembers.ForEach(task => task.update(gameTime));
+			for (int i = privateMembers.Count; --i >= 0; )
+			{
+				privateMembers[i].update(gameTime);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -79,7 +82,10 @@ namespace danmaq.nineball.state.manager
 		public override void draw(
 			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
-			privateMembers.ForEach(task => task.draw(gameTime));
+			for (int i = privateMembers.Count; --i >= 0; )
+			{
+				privateMembers[i].draw(gameTime);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
