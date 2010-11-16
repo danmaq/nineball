@@ -11,7 +11,7 @@ using System;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.entity.input.data
+namespace danmaq.nineball.old.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

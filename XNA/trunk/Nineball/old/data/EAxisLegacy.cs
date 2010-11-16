@@ -7,28 +7,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace danmaq.nineball.entity.audio
+namespace danmaq.nineball.old.data
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>効果音を多重再生した場合の動作。</summary>
-	enum EMultiplePlay
+	/// <summary>方向ボタン列挙体。</summary>
+	public enum EAxisLegacy
 	{
+		/// <summary>無効。</summary>
+		None,
 
-		/// <summary>許可します。</summary>
-		allow,
+		/// <summary>POV。</summary>
+		POV,
 
-		/// <summary>許可せず、現在の音を停止し、再再生します。</summary>
-		mono,
-
-		/// <summary>許可せず、現在の音を全て停止し、再再生します。</summary>
-		monoStrictly,
-
-		/// <summary>許可せず、無視します。</summary>
-		bypass,
-
-		/// <summary>許可せず、例外を発行します。</summary>
-		exept,
-
+		/// <summary>スライダー。</summary>
+		Slider,
 	}
 }
