@@ -11,7 +11,7 @@ using System;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.data
+namespace danmaq.nineball.entity.audio
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -27,11 +27,17 @@ namespace danmaq.nineball.data
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>ミュート状態を示す定数。</summary>
-		public static readonly SVolume Zero = new SVolume();
+		/// <summary>最大音量。</summary>
+		private const float MAX_VOLUME = 2f;
 
-		/// <summary>既定状態(1dB)を示す定数。</summary>
-		public static readonly SVolume One = new SVolume(1);
+		/// <summary>ミュート状態を示す定数。</summary>
+		public static readonly SVolume Mute = new SVolume(0);
+
+		/// <summary>既定状態(0dB)を示す定数。</summary>
+		public static readonly SVolume Zero = new SVolume(1);
+
+		/// <summary>最大状態(+6dB)を示す定数。</summary>
+		public static readonly SVolume Max = new SVolume(MAX_VOLUME);
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -68,7 +74,7 @@ namespace danmaq.nineball.data
 			}
 			set
 			{
-				m_fVolume = CMisc.clampLoop(value, 0.0f, 2.0f);
+				m_fVolume = CMisc.clampLoop(value, 0.0f, MAX_VOLUME);
 				if(Math.Abs(m_fVolume - 1) < 0.001f)
 				{
 					m_fVolume = 1.0f;
@@ -156,6 +162,17 @@ namespace danmaq.nineball.data
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>音量を指定したピーク値でノーマライズします。</summary>
+		/// 
+		/// <param name="expr">ノーマライズ対象の値。</param>
+		/// <param name="peak">ピーク値。</param>
+		/// <returns>ノーマライズされた値。</returns>
+		public static SVolume normalize(SVolume expr, SVolume peak)
+		{
+			return CInterpolate._clampLerp(0, peak.volume, expr / MAX_VOLUME);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>音量値を文字列化します。</summary>
 		/// 
 		/// <param name="bSlider">スライダーを挿入するかどうか</param>
@@ -167,7 +184,9 @@ namespace danmaq.nineball.data
 			if(bSlider)
 			{
 				char[] szVolume = new string('・', 10).ToCharArray();
-				szVolume[(int)MathHelper.Min(CInterpolate._clampSmooth(0, 10, volume, 2), 9)] = '◆';
+				int cursor = (int)MathHelper.Min(
+					CInterpolate._clampSmooth(0, 10, volume, MAX_VOLUME), 9);
+				szVolume[cursor] = '◆';
 				strResult += new string(szVolume) + Environment.NewLine;
 				strDB = string.Format("({0})", strDB);
 			}
