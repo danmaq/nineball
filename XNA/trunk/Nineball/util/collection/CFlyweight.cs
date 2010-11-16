@@ -204,7 +204,10 @@ namespace danmaq.nineball.util.collection
 		/// <summary>このクラスを解放します。</summary>
 		public virtual void Dispose()
 		{
-			list.ForEach(info => onDisposeAction(info.m_instance));
+			for (int i = list.Count; --i >= 0; )
+			{
+				onDisposeAction(list[i].m_instance);
+			}
 			list.Clear();
 			list.TrimExcess();
 		}

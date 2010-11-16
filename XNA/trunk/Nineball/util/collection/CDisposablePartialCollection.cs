@@ -49,7 +49,10 @@ namespace danmaq.nineball.util.collection
 		public override void Clear()
 		{
 			throwAtReadOnly();
-			m_partial.ForEach(item => item.Dispose());
+			for (int i = m_partial.Count; --i >= 0; )
+			{
+				m_partial[i].Dispose();
+			}
 			base.Clear();
 		}
 

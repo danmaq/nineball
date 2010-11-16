@@ -130,7 +130,10 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>コルーチン追加・削除の予約を確定します。</summary>
 		public void commit()
 		{
-			removeList.ForEach(co => coRoutines.Remove(co));
+			for (int i = removeList.Count; --i >= 0; )
+			{
+				coRoutines.Remove(removeList[i]);
+			}
 			removeList.Clear();
 			coRoutines.AddRange(addList);
 			addList.Clear();

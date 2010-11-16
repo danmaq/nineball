@@ -9,6 +9,7 @@
 
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace danmaq.nineball.state.manager.taskmgr
 {
@@ -65,8 +66,11 @@ namespace danmaq.nineball.state.manager.taskmgr
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
 		{
 			entity.commit();
-			privateMembers.tasks.ForEach(task => task.update(gameTime));
-			entity.commit();
+			List<ITask> tasks = privateMembers.tasks;
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				tasks[i].update(gameTime);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -80,7 +84,11 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void draw(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			privateMembers.tasks.ForEach(task => task.draw(gameTime));
+			List<ITask> tasks = privateMembers.tasks;
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				tasks[i].draw(gameTime);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
