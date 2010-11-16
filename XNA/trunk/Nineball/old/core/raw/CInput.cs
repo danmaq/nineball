@@ -185,6 +185,9 @@ namespace danmaq.nineball.old.core.raw
 		/// <summary>右モーターのフォースフィードバックの強さ。</summary>
 		private float m_fFFRight = 0;
 
+		/// <summary>ボタン状態を格納する一時バッファ。</summary>
+		private bool[] bState = new bool[0];
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -215,6 +218,7 @@ namespace danmaq.nineball.old.core.raw
 			int nButtons = buttons;
 			int nFullButtons = nButtons + 4;
 			CONNECTED = connected.Distinct();
+			isUseXBOX360GamePad = CONNECTED.Count() > 0;
 			if(!isUseXBOX360GamePad)
 			{
 				CLogger.add("XBOX360コントローラを使用しません。");
@@ -244,7 +248,6 @@ namespace danmaq.nineball.old.core.raw
 			{
 				BUTTON_STATE[i] = new SButtonState(keyLoopStart, keyLoopInterval);
 			}
-			MICROTHREAD_MANAGER.Add(threadStateReflesh());
 			CLogger.add("入力処理・XBOX360コントローラの初期化完了。");
 		}
 
@@ -264,10 +267,8 @@ namespace danmaq.nineball.old.core.raw
 		/// <summary>XBOX360コントローラが接続されているかどうか。</summary>
 		public bool isUseXBOX360GamePad
 		{
-			get
-			{
-				return (CONNECTED.Count() > 0);
-			}
+			get;
+			private set;
 		}
 
 		/// <summary>任意のボタンが現在のフレームで押されたかどうか。</summary>
@@ -455,6 +456,7 @@ namespace danmaq.nineball.old.core.raw
 		public void update()
 		{
 			MICROTHREAD_MANAGER.update(null);
+			stateReflesh();
 			if(isUseXBOX360GamePad)
 			{
 				GamePad.SetVibration(PlayerIndex.One, forceLeft, forceRight);
@@ -592,68 +594,65 @@ namespace danmaq.nineball.old.core.raw
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>入力状態更新のスレッドです。</summary>
-		/// 
-		/// <returns>スレッドが実行される間、<c>true</c></returns>
-		private IEnumerator<object> threadStateReflesh()
+		/// <summary>入力状態を更新します。</summary>
+		private void stateReflesh()
 		{
-			while(true)
+			if (bState.Length < BUTTON_STATE.Length)
 			{
-				yield return null;
-				bool[] bState = new bool[BUTTON_STATE.Length];
+				Array.Resize<bool>(ref bState, BUTTON_STATE.Length);
+			}
 #if WINDOWS
-				KeyboardState stateKey =
-					Keyboard.GetState();
-				for(int i = 0; i < bState.Length; i++)
+			KeyboardState stateKey =
+				Keyboard.GetState();
+			for(int i = 0; i < bState.Length; i++)
+			{
+				bState[i] = stateKey.IsKeyDown(assignKeyboard[i]);
+			}
+			if(legacy != null)
+			{
+				Microsoft.DirectX.DirectInput.JoystickState legacystate = legacy.state;
+				byte[] buttons = legacystate.GetButtons();
+				bState[(int)EDirection.up] = bState[(int)EDirection.up] || (legacystate.Y < -600);
+				bState[(int)EDirection.down] = bState[(int)EDirection.down] || (legacystate.Y > 600);
+				bState[(int)EDirection.left] = bState[(int)EDirection.left] || (legacystate.X < -600);
+				bState[(int)EDirection.right] = bState[(int)EDirection.right] || (legacystate.X > 600);
+				for(int i = (int)EDirection.__reserved; i < bState.Length; i++)
 				{
-					bState[i] = stateKey.IsKeyDown(assignKeyboard[i]);
+					int nButtonID = assignLegacy[i - (int)EDirection.__reserved];
+					bState[i] = bState[i] ||
+						(buttons.Length > nButtonID && buttons[nButtonID] != 0);
 				}
-				if(legacy != null)
-				{
-					Microsoft.DirectX.DirectInput.JoystickState legacystate = legacy.state;
-					byte[] buttons = legacystate.GetButtons();
-					bState[(int)EDirection.up] = bState[(int)EDirection.up] || (legacystate.Y < -600);
-					bState[(int)EDirection.down] = bState[(int)EDirection.down] || (legacystate.Y > 600);
-					bState[(int)EDirection.left] = bState[(int)EDirection.left] || (legacystate.X < -600);
-					bState[(int)EDirection.right] = bState[(int)EDirection.right] || (legacystate.X > 600);
-					for(int i = (int)EDirection.__reserved; i < bState.Length; i++)
-					{
-						int nButtonID = assignLegacy[i - (int)EDirection.__reserved];
-						bState[i] = bState[i] ||
-							(buttons.Length > nButtonID && buttons[nButtonID] != 0);
-					}
-				}
+			}
 #else
-				for( int i = 0; i < bState.Length; bState[ i++ ] = false );
+			for( int i = 0; i < bState.Length; bState[ i++ ] = false );
 #endif
-				if(isUseXBOX360GamePad)
+			if(isUseXBOX360GamePad)
+			{
+				GamePadState stateButton = GamePad.GetState(PlayerIndex.One);
+				Vector2 leftStick = stateButton.ThumbSticks.Left;
+				if(leftStick.Length() > 0.7f)
 				{
-					GamePadState stateButton = GamePad.GetState(PlayerIndex.One);
-					Vector2 leftStick = stateButton.ThumbSticks.Left;
-					if(leftStick.Length() > 0.7f)
-					{
-						double dAngle = Math.Atan2(leftStick.Y, leftStick.X);
-						bState[(int)EDirection.up] = bState[(int)EDirection.up] || (dAngle <= MathHelper.PiOver4 * 3.5 && dAngle >= MathHelper.PiOver4 * 0.5);
-						bState[(int)EDirection.down] = bState[(int)EDirection.down] || (dAngle >= MathHelper.PiOver4 * -3.5 && dAngle <= MathHelper.PiOver4 * -0.5);
-						bState[(int)EDirection.left] = bState[(int)EDirection.left] || Math.Abs(dAngle) >= MathHelper.PiOver4 * 2.5;
-						bState[(int)EDirection.right] = bState[(int)EDirection.right] || Math.Abs(dAngle) <= MathHelper.PiOver4 * 1.5;
-					}
-					else
-					{
-						bState[(int)EDirection.up] = bState[(int)EDirection.up] || stateButton.IsButtonDown(Buttons.DPadUp);
-						bState[(int)EDirection.down] = bState[(int)EDirection.down] || stateButton.IsButtonDown(Buttons.DPadDown);
-						bState[(int)EDirection.left] = bState[(int)EDirection.left] || stateButton.IsButtonDown(Buttons.DPadLeft);
-						bState[(int)EDirection.right] = bState[(int)EDirection.right] || stateButton.IsButtonDown(Buttons.DPadRight);
-					}
-					for(int i = (int)EDirection.__reserved; i < bState.Length; i++)
-					{
-						bState[i] = bState[i] || stateButton.IsButtonDown(assignXBOX360[i - (int)EDirection.__reserved]);
-					}
+					double dAngle = Math.Atan2(leftStick.Y, leftStick.X);
+					bState[(int)EDirection.up] = bState[(int)EDirection.up] || (dAngle <= MathHelper.PiOver4 * 3.5 && dAngle >= MathHelper.PiOver4 * 0.5);
+					bState[(int)EDirection.down] = bState[(int)EDirection.down] || (dAngle >= MathHelper.PiOver4 * -3.5 && dAngle <= MathHelper.PiOver4 * -0.5);
+					bState[(int)EDirection.left] = bState[(int)EDirection.left] || Math.Abs(dAngle) >= MathHelper.PiOver4 * 2.5;
+					bState[(int)EDirection.right] = bState[(int)EDirection.right] || Math.Abs(dAngle) <= MathHelper.PiOver4 * 1.5;
 				}
-				for(int i = 0; i < bState.Length; i++)
+				else
 				{
-					BUTTON_STATE[i].refresh(bState[i]);
+					bState[(int)EDirection.up] = bState[(int)EDirection.up] || stateButton.IsButtonDown(Buttons.DPadUp);
+					bState[(int)EDirection.down] = bState[(int)EDirection.down] || stateButton.IsButtonDown(Buttons.DPadDown);
+					bState[(int)EDirection.left] = bState[(int)EDirection.left] || stateButton.IsButtonDown(Buttons.DPadLeft);
+					bState[(int)EDirection.right] = bState[(int)EDirection.right] || stateButton.IsButtonDown(Buttons.DPadRight);
 				}
+				for(int i = (int)EDirection.__reserved; i < bState.Length; i++)
+				{
+					bState[i] = bState[i] || stateButton.IsButtonDown(assignXBOX360[i - (int)EDirection.__reserved]);
+				}
+			}
+			for(int i = 0; i < bState.Length; i++)
+			{
+				BUTTON_STATE[i].refresh(bState[i]);
 			}
 		}
 
