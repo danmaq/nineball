@@ -8,16 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.nineball.state.input.low;
-using Microsoft.Xna.Framework.Input;
 using danmaq.nineball.state;
 
 namespace danmaq.nineball.entity.input.low
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>ゲームパッド入力制御・管理クラス。</summary>
-	public sealed class CInputGamePad
+	/// <summary>XNA汎用低層入力制御・管理クラス。</summary>
+	public class CXNAInput<_T>
 		: CEntity
 	{
 
@@ -30,10 +28,10 @@ namespace danmaq.nineball.entity.input.low
 			//* fields ────────────────────────────────*
 
 			/// <summary>最新の入力状態。</summary>
-			public GamePadState nowState;
+			public _T nowState;
 
 			/// <summary>前回の入力状態。</summary>
-			public GamePadState prevState;
+			public _T prevState;
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
@@ -42,8 +40,8 @@ namespace danmaq.nineball.entity.input.low
 			/// <summary>このオブジェクトの終了処理を行います。</summary>
 			public void Dispose()
 			{
-				nowState = new GamePadState();
-				prevState = new GamePadState();
+				nowState = default(_T);
+				prevState = default(_T);
 			}
 		}
 
@@ -58,14 +56,14 @@ namespace danmaq.nineball.entity.input.low
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CInputGamePad()
+		public CXNAInput()
 			: this(null)
 		{
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CInputGamePad(IState firstState)
+		public CXNAInput(IState firstState)
 			: base(firstState, new CPrivateMembers())
 		{
 			_privateMembers = (CPrivateMembers)privateMembers;
@@ -78,7 +76,7 @@ namespace danmaq.nineball.entity.input.low
 		/// <summary>最新の入力状態を取得します。</summary>
 		/// 
 		/// <value>最新の入力状態。</value>
-		public GamePadState nowState
+		public _T nowState
 		{
 			get
 			{
@@ -90,7 +88,7 @@ namespace danmaq.nineball.entity.input.low
 		/// <summary>前回の入力状態を取得します。</summary>
 		/// 
 		/// <value>前回の入力状態。</value>
-		public GamePadState prevState
+		public _T prevState
 		{
 			get
 			{

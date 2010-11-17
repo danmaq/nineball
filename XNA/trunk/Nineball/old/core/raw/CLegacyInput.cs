@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.old.core.data;
+using danmaq.nineball.Properties;
 using danmaq.nineball.util;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
@@ -67,8 +68,7 @@ namespace danmaq.nineball.old.core.raw
 				}
 				catch(Exception e)
 				{
-					CLogger.add("ゲームパッドのオート・センター機能のOFFに出来ませんでした。");
-					CLogger.add("このゲームパッドではフォース フィードバックは使用できません。");
+					CLogger.add(Resources.WARN_LEGACY_CENTER);
 					CLogger.add(e);
 					hWnd = IntPtr.Zero;
 				}
@@ -84,8 +84,8 @@ namespace danmaq.nineball.old.core.raw
 					}
 					catch(Exception e)
 					{
-						CLogger.add("アプリケーションによるレガシ ゲームパッドの独占に失敗しました。");
-						CLogger.add("(共有モードで再設定を試みます。このモードではフォースフィードバックの使用は出来ません。)");
+						CLogger.add(Resources.WARN_LEGACY_EXCLUSIVE);
+						CLogger.add(Resources.WARN_LEGACY_COOP);
 						CLogger.add(e);
 						hWnd = IntPtr.Zero;
 						device.SetCooperativeLevel(null, CooperativeLevelFlags.NonExclusive | coLevel);
@@ -140,7 +140,7 @@ namespace danmaq.nineball.old.core.raw
 			}
 			catch(Exception e)
 			{
-				CLogger.add("レガシ ゲームパッドの初期化に失敗しました。");
+				CLogger.add(Resources.ERR_LEGACY_INIT_FAILED);
 				CLogger.add(e);
 				exception = e;
 				Dispose();
@@ -318,8 +318,8 @@ namespace danmaq.nineball.old.core.raw
 		public override string ToString()
 		{
 			string strResult = "◎◎ レガシ ゲームパッド情報\r\n";
-			strResult += ToString(device.DeviceInformation);
-			strResult += ToString(device.Caps);
+			strResult += device.DeviceInformation.createCapsReport();
+			strResult += device.Caps.createCapsReport();
 			return strResult;
 		}
 
@@ -399,61 +399,6 @@ namespace danmaq.nineball.old.core.raw
 			effect.Flags = EffectFlags.ObjectOffsets | EffectFlags.Spherical;
 			effect.UsesEnvelope = false;
 			return effect;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>デバイスの識別情報レポートを作成します。</summary>
-		/// 
-		/// <param name="info">デバイスの識別情報 列挙オブジェクト</param>
-		/// <returns>デバイスの識別情報レポート 文字列</returns>
-		private string ToString(DeviceInstance info)
-		{
-			string strResult = "▽ レガシ ゲームパッド デバイスの識別情報一覧\r\n";
-			strResult += "  デバイス名・説明    : " + info.ProductName + Environment.NewLine;
-			strResult += "  デバイスGUID        : " + info.ProductGuid.ToString() + Environment.NewLine;
-			strResult += "  インスタンス登録名  : " + info.InstanceName + Environment.NewLine;
-			strResult += "  インスタンスGUID    : " + info.InstanceGuid.ToString() + Environment.NewLine;
-			strResult += "  ForceFeedback GUID  : " + info.FFDriverGuid.ToString() + Environment.NewLine;
-			strResult += "  デバイス タイプ     : " + info.DeviceType.ToString() + Environment.NewLine;
-			strResult += "  デバイス サブタイプ : " + info.DeviceSubType.ToString() + Environment.NewLine;
-			strResult += "  HID 使用コード      : " + info.Usage + Environment.NewLine;
-			strResult += "  HID 使用ページ      : " + info.UsagePage + Environment.NewLine;
-			return strResult;
-		}
-
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>デバイスの性能レポートを作成します。</summary>
-		/// 
-		/// <param name="caps">デバイスの性能 列挙オブジェクト</param>
-		/// <returns>デバイスの性能レポート 文字列</returns>
-		private string ToString(DeviceCaps caps)
-		{
-			string strResult = "▽ レガシ ゲームパッド デバイスの能力一覧" + Environment.NewLine;
-			strResult += "  ドライバ バージョン       : " + caps.FFDriverVersion + Environment.NewLine;
-			strResult += "  ファームウェア バージョン : " + caps.FirmwareRevision + Environment.NewLine;
-			strResult += "  ハードウェア バージョン   : " + caps.HardwareRevision + Environment.NewLine;
-			strResult += "  デバイスの最小分解能      : " + caps.FFMinTimeResolution + " ミリ秒" + Environment.NewLine;
-			strResult += "  フォース命令送信最小間隔  : " + caps.FFSamplePeriod + " ミリ秒" + Environment.NewLine;
-			strResult += "  使用可能な軸の数          : " + caps.NumberAxes + Environment.NewLine;
-			strResult += "  使用可能なボタンの数      : " + caps.NumberButtons + Environment.NewLine;
-			strResult += "  使用可能なPOVの数         : " + caps.NumberPointOfViews + Environment.NewLine;
-			strResult += "  別デバイスのエイリアス    : " + caps.Alias.ToStringOX() + Environment.NewLine;
-			strResult += "  物理的にアタッチされた    : " + caps.Attatched.ToStringOX() + Environment.NewLine;
-			strResult += "  Emulateされた仮想デバイス : " + caps.Hidden.ToStringOX() + Environment.NewLine;
-			strResult += "  ユーザー モード デバイス  : " + caps.Emulated.ToStringOX() + Environment.NewLine;
-			strResult += "  デッドバンド              : " + caps.DeadBand.ToStringOX() + Environment.NewLine;
-			strResult += "  フォース フィードバック   : " + caps.ForceFeedback.ToStringOX() + Environment.NewLine;
-			strResult += "  フェード エフェクト       : " + caps.Fade.ToStringOX() + Environment.NewLine;
-			strResult += "  遅延フォース エフェクト   : " + caps.StartDelay.ToStringOX() + Environment.NewLine;
-			strResult += "  条件エフェクトの飽和      : " + caps.Saturation.ToStringOX() + Environment.NewLine;
-			strResult += "  PosNegCoefficients        : " + caps.PosNegCoefficients.ToStringOX() + Environment.NewLine;
-			strResult += "  PosNegSaturation          : " + caps.PosNegSaturation.ToStringOX() + Environment.NewLine;
-			strResult += "  プレース ホルダ           : " + caps.Phantom.ToStringOX() + Environment.NewLine;
-			strResult += "  Attack                    : " + caps.Attack.ToStringOX() + Environment.NewLine;
-			strResult += "  PolledDataFormat          : " + caps.PolledDataFormat.ToStringOX() + Environment.NewLine;
-			strResult += "  PolledDevice              : " + caps.PolledDevice.ToStringOX() + Environment.NewLine;
-			return strResult;
 		}
 	}
 }

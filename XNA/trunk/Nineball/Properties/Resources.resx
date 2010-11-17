@@ -125,6 +125,10 @@
     <value>ゲーム コントローラ自動認識状態は、コントローラが2つ以上登録されているコレクションには適用することはできません。</value>
     <comment>複数ゲーム コントローラが登録されているマンマシンI/F入力制御・管理クラスコレクションに対し、自動認識状態を設定した場合。</comment>
   </data>
+  <data name="ERR_LEGACY_INIT_FAILED" xml:space="preserve">
+    <value>このゲームパッドは初期化に失敗したため、使用できません。</value>
+    <comment>レガシ ゲームパッド初期化失敗時</comment>
+  </data>
   <data name="ERR_MESSAGE" xml:space="preserve">
     <value>エラーが発生しました。</value>
     <comment>何らかのエラーが発生した時のタイトル</comment>
@@ -148,5 +152,19 @@
   <data name="NULL" xml:space="preserve">
     <value>null</value>
     <comment>NULL文字列</comment>
+  </data>
+  <data name="WARN_LEGACY_CENTER" xml:space="preserve">
+    <value>センタリング機能を設定できませんでした。
+このゲームパッドでは、フォース フィードバックは使用できません。</value>
+    <comment>レガシ ゲームパッド初期化時の警告</comment>
+  </data>
+  <data name="WARN_LEGACY_COOP" xml:space="preserve">
+    <value>共有モードで再設定を試みます。
+このモードでは、フォース フィードバックは使用できません。</value>
+    <comment>レガシ ゲームパッド初期化時の警告</comment>
+  </data>
+  <data name="WARN_LEGACY_EXCLUSIVE" xml:space="preserve">
+    <value>ウィンドウ ハンドルが指定されていないため、ゲームパッドを排他モードに設定できません。</value>
+    <comment>レガシ ゲームパッド初期化時の警告</comment>
   </data>
 </root>

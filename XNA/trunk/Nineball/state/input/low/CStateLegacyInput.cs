@@ -7,58 +7,36 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+#if WINDOWS
+
 using danmaq.nineball.entity.input.low;
+using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input.low
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>キーボード入力制御・管理クラスの既定の状態。</summary>
-	public sealed class CStateInputKeyboard
-		: CState<CInputKeyboard, CInputKeyboard.CPrivateMembers>
+	/// <summary>レガシ ゲームパッド入力制御・管理クラスの既定の状態。</summary>
+	public sealed class CStateLegacyInput
+		: CState<CLegacyInput, CLegacyInput.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>キーボード用クラス オブジェクト。</summary>
-		public static readonly IState<CInputKeyboard, CInputKeyboard.CPrivateMembers> keyboard =
-			new CStateInputKeyboard(() => Keyboard.GetState());
-
-		/// <summary>XBOX360チャットパッド用クラス オブジェクト。</summary>
-		public static readonly IState<CInputKeyboard, CInputKeyboard.CPrivateMembers> chatPad1 =
-			new CStateInputKeyboard(() => Keyboard.GetState(PlayerIndex.One));
-
-		/// <summary>XBOX360チャットパッド用クラス オブジェクト。</summary>
-		public static readonly IState<CInputKeyboard, CInputKeyboard.CPrivateMembers> chatPad2 =
-			new CStateInputKeyboard(() => Keyboard.GetState(PlayerIndex.Two));
-
-		/// <summary>XBOX360チャットパッド用クラス オブジェクト。</summary>
-		public static readonly IState<CInputKeyboard, CInputKeyboard.CPrivateMembers> chatPad3 =
-			new CStateInputKeyboard(() => Keyboard.GetState(PlayerIndex.Three));
-
-		/// <summary>XBOX360チャットパッド用クラス オブジェクト。</summary>
-		public static readonly IState<CInputKeyboard, CInputKeyboard.CPrivateMembers> chatPad4 =
-			new CStateInputKeyboard(() => Keyboard.GetState(PlayerIndex.Four));
-
-		/// <summary>キーボードの状態を取得するためのデリゲート。</summary>
-		private Func<KeyboardState> getKeyboardState;
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly
+			IState<CLegacyInput, CLegacyInput.CPrivateMembers> instance =
+			new CStateLegacyInput();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="getKeyboardState">
-		/// キーボードの状態を取得するためのデリゲート。
-		/// </param>
-		private CStateInputKeyboard(Func<KeyboardState> getKeyboardState)
+		private CStateLegacyInput()
 		{
-			this.getKeyboardState = getKeyboardState;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -75,7 +53,7 @@ namespace danmaq.nineball.state.input.low
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		public override void setup(
-			CInputKeyboard entity, CInputKeyboard.CPrivateMembers privateMembers)
+			CLegacyInput entity, CLegacyInput.CPrivateMembers privateMembers)
 		{
 		}
 
@@ -87,11 +65,21 @@ namespace danmaq.nineball.state.input.low
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CInputKeyboard entity,
-			CInputKeyboard.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void update(CLegacyInput entity,
+			CLegacyInput.CPrivateMembers privateMembers, GameTime gameTime)
 		{
+			Device device = entity.device;
+			try
+			{
+				device.Poll();
+			}
+			catch (NotAcquiredException)
+			{
+				device.Acquire();
+				device.Poll();
+			}
 			privateMembers.prevState = privateMembers.nowState;
-			privateMembers.nowState = getKeyboardState();
+			privateMembers.nowState = device.CurrentJoystickState;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -102,8 +90,8 @@ namespace danmaq.nineball.state.input.low
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CInputKeyboard entity,
-			CInputKeyboard.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void draw(CLegacyInput entity,
+			CLegacyInput.CPrivateMembers privateMembers, GameTime gameTime)
 		{
 		}
 
@@ -118,10 +106,13 @@ namespace danmaq.nineball.state.input.low
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(
-			CInputKeyboard entity, CInputKeyboard.CPrivateMembers privateMembers, IState nextState)
+		public override void teardown(CLegacyInput entity,
+			CLegacyInput.CPrivateMembers privateMembers, IState nextState)
 		{
+			// 入力されたデータだけは破棄する
 			privateMembers.Dispose();
 		}
 	}
 }
+
+#endif
