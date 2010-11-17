@@ -133,21 +133,6 @@ namespace danmaq.nineball.entity.fonts
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>次に変化する状態を設定します。</summary>
-		/// 
-		/// <value>次に変化する状態。</value>
-		/// <exception cref="System.ArgumentNullException">
-		/// 状態として、nullを設定しようとした場合。
-		/// </exception>
-		public new IState<CFont, object> nextState
-		{
-			set
-			{
-				base.nextState = value;
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>表示対象文字列を設定/取得します。</summary>
 		/// 
 		/// <value>表示対象文字列。</value>

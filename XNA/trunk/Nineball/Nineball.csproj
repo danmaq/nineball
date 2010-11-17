@@ -99,8 +99,14 @@
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
+    <Compile Include="entity\input\CVirtualInput.cs" />
+    <Compile Include="entity\input\low\CInputGamePad.cs" />
+    <Compile Include="entity\input\low\CInputKeyboard.cs" />
+    <Compile Include="entity\input\low\CLowInput.cs" />
     <Compile Include="entity\manager\CCameraPath.cs" />
     <Compile Include="entity\manager\CMapJudgeManager.cs" />
+    <Compile Include="state\audio\CStateAudio.cs" />
+    <Compile Include="state\input\low\CStateInputKeyboard.cs" />
     <Compile Include="state\manager\CStateCameraPath.cs" />
     <Compile Include="state\manager\CStateMapJudgeManager.cs" />
     <Compile Include="util\math\EInterpolate.cs" />
@@ -246,9 +252,6 @@
     <Content Include="README.txt" />
     <None Include="_resources\nineball.ico" />
     <None Include="_resources\nineball.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="entity\input\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

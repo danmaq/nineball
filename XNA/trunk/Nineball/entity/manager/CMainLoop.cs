@@ -116,24 +116,6 @@ namespace danmaq.nineball.entity.manager
 			m_firstState = firstState;
 		}
 
-		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>次に変化する状態を設定します。</summary>
-		/// 
-		/// <value>次に変化する状態。</value>
-		/// <exception cref="System.ArgumentNullException">
-		/// 状態として、nullを設定しようとした場合。
-		/// </exception>
-		public new IState<CMainLoop, CPrivateMembers> nextState
-		{
-			set
-			{
-				base.nextState = value;
-			}
-		}
-
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
