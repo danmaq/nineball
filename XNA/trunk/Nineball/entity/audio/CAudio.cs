@@ -10,8 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using danmaq.nineball.entity.manager;
-using Microsoft.Xna.Framework;
+using danmaq.nineball.state.audio;
 using Microsoft.Xna.Framework.Audio;
 
 namespace danmaq.nineball.entity.audio
@@ -20,8 +19,55 @@ namespace danmaq.nineball.entity.audio
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XACT音声制御・管理クラス。</summary>
 	public sealed class CAudio
-		: ITask
+		: CEntity
 	{
+
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		public sealed class CPrivateMembers : IDisposable
+		{
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>オーディオ キューの一覧。</summary>
+			public readonly List<Cue> cueList = new List<Cue>();
+
+			/// <summary>オーディオ キュー予約の一覧。</summary>
+			public readonly List<string> reservedList = new List<string>();
+
+			/// <summary>オーディオ エンジン更新のためのデリゲート。</summary>
+			public readonly Action engineUpdate;
+
+			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* constructor & destructor ───────────────────────*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>コンストラクタ。</summary>
+			/// 
+			/// <param name="engineUpdate">
+			/// オーディオ エンジン更新のためのデリゲート。
+			/// </param>
+			public CPrivateMembers(Action engineUpdate)
+			{
+				this.engineUpdate = engineUpdate;
+			}
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>このオブジェクトの終了処理を行います。</summary>
+			public void Dispose()
+			{
+				reservedList.Clear();
+				for (int i = cueList.Count; --i >= 0; )
+				{
+					cueList[i].Dispose();
+				}
+				cueList.Clear();
+			}
+		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
@@ -35,14 +81,8 @@ namespace danmaq.nineball.entity.audio
 		/// <summary>波形バンク。</summary>
 		public readonly WaveBank waveBank;
 
-		/// <summary>オーディオ キューの一覧。</summary>
-		private readonly List<Cue> cueList = new List<Cue>();
-
-		/// <summary>オーディオ キュー予約の一覧。</summary>
-		private readonly List<string> reservedList = new List<string>();
-
-		/// <summary>オーディオ エンジン更新のためのデリゲート。</summary>
-		private readonly Action engineUpdate;
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		private readonly CPrivateMembers _privateMembers;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -57,15 +97,12 @@ namespace danmaq.nineball.entity.audio
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="audio">XACT音響制御の基底クラス。</param>
-		/// <param name="xwb">XACT波形バンク(BGM) ファイル名。</param>
+		/// <param name="xwb">XACT波形バンク ファイル名。</param>
 		public CAudio(CAudio audio, string xwb)
+			: this(xwb, () => engine.Update())
 		{
 			engine = audio.engine;
-			waveBank = new WaveBank(engine, xwb);
 			soundBank = audio.soundBank;
-			engineUpdate = () =>
-			{
-			};
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -73,13 +110,24 @@ namespace danmaq.nineball.entity.audio
 		/// 
 		/// <param name="xgs">XACTサウンドエンジン ファイル名。</param>
 		/// <param name="xsb">XACT再生キュー ファイル名。</param>
-		/// <param name="xwb">XACT波形バンク(BGM) ファイル名。</param>
+		/// <param name="xwb">XACT波形バンク ファイル名。</param>
 		public CAudio(string xgs, string xsb, string xwb)
+			: this(xwb, () => engine.Update())
 		{
 			engine = new AudioEngine(xgs);
-			waveBank = new WaveBank(engine, xwb);
 			soundBank = new SoundBank(engine, xsb);
-			engineUpdate = () => engine.Update();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="xwb">XACT波形バンク ファイル名。</param>
+		/// <param name="engineUpdate">オーディオ エンジン更新のためのデリゲート。</param>
+		private CAudio(string xwb, Action engineUpdate)
+			: base(CStateAudio.instance, new CPrivateMembers(engineUpdate))
+		{
+			_privateMembers = (CPrivateMembers)privateMembers;
+			waveBank = new WaveBank(engine, xwb);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -93,7 +141,7 @@ namespace danmaq.nineball.entity.audio
 		{
 			get
 			{
-				return cueList.AsReadOnly();
+				return _privateMembers.cueList.AsReadOnly();
 			}
 		}
 
@@ -101,54 +149,10 @@ namespace danmaq.nineball.entity.audio
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void update(GameTime gameTime)
-		{
-			// TODO : なんかガーベージ乱発の予感がする。パフォーマンスモニタで要確認
-			for (int i = cueList.Count; --i >= 0; )
-			{
-				Cue cue = cueList[i];
-				if (cue.IsStopped)
-				{
-					cue.Dispose();
-					cueList.RemoveAt(i);
-				}
-			}
-			for (int i = reservedList.Count; --i >= 0; )
-			{
-				string name = reservedList[i];
-				Cue cue = find(name);
-				if (cue == null || cue.GetVariable("AttackTime") >= loopInterval)
-				{
-					Cue newCue = soundBank.GetCue(name);
-					newCue.Play();
-					cueList.Add(newCue);
-					reservedList.RemoveAt(i);
-				}
-			}
-			engineUpdate();
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public void draw(GameTime gameTime)
-		{
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
-		public void Dispose()
+		public override void Dispose()
 		{
-			reservedList.Clear();
-			for (int i = cueList.Count; --i >= 0; )
-			{
-				cueList[i].Dispose();
-			}
-			cueList.Clear();
+			_privateMembers.Dispose();
 			if (!soundBank.IsDisposed)
 			{
 				soundBank.Dispose();
@@ -161,6 +165,7 @@ namespace danmaq.nineball.entity.audio
 			{
 				engine.Dispose();
 			}
+			base.Dispose();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -169,9 +174,9 @@ namespace danmaq.nineball.entity.audio
 		/// <param name="name">フレンドリ名。</param>
 		public void play(string name)
 		{
-			if (reservedList.Find(s => s == name) != null)
+			if (_privateMembers.reservedList.Find(s => s == name) != null)
 			{
-				reservedList.Add(name);
+				_privateMembers.reservedList.Add(name);
 			}
 		}
 
@@ -212,7 +217,7 @@ namespace danmaq.nineball.entity.audio
 		/// <returns>キュー。</returns>
 		public Cue find(string name)
 		{
-			return cueList.Find(c => c.Name == name);
+			return _privateMembers.cueList.Find(c => c.Name == name);
 		}
 
 		//* -----------------------------------------------------------------------*

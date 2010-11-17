@@ -8,17 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using danmaq.nineball.data.content;
 using danmaq.nineball.state;
-using danmaq.nineball.state.manager;
 
-namespace danmaq.nineball.entity.manager
+namespace danmaq.nineball.entity.input.low
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>ローダータスク クラス。</summary>
-	public class CContentLoader : CEntity
+	/// <summary>低層入力制御・管理クラス。</summary>
+	public class CLowInput<_T>
+		: CEntity
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -29,23 +27,21 @@ namespace danmaq.nineball.entity.manager
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
-			// TODO : ここはGC対策上あまり重要じゃないが、
-			// それでもQueueは使うのは避けたほうがいいかも
-			/// <summary>読込対象のコンテンツ一覧。</summary>
-			public Queue<ICache> contents;
+			/// <summary>最新の入力状態。</summary>
+			public _T nowState;
 
-			/// <summary>読込対象のコンテンツ合計数。</summary>
-			public int total;
+			/// <summary>前回の入力状態。</summary>
+			public _T prevState;
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
 
 			//* -----------------------------------------------------------------------*
-			/// <summary>フィールドのオブジェクトを解放します。</summary>
+			/// <summary>このオブジェクトの終了処理を行います。</summary>
 			public void Dispose()
 			{
-				contents = null;
-				total = 0;
+				nowState = default(_T);
+				prevState = default(_T);
 			}
 		}
 
@@ -53,41 +49,50 @@ namespace danmaq.nineball.entity.manager
 		//* constants ──────────────────────────────-*
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
-		private readonly CPrivateMembers _private;
-
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>読み込みターンの待機フレーム数。</summary>
-		public ushort interval = 1;
-
-		/// <summary>1読み込みターン毎に読み込むファイル数。</summary>
-		public ushort loadPerFrame = 1;
+		private readonly CPrivateMembers _privateMembers;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CContentLoader()
-			: base(null, new CPrivateMembers())
+		public CLowInput()
+			: this(null)
 		{
-			_private = (CPrivateMembers)privateMembers;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		public CLowInput(IState firstState)
+			: base(firstState, new CPrivateMembers())
+		{
+			_privateMembers = (CPrivateMembers)privateMembers;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>進捗率を取得します。</summary>
+		/// <summary>最新の入力状態を取得します。</summary>
 		/// 
-		/// <value>進捗率。最低値は0で、最大値は1。</value>
-		public float progress
+		/// <value>最新の入力状態。</value>
+		public _T nowState
 		{
 			get
 			{
-				int total = _private.total;
-				return (float)(total - _private.contents.Count) / (float)total;
+				return _privateMembers.nowState;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>前回の入力状態を取得します。</summary>
+		/// 
+		/// <value>前回の入力状態。</value>
+		public _T prevState
+		{
+			get
+			{
+				return _privateMembers.prevState;
 			}
 		}
 
@@ -95,20 +100,11 @@ namespace danmaq.nineball.entity.manager
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>読込対象のコンテンツ一覧をセットします。</summary>
-		/// 
-		/// <param name="contents">読込対象のコンテンツ一覧。</param>
-		public void setTarget(IEnumerable<ICache> contents)
+		/// <summary>このオブジェクトの終了処理を行います。</summary>
+		public override void Dispose()
 		{
-			_private.contents = new Queue<ICache>(contents);
-			_private.total = _private.contents.Count;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>読込を開始します。</summary>
-		public void start()
-		{
-			nextState = CStateContentLoader.instance;
+			_privateMembers.Dispose();
+			base.Dispose();
 		}
 	}
 }
