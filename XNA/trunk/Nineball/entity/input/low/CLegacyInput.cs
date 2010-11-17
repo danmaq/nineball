@@ -13,12 +13,13 @@ using System;
 using danmaq.nineball.Properties;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
+using danmaq.nineball.state.input.low;
 
 namespace danmaq.nineball.entity.input.low
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>レガシ ゲームパッド専用低層入力制御・管理クラス。</summary>
+	/// <summary>レガシ ゲームパッド専用低位入力制御・管理クラス。</summary>
 	public class CLegacyInput
 		: CEntity
 	{
@@ -79,7 +80,7 @@ namespace danmaq.nineball.entity.input.low
 		/// <param name="guid">デバイスのインスタンスGUID</param>
 		/// <param name="hWnd">ウィンドウ ハンドル</param>
 		public CLegacyInput(Guid guid, IntPtr hWnd)
-			: base(null, new CPrivateMembers())
+			: base(CStateLegacyInput.instance, new CPrivateMembers())
 		{
 			_privateMembers = (CPrivateMembers)privateMembers;
 			device = new Device(guid);
@@ -98,6 +99,33 @@ namespace danmaq.nineball.entity.input.low
 					Resources.ERR_LEGACY_INIT_FAILED + Environment.NewLine + e.ToString();
 			}
 			this.errorReport = errorReport;
+		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>最新の入力状態を取得します。</summary>
+		/// 
+		/// <value>最新の入力状態。</value>
+		public JoystickState nowInputState
+		{
+			get
+			{
+				return _privateMembers.nowState;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>前回の入力状態を取得します。</summary>
+		/// 
+		/// <value>前回の入力状態。</value>
+		public JoystickState prevInputState
+		{
+			get
+			{
+				return _privateMembers.prevState;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

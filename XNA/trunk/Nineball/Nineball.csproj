@@ -99,6 +99,9 @@
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
+    <Compile Include="util\collection\input\CGamePadInputCollection.cs" />
+    <Compile Include="util\collection\input\CKeyboardInputCollection.cs" />
+    <Compile Include="util\collection\input\CLegacyInputCollection.cs" />
     <Compile Include="entity\input\CVirtualInput.cs" />
     <Compile Include="entity\input\low\CLegacyInput.cs" />
     <Compile Include="entity\input\low\CXNAInput.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="state\input\low\CStateMouseInput.cs" />
     <Compile Include="state\manager\CStateCameraPath.cs" />
     <Compile Include="state\manager\CStateMapJudgeManager.cs" />
+    <Compile Include="util\collection\input\CMouseInputCollection.cs" />
     <Compile Include="util\math\EInterpolate.cs" />
     <Compile Include="entity\audio\SVolume.cs" />
     <Compile Include="data\EAlign.cs" />

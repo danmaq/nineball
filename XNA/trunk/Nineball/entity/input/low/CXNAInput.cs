@@ -14,7 +14,7 @@ namespace danmaq.nineball.entity.input.low
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>XNA汎用低層入力制御・管理クラス。</summary>
+	/// <summary>XNA汎用低位入力制御・管理クラス。</summary>
 	public class CXNAInput<_T>
 		: CEntity
 	{
@@ -76,7 +76,7 @@ namespace danmaq.nineball.entity.input.low
 		/// <summary>最新の入力状態を取得します。</summary>
 		/// 
 		/// <value>最新の入力状態。</value>
-		public _T nowState
+		public _T nowInputState
 		{
 			get
 			{
@@ -88,7 +88,7 @@ namespace danmaq.nineball.entity.input.low
 		/// <summary>前回の入力状態を取得します。</summary>
 		/// 
 		/// <value>前回の入力状態。</value>
-		public _T prevState
+		public _T prevInputState
 		{
 			get
 			{
