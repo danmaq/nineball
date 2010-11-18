@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using danmaq.nineball.data.input;
 using danmaq.nineball.entity.input.low;
 using danmaq.nineball.state.input.low;
 using Microsoft.Xna.Framework;

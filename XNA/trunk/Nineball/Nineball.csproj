@@ -98,11 +98,15 @@
     <Compile Include="data\content\ICache.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
+    <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\input\CInputAdapter.cs" />
     <Compile Include="entity\input\IInputAdapter.cs" />
     <Compile Include="entity\input\low\ILowerInput.cs" />
     <Compile Include="entity\input\SInputInfo.cs" />
+    <Compile Include="state\input\CStateGamePadInput.cs" />
+    <Compile Include="state\input\CStateKeyboardInput.cs" />
+    <Compile Include="state\input\CStateLegacyInput.cs" />
     <Compile Include="state\input\CStateMouseInput.cs" />
     <Compile Include="util\collection\input\CChatPadInputCollection.cs" />
     <Compile Include="util\collection\input\CGamePadInputCollection.cs" />
@@ -123,7 +127,7 @@
     <Compile Include="state\manager\CStateMapJudgeManager.cs" />
     <Compile Include="util\collection\input\CMouseInputCollection.cs" />
     <Compile Include="util\collection\input\CXBOX360InputCollection.cs" />
-    <Compile Include="util\collection\input\EMouseButtons.cs" />
+    <Compile Include="data\input\EMouseButtons.cs" />
     <Compile Include="util\collection\input\IInputCollection.cs" />
     <Compile Include="util\math\EInterpolate.cs" />
     <Compile Include="entity\audio\SVolume.cs" />
