@@ -7,23 +7,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+#if WINDOWS
+
 using System.Collections.Generic;
-using danmaq.nineball.data.input;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.low;
-using danmaq.nineball.util.collection.input;
+using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input
 {
 
-	using CAdapter = CInputAdapter<CXNAInput<MouseState>, MouseState>;
+	using CAdapter = CInputAdapter<CXNAInput<JoystickState>, JoystickState>;
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>高位入力制御・管理クラスのマウス用の状態。</summary>
-	public sealed class CStateMouseInput
+	/// <summary>高位入力制御・管理クラスのレガシ ゲームパッド用の状態。</summary>
+	public sealed class CStateLegacyInput
 		: CState<CAdapter, CAdapter.CPrivateMembers>
 	{
 
@@ -32,36 +31,18 @@ namespace danmaq.nineball.state.input
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly IState<CAdapter, CAdapter.CPrivateMembers> instance =
-			new CStateMouseInput();
+			new CStateLegacyInput();
 
-		/// <summary>プロセッサ一覧。</summary>
-		private readonly Func<SInputInfo, MouseState, SInputInfo>[] processorList;
+		/// <summary>ヌル低位入力制御・管理クラス。</summary>
+		private readonly CXNAInput<JoystickState> nullDevice = new CXNAInput<JoystickState>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateMouseInput()
+		private CStateLegacyInput()
 		{
-			Func<SInputInfo, MouseState, SInputInfo>[] processorList =
-				new Func<SInputInfo, MouseState, SInputInfo>[(int)EMouseButtons.__reserved];
-			processorList[(int)EMouseButtons.None] = (info, state) => info;
-			processorList[(int)EMouseButtons.position] = (info, state) =>
-				info.updatePosition(new Vector3(state.X, state.Y, 0));
-			processorList[(int)EMouseButtons.scrollWheel] = (info, state) =>
-				info.updatePosition(new Vector3(0, 0, state.ScrollWheelValue));
-			processorList[(int)EMouseButtons.leftButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.LeftButton));
-			processorList[(int)EMouseButtons.middleButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.MiddleButton));
-			processorList[(int)EMouseButtons.rightButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.RightButton));
-			processorList[(int)EMouseButtons.xButton1] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.XButton1));
-			processorList[(int)EMouseButtons.xButton2] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.XButton2));
-			this.processorList = processorList;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -81,7 +62,7 @@ namespace danmaq.nineball.state.input
 		{
 			if (entity.lowerInput == null)
 			{
-				entity.lowerInput = CMouseInputCollection.instance.input;
+				entity.lowerInput = nullDevice;
 			}
 		}
 
@@ -99,11 +80,7 @@ namespace danmaq.nineball.state.input
 			entity.lowerInput.update(gameTime);
 			IList<int> assign = entity.assignList;
 			List<SInputInfo> buttons = privateMembers.buttonList;
-			MouseState nowState = entity.lowerInput.nowInputState;
-			for (int i = assign.Count; --i >= 0; )
-			{
-				buttons[i] = processorList[assign[i]](buttons[i], nowState);
-			}
+			JoystickState nowState = entity.lowerInput.nowInputState;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -136,3 +113,5 @@ namespace danmaq.nineball.state.input
 		}
 	}
 }
+
+#endif

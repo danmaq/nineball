@@ -12,18 +12,17 @@ using System.Collections.Generic;
 using danmaq.nineball.data.input;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.low;
-using danmaq.nineball.util.collection.input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input
 {
 
-	using CAdapter = CInputAdapter<CXNAInput<MouseState>, MouseState>;
+	using CAdapter = CInputAdapter<CXNAInput<GamePadState>, GamePadState>;
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>高位入力制御・管理クラスのマウス用の状態。</summary>
-	public sealed class CStateMouseInput
+	/// <summary>高位入力制御・管理クラスのXBOX360 ゲームパッド用の状態。</summary>
+	public sealed class CStateGamePadInput
 		: CState<CAdapter, CAdapter.CPrivateMembers>
 	{
 
@@ -32,35 +31,58 @@ namespace danmaq.nineball.state.input
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly IState<CAdapter, CAdapter.CPrivateMembers> instance =
-			new CStateMouseInput();
+			new CStateGamePadInput();
 
 		/// <summary>プロセッサ一覧。</summary>
-		private readonly Func<SInputInfo, MouseState, SInputInfo>[] processorList;
+		private readonly Func<SInputInfo, GamePadState, SInputInfo>[] processorList;
+
+		/// <summary>ヌル低位入力制御・管理クラス。</summary>
+		private readonly CXNAInput<GamePadState> nullDevice = new CXNAInput<GamePadState>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateMouseInput()
+		private CStateGamePadInput()
 		{
-			Func<SInputInfo, MouseState, SInputInfo>[] processorList =
-				new Func<SInputInfo, MouseState, SInputInfo>[(int)EMouseButtons.__reserved];
-			processorList[(int)EMouseButtons.None] = (info, state) => info;
-			processorList[(int)EMouseButtons.position] = (info, state) =>
-				info.updatePosition(new Vector3(state.X, state.Y, 0));
-			processorList[(int)EMouseButtons.scrollWheel] = (info, state) =>
-				info.updatePosition(new Vector3(0, 0, state.ScrollWheelValue));
-			processorList[(int)EMouseButtons.leftButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.LeftButton));
-			processorList[(int)EMouseButtons.middleButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.MiddleButton));
-			processorList[(int)EMouseButtons.rightButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.RightButton));
-			processorList[(int)EMouseButtons.xButton1] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.XButton1));
-			processorList[(int)EMouseButtons.xButton2] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.XButton2));
+			Vector3 up = -Vector3.UnitY;
+			Vector3 down = Vector3.UnitY;
+			Vector3 left = -Vector3.UnitX;
+			Vector3 right = Vector3.UnitX;
+			Func<SInputInfo, GamePadState, SInputInfo>[] processorList =
+				new Func<SInputInfo, GamePadState, SInputInfo>[(int)EGamePadButtons.__reserved];
+			processorList[(int)EGamePadButtons.start] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.Start));
+			processorList[(int)EGamePadButtons.back] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.Back));
+			processorList[(int)EGamePadButtons.bigButton] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.BigButton));
+			processorList[(int)EGamePadButtons.A] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.A));
+			processorList[(int)EGamePadButtons.B] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.B));
+			processorList[(int)EGamePadButtons.X] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.X));
+			processorList[(int)EGamePadButtons.Y] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.Y));
+			processorList[(int)EGamePadButtons.leftShoulder] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.LeftShoulder));
+			processorList[(int)EGamePadButtons.rightShoulder] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.RightShoulder));
+			processorList[(int)EGamePadButtons.leftTrigger] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, state.Triggers.Left));
+			processorList[(int)EGamePadButtons.rightTrigger] = (info, state) =>
+				info.updateVelocity(new Vector3(0, 0, state.Triggers.Right));
+			processorList[(int)EGamePadButtons.dPad] = (info, state) => info.updateVelocity(
+				up * (float)state.DPad.Up +
+				down * (float)state.DPad.Down +
+				left * (float)state.DPad.Left +
+				right * (float)state.DPad.Right);
+			processorList[(int)EGamePadButtons.leftThumb] = (info, state) => info.updateVelocity(
+				new Vector3(state.ThumbSticks.Left, (float)state.Buttons.LeftStick));
+			processorList[(int)EGamePadButtons.rightThumb] = (info, state) => info.updateVelocity(
+				new Vector3(state.ThumbSticks.Right, (float)state.Buttons.RightStick));
 			this.processorList = processorList;
 		}
 
@@ -81,7 +103,7 @@ namespace danmaq.nineball.state.input
 		{
 			if (entity.lowerInput == null)
 			{
-				entity.lowerInput = CMouseInputCollection.instance.input;
+				entity.lowerInput = nullDevice;
 			}
 		}
 
@@ -99,7 +121,7 @@ namespace danmaq.nineball.state.input
 			entity.lowerInput.update(gameTime);
 			IList<int> assign = entity.assignList;
 			List<SInputInfo> buttons = privateMembers.buttonList;
-			MouseState nowState = entity.lowerInput.nowInputState;
+			GamePadState nowState = entity.lowerInput.nowInputState;
 			for (int i = assign.Count; --i >= 0; )
 			{
 				buttons[i] = processorList[assign[i]](buttons[i], nowState);
