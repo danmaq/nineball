@@ -8,17 +8,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using danmaq.nineball.entity.input.low;
 using danmaq.nineball.state;
 
-namespace danmaq.nineball.entity.input.low
+namespace danmaq.nineball.entity.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>XNA汎用低位入力制御・管理クラス。</summary>
+	/// <summary>高位入力制御・管理クラス。</summary>
 	/// 
-	/// <typeparam name="_T">入力状態の型。</typeparam>
-	public class CXNAInput<_T>
-		: CEntity, ILowerInput<_T>
+	/// <typeparam name="_T">低位入力制御・管理クラスの型。</typeparam>
+	/// <typeparam name="_S">入力状態の型。</typeparam>
+	public sealed class CInputAdapter<_T, _S>
+		: CEntity, IInputAdapter where _T : ILowerInput<_S>
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -26,14 +30,11 @@ namespace danmaq.nineball.entity.input.low
 		public sealed class CPrivateMembers : IDisposable
 		{
 
-			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-			//* fields ────────────────────────────────*
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
 
-			/// <summary>最新の入力状態。</summary>
-			public _T nowState;
-
-			/// <summary>前回の入力状態。</summary>
-			public _T prevState;
+			/// <summary>入力情報一覧。</summary>
+			public List<SInputInfo> buttonList = new List<SInputInfo>(1);
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
@@ -42,8 +43,7 @@ namespace danmaq.nineball.entity.input.low
 			/// <summary>このオブジェクトの終了処理を行います。</summary>
 			public void Dispose()
 			{
-				nowState = default(_T);
-				prevState = default(_T);
+				buttonList.Clear();
 			}
 		}
 
@@ -53,12 +53,20 @@ namespace danmaq.nineball.entity.input.low
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		private readonly CPrivateMembers _privateMembers;
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>低位入力制御・管理クラス。</summary>
+		public _T lowerInput;
+
+		private ReadOnlyCollection<int> m_assignList = Array.AsReadOnly<int>(new int[0]);
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CXNAInput()
+		public CInputAdapter()
 			: this(null)
 		{
 		}
@@ -67,36 +75,49 @@ namespace danmaq.nineball.entity.input.low
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="firstState">初期状態。</param> 
-		public CXNAInput(IState firstState)
+		public CInputAdapter(IState firstState)
 			: base(firstState, new CPrivateMembers())
 		{
 			_privateMembers = (CPrivateMembers)privateMembers;
+			buttonList = _privateMembers.buttonList.AsReadOnly();
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>最新の入力状態を取得します。</summary>
+		/// <summary>入力情報一覧を取得します。</summary>
 		/// 
-		/// <value>最新の入力状態。</value>
-		public _T nowInputState
+		/// <value>入力情報一覧。</value>
+		public IList<SInputInfo> buttonList
 		{
-			get
-			{
-				return _privateMembers.nowState;
-			}
+			get;
+			private set;
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>前回の入力状態を取得します。</summary>
+		/// <summary>割り当て一覧を取得します。</summary>
 		/// 
-		/// <value>前回の入力状態。</value>
-		public _T prevInputState
+		/// <value>割り当て一覧。</value>
+		public ReadOnlyCollection<int> assignList
 		{
 			get
 			{
-				return _privateMembers.prevState;
+				return m_assignList;
+			}
+			set
+			{
+				m_assignList = value;
+				int length = assignList.Count;
+				if (buttonList.Count != length)	// 数が食い違う場合は初期化
+				{
+					List<SInputInfo> btns = _privateMembers.buttonList;
+					btns.Clear();
+					for (int i = length; --i >= 0; )
+					{
+						btns.Add(new SInputInfo());
+					}
+				}
 			}
 		}
 
@@ -108,6 +129,7 @@ namespace danmaq.nineball.entity.input.low
 		public override void Dispose()
 		{
 			_privateMembers.Dispose();
+			buttonList = new SInputInfo[0];
 			base.Dispose();
 		}
 	}

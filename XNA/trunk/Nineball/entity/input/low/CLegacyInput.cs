@@ -11,9 +11,9 @@
 
 using System;
 using danmaq.nineball.Properties;
+using danmaq.nineball.state.input.low;
 using danmaq.nineball.util.caps;
 using Microsoft.DirectX.DirectInput;
-using danmaq.nineball.state.input.low;
 
 namespace danmaq.nineball.entity.input.low
 {
@@ -21,7 +21,7 @@ namespace danmaq.nineball.entity.input.low
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲームパッド専用低位入力制御・管理クラス。</summary>
 	public class CLegacyInput
-		: CEntity
+		: CEntity, ILowerInput<JoystickState>
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

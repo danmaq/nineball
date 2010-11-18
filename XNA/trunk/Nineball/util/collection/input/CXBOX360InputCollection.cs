@@ -7,66 +7,60 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if WINDOWS
-
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using danmaq.nineball.entity.input.low;
-using danmaq.nineball.util.math;
-using Microsoft.DirectX.DirectInput;
+using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.util.collection.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>レガシ ゲームパッド専用低位入力制御・管理クラスのコレクション。</summary>
-	public sealed class CLegacyInputCollection
+	/// <summary>XBOX360デバイス共通低位入力制御・管理クラスのコレクション。</summary>
+	/// 
+	/// <typeparam name="_T">入力状態の型。</typeparam>
+	public abstract class CXBOX360InputCollection<_T>
 		: IInputCollection
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CLegacyInputCollection instance = new CLegacyInputCollection();
-
 		/// <summary>ゲームパッド専用低位入力制御・管理クラス一覧。</summary>
-		public readonly ReadOnlyCollection<CLegacyInput> inputList;
-
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>アナログ入力におけるハイパス値(0～1)。</summary>
-		public float threshold = 0.25f;
+		public readonly ReadOnlyCollection<CXNAInput<_T>> inputList;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CLegacyInputCollection()
+		/// 
+		/// <param name="stateList">状態のコレクション。</param>
+		public CXBOX360InputCollection(IList stateList)
 		{
-			IntPtr hWnd = Process.GetCurrentProcess().Handle;
-			DeviceList srcList =
-				Manager.GetDevices(DeviceClass.GameControl, EnumDevicesFlags.AttachedOnly);
-			List<CLegacyInput> dstList = new List<CLegacyInput>(srcList.Count);
-			foreach (DeviceInstance item in srcList)
+			int length = stateList.Count;
+			CXNAInput<_T>[] array = new CXNAInput<_T>[length];
+			for (int i = length; --i >= 0; )
 			{
-				// TODO : なんかもうちょっとまともな区別方法ないの？
-				if (!(Regex.IsMatch(item.ProductName, "Xbox ?360", RegexOptions.IgnoreCase)))
-				{
-					dstList.Add(new CLegacyInput(item.InstanceGuid, hWnd));
-				}
+				array[i] = new CXNAInput<_T>((IState)stateList[i]);
 			}
-			inputList = dstList.AsReadOnly();
+			inputList = Array.AsReadOnly<CXNAInput<_T>>(array);
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 前回の状態と現在の状態より、ボタン入力があったかどうかを取得します。
+		/// </summary>
+		/// 
+		/// <param name="now">現在のキー入力状態。</param>
+		/// <param name="prev">前回のキー入力状態。</param>
+		/// <returns>ボタン入力があった場合、<c>true</c>。</returns>
+		protected abstract bool isInput(_T now, _T prev);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ボタン入力を検出します。</summary>
@@ -81,21 +75,14 @@ namespace danmaq.nineball.util.collection.input
 		/// <returns>
 		/// ボタン入力が検出されたデバイスの管理クラス。検出しなかった場合、<c>null</c>。
 		/// </returns>
-		public CLegacyInput detectInput(GameTime gameTime)
+		public CXNAInput<_T> detectInput(GameTime gameTime)
 		{
-			CLegacyInput result = null;
-			int threshold =
-				(int)CInterpolate._clampSmooth(0, CLegacyInput.RANGE, this.threshold, 1);
+			CXNAInput<_T> result = null;
 			for (int i = inputList.Count; --i >= 0 && result == null; )
 			{
-				CLegacyInput input = inputList[i];
+				CXNAInput<_T> input = inputList[i];
 				input.update(gameTime);
-				JoystickState state = input.nowInputState;
-				if (state.Equals(input.prevInputState) && (
-					Array.Exists<byte>(state.GetButtons(), b => b != 0) ||
-					Math.Abs(state.X) >= threshold ||
-					Math.Abs(state.Y) >= threshold ||
-					Math.Abs(state.Z) >= threshold))
+				if (isInput(input.nowInputState, input.prevInputState))
 				{
 					result = input;
 				}
@@ -122,5 +109,3 @@ namespace danmaq.nineball.util.collection.input
 		}
 	}
 }
-
-#endif

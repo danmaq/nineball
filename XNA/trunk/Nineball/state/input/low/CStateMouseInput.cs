@@ -9,7 +9,6 @@
 
 using System;
 using danmaq.nineball.entity.input.low;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input.low
