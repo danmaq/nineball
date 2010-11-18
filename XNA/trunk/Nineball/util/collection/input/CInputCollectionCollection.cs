@@ -7,62 +7,45 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if WINDOWS
-
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using danmaq.nineball.entity.input.low;
-using danmaq.nineball.util.math;
-using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.util.collection.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>レガシ ゲームパッド専用低位入力制御・管理クラスのコレクション。</summary>
-	public sealed class CLegacyInputCollection
-		: IInputCollection
+	/// <summary>低位入力制御・管理クラスのコレクションのコレクション。</summary>
+	public sealed class CInputCollectionCollection
+		: List<IInputCollection>, IInputCollection
 	{
-
-		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* constants ──────────────────────────────-*
-
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CLegacyInputCollection instance = new CLegacyInputCollection();
-
-		/// <summary>ゲームパッド専用低位入力制御・管理クラス一覧。</summary>
-		public readonly ReadOnlyCollection<CLegacyInput> inputList;
-
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>アナログ入力におけるハイパス値(0～1)。</summary>
-		public float threshold = 0.25f;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CLegacyInputCollection()
+		private CInputCollectionCollection()
 		{
-			IntPtr hWnd = Process.GetCurrentProcess().Handle;
-			DeviceList srcList =
-				Manager.GetDevices(DeviceClass.GameControl, EnumDevicesFlags.AttachedOnly);
-			List<CLegacyInput> dstList = new List<CLegacyInput>(srcList.Count);
-			foreach (DeviceInstance item in srcList)
-			{
-				// TODO : なんかもうちょっとまともな区別方法ないの？
-				if (!(Regex.IsMatch(item.ProductName, "Xbox ?360", RegexOptions.IgnoreCase)))
-				{
-					dstList.Add(new CLegacyInput(item.InstanceGuid, hWnd));
-				}
-			}
-			inputList = dstList.AsReadOnly();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="capacity">新しいリストに格納できる要素の数。</param>
+		private CInputCollectionCollection(int capacity)
+			: base(capacity)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="collection">
+		/// 新しいリストに要素がコピーされたコレクション。
+		/// </param>
+		private CInputCollectionCollection(IEnumerable<IInputCollection> collection)
+			: base(collection)
+		{
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -78,29 +61,10 @@ namespace danmaq.nineball.util.collection.input
 		/// </remarks>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		/// <returns>
-		/// ボタン入力が検出されたデバイスの管理クラス。検出しなかった場合、<c>null</c>。
-		/// </returns>
-		public CLegacyInput detectInput(GameTime gameTime)
+		/// <returns>検出されたボタン。</returns>
+		public IInputCollection detectInput(GameTime gameTime)
 		{
-			CLegacyInput result = null;
-			int threshold =
-				(int)CInterpolate._clampSmooth(0, CLegacyInput.RANGE, this.threshold, 1);
-			for (int i = inputList.Count; --i >= 0 && result == null; )
-			{
-				CLegacyInput input = inputList[i];
-				input.update(gameTime);
-				JoystickState state = input.nowInputState;
-				if (state.Equals(input.prevInputState) && (
-					Array.Exists<byte>(state.GetButtons(), b => b != 0) ||
-					Math.Abs(state.X) >= threshold ||
-					Math.Abs(state.Y) >= threshold ||
-					Math.Abs(state.Z) >= threshold))
-				{
-					result = input;
-				}
-			}
-			return result;
+			return Find(c => c.detectInput(gameTime));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -122,5 +86,3 @@ namespace danmaq.nineball.util.collection.input
 		}
 	}
 }
-
-#endif
