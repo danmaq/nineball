@@ -27,8 +27,8 @@ namespace danmaq.nineball.old.core.manager
 		//* constants ──────────────────────────────-*
 
 		/// <summary>接続先。</summary>
-		private readonly entity.manager.CCoRoutineManager bridge =
-			new entity.manager.CCoRoutineManager();
+		private readonly nineball.entity.manager.CCoRoutineManager bridge =
+			new nineball.entity.manager.CCoRoutineManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*

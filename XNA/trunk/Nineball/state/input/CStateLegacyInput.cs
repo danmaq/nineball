@@ -12,13 +12,14 @@
 using System.Collections.Generic;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.low;
+using danmaq.nineball.util.math;
 using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.state.input
 {
 
-	using CAdapter = CInputAdapter<CXNAInput<JoystickState>, JoystickState>;
+	using CAdapter = CInputAdapter<CLegacyInput, JoystickState>;
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>高位入力制御・管理クラスのレガシ ゲームパッド用の状態。</summary>
@@ -32,9 +33,6 @@ namespace danmaq.nineball.state.input
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly IState<CAdapter, CAdapter.CPrivateMembers> instance =
 			new CStateLegacyInput();
-
-		/// <summary>ヌル低位入力制御・管理クラス。</summary>
-		private readonly CXNAInput<JoystickState> nullDevice = new CXNAInput<JoystickState>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -60,10 +58,6 @@ namespace danmaq.nineball.state.input
 		/// </param>
 		public override void setup(CAdapter entity, CAdapter.CPrivateMembers privateMembers)
 		{
-			if (entity.lowerInput == null)
-			{
-				entity.lowerInput = nullDevice;
-			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -81,6 +75,20 @@ namespace danmaq.nineball.state.input
 			IList<int> assign = entity.assignList;
 			List<SInputInfo> buttons = privateMembers.buttonList;
 			JoystickState nowState = entity.lowerInput.nowInputState;
+			byte[] buffer = nowState.GetButtons();
+			for (int i = assign.Count; --i >= 0; )
+			{
+				if (assign[i] >= 0)
+				{
+					buttons[i].updateVelocity(Vector3.UnitZ *
+						CInterpolate._amountSmooth(buffer[assign[i]], byte.MaxValue));
+				}
+				else
+				{
+					buttons[i].updateVelocity(new Vector3(nowState.X, nowState.Y, nowState.Z) /
+						(float)CLegacyInput.RANGE);
+				}
+			}
 		}
 
 		//* -----------------------------------------------------------------------*

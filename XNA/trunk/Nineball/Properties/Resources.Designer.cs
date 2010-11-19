@@ -97,6 +97,16 @@ namespace danmaq.nineball.Properties {
         }
         
         /// <summary>
+        ///   多重起動されました。
+        ///このアプリケーションは多重起動に対応しておりません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ERR_MUTEX {
+            get {
+                return ResourceManager.GetString("ERR_MUTEX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コンテンツ マネージャが初期化されていません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ERR_NULL_MGR_CONTENT {

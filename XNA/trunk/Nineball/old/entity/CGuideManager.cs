@@ -12,17 +12,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using danmaq.nineball.entity;
+using danmaq.nineball.entity.component;
 using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 
-namespace danmaq.nineball.entity.component {
+namespace danmaq.nineball.old.entity {
 
 	// TODO : どのように使うかの仕様が作りかけ
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360ガイド 補助クラス。</summary>
-	public sealed class CGuideManager : CGameComponent<CEntity> {
+	public sealed class CGuideManager : CGameComponent {
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>ガイド表示情報の共通基底クラス。</summary>

@@ -161,7 +161,7 @@ namespace danmaq.nineball.state.manager
 #if XBOX360
 			registedGameComponentList.Add( new GamerServicesComponent( game ) );
 			registedGameComponentList.Add(
-				new CGameComponent<CEntity>( game, new CEntity( CStateGuideHelper.instance ), false ) );
+				new CGameComponent(game, new CEntity(CStateGuideHelper.instance), false));
 #endif
 			registedGameComponentList.Add(new CDrawableGameComponent(
 				game, new CEntity(CStateFPSCalculator.instance), false));

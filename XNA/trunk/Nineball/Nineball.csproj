@@ -136,7 +136,7 @@
     <Compile Include="entity\fonts\CFont.cs" />
     <Compile Include="entity\fonts\SFontGradationInfo.cs" />
     <Compile Include="data\SGradation.cs" />
-    <Compile Include="entity\component\CGuideManager.cs" />
+    <Compile Include="old\entity\CGuideManager.cs" />
     <Compile Include="entity\component\IGameComponentWithEntity.cs" />
     <Compile Include="old\data\ButtonsExtension.cs" />
     <Compile Include="old\data\EAxisLegacy.cs" />

@@ -44,6 +44,30 @@ namespace danmaq.nineball.entity.input
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在押されているかどうかを取得します。</summary>
+		/// 
+		/// <value>現在押されている場合、<c>true</c>。</value>
+		public bool press
+		{
+			get
+			{
+				return velocity.Z > 0;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在押されたかどうかを取得します。</summary>
+		/// 
+		/// <value>現在押された場合、<c>true</c>。</value>
+		public bool push
+		{
+			get
+			{
+				return velocity.Z > 0 && prevVelocity.Z == 0;
+			}
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
