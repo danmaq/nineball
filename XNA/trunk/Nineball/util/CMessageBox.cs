@@ -15,7 +15,7 @@ using danmaq.nineball.Properties;
 using System.Windows.Forms;
 #else
 using Microsoft.Xna.Framework.GamerServices;
-using danmaq.Nineball.core.inner;
+using danmaq.nineball.state.manager;
 #endif
 
 namespace danmaq.nineball.util
@@ -79,7 +79,7 @@ namespace danmaq.nineball.util
 #if WINDOWS
 			MessageBox.Show(strText, titleBar, MessageBoxButtons.OK, MessageBoxIcon.Hand);
 #else
-			CStateGuideHelper.reserveMessage( endMessageBox, strText );
+			CStateGuideHelper.instance.reserveMessage( endMessageBox, strText );
 #endif
 		}
 

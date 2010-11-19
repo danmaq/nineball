@@ -50,8 +50,7 @@ namespace danmaq.nineball
 			{
 				if(!mutex.WaitOne(0, false))
 				{
-					throw new ApplicationException("多重起動されました。" + Environment.NewLine +
-						"このアプリケーションは多重起動に対応しておりません。");
+					throw new ApplicationException(Resources.ERR_MUTEX);
 				}
 			}
 

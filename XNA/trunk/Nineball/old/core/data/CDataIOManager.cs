@@ -271,7 +271,7 @@ namespace danmaq.nineball.old.core.data
 #else
 			if(staticMembers.deviceReady)
 			{
-				load(staticMembers.getPath(fileName));
+				load(staticMembers.getPath(FILE));
 			}
 			else
 			{
@@ -295,7 +295,7 @@ namespace danmaq.nineball.old.core.data
 #else
 			if(staticMembers.deviceReady)
 			{
-				bResult = save(staticMembers.getPath(fileName));
+				bResult = save(staticMembers.getPath(FILE));
 			}
 #endif
 			CLogger.add(typeName + "を" + FILE + "へ保存" + (bResult ? "完了。" : "に失敗。"));
@@ -318,7 +318,7 @@ namespace danmaq.nineball.old.core.data
 			staticMembers.initializeDevice(result);
 			load(
 				staticMembers.deviceReady ?
-				staticMembers.getPath(fileName) : null);
+				staticMembers.getPath(FILE) : null);
 		}
 #endif
 

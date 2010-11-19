@@ -133,6 +133,11 @@
     <value>エラーが発生しました。</value>
     <comment>何らかのエラーが発生した時のタイトル</comment>
   </data>
+  <data name="ERR_MUTEX" xml:space="preserve">
+    <value>多重起動されました。
+このアプリケーションは多重起動に対応しておりません。</value>
+    <comment>Mutex初期化に失敗時</comment>
+  </data>
   <data name="ERR_NULL_MGR_CONTENT" xml:space="preserve">
     <value>コンテンツ マネージャが初期化されていません。</value>
     <comment>コンテンツ キャッシュにコンテンツ マネージャが設定されていない状態で読み込みを開始した場合</comment>
