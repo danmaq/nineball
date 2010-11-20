@@ -1,26 +1,27 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "danmaq Nineball Library" )]
-[assembly: AssemblyProduct( "danmaq Nineball Library" )]
-[assembly: AssemblyDescription( "" )]
-[assembly: AssemblyCompany( "danmaq" )]
-[assembly: AssemblyCopyright( "Copyright © 2008-2010 danmaq All rights reserved." )]
-[assembly: AssemblyTrademark( "" )]
-[assembly: AssemblyCulture( "" )]
+[assembly: AssemblyTitle("Blank")]
+[assembly: AssemblyProduct("Blank")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyCompany("Microsoft")]
+
+[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible( true )]
+[assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid( "22c2cfa5-b4a7-4c79-85af-f9046fe19cae" )]
+[assembly: Guid("235e4b05-c4d3-4ad4-a111-09b044a9d53c")]
+
 
 // Version information for an assembly consists of the following four values:
 //
@@ -29,5 +30,4 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.0.66")]
-[assembly: NeutralResourcesLanguageAttribute( "ja-JP" )]
+[assembly: AssemblyVersion("0.0.0.1")]
