@@ -108,6 +108,7 @@
     <Compile Include="state\input\CStateKeyboardInput.cs" />
     <Compile Include="state\input\CStateLegacyInput.cs" />
     <Compile Include="state\input\CStateMouseInput.cs" />
+    <Compile Include="util\CMutexObject.cs" />
     <Compile Include="util\collection\input\CChatPadInputCollection.cs" />
     <Compile Include="util\collection\input\CGamePadInputCollection.cs" />
     <Compile Include="util\collection\input\CInputCollectionCollection.cs" />
