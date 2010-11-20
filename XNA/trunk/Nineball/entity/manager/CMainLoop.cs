@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework;
 namespace danmaq.nineball.entity.manager
 {
 
+#if false
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>メインループのゲームコンポーネント クラス。</summary>
 	public sealed class CMainLoop : CEntity
@@ -139,4 +140,5 @@ namespace danmaq.nineball.entity.manager
 			}
 		}
 	}
+#endif
 }

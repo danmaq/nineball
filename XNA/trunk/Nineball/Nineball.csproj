@@ -101,6 +101,8 @@
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\input\CInputAdapter.cs" />
+    <Compile Include="entity\input\CInputEmptyAdapter.cs" />
+    <Compile Include="util\collection\input\CInputObject.cs" />
     <Compile Include="entity\input\IInputAdapter.cs" />
     <Compile Include="entity\input\low\ILowerInput.cs" />
     <Compile Include="entity\input\SInputInfo.cs" />

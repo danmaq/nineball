@@ -72,6 +72,15 @@ namespace danmaq.nineball.entity.input
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>入力情報をリセットします。</summary>
+		public void reset()
+		{
+			velocity = Vector3.Zero;
+			velocityGap = Vector3.Zero;
+			position = Vector3.Zero;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>入力方向を更新します。</summary>
 		/// 
 		/// <param name="velocity">入力方向。</param>

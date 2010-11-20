@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework.GamerServices;
 
 namespace danmaq.nineball.state.manager
 {
+#if false
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>メインループクラス用の既定の状態です。</summary>
@@ -224,4 +225,6 @@ namespace danmaq.nineball.state.manager
 			isSetupped = false;
 		}
 	}
+
+#endif
 }

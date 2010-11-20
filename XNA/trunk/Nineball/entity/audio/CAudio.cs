@@ -36,22 +36,13 @@ namespace danmaq.nineball.entity.audio
 			/// <summary>オーディオ キュー予約の一覧。</summary>
 			public readonly List<string> reservedList = new List<string>();
 
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
+
 			/// <summary>オーディオ エンジン更新のためのデリゲート。</summary>
-			public readonly Action engineUpdate;
-
-			//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-			//* constructor & destructor ───────────────────────*
-
-			//* -----------------------------------------------------------------------*
-			/// <summary>コンストラクタ。</summary>
-			/// 
-			/// <param name="engineUpdate">
-			/// オーディオ エンジン更新のためのデリゲート。
-			/// </param>
-			public CPrivateMembers(Action engineUpdate)
+			public Action engineUpdate = () =>
 			{
-				this.engineUpdate = engineUpdate;
-			}
+			};
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
@@ -93,41 +84,88 @@ namespace danmaq.nineball.entity.audio
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
+		// TODO : WaveBankのロジック、一本化したいな
+
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>
+		/// ストリーミング波形バンクを使用するためには、<paramref name="offset"/>と
+		/// <paramref name="packetSize"/>を設定する必要があります。
+		/// </para>
+		/// </summary>
+		/// <remarks>
+		/// このコンストラクタで初期化されたインスタンスは、
+		/// オーディオ エンジンの更新を実行しません。
+		/// </remarks>
 		/// 
 		/// <param name="audio">XACT音響制御の基底クラス。</param>
 		/// <param name="xwb">XACT波形バンク ファイル名。</param>
-		public CAudio(CAudio audio, string xwb)
-			: this(xwb, () => engine.Update())
+		/// <param name="offset">
+		/// Wave バンク データ ファイル内のオフセット。
+		/// このオフセットは DVD セクター単位で揃える必要があります。
+		/// </param>
+		/// <param name="packetSize">
+		/// 各ストリームで使用されるストリームのパケット サイズ (セクター単位)。
+		/// 最小値は 2 です。
+		/// </param>
+		public CAudio(CAudio audio, string xwb, int? offset, short? packetSize)
+			: this()
 		{
 			engine = audio.engine;
+			if (offset.HasValue && packetSize.HasValue)
+			{
+				waveBank = new WaveBank(engine, xwb, offset.Value, packetSize.Value);
+			}
+			else
+			{
+				waveBank = new WaveBank(engine, xwb);
+			}
 			soundBank = audio.soundBank;
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>
+		/// ストリーミング波形バンクを使用するためには、<paramref name="offset"/>と
+		/// <paramref name="packetSize"/>を設定する必要があります。
+		/// </para>
+		/// </summary>
 		/// 
 		/// <param name="xgs">XACTサウンドエンジン ファイル名。</param>
 		/// <param name="xsb">XACT再生キュー ファイル名。</param>
 		/// <param name="xwb">XACT波形バンク ファイル名。</param>
-		public CAudio(string xgs, string xsb, string xwb)
-			: this(xwb, () => engine.Update())
+		/// <param name="offset">
+		/// Wave バンク データ ファイル内のオフセット。
+		/// このオフセットは DVD セクター単位で揃える必要があります。
+		/// </param>
+		/// <param name="packetSize">
+		/// 各ストリームで使用されるストリームのパケット サイズ (セクター単位)。
+		/// 最小値は 2 です。
+		/// </param>
+		public CAudio(string xgs, string xsb, string xwb, int? offset, short? packetSize)
+			: this()
 		{
 			engine = new AudioEngine(xgs);
+			if (offset.HasValue && packetSize.HasValue)
+			{
+				waveBank = new WaveBank(engine, xwb, offset.Value, packetSize.Value);
+			}
+			else
+			{
+				waveBank = new WaveBank(engine, xwb);
+			}
 			soundBank = new SoundBank(engine, xsb);
+			_privateMembers.engineUpdate = engineUpdate;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="xwb">XACT波形バンク ファイル名。</param>
-		/// <param name="engineUpdate">オーディオ エンジン更新のためのデリゲート。</param>
-		private CAudio(string xwb, Action engineUpdate)
-			: base(CStateAudio.instance, new CPrivateMembers(engineUpdate))
+		private CAudio()
+			: base(CStateAudio.instance, new CPrivateMembers())
 		{
 			_privateMembers = (CPrivateMembers)privateMembers;
-			waveBank = new WaveBank(engine, xwb);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -174,7 +212,7 @@ namespace danmaq.nineball.entity.audio
 		/// <param name="name">フレンドリ名。</param>
 		public void play(string name)
 		{
-			if (_privateMembers.reservedList.Find(s => s == name) != null)
+			if (_privateMembers.reservedList.Find(s => s == name) == null)
 			{
 				_privateMembers.reservedList.Add(name);
 			}
@@ -201,13 +239,48 @@ namespace danmaq.nineball.entity.audio
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>音声を再開します。</summary>
+		/// <summary>音声を停止します。</summary>
 		/// 
 		/// <param name="name">フレンドリ名。</param>
 		/// <returns>再開した場合、<c>true</c>。</returns>
 		public bool stop(string name)
 		{
-			return command(name, c => c.Stop(AudioStopOptions.AsAuthored));
+			return stop(name, AudioStopOptions.AsAuthored);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>音声を停止します。</summary>
+		/// 
+		/// <param name="name">フレンドリ名。</param>
+		/// <param name="options">
+		/// どのようにサウンドを停止するかを指定する列挙値。
+		/// </param>
+		/// <returns>再開した場合、<c>true</c>。</returns>
+		public bool stop(string name, AudioStopOptions options)
+		{
+			return command(name, c => c.Stop(options));
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>音声を全て停止します。</summary>
+		public void stop()
+		{
+			stop(AudioStopOptions.AsAuthored);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>音声を全て停止します。</summary>
+		/// 
+		/// <param name="options">
+		/// どのようにサウンドを停止するかを指定する列挙値。
+		/// </param>
+		public void stop(AudioStopOptions options)
+		{
+			List<Cue> cueList = _privateMembers.cueList;
+			for (int i = cueList.Count; --i >= 0; )
+			{
+				cueList[i].Stop(options);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -235,6 +308,19 @@ namespace danmaq.nineball.entity.audio
 				action(cue);
 			}
 			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>オーディオ エンジンを更新します。</summary>
+		private void engineUpdate()
+		{
+			engine.Update();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>何もしない関数です。</summary>
+		private void noop()
+		{
 		}
 	}
 }
