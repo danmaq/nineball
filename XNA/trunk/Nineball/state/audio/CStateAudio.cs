@@ -64,7 +64,6 @@ namespace danmaq.nineball.state.audio
 		public override void update(
 			CAudio entity, CAudio.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			// TODO : なんかガーベージ乱発の予感がする。パフォーマンスモニタで要確認
 			List<Cue> cueList = privateMembers.cueList;
 			List<string> reservedList = privateMembers.reservedList;
 			for (int i = cueList.Count; --i >= 0; )
@@ -72,6 +71,7 @@ namespace danmaq.nineball.state.audio
 				Cue cue = cueList[i];
 				if (cue.IsStopped)
 				{
+					// Cueクラスは使いまわすことができない
 					cue.Dispose();
 					cueList.RemoveAt(i);
 				}

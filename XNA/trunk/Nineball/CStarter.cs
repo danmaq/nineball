@@ -14,6 +14,8 @@ using danmaq.nineball.state.manager;
 using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 
+#if false
+
 namespace danmaq.nineball
 {
 
@@ -137,3 +139,5 @@ namespace danmaq.nineball
 		}
 	}
 }
+
+#endif
