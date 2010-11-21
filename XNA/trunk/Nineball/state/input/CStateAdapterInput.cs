@@ -9,55 +9,33 @@
 
 using System;
 using System.Collections.Generic;
-using danmaq.nineball.data.input;
 using danmaq.nineball.entity.input;
-using danmaq.nineball.entity.input.low;
-using danmaq.nineball.util.collection.input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input
 {
 
-	using CAdapter = CInputAdapter<CXNAInput<KeyboardState>, KeyboardState>;
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>
-	/// 高位入力制御・管理クラスのキーボードまたはXBOX360チャットパッド用の状態。
-	/// </summary>
-	public sealed class CStateKeyboardInput
-		: CState<CAdapter, CAdapter.CPrivateMembers>
+	/// <summary>高位入力制御・管理クラス コレクションの状態。</summary>
+	public sealed class CStateAdapterInput
+		: CState<CInputAdapterAdapter, CInputAdapterAdapter.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CAdapter, CAdapter.CPrivateMembers> instance =
-			new CStateKeyboardInput();
-
-		/// <summary>プロセッサ一覧。</summary>
-		private readonly Func<SInputInfo, KeyboardState, SInputInfo>[] processorList;
+		public static readonly
+			IState<CInputAdapterAdapter, CInputAdapterAdapter.CPrivateMembers> instance =
+				new CStateAdapterInput();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateKeyboardInput()
+		private CStateAdapterInput()
 		{
-			Func<SInputInfo, KeyboardState, SInputInfo>[] processorList =
-				new Func<SInputInfo, KeyboardState, SInputInfo>[-(int)EKeyboardAxisButtons.__reserved];
-			processorList[0] = (info, state) => info;
-			processorList[-(int)EKeyboardAxisButtons.wsad] = (info, state) =>
-				updateAxis(info, state, Keys.W, Keys.S, Keys.A, Keys.D);
-			processorList[-(int)EKeyboardAxisButtons.ijkl] = (info, state) =>
-				updateAxis(info, state, Keys.I, Keys.J, Keys.K, Keys.L);
-			processorList[-(int)EKeyboardAxisButtons.arrow] = (info, state) =>
-				updateAxis(info, state, Keys.Up, Keys.Down, Keys.Left, Keys.Right);
-			processorList[-(int)EKeyboardAxisButtons.numpad] = (info, state) =>
-				updateAxis(info, state, Keys.NumPad8, Keys.NumPad2, Keys.NumPad4, Keys.NumPad6);
-			this.processorList = processorList;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -73,12 +51,9 @@ namespace danmaq.nineball.state.input
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CAdapter entity, CAdapter.CPrivateMembers privateMembers)
+		public override void setup(
+			CInputAdapterAdapter entity, CInputAdapterAdapter.CPrivateMembers privateMembers)
 		{
-			if (entity.lowerInput == null)
-			{
-				entity.lowerInput = CKeyboardInputCollection.instance.input;
-			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -89,25 +64,31 @@ namespace danmaq.nineball.state.input
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(
-			CAdapter entity, CAdapter.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void update(CInputAdapterAdapter entity,
+			CInputAdapterAdapter.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			entity.lowerInput.update(gameTime);
-			IList<int> assign = entity.assignList;
-			List<SInputInfo> buttons = privateMembers.buttonList;
-			KeyboardState nowState = entity.lowerInput.nowInputState;
-			for (int i = assign.Count; --i >= 0; )
+			IList<IInputAdapter> lower = entity.lowerInput;
+			IList<int> assigns = entity.assignList;
+			List<SInputInfo> btns = privateMembers.buttonList;
+			int lLength = lower.Count;
+			for (int j = lLength; --j >= 0; lower[j].update(gameTime))
+				;
+			for (int i = assigns.Count; --i >= 0; )
 			{
-				int id = assign[i];
-				if (id >= 0)
+				int id = assigns[i];
+				Vector3 velocity = Vector3.Zero;
+				float vm = 0;
+				for (int j = lLength; --j >= 0; )
 				{
-					buttons[i] = buttons[i].updateVelocity(
-						Vector3.UnitZ * Convert.ToInt32(nowState.IsKeyDown((Keys)id)));
+					SInputInfo src = lower[j].buttonList[id];
+					velocity += src.velocity;
+					vm = MathHelper.Max(vm, src.velocity.Length());
 				}
-				else
+				if (vm > 0)
 				{
-					buttons[i] = processorList[-id](buttons[i], nowState);
+					velocity.Normalize();
 				}
+				btns[id] = btns[id].updateVelocity(velocity * vm);
 			}
 		}
 
@@ -119,8 +100,8 @@ namespace danmaq.nineball.state.input
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(
-			CAdapter entity, CAdapter.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void draw(CInputAdapterAdapter entity,
+			CInputAdapterAdapter.CPrivateMembers privateMembers, GameTime gameTime)
 		{
 		}
 
@@ -135,34 +116,9 @@ namespace danmaq.nineball.state.input
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(
-			CAdapter entity, CAdapter.CPrivateMembers privateMembers, IState nextState)
+		public override void teardown(CInputAdapterAdapter entity,
+			CInputAdapterAdapter.CPrivateMembers privateMembers, IState nextState)
 		{
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>方向キーの情報を取得します。</summary>
-		/// 
-		/// <param name="prev">前回の入力情報。</param>
-		/// <param name="state">低位入力クラスから取得した最新の情報。</param>
-		/// <param name="up">上ボタンとして割り当てられたキー。</param>
-		/// <param name="down">下ボタンとして割り当てられたキー。</param>
-		/// <param name="left">左ボタンとして割り当てられたキー。</param>
-		/// <param name="right">右ボタンとして割り当てられたキー。</param>
-		/// <returns>最新の入力情報。</returns>
-		private SInputInfo updateAxis(SInputInfo prev, KeyboardState state,
-			Keys up, Keys down, Keys left, Keys right)
-		{
-			Vector3 v =
-				Convert.ToInt32(state.IsKeyDown(up)) * -Vector3.UnitY +
-				Convert.ToInt32(state.IsKeyDown(down)) * Vector3.UnitY +
-				Convert.ToInt32(state.IsKeyDown(left)) * -Vector3.UnitX +
-				Convert.ToInt32(state.IsKeyDown(right)) * Vector3.UnitX;
-			if (v.Length() > 0)
-			{
-				v.Normalize();
-			}
-			return prev.updateVelocity(v);
 		}
 	}
 }

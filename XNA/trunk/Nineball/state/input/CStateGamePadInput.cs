@@ -34,7 +34,7 @@ namespace danmaq.nineball.state.input
 			new CStateGamePadInput();
 
 		/// <summary>プロセッサ一覧。</summary>
-		private readonly Func<SInputInfo, GamePadState, SInputInfo>[] processorList;
+		private readonly Func<GamePadState, Vector3>[] processorList;
 
 		/// <summary>ヌル低位入力制御・管理クラス。</summary>
 		private readonly CXNAInput<GamePadState> nullDevice = new CXNAInput<GamePadState>();
@@ -50,39 +50,48 @@ namespace danmaq.nineball.state.input
 			Vector3 down = Vector3.UnitY;
 			Vector3 left = -Vector3.UnitX;
 			Vector3 right = Vector3.UnitX;
-			Func<SInputInfo, GamePadState, SInputInfo>[] processorList =
-				new Func<SInputInfo, GamePadState, SInputInfo>[(int)EGamePadButtons.__reserved];
-			processorList[(int)EGamePadButtons.start] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.Start));
-			processorList[(int)EGamePadButtons.back] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.Back));
-			processorList[(int)EGamePadButtons.bigButton] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.BigButton));
-			processorList[(int)EGamePadButtons.A] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.A));
-			processorList[(int)EGamePadButtons.B] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.B));
-			processorList[(int)EGamePadButtons.X] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.X));
-			processorList[(int)EGamePadButtons.Y] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.Y));
-			processorList[(int)EGamePadButtons.leftShoulder] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.LeftShoulder));
-			processorList[(int)EGamePadButtons.rightShoulder] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, (float)state.Buttons.RightShoulder));
-			processorList[(int)EGamePadButtons.leftTrigger] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, state.Triggers.Left));
-			processorList[(int)EGamePadButtons.rightTrigger] = (info, state) =>
-				info.updateVelocity(new Vector3(0, 0, state.Triggers.Right));
-			processorList[(int)EGamePadButtons.dPad] = (info, state) => info.updateVelocity(
-				up * (float)state.DPad.Up +
-				down * (float)state.DPad.Down +
-				left * (float)state.DPad.Left +
-				right * (float)state.DPad.Right);
-			processorList[(int)EGamePadButtons.leftThumb] = (info, state) => info.updateVelocity(
-				new Vector3(state.ThumbSticks.Left, (float)state.Buttons.LeftStick));
-			processorList[(int)EGamePadButtons.rightThumb] = (info, state) => info.updateVelocity(
-				new Vector3(state.ThumbSticks.Right, (float)state.Buttons.RightStick));
+			Func<GamePadState, Vector3>[] processorList =
+				new Func<GamePadState, Vector3>[(int)EGamePadButtons.__reserved];
+			processorList[(int)EGamePadButtons.none] = (state) => Vector3.Zero;
+			processorList[(int)EGamePadButtons.start] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.Start;
+			processorList[(int)EGamePadButtons.back] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.Back;
+			processorList[(int)EGamePadButtons.bigButton] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.BigButton;
+			processorList[(int)EGamePadButtons.A] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.A;
+			processorList[(int)EGamePadButtons.B] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.B;
+			processorList[(int)EGamePadButtons.X] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.X;
+			processorList[(int)EGamePadButtons.Y] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.Y;
+			processorList[(int)EGamePadButtons.leftShoulder] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.LeftShoulder;
+			processorList[(int)EGamePadButtons.rightShoulder] = (state) =>
+				Vector3.UnitZ * (float)state.Buttons.RightShoulder;
+			processorList[(int)EGamePadButtons.leftTrigger] = (state) =>
+				Vector3.UnitZ * state.Triggers.Left;
+			processorList[(int)EGamePadButtons.rightTrigger] = (state) =>
+				Vector3.UnitZ * state.Triggers.Right;
+			processorList[(int)EGamePadButtons.dPad] = (state) =>
+			{
+				Vector3 v =
+					-Vector3.UnitY * (float)state.DPad.Up +
+					Vector3.UnitY * (float)state.DPad.Down +
+					-Vector3.UnitX * (float)state.DPad.Left +
+					Vector3.UnitX * (float)state.DPad.Right;
+				if (v.Length() > 0)
+				{
+					v.Normalize();
+				}
+				return v;
+			};
+			processorList[(int)EGamePadButtons.leftThumb] = (state) =>
+			    new Vector3(state.ThumbSticks.Left, (float)state.Buttons.LeftStick);
+			processorList[(int)EGamePadButtons.rightThumb] = (state) => 
+			    new Vector3(state.ThumbSticks.Right, (float)state.Buttons.RightStick);
 			this.processorList = processorList;
 		}
 
@@ -122,9 +131,21 @@ namespace danmaq.nineball.state.input
 			IList<int> assign = entity.assignList;
 			List<SInputInfo> buttons = privateMembers.buttonList;
 			GamePadState nowState = entity.lowerInput.nowInputState;
+			float threshold = entity.threshold;
 			for (int i = assign.Count; --i >= 0; )
 			{
-				buttons[i] = processorList[assign[i]](buttons[i], nowState);
+				Vector3 v3 = processorList[assign[i]](nowState);
+				Vector2 v2 = new Vector2(v3.X, v3.Y);
+				if (v2.Length() < threshold)
+				{
+					v3.X = 0;
+					v3.Y = 0;
+				}
+				if (v3.Z < threshold)
+				{
+					v3.Z = 0;
+				}
+				buttons[i] = buttons[i].updateVelocity(v3);
 			}
 		}
 

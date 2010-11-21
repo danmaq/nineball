@@ -15,6 +15,9 @@ namespace danmaq.nineball.data.input
 	public enum EGamePadButtons
 	{
 
+		/// <summary>割り当てられません。</summary>
+		none,
+
 		/// <summary>スタート ボタン。</summary>
 		start,
 
