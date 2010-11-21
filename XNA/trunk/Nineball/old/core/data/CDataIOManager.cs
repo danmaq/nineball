@@ -32,7 +32,7 @@ namespace danmaq.nineball.old.core.data
 	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
 	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
 	/// </remarks>
-	[Obsolete]
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.util.storage.CIOInfoを使用してください。")]
 	sealed class CDataIOManager : IDisposable
 	{
 
@@ -42,6 +42,12 @@ namespace danmaq.nineball.old.core.data
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CDataIOManager instance = new CDataIOManager();
 
+#if WINDOWS
+
+		/// <summary>WINDOWS版におけるパス。</summary>
+		private readonly string path;
+
+#endif
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 #if XBOX360
@@ -63,6 +69,10 @@ namespace danmaq.nineball.old.core.data
 		/// <summary>コンストラクタ。</summary>
 		private CDataIOManager()
 		{
+#if WINDOWS
+			path = Path.Combine(Path.Combine(Environment.GetFolderPath(
+				Environment.SpecialFolder.MyDocuments), "SavedGames"), "AllPlayers");
+#endif
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -126,8 +136,10 @@ namespace danmaq.nineball.old.core.data
 		/// <returns>ファイルへの絶対パス。</returns>
 		public string getPath(string strFileName)
 		{
-			string strResult = strFileName;
-#if XBOX360
+			string strResult;
+#if WINDOWS
+			strResult = Path.Combine(Path.Combine(path, titleName), strFileName);
+#else
 			if(deviceReady)
 			{
 				if(container == null)
@@ -173,7 +185,7 @@ namespace danmaq.nineball.old.core.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>永続データ管理クラス。</summary>
-	[Obsolete]
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.util.storage.CSerializeHelper<T>を使用してください。")]
 	public sealed class CDataIOManager<_T> : IDisposable where _T : new()
 	{
 

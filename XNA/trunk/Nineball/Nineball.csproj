@@ -99,10 +99,17 @@
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="data\input\EGamePadButtons.cs" />
+    <Compile Include="data\input\EKeyboardAxisButtons.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
+    <Compile Include="util\storage\CGuideWrapper.cs" />
+    <Compile Include="entity\input\CGamePad.cs" />
     <Compile Include="entity\input\CInputAdapter.cs" />
+    <Compile Include="entity\input\CInputAdapterAdapter.cs" />
     <Compile Include="entity\input\CInputEmptyAdapter.cs" />
-    <Compile Include="util\collection\input\CInputObject.cs" />
+    <Compile Include="entity\input\CKeyboard.cs" />
+    <Compile Include="entity\input\CLegacyGamePad.cs" />
+    <Compile Include="entity\input\CMouse.cs" />
+    <Compile Include="state\input\CStateAdapterInput.cs" />
     <Compile Include="entity\input\IInputAdapter.cs" />
     <Compile Include="entity\input\low\ILowerInput.cs" />
     <Compile Include="entity\input\SInputInfo.cs" />
@@ -229,6 +236,8 @@
     <Compile Include="util\resolution\CResolution.cs" />
     <Compile Include="util\resolution\CResolutionAspectFix.cs" />
     <Compile Include="util\resolution\EResolution.cs" />
+    <Compile Include="util\storage\CIOInfo.cs" />
+    <Compile Include="util\storage\CSerializeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

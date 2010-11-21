@@ -9,32 +9,32 @@
 
 using danmaq.nineball.entity.input.low;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input;
+using danmaq.nineball.util.collection.input;
+using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.entity.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>高位入力制御・管理クラス。</summary>
-	/// 
-	/// <typeparam name="_T">低位入力制御・管理クラスの型。</typeparam>
-	/// <typeparam name="_S">入力状態の型。</typeparam>
-	public class CInputAdapter<_T, _S>
-		: CInputEmptyAdapter where _T : ILowerInput<_S>
+	/// <summary>
+	/// <para>キーボード専用入力管理クラス。</para>
+	/// <para>
+	/// このクラスは、
+	/// <c>CInputAdapter&lt;CXNAInput&lt;KeyboardState&gt;, KeyboardState&gt;</c>
+	/// の事実上のシノニムです。</para>
+	/// </summary>
+	public class CKeyboard
+		: CInputAdapter<CXNAInput<KeyboardState>, KeyboardState>
 	{
-
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>低位入力制御・管理クラス。</summary>
-		public _T lowerInput;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CInputAdapter()
-			: base(null)
+		public CKeyboard()
+			: this(CStateKeyboardInput.instance)
 		{
 		}
 
@@ -42,9 +42,10 @@ namespace danmaq.nineball.entity.input
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="firstState">初期状態。</param> 
-		public CInputAdapter(IState firstState)
+		public CKeyboard(IState firstState)
 			: base(firstState)
 		{
+			lowerInput = CKeyboardInputCollection.instance.input;
 		}
 	}
 }

@@ -97,6 +97,15 @@ namespace danmaq.nineball.Properties {
         }
         
         /// <summary>
+        ///   アプリケーション タイトルの変更はできません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ERR_MODIFY_TITLE {
+            get {
+                return ResourceManager.GetString("ERR_MODIFY_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   多重起動されました。
         ///このアプリケーションは多重起動に対応しておりません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -148,6 +157,16 @@ namespace danmaq.nineball.Properties {
         public static string NULL {
             get {
                 return ResourceManager.GetString("NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ゲーマー サービスを起動できませんでした。
+        ///ダイアログ・ストレージ選択機能はWindowsの機能で代用します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string WARN_GAMER_SERVICE {
+            get {
+                return ResourceManager.GetString("WARN_GAMER_SERVICE", resourceCulture);
             }
         }
         

@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input
@@ -15,6 +16,7 @@ namespace danmaq.nineball.entity.input
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力情報構造体。</summary>
 	public struct SInputInfo
+		: IDisposable
 	{
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -28,6 +30,9 @@ namespace danmaq.nineball.entity.input
 
 		/// <summary>位置。</summary>
 		public Vector3 position;
+
+		/// <summary>押下カウンタ。</summary>
+		public int pressCounter;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -73,11 +78,22 @@ namespace danmaq.nineball.entity.input
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>入力情報をリセットします。</summary>
-		public void reset()
+		public void Dispose()
 		{
 			velocity = Vector3.Zero;
 			velocityGap = Vector3.Zero;
 			position = Vector3.Zero;
+			pressCounter = 0;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>キーリピート状態かどうかを取得します。</summary>
+		/// 
+		/// <param name="delay">リピート開始までの時間。</param>
+		/// <param name="interval">リピート間隔。</param>
+		public bool pushLoop(int delay, int interval)
+		{
+			return press && pressCounter >= delay && pressCounter % interval == 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -89,6 +105,14 @@ namespace danmaq.nineball.entity.input
 		{
 			velocityGap = velocity - this.velocity;
 			this.velocity = velocity;
+			if (press)
+			{
+				pressCounter++;
+			}
+			else
+			{
+				pressCounter = 0;
+			}
 			return this;
 		}
 

@@ -7,34 +7,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.entity.input.low;
+using System.Collections.Generic;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input;
 
 namespace danmaq.nineball.entity.input
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>高位入力制御・管理クラス。</summary>
-	/// 
-	/// <typeparam name="_T">低位入力制御・管理クラスの型。</typeparam>
-	/// <typeparam name="_S">入力状態の型。</typeparam>
-	public class CInputAdapter<_T, _S>
-		: CInputEmptyAdapter where _T : ILowerInput<_S>
+	/// <summary>高位入力制御・管理クラスのコレクション。</summary>
+	public sealed class CInputAdapterAdapter
+		: CInputEmptyAdapter
 	{
 
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
 
-		/// <summary>低位入力制御・管理クラス。</summary>
-		public _T lowerInput;
+		/// <summary>高位入力制御・管理クラス。</summary>
+		public readonly List<IInputAdapter> lowerInput = new List<IInputAdapter>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CInputAdapter()
-			: base(null)
+		public CInputAdapterAdapter()
+			: base(CStateAdapterInput.instance)
 		{
 		}
 
@@ -42,7 +40,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="firstState">初期状態。</param> 
-		public CInputAdapter(IState firstState)
+		public CInputAdapterAdapter(IState firstState)
 			: base(firstState)
 		{
 		}

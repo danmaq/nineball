@@ -133,6 +133,10 @@
     <value>エラーが発生しました。</value>
     <comment>何らかのエラーが発生した時のタイトル</comment>
   </data>
+  <data name="ERR_MODIFY_TITLE" xml:space="preserve">
+    <value>アプリケーション タイトルの変更はできません。</value>
+    <comment>アプリケーション タイトルの変更時</comment>
+  </data>
   <data name="ERR_MUTEX" xml:space="preserve">
     <value>多重起動されました。
 このアプリケーションは多重起動に対応しておりません。</value>
@@ -157,6 +161,11 @@
   <data name="NULL" xml:space="preserve">
     <value>null</value>
     <comment>NULL文字列</comment>
+  </data>
+  <data name="WARN_GAMER_SERVICE" xml:space="preserve">
+    <value>ゲーマー サービスを起動できませんでした。
+ダイアログ・ストレージ選択機能はWindowsの機能で代用します。</value>
+    <comment>ゲーマー サービスが使用できない場合</comment>
   </data>
   <data name="WARN_LEGACY_CENTER" xml:space="preserve">
     <value>センタリング機能を設定できませんでした。

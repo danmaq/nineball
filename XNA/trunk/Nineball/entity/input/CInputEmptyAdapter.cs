@@ -52,6 +52,9 @@ namespace danmaq.nineball.entity.input
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
+		/// <summary>アナログ入力におけるハイパス値(0～1)。</summary>
+		public float threshold = 0.25f;
+
 		/// <summary>割り当て一覧。</summary>
 		private ReadOnlyCollection<int> m_assignList = Array.AsReadOnly<int>(new int[0]);
 
@@ -93,7 +96,7 @@ namespace danmaq.nineball.entity.input
 		/// <summary>割り当て一覧を取得します。</summary>
 		/// 
 		/// <value>割り当て一覧。</value>
-		public ReadOnlyCollection<int> assignList
+		public virtual ReadOnlyCollection<int> assignList
 		{
 			get
 			{
@@ -132,7 +135,7 @@ namespace danmaq.nineball.entity.input
 		public void reset()
 		{
 			List<SInputInfo> btns = _privateMembers.buttonList;
-			for (int i = btns.Count; --i >= 0; btns[i].reset())
+			for (int i = btns.Count; --i >= 0; btns[i].Dispose())
 				;
 		}
 	}
