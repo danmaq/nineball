@@ -123,11 +123,14 @@ namespace danmaq.nineball.util.storage
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>ゲーマー サービスが使用可能かどうか。</summary>
-		public readonly bool isAvaliableUseGamerService = true;
-
 		/// <summary>ボタン一覧。</summary>
 		private readonly string[] buttons = { "OK" };
+
+		/// <summary>ゲーマー サービス コンポーネント。</summary>
+		private readonly GamerServicesComponent gsc;
+
+		/// <summary>ゲーム コンポーネントをアタッチするゲーム。</summary>
+		private readonly Game game;
 
 #if WINDOWS
 		/// <summary>
@@ -152,9 +155,11 @@ namespace danmaq.nineball.util.storage
 					string.Format(Resources.ERR_SINGLETON, typeof(CGuideWrapper).FullName));
 			}
 			instance = this;
+			this.game = game;
 			try
 			{
-				game.Components.Add(new GamerServicesComponent(game));
+				gsc = new GamerServicesComponent(game);
+				game.Components.Add(gsc);
 			}
 			catch (Exception e)
 			{
@@ -183,8 +188,26 @@ namespace danmaq.nineball.util.storage
 			private set;
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>ゲーマー サービスが使用可能かどうかを取得します。</summary>
+		/// 
+		/// <value>ゲーマー サービスが使用可能である場合、<c>true</c>。</value>
+		public bool isAvaliableUseGamerService
+		{
+			get;
+			private set;
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ゲーマー サービス コンポーネントを削除します。</summary>
+		public void removeGamerServiceComponent()
+		{
+			game.Components.Remove(gsc);
+			isAvaliableUseGamerService = false;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>メッセージボックスの表示を開始します。</summary>
