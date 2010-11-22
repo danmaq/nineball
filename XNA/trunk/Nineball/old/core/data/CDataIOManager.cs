@@ -42,12 +42,6 @@ namespace danmaq.nineball.old.core.data
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CDataIOManager instance = new CDataIOManager();
 
-#if WINDOWS
-
-		/// <summary>WINDOWS版におけるパス。</summary>
-		private readonly string path;
-
-#endif
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 #if XBOX360
@@ -69,10 +63,6 @@ namespace danmaq.nineball.old.core.data
 		/// <summary>コンストラクタ。</summary>
 		private CDataIOManager()
 		{
-#if WINDOWS
-			path = Path.Combine(Path.Combine(Environment.GetFolderPath(
-				Environment.SpecialFolder.MyDocuments), "SavedGames"), "AllPlayers");
-#endif
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -136,18 +126,13 @@ namespace danmaq.nineball.old.core.data
 		/// <returns>ファイルへの絶対パス。</returns>
 		public string getPath(string strFileName)
 		{
-			string strResult;
-#if WINDOWS
-			strResult = Path.Combine(Path.Combine(path, titleName), strFileName);
-#else
+			string strResult = strFileName;
+#if !WINDOWS
 			if(deviceReady)
 			{
 				if(container == null)
 				{
-					if(container == null)
-					{
-						container = device.OpenContainer(titleName);
-					}
+					container = device.OpenContainer(titleName);
 				}
 				strResult = Path.Combine(container.Path, strFileName);
 			}

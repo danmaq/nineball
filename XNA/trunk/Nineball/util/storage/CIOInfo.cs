@@ -27,9 +27,6 @@ namespace danmaq.nineball.util.storage
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CIOInfo instance = new CIOInfo();
 
-		/// <summary>Windows版におけるXNAセーブデータのルート フォルダ。</summary>
-		private readonly string windowsXNARoot;
-
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -38,6 +35,9 @@ namespace danmaq.nineball.util.storage
 
 		/// <summary>アプリケーション タイトル文字列。</summary>
 		private string m_titleName;
+
+		/// <summary>Windows版におけるXNAセーブデータのルート フォルダ。</summary>
+		private string windowsXNARoot;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -49,7 +49,7 @@ namespace danmaq.nineball.util.storage
 #if WINDOWS
 			string documents =
 				Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-			windowsXNARoot = Path.Combine(Path.Combine(documents, "SavedGames"), "AllPlayers");
+			windowsXNARoot = Path.Combine(documents, "SavedGames");
 #endif
 		}
 
@@ -100,6 +100,11 @@ namespace danmaq.nineball.util.storage
 					throw new InvalidOperationException(Resources.ERR_MODIFY_TITLE);
 				}
 				m_titleName = value;
+				windowsXNARoot = Path.Combine(
+					Path.Combine(windowsXNARoot, value), "AllPlayers");
+#if WINDOWS
+				new DirectoryInfo(windowsXNARoot).Create();
+#endif
 			}
 		}
 

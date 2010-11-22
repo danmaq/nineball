@@ -26,7 +26,7 @@ namespace danmaq.nineball.util.storage
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>永続データ管理クラス。</summary>
-	public sealed class CSerializeHelper<_T>
+	public sealed class CSerializeHelper<_T> where _T : new()
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -51,7 +51,7 @@ namespace danmaq.nineball.util.storage
 		//* fields ────────────────────────────────*
 
 		/// <summary>永続データ。</summary>
-		public _T data = default(_T);
+		public _T data = new _T();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -90,7 +90,7 @@ namespace danmaq.nineball.util.storage
 		public void resetData()
 		{
 			CLogger.add(string.Format("{0}は初期化されました。", typeName));
-			data = default(_T);
+			data = new _T();
 		}
 
 
@@ -131,7 +131,7 @@ namespace danmaq.nineball.util.storage
 			bool result = false;
 			if (CIOInfo.instance.deviceReady)
 			{
-				save(CIOInfo.instance.getPath(fileName));
+				result = save(CIOInfo.instance.getPath(fileName));
 			}
 			CLogger.add(string.Format("{0}を{1}へ保存{2}。",
 				typeName, fileName, result ? "完了" : "に失敗"));

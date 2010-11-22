@@ -9,8 +9,8 @@
 
 using System;
 using System.Collections.Generic;
+using danmaq.nineball.old.core.raw;
 using danmaq.nineball.old.task;
-using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.old.core.manager

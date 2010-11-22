@@ -15,7 +15,7 @@ namespace danmaq.nineball.util.math
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>三角関数系の演算関数集クラス。</summary>
-	public static class CMath
+	public static class CTrigonometric
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

@@ -10,7 +10,7 @@
 using System;
 using danmaq.nineball.data.phase;
 using danmaq.nineball.old.core.manager;
-using danmaq.nineball.util;
+using danmaq.nineball.old.core.raw;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.old.scene
