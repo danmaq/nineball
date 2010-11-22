@@ -11,23 +11,27 @@ using System;
 using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.old.core.raw;
+using danmaq.nineball.state;
+using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.util
+namespace danmaq.nineball.entity.manager
 {
 
-	// TODO : Entityにしようかな
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>スプライト描画管理 クラス。</summary>
-	public sealed class CSprite : IDisposable
+	/// <summary>スプライト描画管理クラス。</summary>
+	public sealed class CSpriteManager
+		: CEntity
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>現在の描画状態が格納された構造体。</summary>
 		public struct SDrawMode
 		{
+
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
 
 			/// <summary>描画中かどうか。</summary>
 			public bool isBegin;
@@ -36,66 +40,89 @@ namespace danmaq.nineball.util
 			public SpriteBlendMode blendMode;
 		}
 
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		public sealed class CPrivateMembers
+			: IDisposable
+		{
+
+			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* constants ──────────────────────────────-*
+
+			/// <summary>描画情報リスト。</summary>
+			public readonly List<SSpriteDrawInfo> drawCache = new List<SSpriteDrawInfo>(1);
+
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
+
+			/// <summary>スプライトの予約数。</summary>
+			public int reservedCount;
+
+			/// <summary>スプライトの最大予約数。</summary>
+			public int maxReserved;
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>フィールドのオブジェクトを解放します。</summary>
+			public void Dispose()
+			{
+				drawCache.Clear();
+				reservedCount = 0;
+			}
+		}
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
-
-		/// <summary>予約可能な最大数。</summary>
-		public int reserveLimit = 10000;
-
-		/// <summary>描画情報リスト。</summary>
-		private readonly List<SSpriteDrawInfo> drawCache = new List<SSpriteDrawInfo>(1);
 
 		/// <summary>CResolutionAspectFixの型情報。</summary>
 		private readonly Type typeResAF = typeof(CResolutionAspectFix);
 
+		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
+		private readonly CPrivateMembers _private;
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
+
+		/// <summary>予約可能な最大数。</summary>
+		public int reserveLimit = 10000;
 
 		/// <summary>解像度管理クラス。</summary>
 		public CResolution resolution = null;
 
-		/// <summary>現在の描画状態。</summary>
-		private SDrawMode m_drawMode;
+		/// <summary>スプライトバッチ。</summary>
+		public SpriteBatch spriteBatch;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
-		public CSprite()
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>既定の状態で初期化します。</para>
+		/// </summary>
+		public CSpriteManager()
+			: this(CStateSpriteManager.instance)
 		{
-			resolution = new CResolution();
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>指定の状態で初期化します。</para>
+		/// </summary>
 		/// 
-		/// <param name="spriteBatch">スプライトバッチ</param>
-		public CSprite(SpriteBatch spriteBatch)
-			: this()
+		/// <param name="firstState">初期の状態。</param>
+		public CSpriteManager(IState firstState)
+			: base(firstState, new CPrivateMembers())
 		{
-			this.spriteBatch = spriteBatch;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>デストラクタ。</summary>
-		~CSprite()
-		{
-			Dispose();
+			_private = (CPrivateMembers)privateMembers;
+			resolution = new CResolution();
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>スプライトバッチを取得します。</summary>
-		/// 
-		/// <value>スプライトバッチ。</value>
-		public SpriteBatch spriteBatch
-		{
-			get;
-			set;
-		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>スプライトの予約数を取得します。</summary>
@@ -103,8 +130,10 @@ namespace danmaq.nineball.util
 		/// <value>スプライトの予約数</value>
 		public int reservedCount
 		{
-			get;
-			private set;
+			get
+			{
+				return _private.reservedCount;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -113,8 +142,10 @@ namespace danmaq.nineball.util
 		/// <value>スプライトの最大予約数</value>
 		public int maxReserved
 		{
-			get;
-			private set;
+			get
+			{
+				return _private.maxReserved;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -125,10 +156,10 @@ namespace danmaq.nineball.util
 		/// アンマネージ リソースの解放およびリセットに関連付けられている
 		/// アプリケーション定義のタスクを実行します。
 		/// </summary>
-		public void Dispose()
+		public override void Dispose()
 		{
-			drawCache.Clear();
-			reservedCount = 0;
+			_private.Dispose();
+			base.Dispose();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -185,7 +216,7 @@ namespace danmaq.nineball.util
 		)
 		{
 			Vector2 origin = Vector2.Zero;
-			switch(halign)
+			switch (halign)
 			{
 				case EAlign.Center:
 					origin.X = (float)(srcRect.Width) * 0.5f;
@@ -194,7 +225,7 @@ namespace danmaq.nineball.util
 					origin.X = srcRect.Width;
 					break;
 			}
-			switch(valign)
+			switch (valign)
 			{
 				case EAlign.Center:
 					origin.Y = (float)(srcRect.Height) * 0.5f;
@@ -287,13 +318,13 @@ namespace danmaq.nineball.util
 			info.fRotation = fRotate;
 			info.origin = origin;
 			info.blendMode = blend;
-			if(resolution == null)
+			if (resolution == null)
 			{
 				info.scale = scale;
 			}
 			else
 			{
-				if(resolution.GetType() == typeResAF || resolution.GetType().IsSubclassOf(typeResAF))
+				if (resolution.GetType() == typeResAF || resolution.GetType().IsSubclassOf(typeResAF))
 				{
 					CResolutionAspectFix res = (CResolutionAspectFix)resolution;
 					info.scale = scale * res.scaleGapFromVGA;
@@ -309,90 +340,23 @@ namespace danmaq.nineball.util
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>予約された描画処理を実行します。</summary>
-		public void draw()
-		{
-			if(spriteBatch == null)
-			{
-				throw new InvalidOperationException("描画に使用するSpriteBatchがありません。");
-			}
-			drawCache.Sort(0, reservedCount, null);
-			for(int i=0; i < reservedCount; i++)
-			{
-				SSpriteDrawInfo info = drawCache[i];
-				changeMode(info);
-				if(info.spriteFont == null)
-				{
-					Rectangle rectDst = info.destinationRectangle;
-					spriteBatch.Draw(info.texture, rectDst,
-						info.sourceRectangle, info.color, info.fRotation,
-						info.origin, info.effects, info.fLayerDepth);
-				}
-				else
-				{
-					spriteBatch.DrawString(info.spriteFont, info.text,
-						info.position, info.color, info.fRotation, info.origin,
-						info.scale, info.effects, info.fLayerDepth);
-				}
-			}
-			maxReserved = Math.Max(maxReserved, reservedCount);
-			resetMode();
-			reservedCount = 0;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>描画モードを変更します。</summary>
-		/// 
-		/// <param name="info">次に描画する情報</param>
-		private void changeMode(SSpriteDrawInfo info)
-		{
-			if(!spriteBatch.IsDisposed)
-			{
-				if(m_drawMode.isBegin && (m_drawMode.blendMode != info.blendMode))
-				{
-					spriteBatch.End();
-					m_drawMode.isBegin = false;
-				}
-				if(!m_drawMode.isBegin)
-				{
-					spriteBatch.Begin(info.blendMode, SpriteSortMode.FrontToBack, SaveStateMode.None);
-					m_drawMode.isBegin = true;
-					m_drawMode.blendMode = info.blendMode;
-					spriteBatch.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-					spriteBatch.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
-				}
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>描画モードを終了します。</summary>
-		private void resetMode()
-		{
-			if(!spriteBatch.IsDisposed && m_drawMode.isBegin)
-			{
-				spriteBatch.End();
-				m_drawMode.isBegin = false;
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>描画予約を設定します。</summary>
 		/// 
 		/// <param name="info">描画する情報</param>
 		private void setReserve(SSpriteDrawInfo info)
 		{
-			if(reservedCount >= drawCache.Count)
+			if (reservedCount >= _private.drawCache.Count)
 			{
-				if(reservedCount < reserveLimit)
+				if (reservedCount < reserveLimit)
 				{
-					drawCache.Add(info);
+					_private.drawCache.Add(info);
 				}
 			}
 			else
 			{
-				drawCache[reservedCount] = info;
+				_private.drawCache[reservedCount] = info;
 			}
-			reservedCount++;
+			_private.reservedCount++;
 		}
 	}
 }

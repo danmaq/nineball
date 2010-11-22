@@ -101,6 +101,8 @@
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="data\input\EKeyboardAxisButtons.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
+    <Compile Include="entity\manager\CSpriteManager.cs" />
+    <Compile Include="state\manager\CStateSpriteManager.cs" />
     <Compile Include="util\storage\CGuideWrapper.cs" />
     <Compile Include="entity\input\CGamePad.cs" />
     <Compile Include="entity\input\CInputAdapter.cs" />
@@ -179,8 +181,8 @@
     <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
     <Compile Include="state\manager\taskmgr\CStateAutoReject.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
-    <Compile Include="util\math\CMath.cs" />
-    <Compile Include="util\math\CMisc.cs" />
+    <Compile Include="util\math\CTrigonometric.cs" />
+    <Compile Include="util\CMisc.cs" />
     <Compile Include="data\phase\SPhase.cs" />
     <Compile Include="util\CSingleton.cs" />
     <Compile Include="util\math\CStaticRandom.cs" />
@@ -231,7 +233,7 @@
     <Compile Include="util\collection\CFlyweightNewDisposable.cs" />
     <Compile Include="util\collection\CGameComponentManager.cs" />
     <Compile Include="util\CSceneManager.cs" />
-    <Compile Include="util\CSprite.cs" />
+    <Compile Include="old\core\raw\CSprite.cs" />
     <Compile Include="util\collection\CPartialCollection.cs" />
     <Compile Include="util\resolution\CResolution.cs" />
     <Compile Include="util\resolution\CResolutionAspectFix.cs" />

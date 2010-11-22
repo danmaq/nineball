@@ -8,9 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using danmaq.nineball.data;
+using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
 using danmaq.nineball.state.fonts;
-using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -39,7 +39,7 @@ namespace danmaq.nineball.entity.fonts
 		public SpriteFont font = null;
 
 		/// <summary>スプライト管理クラス。</summary>
-		public CSprite sprite = null;
+		public CSpriteManager sprite = null;
 
 		/// <summary>グラデーション情報(X座標誤差)</summary>
 		public SGradation gapX = new SGradation();

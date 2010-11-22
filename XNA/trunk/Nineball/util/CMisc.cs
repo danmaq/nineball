@@ -11,11 +11,11 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.util.math
+namespace danmaq.nineball.util
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>雑多な演算関数集クラス。</summary>
+	/// <summary>雑多な関数集クラス。</summary>
 	public static class CMisc
 	{
 
@@ -121,6 +121,32 @@ namespace danmaq.nineball.util.math
 		public static Vector3 rotate(this Vector3 source, Vector3 axis, float angle)
 		{
 			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>使用されているリソースを解放します。</summary>
+		/// 
+		/// <typeparam name="_T">解放対象の型。</typeparam>
+		/// <param name="obj">解放対象のオブジェクト。</param>
+		/// <returns>解放された場合、<c>true</c>。</returns>
+		public static bool safeDispose<_T>(ref _T obj) where _T : class, IDisposable
+		{
+			bool result = obj != null;
+			if (result)
+			{
+				try
+				{
+					obj.Dispose();
+				}
+				catch (Exception e)
+				{
+					CLogger.add(
+						string.Format("{0}の解放に失敗しました。", obj.GetType().FullName));
+					CLogger.add(e);
+				}
+				obj = null;
+			}
+			return result;
 		}
 	}
 }
