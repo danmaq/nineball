@@ -89,9 +89,17 @@ namespace danmaq.nineball.state.input
 				return v;
 			};
 			processorList[(int)EGamePadButtons.leftThumb] = (state) =>
-			    new Vector3(state.ThumbSticks.Left, (float)state.Buttons.LeftStick);
-			processorList[(int)EGamePadButtons.rightThumb] = (state) => 
-			    new Vector3(state.ThumbSticks.Right, (float)state.Buttons.RightStick);
+			{
+				Vector3 v = new Vector3(state.ThumbSticks.Left, (float)state.Buttons.LeftStick);
+				v.Y = -v.Y;
+				return v;
+			};
+			processorList[(int)EGamePadButtons.rightThumb] = (state) =>
+			{
+				Vector3 v = new Vector3(state.ThumbSticks.Right, (float)state.Buttons.RightStick);
+				v.Y = -v.Y;
+				return v;
+			};
 			this.processorList = processorList;
 		}
 
@@ -132,6 +140,7 @@ namespace danmaq.nineball.state.input
 			List<SInputInfo> buttons = privateMembers.buttonList;
 			GamePadState nowState = entity.lowerInput.nowInputState;
 			float threshold = entity.threshold;
+			float axisThreshold = threshold / 3f;
 			for (int i = assign.Count; --i >= 0; )
 			{
 				Vector3 v3 = processorList[assign[i]](nowState);
@@ -140,6 +149,17 @@ namespace danmaq.nineball.state.input
 				{
 					v3.X = 0;
 					v3.Y = 0;
+				}
+				else
+				{
+					if (Math.Abs(v3.X) < axisThreshold)
+					{
+						v3.X = 0;
+					}
+					if (Math.Abs(v3.Y) < axisThreshold)
+					{
+						v3.Y = 0;
+					}
 				}
 				if (v3.Z < threshold)
 				{
