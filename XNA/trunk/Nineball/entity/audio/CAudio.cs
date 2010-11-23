@@ -19,7 +19,7 @@ namespace danmaq.nineball.entity.audio
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XACT音声制御・管理クラス。</summary>
 	public sealed class CAudio
-		: CEntity
+		: CEntity, IAudio
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -63,15 +63,6 @@ namespace danmaq.nineball.entity.audio
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>オーディオ エンジン。</summary>
-		public readonly AudioEngine engine;
-
-		/// <summary>サウンド バンク。</summary>
-		public readonly SoundBank soundBank;
-
-		/// <summary>波形バンク。</summary>
-		public readonly WaveBank waveBank;
-
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		private readonly CPrivateMembers _privateMembers;
 
@@ -83,8 +74,6 @@ namespace danmaq.nineball.entity.audio
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
-
-		// TODO : WaveBankのロジック、一本化したいな
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -109,7 +98,7 @@ namespace danmaq.nineball.entity.audio
 		/// 各ストリームで使用されるストリームのパケット サイズ (セクター単位)。
 		/// 最小値は 2 です。
 		/// </param>
-		public CAudio(CAudio audio, string xwb, int? offset, short? packetSize)
+		public CAudio(IAudio audio, string xwb, int? offset, short? packetSize)
 			: this()
 		{
 			engine = audio.engine;
@@ -170,6 +159,36 @@ namespace danmaq.nineball.entity.audio
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>オーディオ エンジンを取得します。</summary>
+		/// 
+		/// <value>オーディオ エンジン。</value>
+		public AudioEngine engine
+		{
+			get;
+			private set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>サウンド バンクを取得します。</summary>
+		/// 
+		/// <value>サウンド バンク。</value>
+		public SoundBank soundBank
+		{
+			get;
+			private set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>波形バンクを取得します。</summary>
+		/// 
+		/// <value>波形バンク。</value>
+		public WaveBank waveBank
+		{
+			get;
+			private set;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>キュー一覧を取得します。</summary>

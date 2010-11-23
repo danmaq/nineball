@@ -33,7 +33,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		protected readonly Predicate<ITask> predicate;
 	
 		/// <summary>接続先。</summary>
-		private readonly IState<CTaskManager, CTaskManager.CPrivateMembers> bridge =
+		private readonly IState<CTaskManager, CTaskManager.CPrivateMembers> adaptee =
 			CStateDefault.instance;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -64,7 +64,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void setup(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers)
 		{
-			bridge.setup(entity, privateMembers);
+			adaptee.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -78,7 +78,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void update(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			bridge.update(entity, privateMembers, gameTime);
+			adaptee.update(entity, privateMembers, gameTime);
 			// NOTE : GC対策のため、List<T>.FindAllは使用しない
 			IList<ITask> tasks = privateMembers.tasks;
 			for (int i = tasks.Count; --i >= 0; )
@@ -102,7 +102,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void draw(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			bridge.draw(entity, privateMembers, gameTime);
+			adaptee.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -119,7 +119,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void teardown(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, IState nextState)
 		{
-			bridge.teardown(entity, privateMembers, nextState);
+			adaptee.teardown(entity, privateMembers, nextState);
 		}
 	}
 }

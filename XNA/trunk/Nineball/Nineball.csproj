@@ -98,11 +98,15 @@
     <Compile Include="data\content\ICache.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
+    <Compile Include="data\input\EDevice.cs" />
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="data\input\EKeyboardAxisButtons.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
+    <Compile Include="entity\audio\CEmptyAudio.cs" />
+    <Compile Include="entity\audio\IAudio.cs" />
     <Compile Include="entity\manager\CSpriteManager.cs" />
     <Compile Include="state\manager\CStateSpriteManager.cs" />
+    <Compile Include="util\collection\input\CInputHelper.cs" />
     <Compile Include="util\storage\CGuideWrapper.cs" />
     <Compile Include="entity\input\CGamePad.cs" />
     <Compile Include="entity\input\CInputAdapter.cs" />
@@ -160,7 +164,7 @@
     <Compile Include="old\data\SDirArray.cs" />
     <Compile Include="entity\manager\CAnimationSprite.cs" />
     <Compile Include="entity\manager\CContentLoader.cs" />
-    <Compile Include="entity\manager\CFryweightTaskManager.cs" />
+    <Compile Include="entity\manager\CFlyweightFactory.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
@@ -177,7 +181,7 @@
     <Compile Include="state\manager\CStateAnimationSprite.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
     <Compile Include="state\manager\CStateCoRoutineManager.cs" />
-    <Compile Include="state\manager\CStateFryweightTaskManager.cs" />
+    <Compile Include="state\manager\CStateFlyweightFactory.cs" />
     <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
     <Compile Include="state\manager\taskmgr\CStateAutoReject.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
@@ -235,8 +239,6 @@
     <Compile Include="util\CSceneManager.cs" />
     <Compile Include="old\core\raw\CSprite.cs" />
     <Compile Include="util\collection\CPartialCollection.cs" />
-    <Compile Include="util\resolution\CResolution.cs" />
-    <Compile Include="util\resolution\CResolutionAspectFix.cs" />
     <Compile Include="util\resolution\EResolution.cs" />
     <Compile Include="util\storage\CIOInfo.cs" />
     <Compile Include="util\storage\CSerializeHelper.cs" />
