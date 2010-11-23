@@ -155,7 +155,7 @@ namespace danmaq.nineball.old.core.raw
 			}
 			protected set
 			{
-				if (supports.Contains(value))
+				//if (supports.Contains(value))
 				{
 					m_now = value;
 					rect = value.toRect();

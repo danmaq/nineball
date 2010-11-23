@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.nineball.data;
 using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
@@ -83,6 +84,14 @@ namespace danmaq.nineball.entity.fonts
 		/// <summary>影を描画するかどうか。</summary>
 		public bool isDrawShadow = true;
 
+		// TODO : CPrivateMembers作って、そこに入れる
+
+		/// <summary>グラデーション バッファ。</summary>
+		public SFontGradationInfo[] gradationBuffer = new SFontGradationInfo[0];
+
+		/// <summary>グラデーション バッファ生成用の文字バッファ。</summary>
+		public string[] charBuffer = new string[0];
+
 		/// <summary>表示対象文字列。</summary>
 		private string m_strText = string.Empty;
 
@@ -145,6 +154,17 @@ namespace danmaq.nineball.entity.fonts
 			set
 			{
 				m_strText = value ?? string.Empty;
+				int length = m_strText.Length;
+				if (gradationBuffer.Length < length)
+				{
+					Array.Resize(ref gradationBuffer, length);
+				}
+				char[] sz = m_strText.ToCharArray();
+				Array.Resize(ref charBuffer, length);
+				for (int i = 0; i < length; i++)
+				{
+					charBuffer[i] = sz[i].ToString();
+				}
 			}
 		}
 

@@ -223,7 +223,7 @@ namespace danmaq.nineball.util.storage
 						File.Open(path, FileMode.Create, FileAccess.Write),
 						CompressionMode.Compress);
 #else
-					stream = File.Open(strPath, FileMode.Create, FileAccess.Write);
+					stream = File.Open(path, FileMode.Create, FileAccess.Write);
 #endif
 					(new XmlSerializer(typeof(_T), new XmlRootAttribute())).Serialize(stream, data);
 				}

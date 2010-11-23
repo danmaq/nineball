@@ -381,6 +381,28 @@ namespace danmaq.nineball.util.resolution
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>1段階小さい解像度を取得します。</summary>
+		/// 
+		/// <param name="resolution">解像度列挙体。</param>
+		/// <returns>解像度。</returns>
+		public static EResolution prev(this EResolution resolution)
+		{
+			int i = ((int)resolution) - 1;
+			return i >= 0 ? (EResolution)i : EResolution.__reserved.prev();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1段階大きい解像度を取得します。</summary>
+		/// 
+		/// <param name="resolution">解像度列挙体。</param>
+		/// <returns>解像度。</returns>
+		public static EResolution next(this EResolution resolution)
+		{
+			int i = ((int)resolution) + 1;
+			return i < (int)EResolution.__reserved ? (EResolution)i : (EResolution)0;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>解像度列挙体に対応する解像度を取得します。</summary>
 		/// 
 		/// <param name="resolution">解像度列挙体。</param>
@@ -441,7 +463,7 @@ namespace danmaq.nineball.util.resolution
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static string ToString(this EResolution resolution)
+		public static string getDescription(this EResolution resolution)
 		{
 			string strRes = resolution.ToString().Replace("plus", "+");
 			Point pos = resolution.getXY();

@@ -27,7 +27,7 @@ namespace danmaq.nineball.old.core.manager
 		//* constants ──────────────────────────────-*
 
 		/// <summary>接続先。</summary>
-		private readonly nineball.entity.manager.CCoRoutineManager bridge =
+		private readonly nineball.entity.manager.CCoRoutineManager adaptee =
 			new nineball.entity.manager.CCoRoutineManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -47,7 +47,7 @@ namespace danmaq.nineball.old.core.manager
 		/// <returns>スレッドの件数</returns>
 		public static implicit operator int(CCoRoutineManager m)
 		{
-			return m.bridge.Count;
+			return m.adaptee.Count;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -56,20 +56,20 @@ namespace danmaq.nineball.old.core.manager
 		/// <returns>まだ全てのスレッドが完了していない場合、<c>true</c></returns>
 		public bool update()
 		{
-			bridge.update(null);
+			adaptee.update(null);
 			if (reserveAllRemove)
 			{
-				bridge.Clear();
+				adaptee.Clear();
 				reserveAllRemove = false;
 			}
-			return bridge.Count > 0;
+			return adaptee.Count > 0;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コルーチンを全て削除します。</summary>
 		public void remove()
 		{
-			bridge.Clear();
+			adaptee.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -79,7 +79,7 @@ namespace danmaq.nineball.old.core.manager
 		/// <returns>コルーチンを削除できた場合、<c>true</c></returns>
 		public bool remove(IEnumerator co)
 		{
-			return bridge.Remove(co);
+			return adaptee.Remove(co);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -92,7 +92,7 @@ namespace danmaq.nineball.old.core.manager
 			bool result = true;
 			try
 			{
-				bridge.Add(co);
+				adaptee.Add(co);
 			}
 			catch (Exception)
 			{

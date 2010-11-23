@@ -103,7 +103,6 @@ namespace danmaq.nineball.state.misc
 		public override void setup(IEntity entity, object privateMembers)
 		{
 			report = createReport();
-			GC.Collect();
 			base.setup(entity, privateMembers);
 		}
 
@@ -127,13 +126,15 @@ namespace danmaq.nineball.state.misc
 		private string createReport()
 		{
 			string strResult = "◆◆◆ DirectX環境情報" + Environment.NewLine;
-			foreach(GraphicsAdapter adapter in GraphicsAdapter.Adapters)
+			int length = GraphicsAdapter.Adapters.Count;
+			for (int i = 0; i < length; i++)
 			{
+				GraphicsAdapter adapter = GraphicsAdapter.Adapters[i];
 				bool bCurrentDevice;
 				ShaderProfile ps;
 				ShaderProfile vs;
 				strResult += adapter.createCapsReport(out bCurrentDevice, out ps, out vs) + Environment.NewLine;
-				if(bCurrentDevice)
+				if (bCurrentDevice)
 				{
 					PixelShaderProfile = ps;
 					VertexShaderProfile = vs;
@@ -143,12 +144,12 @@ namespace danmaq.nineball.state.misc
 			{
 				PlayerIndex[] all = {
 					PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
-				foreach(PlayerIndex i in all)
+				foreach (PlayerIndex i in all)
 				{
 					strResult += GamePad.GetCapabilities(i).createCapsReport(i);
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				strResult += "!▲! XBOX360コントローラ デバイスの性能取得に失敗。" + Environment.NewLine + e.ToString();
 			}

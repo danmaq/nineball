@@ -18,7 +18,7 @@ namespace danmaq.nineball.entity.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>再利用を前提としたタスク管理クラス。</summary>
-	public sealed class CFryweightTaskManager
+	public sealed class CFlyweightFactory
 		: CEntity, IEnumerable<IEntity>
 	{
 
@@ -45,8 +45,8 @@ namespace danmaq.nineball.entity.manager
 		/// <para>コンストラクタ。</para>
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
-		public CFryweightTaskManager()
-			: this(CStateFryweightTaskManager.instance)
+		public CFlyweightFactory()
+			: this(CStateFlyweightFactory.instance)
 		{
 		}
 
@@ -57,7 +57,7 @@ namespace danmaq.nineball.entity.manager
 		/// </summary>
 		/// 
 		/// <param name="firstState">初期の状態。</param>
-		public CFryweightTaskManager(IState firstState)
+		public CFlyweightFactory(IState firstState)
 			: base(firstState, new List<IEntity>())
 		{
 			tasks = (List<IEntity>)privateMembers;
@@ -123,7 +123,7 @@ namespace danmaq.nineball.entity.manager
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>タスクをまとめて追加します。</summary>
-		/// <remarks>このメソッドではFryweightな再利用はできません。</remarks>
+		/// <remarks>このメソッドではFlyweightな再利用はできません。</remarks>
 		/// 
 		/// <param name="collection">追加するタスク一覧。</param>
 		/// <exception cref="System.ArgumentNullException">

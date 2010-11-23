@@ -17,23 +17,23 @@ namespace danmaq.nineball.state.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>タスク管理クラス用の既定の状態です。</summary>
-	public sealed class CStateFryweightTaskManager
-		: CState<CFryweightTaskManager, List<IEntity>>
+	public sealed class CStateFlyweightFactory
+		: CState<CFlyweightFactory, List<IEntity>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CFryweightTaskManager, List<IEntity>> instance =
-			new CStateFryweightTaskManager();
+		public static readonly IState<CFlyweightFactory, List<IEntity>> instance =
+			new CStateFlyweightFactory();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFryweightTaskManager()
+		private CStateFlyweightFactory()
 		{
 		}
 
@@ -50,7 +50,7 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CFryweightTaskManager entity, List<IEntity> privateMembers)
+		public override void setup(CFlyweightFactory entity, List<IEntity> privateMembers)
 		{
 		}
 
@@ -63,7 +63,7 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
+			CFlyweightFactory entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
 			for (int i = privateMembers.Count; --i >= 0; )
 			{
@@ -80,7 +80,7 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, GameTime gameTime)
+			CFlyweightFactory entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
 			for (int i = privateMembers.Count; --i >= 0; )
 			{
@@ -100,7 +100,7 @@ namespace danmaq.nineball.state.manager
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CFryweightTaskManager entity, List<IEntity> privateMembers, IState nextState)
+			CFlyweightFactory entity, List<IEntity> privateMembers, IState nextState)
 		{
 		}
 	}

@@ -181,13 +181,13 @@ namespace danmaq.nineball.entity.audio
 		public string ToString(bool bSlider)
 		{
 			string strResult = string.Empty;
-			string strDB = String.Format("{0:+0.0;-0.0;0}dB", dB.ToString());
+			string strDB = String.Format("{0:+00.0;-00.0;+00.0}dB", dB);
 			if(bSlider)
 			{
-				char[] szVolume = new string('・', 10).ToCharArray();
+				char[] szVolume = new string('.', 10).ToCharArray();
 				int cursor = (int)MathHelper.Min(
 					CInterpolate._clampSmooth(0, 10, volume, MAX_VOLUME), 9);
-				szVolume[cursor] = '◆';
+				szVolume[cursor] = 'V';
 				strResult += new string(szVolume) + Environment.NewLine;
 				strDB = string.Format("({0})", strDB);
 			}
