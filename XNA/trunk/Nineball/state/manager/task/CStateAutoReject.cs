@@ -7,33 +7,45 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
+using System.Collections.Generic;
+using danmaq.nineball.entity;
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
-namespace danmaq.nineball.state.manager.taskmgr
+namespace danmaq.nineball.state.graphics.task
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>タスク管理クラス用の既定の状態です。</summary>
-	public sealed class CStateDefault
-		: CState<CTaskManager, CTaskManager.CPrivateMembers>
+	/// <summary>特定条件においてタスクを自動排除する管理クラス用状態です。</summary>
+	public class CStateAutoReject
+		 : CState<CTaskManager, CTaskManager.CPrivateMembers>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CTaskManager, CTaskManager.CPrivateMembers> instance =
-			new CStateDefault();
+		/// <summary>CState.emptyを検出して排除するクラス オブジェクト。</summary>
+		public static readonly IState<CTaskManager, CTaskManager.CPrivateMembers> emptyState =
+			new CStateAutoReject(task => ((IEntity)task).currentState == CState.empty);
+
+		/// <summary>排除条件。</summary>
+		protected readonly Predicate<ITask> predicate;
+	
+		/// <summary>接続先。</summary>
+		private readonly IState<CTaskManager, CTaskManager.CPrivateMembers> adaptee =
+			CStateDefault.instance;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateDefault()
+		/// 
+		/// <param name="predicate">排除条件。</param>
+		protected CStateAutoReject(Predicate<ITask> predicate)
 		{
+			this.predicate = predicate;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -52,6 +64,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void setup(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers)
 		{
+			adaptee.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -65,11 +78,16 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void update(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			entity.commit();
-			List<ITask> tasks = privateMembers.tasks;
+			adaptee.update(entity, privateMembers, gameTime);
+			// NOTE : GC対策のため、List<T>.FindAllは使用しない
+			IList<ITask> tasks = privateMembers.tasks;
 			for (int i = tasks.Count; --i >= 0; )
 			{
-				tasks[i].update(gameTime);
+				ITask task = tasks[i];
+				if (predicate(task))
+				{
+					entity.Remove(task);
+				}
 			}
 		}
 
@@ -84,11 +102,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void draw(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
 		{
-			List<ITask> tasks = privateMembers.tasks;
-			for (int i = tasks.Count; --i >= 0; )
-			{
-				tasks[i].draw(gameTime);
-			}
+			adaptee.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -105,6 +119,7 @@ namespace danmaq.nineball.state.manager.taskmgr
 		public override void teardown(
 			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, IState nextState)
 		{
+			adaptee.teardown(entity, privateMembers, nextState);
 		}
 	}
 }

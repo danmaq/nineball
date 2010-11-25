@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.data.content;
-using danmaq.nineball.state;
 using danmaq.nineball.state.manager;
 
 namespace danmaq.nineball.entity.manager

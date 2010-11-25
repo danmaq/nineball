@@ -104,8 +104,10 @@
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
-    <Compile Include="entity\manager\CSpriteManager.cs" />
-    <Compile Include="state\manager\CStateSpriteManager.cs" />
+    <Compile Include="entity\graphics\CFogAnimation.cs" />
+    <Compile Include="entity\graphics\CSpriteManager.cs" />
+    <Compile Include="state\graphics\CStateFogAnimation.cs" />
+    <Compile Include="state\graphics\CStateSpriteManager.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
     <Compile Include="util\storage\CGuideWrapper.cs" />
     <Compile Include="entity\input\CGamePad.cs" />
@@ -131,7 +133,7 @@
     <Compile Include="util\collection\input\CLegacyInputCollection.cs" />
     <Compile Include="entity\input\low\CLegacyInput.cs" />
     <Compile Include="entity\input\low\CXNAInput.cs" />
-    <Compile Include="entity\manager\CCameraPath.cs" />
+    <Compile Include="entity\graphics\CCameraPath.cs" />
     <Compile Include="entity\manager\CMapJudgeManager.cs" />
     <Compile Include="state\audio\CStateAudio.cs" />
     <Compile Include="state\input\low\CStateGamePadInput.cs" />
@@ -139,7 +141,7 @@
     <Compile Include="state\input\low\CStateLegacyInput.cs" />
     <Compile Include="state\input\low\CStateXNAInput.cs" />
     <Compile Include="state\input\low\CStateMouseInput.cs" />
-    <Compile Include="state\manager\CStateCameraPath.cs" />
+    <Compile Include="state\graphics\CStateCameraPath.cs" />
     <Compile Include="state\manager\CStateMapJudgeManager.cs" />
     <Compile Include="util\collection\input\CMouseInputCollection.cs" />
     <Compile Include="util\collection\input\CXBOX360InputCollection.cs" />
@@ -162,7 +164,7 @@
     <Compile Include="old\data\EReservedButtonID.cs" />
     <Compile Include="old\data\GamePadStateExtention.cs" />
     <Compile Include="old\data\SDirArray.cs" />
-    <Compile Include="entity\manager\CAnimationSprite.cs" />
+    <Compile Include="entity\graphics\CAnimationSprite.cs" />
     <Compile Include="entity\manager\CContentLoader.cs" />
     <Compile Include="entity\manager\CFlyweightFactory.cs" />
     <Compile Include="entity\manager\CMainLoop.cs" />
@@ -178,12 +180,12 @@
     <Compile Include="old\core\raw\CResolution.cs" />
     <Compile Include="old\core\raw\CResolutionAspectFix.cs" />
     <Compile Include="old\task\CTaskLoader.cs" />
-    <Compile Include="state\manager\CStateAnimationSprite.cs" />
+    <Compile Include="state\graphics\CStateAnimationSprite.cs" />
     <Compile Include="state\manager\CStateContentLoader.cs" />
     <Compile Include="state\manager\CStateCoRoutineManager.cs" />
     <Compile Include="state\manager\CStateFlyweightFactory.cs" />
-    <Compile Include="state\manager\taskmgr\CStateDefault.cs" />
-    <Compile Include="state\manager\taskmgr\CStateAutoReject.cs" />
+    <Compile Include="state\manager\task\CStateDefault.cs" />
+    <Compile Include="state\manager\task\CStateAutoReject.cs" />
     <Compile Include="util\math\CInterpolate.cs" />
     <Compile Include="util\math\CTrigonometric.cs" />
     <Compile Include="util\CMisc.cs" />

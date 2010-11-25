@@ -10,12 +10,14 @@
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.state;
+using danmaq.nineball.state.graphics;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
-using danmaq.nineball.state.manager;
 
-namespace danmaq.nineball.entity.manager
+namespace danmaq.nineball.entity.graphics
 {
+
+	// TODO : アニメスプライトはまだしも、カメラパスとフォグアニメ、統合できるんじゃね？
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>カメラパス管理クラス。</summary>

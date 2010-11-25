@@ -7,87 +7,98 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
-using danmaq.nineball.data;
-using danmaq.nineball.old.core.raw;
 using danmaq.nineball.state;
-using danmaq.nineball.state.manager;
+using danmaq.nineball.state.graphics;
+using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.entity.manager
+namespace danmaq.nineball.entity.graphics
 {
 
+	// TODO : アニメスプライトはまだしも、カメラパスとフォグアニメ、統合できるんじゃね？
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>アニメーション スプライト。</summary>
-	public class CAnimationSprite
+	/// <summary>フォグ アニメーション管理クラス。</summary>
+	public class CFogAnimation
 		: CEntity
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-		/// <summary>アニメーション定義構造体。</summary>
+		/// <summary>フォグ アニメーションの変換済みコンテンツ データ。</summary>
+		[Serializable]
 		public struct SData
 		{
+
+			//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+			/// <summary>フォグデータを構成する構造体。</summary>
+			public struct SFogData
+			{
+
+				//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+				//* fields ────────────────────────────────*
+
+				/// <summary>色。</summary>
+				public Color color;
+
+				/// <summary>開始点。</summary>
+				public float near;
+
+				/// <summary>終了点。</summary>
+				public float far;
+			}
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
-			/// <summary>切り出し座標。</summary>
-			public Rectangle srcRect;
+			/// <summary>現在シーンの時間。</summary>
+			public int interval;
 
-			/// <summary>乗算色。</summary>
-			public Color color;
-
-			/// <summary>合成モード。</summary>
-			public SpriteBlendMode blendMode;
-
-			/// <summary>次に移動するフレーム(現在位置からの相対指定)。</summary>
+			/// <summary>次に移動するシーン(相対指定)。</summary>
 			public int next;
 
+			/// <summary>線形補完パターン。</summary>
+			public EInterpolate interpolate;
+
+			/// <summary>開始値。</summary>
+			public SFogData start;
+
+			/// <summary>終了値。</summary>
+			public SFogData end;
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>現在のフォグ情報を取得します。</summary>
+			/// 
+			/// <param name="now">現在の時間。</param>
+			/// <returns>現在のフォグ情報。</returns>
+			public SFogData getNow(int now)
+			{
+				SFogData data = new SFogData();
+				float amount = interpolate.interpolate(0, 1, now, interval);
+				data.color = Color.Lerp(start.color, end.color, amount);
+				data.far = MathHelper.Lerp(start.far, end.far, amount);
+				data.near = MathHelper.Lerp(start.near, end.near, amount);
+				return data;
+			}
 		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>アニメーション定義一覧。</summary>
+		/// <summary>フォグ アニメーション定義一覧。</summary>
 		public readonly List<SData> data = new List<SData>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>テクスチャ。</summary>
-		public Texture2D texture;
-
-		/// <summary>描画先座標。</summary>
-		public Vector2 position;
-
-		/// <summary>水平位置揃え情報。</summary>
-		public EAlign alignHorizontal = EAlign.Center;
-
-		/// <summary>垂直位置揃え情報。</summary>
-		public EAlign alignVertical = EAlign.Center;
-
 		/// <summary>インデックス ポインタ。</summary>
 		public int index = 0;
-
-		/// <summary>アニメーション速度。</summary>
-		public int interval = 1;
-
-		/// <summary>描画レイヤ。</summary>
-		public float layer = 0f;
-
-		/// <summary>回転。</summary>
-		public float rotate = 0f;
-
-		/// <summary>拡大率。</summary>
-		public Vector2 scale = Vector2.One;
-
-		/// <summary>反転効果。</summary>
-		public SpriteEffects effect = SpriteEffects.None;
-
-		/// <summary>スプライト管理クラス。</summary>
-		public CSpriteManager sprite;
-
+		
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -96,8 +107,8 @@ namespace danmaq.nineball.entity.manager
 		/// <para>コンストラクタ。</para>
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
-		public CAnimationSprite()
-			: base(CStateAnimationSprite.instance)
+		public CFogAnimation()
+			: base(CStateFogAnimation.instance)
 		{
 		}
 
@@ -108,7 +119,7 @@ namespace danmaq.nineball.entity.manager
 		/// </summary>
 		/// 
 		/// <param name="firstState">初期の状態。</param>
-		public CAnimationSprite(IState firstState)
+		public CFogAnimation(IState firstState)
 			: base(firstState, null)
 		{
 		}
@@ -123,7 +134,7 @@ namespace danmaq.nineball.entity.manager
 		/// <param name="privateMembers">
 		///	オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		///	</param>
-		public CAnimationSprite(IState firstState, object privateMembers)
+		public CFogAnimation(IState firstState, object privateMembers)
 			: base(firstState, privateMembers)
 		{
 		}
@@ -132,10 +143,10 @@ namespace danmaq.nineball.entity.manager
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>現在の切り出し位置を取得します。</summary>
+		/// <summary>現在のフォグ アニメーション定義を取得します。</summary>
 		/// 
-		/// <value>現在の切り出し位置。</value>
-		public SData now
+		/// <value>現在のフォグ アニメーション定義。</value>
+		public SData nowScene
 		{
 			get
 			{
@@ -143,26 +154,16 @@ namespace danmaq.nineball.entity.manager
 			}
 		}
 
-		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* methods ───────────────────────────────-*
-
 		//* -----------------------------------------------------------------------*
-		/// <summary>既定のアニメーション プログラムをセットします。</summary>
+		/// <summary>現在のフォグ アニメーション定義を取得します。</summary>
 		/// 
-		/// <param name="loop">アニメーションをループするかどうか。</param>
-		public void setDefaultProgram(bool loop)
+		/// <value>現在のフォグ アニメーション定義。</value>
+		public SData.SFogData nowFog
 		{
-			int length = data.Count;
-			SData _data;
-			for (int i = length; --i >= 0; )
+			get
 			{
-				_data = data[i];
-				_data.next = 1;
-				data[i] = _data;
+				return nowScene.getNow(counter);
 			}
-			_data = data[length - 1];
-			_data.next = loop ? 0 : -length;
-			data[length - 1] = _data;
 		}
 	}
 }

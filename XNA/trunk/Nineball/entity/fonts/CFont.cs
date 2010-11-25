@@ -9,7 +9,7 @@
 
 using System;
 using danmaq.nineball.data;
-using danmaq.nineball.entity.manager;
+using danmaq.nineball.entity.graphics;
 using danmaq.nineball.state;
 using danmaq.nineball.state.fonts;
 using Microsoft.Xna.Framework;
