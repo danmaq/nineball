@@ -7,31 +7,33 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.entity.manager;
+using danmaq.nineball.entity.graphics;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.manager
+namespace danmaq.nineball.state.graphics
 {
 
+	// TODO : アニメスプライトはまだしも、カメラパスとフォグアニメ、統合できるんじゃね？
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カメラパス管理クラス用の既定の状態です。</summary>
-	public sealed class CStateCameraPath
-		 : CState<CCameraPath, object>
+	/// <summary>フォグ アニメーション管理クラス用の既定の状態です。</summary>
+	public sealed class CStateFogAnimation
+		 : CState<CFogAnimation, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CCameraPath, object> instance
-			= new CStateCameraPath();
+		public static readonly IState<CFogAnimation, object> instance
+			= new CStateFogAnimation();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCameraPath()
+		private CStateFogAnimation()
 		{
 		}
 
@@ -48,7 +50,7 @@ namespace danmaq.nineball.state.manager
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CCameraPath entity, object privateMembers)
+		public override void setup(CFogAnimation entity, object privateMembers)
 		{
 			entity.resetCounter();
 		}
@@ -61,9 +63,9 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CCameraPath entity, object privateMembers, GameTime gameTime)
+		public override void update(CFogAnimation entity, object privateMembers, GameTime gameTime)
 		{
-			CCameraPath.SData now = entity.nowScene;
+			CFogAnimation.SData now = entity.nowScene;
 			if (entity.counter >= now.interval)
 			{
 				entity.resetCounter();
@@ -79,7 +81,7 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CCameraPath entity, object privateMembers, GameTime gameTime)
+		public override void draw(CFogAnimation entity, object privateMembers, GameTime gameTime)
 		{
 		}
 
@@ -94,7 +96,8 @@ namespace danmaq.nineball.state.manager
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(CCameraPath entity, object privateMembers, IState nextState)
+		public override void teardown(
+			CFogAnimation entity, object privateMembers, IState nextState)
 		{
 		}
 	}

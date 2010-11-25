@@ -9,11 +9,11 @@
 
 using System;
 using danmaq.nineball.data;
-using danmaq.nineball.entity.manager;
+using danmaq.nineball.entity.graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.state.manager
+namespace danmaq.nineball.state.graphics
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

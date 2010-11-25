@@ -12,11 +12,11 @@ using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.old.core.raw;
 using danmaq.nineball.state;
-using danmaq.nineball.state.manager;
+using danmaq.nineball.state.graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.entity.manager
+namespace danmaq.nineball.entity.graphics
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

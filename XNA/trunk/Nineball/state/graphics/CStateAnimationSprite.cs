@@ -7,45 +7,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using danmaq.nineball.entity;
-using danmaq.nineball.entity.manager;
+using danmaq.nineball.entity.graphics;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.manager.taskmgr
+namespace danmaq.nineball.state.graphics
 {
 
+	// TODO : アニメスプライトはまだしも、カメラパスとフォグアニメ、統合できるんじゃね？
+
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>特定条件においてタスクを自動排除する管理クラス用状態です。</summary>
-	public class CStateAutoReject
-		 : CState<CTaskManager, CTaskManager.CPrivateMembers>
+	/// <summary>アニメーション スプライト用の既定の状態です。</summary>
+	public sealed class CStateAnimationSprite
+		 : CState<CAnimationSprite, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>CState.emptyを検出して排除するクラス オブジェクト。</summary>
-		public static readonly IState<CTaskManager, CTaskManager.CPrivateMembers> emptyState =
-			new CStateAutoReject(task => ((IEntity)task).currentState == CState.empty);
-
-		/// <summary>排除条件。</summary>
-		protected readonly Predicate<ITask> predicate;
-	
-		/// <summary>接続先。</summary>
-		private readonly IState<CTaskManager, CTaskManager.CPrivateMembers> adaptee =
-			CStateDefault.instance;
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly IState<CAnimationSprite, object> instance
+			= new CStateAnimationSprite();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="predicate">排除条件。</param>
-		protected CStateAutoReject(Predicate<ITask> predicate)
+		private CStateAnimationSprite()
 		{
-			this.predicate = predicate;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -61,10 +50,8 @@ namespace danmaq.nineball.state.manager.taskmgr
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(
-			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers)
+		public override void setup(CAnimationSprite entity, object privateMembers)
 		{
-			adaptee.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -76,18 +63,12 @@ namespace danmaq.nineball.state.manager.taskmgr
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(
-			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
+			CAnimationSprite entity, object privateMembers, GameTime gameTime)
 		{
-			adaptee.update(entity, privateMembers, gameTime);
-			// NOTE : GC対策のため、List<T>.FindAllは使用しない
-			IList<ITask> tasks = privateMembers.tasks;
-			for (int i = tasks.Count; --i >= 0; )
+			if (entity.counter % entity.interval == 0 && entity.data.Count > 0)
 			{
-				ITask task = tasks[i];
-				if (predicate(task))
-				{
-					entity.Remove(task);
-				}
+				// TODO : whileに相当する機能がほしいなぁ。最低でもif～gotoがあれば
+				entity.index += entity.now.next;
 			}
 		}
 
@@ -100,9 +81,16 @@ namespace danmaq.nineball.state.manager.taskmgr
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(
-			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, GameTime gameTime)
+			CAnimationSprite entity, object privateMembers, GameTime gameTime)
 		{
-			adaptee.draw(entity, privateMembers, gameTime);
+			if (entity.sprite != null && entity.data.Count > 0)
+			{
+				CAnimationSprite.SData data = entity.now;
+				entity.sprite.add(entity.texture, entity.position,
+					entity.alignHorizontal, entity.alignVertical,
+					data.srcRect, data.color, entity.rotate, entity.scale, entity.effect,
+					entity.layer, data.blendMode);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -117,9 +105,8 @@ namespace danmaq.nineball.state.manager.taskmgr
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CTaskManager entity, CTaskManager.CPrivateMembers privateMembers, IState nextState)
+			CAnimationSprite entity, object privateMembers, IState nextState)
 		{
-			adaptee.teardown(entity, privateMembers, nextState);
 		}
 	}
 }
