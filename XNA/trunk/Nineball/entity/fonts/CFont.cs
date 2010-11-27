@@ -159,11 +159,10 @@ namespace danmaq.nineball.entity.fonts
 				{
 					Array.Resize(ref gradationBuffer, length);
 				}
-				char[] sz = m_strText.ToCharArray();
 				Array.Resize(ref charBuffer, length);
 				for (int i = 0; i < length; i++)
 				{
-					charBuffer[i] = sz[i].ToString();
+					charBuffer[i] = m_strText[i].ToString();
 				}
 			}
 		}
