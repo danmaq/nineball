@@ -55,9 +55,6 @@ namespace danmaq.nineball.entity.graphics
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
-			/// <summary>スプライトの予約数。</summary>
-			public int reservedCount;
-
 			/// <summary>スプライトの最大予約数。</summary>
 			public int maxReserved;
 
@@ -69,15 +66,11 @@ namespace danmaq.nineball.entity.graphics
 			public void Dispose()
 			{
 				drawCache.Clear();
-				reservedCount = 0;
 			}
 		}
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
-
-		/// <summary>CResolutionAspectFixの型情報。</summary>
-		private readonly Type typeResAF = typeof(CResolutionAspectFix);
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		private readonly CPrivateMembers _private;
@@ -88,11 +81,14 @@ namespace danmaq.nineball.entity.graphics
 		/// <summary>予約可能な最大数。</summary>
 		public int reserveLimit = 10000;
 
-		/// <summary>解像度管理クラス。</summary>
-		public CResolution resolution = null;
-
 		/// <summary>スプライトバッチ。</summary>
 		public SpriteBatch spriteBatch;
+
+		/// <summary>解像度管理クラス。</summary>
+		private CResolution m_resolution = null;
+
+		/// <summary>アスペクト比固定かどうか。</summary>
+		private bool m_aspectFixed;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -125,6 +121,25 @@ namespace danmaq.nineball.entity.graphics
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>解像度管理クラスを取得/設定します。</summary>
+		/// 
+		/// <value>解像度管理クラス。</value>
+		public CResolution resolution
+		{
+			get
+			{
+				return m_resolution;
+			}
+			set
+			{
+				m_resolution = value;
+				Type expect = typeof(CResolutionAspectFix);
+				Type got = value.GetType();
+				m_aspectFixed = got == expect || got.IsSubclassOf(expect);
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>スプライトの予約数を取得します。</summary>
 		/// 
 		/// <value>スプライトの予約数</value>
@@ -132,7 +147,7 @@ namespace danmaq.nineball.entity.graphics
 		{
 			get
 			{
-				return _private.reservedCount;
+				return _private.drawCache.Count;
 			}
 		}
 
@@ -287,7 +302,7 @@ namespace danmaq.nineball.entity.graphics
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
 			info.blendMode = blend;
-			setReserve(info);
+			_private.drawCache.Add(info);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -324,7 +339,7 @@ namespace danmaq.nineball.entity.graphics
 			}
 			else
 			{
-				if (resolution.GetType() == typeResAF || resolution.GetType().IsSubclassOf(typeResAF))
+				if (m_aspectFixed)
 				{
 					CResolutionAspectFix res = (CResolutionAspectFix)resolution;
 					info.scale = scale * res.scaleGapFromVGA;
@@ -336,27 +351,7 @@ namespace danmaq.nineball.entity.graphics
 			}
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
-			setReserve(info);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>描画予約を設定します。</summary>
-		/// 
-		/// <param name="info">描画する情報</param>
-		private void setReserve(SSpriteDrawInfo info)
-		{
-			if (reservedCount >= _private.drawCache.Count)
-			{
-				if (reservedCount < reserveLimit)
-				{
-					_private.drawCache.Add(info);
-				}
-			}
-			else
-			{
-				_private.drawCache[reservedCount] = info;
-			}
-			_private.reservedCount++;
+			_private.drawCache.Add(info);
 		}
 	}
 }

@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.entity.graphics;
 using Microsoft.Xna.Framework;
@@ -91,10 +92,13 @@ namespace danmaq.nineball.state.graphics
 			{
 				throw new InvalidOperationException("描画に使用するSpriteBatchがありません。");
 			}
-			privateMembers.drawCache.Sort(0, privateMembers.reservedCount, null);
-			for (int i = 0; i < privateMembers.reservedCount; i++)
+			List<SSpriteDrawInfo> drawCache = privateMembers.drawCache;
+			int length = drawCache.Count;
+			privateMembers.drawCache.Sort(compare);
+
+			for (int i = length; --i >= 0; )
 			{
-				SSpriteDrawInfo info = privateMembers.drawCache[i];
+				SSpriteDrawInfo info = drawCache[i];
 				changeMode(spriteBatch, info);
 				if (info.spriteFont == null)
 				{
@@ -111,9 +115,9 @@ namespace danmaq.nineball.state.graphics
 				}
 			}
 			privateMembers.maxReserved =
-				Math.Max(privateMembers.maxReserved, privateMembers.reservedCount);
+				Math.Max(privateMembers.maxReserved, length);
 			resetMode(spriteBatch);
-			privateMembers.reservedCount = 0;
+			privateMembers.drawCache.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -168,6 +172,22 @@ namespace danmaq.nineball.state.graphics
 				spriteBatch.End();
 				m_drawMode.isBegin = false;
 			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>描画優先度を比較します。</summary>
+		/// 
+		/// <param name="x">比較対象の第1オブジェクト。</param>
+		/// <param name="y">比較対象の第2オブジェクト。</param>
+		/// <returns>x＜y…-1、x＞y…1。</returns>
+		private int compare(SSpriteDrawInfo x, SSpriteDrawInfo y)
+		{
+			int result = Math.Sign(y.fLayerDepth - x.fLayerDepth);
+			if (result == 0)
+			{
+				result = (int)y.blendMode - (int)x.blendMode;
+			}
+			return result == 0 ? (int)y.effects - (int)x.effects : result;
 		}
 	}
 }

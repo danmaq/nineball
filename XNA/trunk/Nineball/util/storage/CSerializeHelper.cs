@@ -7,17 +7,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if WINDOWS
-#define COMPRESS
-#endif
-
 using System;
 using System.IO;
 using System.Xml.Serialization;
 using danmaq.nineball.data;
 using Microsoft.Xna.Framework.GamerServices;
 
-#if COMPRESS
+#if WINDOWS
 using System.IO.Compression;
 #endif
 
@@ -50,6 +46,13 @@ namespace danmaq.nineball.util.storage
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
+		/// <summary>保存データの圧縮を施すかどうか。</summary>
+		/// <remarks>
+		/// XBOX360版ではダミー変数となります。
+		/// この値をtrueにしても圧縮されません。
+		/// </remarks>
+		private bool m_compress = true;
+
 		/// <summary>永続データ。</summary>
 		public _T data = new _T();
 
@@ -61,10 +64,17 @@ namespace danmaq.nineball.util.storage
 		/// 
 		/// <param name="titleName">XNA Framework タイトル名(半角英数)</param>
 		/// <param name="fileName">設定ファイル名</param>
+		/// <param name="compress">
+		/// <para>保存データの圧縮を施すかどうか。</para>
+		/// <para>
+		/// XBOX360版ではダミー引数となります。
+		/// この値をtrueにしてもいかなる変化もありません。
+		/// </para>
+		/// </param>
 		/// <exception cref="System.ArgumentNullException">
 		/// 引数にnullが渡された場合。
 		/// </exception>
-		public CSerializeHelper(string titleName, string fileName)
+		public CSerializeHelper(string titleName, string fileName, bool compress)
 		{
 			if (fileName == null)
 			{
@@ -76,6 +86,7 @@ namespace danmaq.nineball.util.storage
 			}
 			CIOInfo.instance.titleName = titleName;
 			this.fileName = fileName;
+			this.m_compress = compress;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -157,14 +168,19 @@ namespace danmaq.nineball.util.storage
 				Stream stream = null;
 				try
 				{
-#if COMPRESS
-					stream = new DeflateStream(
-						File.Open(path, FileMode.Open, FileAccess.Read),
-						CompressionMode.Decompress);
-#else
-					stream = File.Open(path, FileMode.Open, FileAccess.Read);
+#if WINDOWS
+					if (m_compress)
+					{
+						stream = new DeflateStream(
+							File.Open(path, FileMode.Open, FileAccess.Read),
+							CompressionMode.Decompress);
+					}
+					else
 #endif
-					data = (_T)((new XmlSerializer(typeof(_T), new XmlRootAttribute())).Deserialize(stream));
+					{
+						stream = File.Open(path, FileMode.Open, FileAccess.Read);
+					}
+						data = (_T)((new XmlSerializer(typeof(_T), new XmlRootAttribute())).Deserialize(stream));
 					if (data != null)
 					{
 						readed = true;
@@ -211,19 +227,15 @@ namespace danmaq.nineball.util.storage
 			bool result = false;
 			if (path != null)
 			{
-#if COMPRESS
-				DeflateStream stream = null;
-#else
-				FileStream stream = null;
-#endif
+				Stream stream = null;
 				try
 				{
-#if COMPRESS
-					stream = new DeflateStream(
-						File.Open(path, FileMode.Create, FileAccess.Write),
-						CompressionMode.Compress);
-#else
 					stream = File.Open(path, FileMode.Create, FileAccess.Write);
+#if WINDOWS
+					if (m_compress)
+					{
+						stream = new DeflateStream(stream, CompressionMode.Compress);
+					}
 #endif
 					(new XmlSerializer(typeof(_T), new XmlRootAttribute())).Serialize(stream, data);
 				}
