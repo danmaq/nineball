@@ -18,7 +18,7 @@ namespace danmaq.nineball.entity.manager
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>再利用を前提としたタスク管理クラス。</summary>
-	public sealed class CFlyweightFactory
+	public class CFlyweightFactory
 		: CEntity, IEnumerable<IEntity>
 	{
 
@@ -26,7 +26,7 @@ namespace danmaq.nineball.entity.manager
 		//* constants ──────────────────────────────-*
 
 		/// <summary>登録されているタスク一覧。</summary>
-		private readonly List<IEntity> tasks;
+		protected readonly List<IEntity> tasks;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*

@@ -127,10 +127,20 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>最後に状態が変化した時間を取得します。</summary>
+		/// <summary>最後に状態が変化した現実時間を取得します。</summary>
 		/// 
-		/// <value>最後に状態が変化した時間。</value>
+		/// <value>最後に状態が変化した現実時間。</value>
 		public DateTime lastStateChangeTime
+		{
+			get;
+			private set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>最後に状態が変化したフレーム時間を取得します。</summary>
+		/// 
+		/// <value>最後に状態が変化したフレーム時間。</value>
+		public int lastStateChangeCounter
 		{
 			get;
 			private set;
@@ -236,7 +246,7 @@ namespace danmaq.nineball.entity
 		/// <param name="allowSameState">
 		/// 同じ状態同志で遷移することを認めるかどうか。
 		/// </param>
-		protected virtual void commitNextState(bool allowSameState)
+		public virtual void commitNextState(bool allowSameState)
 		{
 			if (nextState == currentState && !allowSameState)
 			{
@@ -252,6 +262,7 @@ namespace danmaq.nineball.entity
 				previousState = currentState;
 				currentState = _nextState;
 				lastStateChangeTime = DateTime.Now;
+				lastStateChangeCounter = counter;
 				currentState.setup(this, privateMembers);
 				if (changedState != null)
 				{
