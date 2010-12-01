@@ -22,7 +22,7 @@ namespace danmaq.nineball.entity
 		//* fields ────────────────────────────────*
 
 		/// <summary>所有者。</summary>
-		IEntity owner;
+		public IEntity owner;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
