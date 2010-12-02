@@ -29,6 +29,13 @@ namespace danmaq.nineball.state
 		/// <summary>実装された、既定の空の状態。</summary>
 		public static readonly CState empty = new CState();
 
+		/// <summary>実装された、既定の空の状態のクローン。</summary>
+		/// <remarks>
+		/// <c>empty</c>を使用せずに(たとえば自動削除回避のため)、
+		/// 空の状態を再現するために使用します。
+		/// </remarks>
+		public static readonly CState emptyClone = new CState();
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
