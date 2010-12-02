@@ -104,7 +104,7 @@
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
-    <Compile Include="entity\CValiableOwner.cs" />
+    <Compile Include="entity\CVariableOwner.cs" />
     <Compile Include="entity\graphics\CFogAnimation.cs" />
     <Compile Include="entity\graphics\CSpriteManager.cs" />
     <Compile Include="state\graphics\CStateFogAnimation.cs" />

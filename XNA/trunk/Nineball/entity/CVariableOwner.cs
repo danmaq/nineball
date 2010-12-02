@@ -14,7 +14,7 @@ namespace danmaq.nineball.entity
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>所有者を動的に変更可能な、状態を持つオブジェクト クラス。</summary>
-	public class CValiableOwner
+	public class CVariableOwner
 		: CEntity
 	{
 
@@ -32,7 +32,7 @@ namespace danmaq.nineball.entity
 		/// <para>コンストラクタ。</para>
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
-		public CValiableOwner()
+		public CVariableOwner()
 			: base(null)
 		{
 		}
@@ -44,7 +44,7 @@ namespace danmaq.nineball.entity
 		/// </summary>
 		/// 
 		/// <param name="firstState">初期の状態。</param>
-		public CValiableOwner(IState firstState)
+		public CVariableOwner(IState firstState)
 			: base(firstState)
 		{
 		}
@@ -59,7 +59,7 @@ namespace danmaq.nineball.entity
 		/// <param name="privateMembers">
 		///	オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		///	</param>
-		public CValiableOwner(IState firstState, object privateMembers)
+		public CVariableOwner(IState firstState, object privateMembers)
 			: base(firstState, privateMembers)
 		{
 		}
