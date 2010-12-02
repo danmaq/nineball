@@ -211,6 +211,8 @@ namespace danmaq.nineball.entity
 		public virtual void Dispose()
 		{
 			resetCounter();
+			// TODO : イベントを投げることも考えると、commitState()したほうがよいな……
+			currentState.teardown(this, privateMembers, CState.empty);
 			currentState = CState.empty;
 			previousState = CState.empty;
 			nextState = null;
