@@ -107,7 +107,7 @@ namespace danmaq.nineball.util
 		/// <returns>回転されたベクトル。</returns>
 		public static Vector2 rotate(this Vector2 source, float angle)
 		{
-			return Vector2.Transform(source, Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle));
+			return Vector2.Transform(source, Quaternion.CreateFromAxisAngle(-Vector3.UnitZ, angle));
 		}
 
 		//* -----------------------------------------------------------------------*
