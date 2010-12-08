@@ -78,6 +78,21 @@ namespace danmaq.nineball.entity.manager
 			}
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定したインデックスにある要素を取得します。</summary>
+		/// 
+		/// <param name="index">
+		/// 取得する要素の、<c>0</c>から始まるインデックス番号。
+		/// </param>
+		/// <value>指定したインデックスにある要素。</value>
+		public IEntity this[int index]
+		{
+			get
+			{
+				return tasks[index];
+			}
+		}
+
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
