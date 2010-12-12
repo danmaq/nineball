@@ -61,6 +61,7 @@ namespace danmaq.nineball.util.collection.input
 				GamePadDPad dpad = now.DPad;
 				GamePadThumbSticks nStks = now.ThumbSticks;
 				GamePadThumbSticks pStks = prev.ThumbSticks;
+				// TODO : トリガ忘れてね？
 				result =
 					btns != prev.Buttons && (
 						btns.A == ButtonState.Pressed ||

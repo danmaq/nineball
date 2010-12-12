@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using danmaq.nineball.entity.input.low;
@@ -30,7 +29,7 @@ namespace danmaq.nineball.util.collection.input
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CKeyboardInputCollection instance = new CKeyboardInputCollection();
 
-		/// <summary>マウス専用低位入力制御・管理クラス。</summary>
+		/// <summary>キーボード専用低位入力制御・管理クラス。</summary>
 		public readonly CXNAInput<KeyboardState> input =
 			new CXNAInput<KeyboardState>(CStateKeyboardInput.keyboard);
 
@@ -64,8 +63,6 @@ namespace danmaq.nineball.util.collection.input
 			input.update(gameTime);
 			Keys[] now = input.nowInputState.GetPressedKeys();
 			Keys[] prev = input.prevInputState.GetPressedKeys();
-			Array.Sort<Keys>(now);
-			Array.Sort<Keys>(prev);
 			return now.Length > prev.Length ? now.Except(prev) : null;
 		}
 
