@@ -160,6 +160,7 @@ namespace danmaq.nineball.util.storage
 			{
 				gsc = new GamerServicesComponent(game);
 				game.Components.Add(gsc);
+				isAvaliableUseGamerService = true;
 			}
 			catch (Exception e)
 			{
@@ -196,6 +197,22 @@ namespace danmaq.nineball.util.storage
 		{
 			get;
 			private set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// ガイド ユーザ インターフェイス画面が有効であるかどうかを取得します。
+		/// </summary>
+		/// 
+		/// <value>
+		/// ガイド ユーザ インターフェイス画面が有効である場合、<c>true</c>。
+		/// </value>
+		public bool isVisible
+		{
+			get
+			{
+				return isAvaliableUseGamerService ? Guide.IsVisible : false;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
