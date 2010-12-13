@@ -9,7 +9,9 @@
 
 #if WINDOWS
 
+using System;
 using System.Collections.Generic;
+using danmaq.nineball.data.input;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.entity.input.low;
 using danmaq.nineball.util.math;
@@ -34,6 +36,9 @@ namespace danmaq.nineball.state.input
 		public static readonly IState<CAdapter, CAdapter.CPrivateMembers> instance =
 			new CStateLegacyInput();
 
+		/// <summary>プロセッサ一覧。</summary>
+		private readonly Func<SInputInfo, JoystickState, CAdapter, SInputInfo>[] processorList;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -41,6 +46,18 @@ namespace danmaq.nineball.state.input
 		/// <summary>コンストラクタ。</summary>
 		private CStateLegacyInput()
 		{
+			Func<SInputInfo, JoystickState, CAdapter, SInputInfo>[] processorList =
+				new Func<SInputInfo, JoystickState, CAdapter, SInputInfo>
+					[-(int)ELegacyGamePadAxisButtons.__reserved];
+			processorList[0] = (info, state, entity) => info;
+			processorList[-(int)ELegacyGamePadAxisButtons.analog] =
+				(info, state, entity) => info.updateVelocityWithAxisHPF(
+					new Vector3(state.X, state.Y, state.Z) / (float)CLegacyInput.RANGE,
+					entity.threshold);
+			processorList[-(int)ELegacyGamePadAxisButtons.pov] =
+				(info, state, entity) => info.updateVelocityWithAxisHPF(
+					getVelocityFromPOV(state), entity.threshold);
+			this.processorList = processorList;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -75,18 +92,19 @@ namespace danmaq.nineball.state.input
 			IList<int> assign = entity.assignList;
 			List<SInputInfo> buttons = privateMembers.buttonList;
 			JoystickState nowState = entity.lowerInput.nowInputState;
+			float threshold = entity.threshold;
 			byte[] buffer = nowState.GetButtons();
 			for (int i = assign.Count; --i >= 0; )
 			{
-				if (assign[i] >= 0)
+				int id = assign[i];
+				if (id >= 0)
 				{
-					buttons[i].updateVelocity(Vector3.UnitZ *
-						CInterpolate._amountSmooth(buffer[assign[i]], byte.MaxValue));
+					buttons[i] = buttons[i].updateVelocity(Vector3.UnitZ *
+						CInterpolate._amountSmooth(buffer[id], byte.MaxValue));
 				}
 				else
 				{
-					buttons[i].updateVelocity(new Vector3(nowState.X, nowState.Y, nowState.Z) /
-						(float)CLegacyInput.RANGE);
+					buttons[i] = processorList[-id](buttons[i], nowState, entity);
 				}
 			}
 		}
@@ -118,6 +136,28 @@ namespace danmaq.nineball.state.input
 		public override void teardown(
 			CAdapter entity, CAdapter.CPrivateMembers privateMembers, IState nextState)
 		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ハット スイッチの角度情報をベクトルに変換します。。</summary>
+		/// 
+		/// <param name="state">最新の入力状態。</param>
+		/// <returns>ベクトル。Z軸はダミー値。</returns>
+		private Vector3 getVelocityFromPOV(JoystickState state)
+		{
+			Vector3 result = Vector3.Zero;
+			int[] povList = state.GetPointOfView();
+			if (povList.Length > 0)
+			{
+				int pov = povList[0];
+				if (pov >= 0)
+				{
+					float angle = MathHelper.ToRadians(pov * 0.01f);
+					Quaternion q = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle);
+					result = Vector3.Transform(-Vector3.UnitY, q);
+				}
+			}
+			return result;
 		}
 	}
 }

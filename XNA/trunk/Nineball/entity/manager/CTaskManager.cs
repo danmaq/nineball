@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using danmaq.nineball.state;
-using danmaq.nineball.state.graphics.task;
+using danmaq.nineball.state.manager.task;
 
 namespace danmaq.nineball.entity.manager
 {
