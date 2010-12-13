@@ -13,7 +13,7 @@ using danmaq.nineball.entity;
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.graphics.task
+namespace danmaq.nineball.state.manager.task
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

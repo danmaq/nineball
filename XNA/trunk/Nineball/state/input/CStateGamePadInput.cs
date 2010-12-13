@@ -140,32 +140,10 @@ namespace danmaq.nineball.state.input
 			List<SInputInfo> buttons = privateMembers.buttonList;
 			GamePadState nowState = entity.lowerInput.nowInputState;
 			float threshold = entity.threshold;
-			float axisThreshold = threshold / 3f;
 			for (int i = assign.Count; --i >= 0; )
 			{
-				Vector3 v3 = processorList[assign[i]](nowState);
-				Vector2 v2 = new Vector2(v3.X, v3.Y);
-				if (v2.Length() < threshold)
-				{
-					v3.X = 0;
-					v3.Y = 0;
-				}
-				else
-				{
-					if (Math.Abs(v3.X) < axisThreshold)
-					{
-						v3.X = 0;
-					}
-					if (Math.Abs(v3.Y) < axisThreshold)
-					{
-						v3.Y = 0;
-					}
-				}
-				if (v3.Z < threshold)
-				{
-					v3.Z = 0;
-				}
-				buttons[i] = buttons[i].updateVelocity(v3);
+				buttons[i] = buttons[i].updateVelocityWithAxisHPF(
+					processorList[assign[i]](nowState), threshold);
 			}
 		}
 

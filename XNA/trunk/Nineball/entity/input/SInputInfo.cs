@@ -172,6 +172,39 @@ namespace danmaq.nineball.entity.input
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>入力方向を更新します。</summary>
+		/// 
+		/// <param name="velocity">入力方向。</param>
+		/// <param name="threshold">閾値。</param>
+		/// <returns>更新された状態。</returns>
+		public SInputInfo updateVelocityWithAxisHPF(Vector3 velocity, float threshold)
+		{
+			Vector2 v2 = new Vector2(velocity.X, velocity.Y);
+			if (v2.Length() < threshold)
+			{
+				velocity.X = 0;
+				velocity.Y = 0;
+			}
+			else
+			{
+				float axisThreshold = threshold * 0.3333f;
+				if (Math.Abs(velocity.X) < axisThreshold)
+				{
+					velocity.X = 0;
+				}
+				if (Math.Abs(velocity.Y) < axisThreshold)
+				{
+					velocity.Y = 0;
+				}
+			}
+			if (velocity.Z < threshold)
+			{
+				velocity.Z = 0;
+			}
+			return updateVelocity(velocity);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>位置を更新します。</summary>
 		/// 
 		/// <param name="position">位置。</param>

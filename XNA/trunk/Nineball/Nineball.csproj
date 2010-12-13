@@ -101,6 +101,7 @@
     <Compile Include="data\input\EDevice.cs" />
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="data\input\EKeyboardAxisButtons.cs" />
+    <Compile Include="data\input\ELegacyGamePadAxisButtons.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
