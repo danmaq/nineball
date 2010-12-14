@@ -33,9 +33,6 @@ namespace danmaq.nineball.data.content
 		/// </summary>
 		private readonly bool disposable;
 
-		/// <summary>読み出し対象のアセット文字列。</summary>
-		private readonly string asset;
-
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -72,6 +69,16 @@ namespace danmaq.nineball.data.content
 		{
 			get;
 			set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>読み出し対象のアセット文字列を取得します。</summary>
+		/// 
+		/// <value>読み出し対象のアセット文字列。</value>
+		public string asset
+		{
+			get;
+			private set;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
