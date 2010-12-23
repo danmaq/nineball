@@ -207,11 +207,31 @@ namespace danmaq.nineball.util.storage
 		/// <value>
 		/// ガイド ユーザ インターフェイス画面が有効である場合、<c>true</c>。
 		/// </value>
-		public bool isVisible
+		public bool IsVisible
 		{
 			get
 			{
 				return isAvaliableUseGamerService ? Guide.IsVisible : false;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>通知が画面上に表示される場所を取得/設定します。</summary>
+		/// 
+		/// <value>通知メッセージ ボックスの位置。</value>
+		public NotificationPosition NotificationPosition
+		{
+			get
+			{
+				return isAvaliableUseGamerService ?
+					Guide.NotificationPosition : NotificationPosition.BottomCenter;
+			}
+			set
+			{
+				if (isAvaliableUseGamerService)
+				{
+					Guide.NotificationPosition = value;
+				}
 			}
 		}
 

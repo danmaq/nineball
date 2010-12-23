@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+using danmaq.nineball.entity;
 using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
 
@@ -17,7 +17,7 @@ namespace danmaq.nineball.state.manager
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>マップ方式判定管理クラス専用の既定の状態です。</summary>
 	public sealed class CStateMapJudgeManager<_T>
-		: CState<CMapJudgeManager<_T>, object> where _T : class
+		: CState<CMapJudgeManager<_T>, object> where _T : class, IEntity
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -64,8 +64,7 @@ namespace danmaq.nineball.state.manager
 		public override void update(
 			CMapJudgeManager<_T> entity, object privateMembers, GameTime gameTime)
 		{
-			_T[] map = entity.map;
-			Array.Clear(map, 0, map.Length);
+			entity.clear();
 		}
 
 		//* -----------------------------------------------------------------------*
