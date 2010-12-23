@@ -19,7 +19,7 @@ namespace danmaq.nineball.entity.manager
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>マップ方式判定管理クラス。</summary>
 	public class CMapJudgeManager<_T>
-		: CEntity where _T : class
+		: CEntity where _T : class, IEntity
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -68,7 +68,7 @@ namespace danmaq.nineball.entity.manager
 		public readonly Point size;
 
 		/// <summary>判定用マップ。</summary>
-		public readonly _T[] map;
+		public readonly List<_T>[] map;
 
 		/// <summary>近隣検索用マップ。</summary>
 		private readonly int[] nearMap;
@@ -113,7 +113,10 @@ namespace danmaq.nineball.entity.manager
 				-1, 1,
 				size.X - 1, size.X, size.X + 1,
 			};
-			map = new _T[size.X * size.Y];
+			int length = size.X * size.Y;
+			map = new List<_T>[length];
+			for (int i = length; --i >= 0; map[i] = new List<_T>())
+				;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -123,8 +126,15 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
-			Array.Clear(map, 0, map.Length);
+			clear();
 			base.Dispose();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>マップの登録状況を消去します。</summary>
+		public void clear()
+		{
+			Array.ForEach(map, i => i.Clear());
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -181,7 +191,7 @@ namespace danmaq.nineball.entity.manager
 			_T result = null;
 			if (index >= 0 && index < map.Length)
 			{
-				result = map[index];
+				result = find(index);
 				if (result == null && (lr || ud))
 				{
 					// TODO : もうちょっと整理したいなぁ……。
@@ -224,9 +234,25 @@ namespace danmaq.nineball.entity.manager
 						nearBuffer.Add((int)ENearIndex.right);
 					}
 					for (int i = nearBuffer.Count; --i >= 0 && result == null;
-						result = map[index + nearMap[nearBuffer[i]]])
+						find(index + nearMap[nearBuffer[i]]))
 						;
 				}
+			}
+			return result;
+		}
+
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定ブロックに存在する要素を取得します。</summary>
+		/// 
+		/// <param name="index">ブロック番号。</param>
+		/// <returns>要素。存在しない場合、<c>null</c>。</returns>
+		public virtual _T find(int index)
+		{
+			_T result = null;
+			if (index >= 0 && index < map.Length)
+			{
+				result = map[index].Find(o => o.currentState != CState.empty);
 			}
 			return result;
 		}

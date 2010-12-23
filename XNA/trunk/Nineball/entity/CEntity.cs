@@ -88,7 +88,6 @@ namespace danmaq.nineball.entity
 		{
 			previousState = CState.empty;
 			currentState = CState.empty;
-			lastStateChangeTime = DateTime.Now;
 			nextState = firstState;
 			this.privateMembers = privateMembers;
 		}
@@ -124,16 +123,6 @@ namespace danmaq.nineball.entity
 		{
 			get;
 			protected set;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>最後に状態が変化した現実時間を取得します。</summary>
-		/// 
-		/// <value>最後に状態が変化した現実時間。</value>
-		public DateTime lastStateChangeTime
-		{
-			get;
-			private set;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -263,7 +252,6 @@ namespace danmaq.nineball.entity
 				IState oldCurrent = currentState;
 				previousState = currentState;
 				currentState = _nextState;
-				lastStateChangeTime = DateTime.Now;
 				lastStateChangeCounter = counter;
 				currentState.setup(this, privateMembers);
 				if (changedState != null)
