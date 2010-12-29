@@ -288,8 +288,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HISTORY.txt" />
-    <Content Include="README.txt" />
+    <None Include="HISTORY.txt" />
+    <None Include="README.txt" />
     <None Include="_resources\nineball.ico" />
     <None Include="_resources\nineball.png" />
   </ItemGroup>
