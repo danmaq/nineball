@@ -134,7 +134,10 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>マップの登録状況を消去します。</summary>
 		public void clear()
 		{
-			Array.ForEach(map, i => i.Clear());
+			for (int i = map.Length; --i >= 0; )
+			{
+				map[i].Clear();
+			}
 		}
 
 		//* -----------------------------------------------------------------------*

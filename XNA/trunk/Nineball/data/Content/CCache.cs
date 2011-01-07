@@ -22,7 +22,9 @@ namespace danmaq.nineball.data.content
 	/// </remarks>
 	/// 
 	/// <typeparam name="_T">コンテンツの型情報。</typeparam>
-	public class CCache<_T> : CValue<_T>, ICache where _T : class
+	public class CCache<_T>
+		: CValue<_T>, ICache
+		where _T : class
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -43,7 +45,12 @@ namespace danmaq.nineball.data.content
 		public CCache(string asset)
 		{
 			this.asset = asset;
-			disposable = typeof(_T).GetInterface("System.IDisposable") != null;
+			Type target = typeof(IDisposable);
+			Type[] types = typeof(_T).GetInterfaces();
+			for (int i = types.Length; --i >= 0 && !disposable; )
+			{
+				disposable = types[i] == target;
+			}
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

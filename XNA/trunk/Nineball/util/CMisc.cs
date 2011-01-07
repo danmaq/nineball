@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.util
@@ -83,6 +82,62 @@ namespace danmaq.nineball.util
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 指定された述語によって定義された条件と一致する要素を検索し、
+		/// 最もインデックス番号の大きい要素の 0 から始まるインデックスを返します。
+		/// </summary>
+		/// <remarks>
+		/// 検索は最後の要素から開始して順方向に進み、最後の要素で終了します。
+		/// このメソッドは O(n) 操作です。
+		/// </remarks>
+		/// 
+		/// <typeparam name="_T">配列要素の型。</typeparam>
+		/// <param name="array">検索対象となる1次元配列。</param>
+		/// <param name="predicate">検索する要素の条件。</param>
+		/// <returns>
+		/// 定義された条件と一致する要素が存在した場合、最もインデックス番号の大きい
+		/// 要素の 0 から始まるインデックス。それ以外の場合は –1。
+		/// </returns>
+		public static int FindLastIndex<_T>(_T[] array, Predicate<_T> match)
+		{
+			int result = -1;
+			for (int i = array.Length; --i >= 0 && result < 0; )
+			{
+				if(match(array[i]))
+				{
+					result = i;
+				}
+			}
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>使用されているリソースを解放します。</summary>
+		/// 
+		/// <typeparam name="_T">解放対象の型。</typeparam>
+		/// <param name="obj">解放対象のオブジェクト。</param>
+		/// <returns>解放された場合、<c>true</c>。</returns>
+		public static bool safeDispose<_T>(ref _T obj) where _T : class, IDisposable
+		{
+			bool result = obj != null;
+			if (result)
+			{
+				try
+				{
+					obj.Dispose();
+				}
+				catch (Exception e)
+				{
+					CLogger.add(
+						string.Format("{0}の解放に失敗しました。", obj.GetType().FullName));
+					CLogger.add(e);
+				}
+				obj = null;
+			}
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>矩形を中心を原点として拡大します。</summary>
 		/// 
 		/// <param name="rectExpr">矩形</param>
@@ -121,32 +176,6 @@ namespace danmaq.nineball.util
 		public static Vector3 rotate(this Vector3 source, Vector3 axis, float angle)
 		{
 			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>使用されているリソースを解放します。</summary>
-		/// 
-		/// <typeparam name="_T">解放対象の型。</typeparam>
-		/// <param name="obj">解放対象のオブジェクト。</param>
-		/// <returns>解放された場合、<c>true</c>。</returns>
-		public static bool safeDispose<_T>(ref _T obj) where _T : class, IDisposable
-		{
-			bool result = obj != null;
-			if (result)
-			{
-				try
-				{
-					obj.Dispose();
-				}
-				catch (Exception e)
-				{
-					CLogger.add(
-						string.Format("{0}の解放に失敗しました。", obj.GetType().FullName));
-					CLogger.add(e);
-				}
-				obj = null;
-			}
-			return result;
 		}
 	}
 }

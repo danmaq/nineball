@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.entity.input.low;
 using Microsoft.Xna.Framework;
@@ -17,7 +18,7 @@ namespace danmaq.nineball.state.input.low
 {
 
 	using IStateKeyboardInput =
-		IState<CXNAInput<KeyboardState>, CXNAInput<KeyboardState>.CPrivateMembers>;
+			IState<CXNAInput<KeyboardState>, CXNAInput<KeyboardState>.CPrivateMembers>;
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>キーボード入力制御・管理クラスの既定の状態。</summary>
@@ -63,7 +64,7 @@ namespace danmaq.nineball.state.input.low
 			array[(int)PlayerIndex.Two] = chatPad2;
 			array[(int)PlayerIndex.Three] = chatPad3;
 			array[(int)PlayerIndex.Four] = chatPad4;
-			chatPadInstanceList = Array.AsReadOnly<IStateKeyboardInput>(array);
+			chatPadInstanceList = new List<IStateKeyboardInput>(array).AsReadOnly();
 		}
 
 		//* -----------------------------------------------------------------------*
