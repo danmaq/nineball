@@ -37,7 +37,7 @@ namespace danmaq.nineball.util.storage
 		private string m_titleName;
 
 		/// <summary>Windows版におけるXNAセーブデータのルート フォルダ。</summary>
-		private string windowsXNARoot;
+		private string windowsXNARoot = null;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -100,9 +100,9 @@ namespace danmaq.nineball.util.storage
 					throw new InvalidOperationException(Resources.ERR_MODIFY_TITLE);
 				}
 				m_titleName = value;
+#if WINDOWS
 				windowsXNARoot = Path.Combine(
 					Path.Combine(windowsXNARoot, value), "AllPlayers");
-#if WINDOWS
 				new DirectoryInfo(windowsXNARoot).Create();
 #endif
 			}

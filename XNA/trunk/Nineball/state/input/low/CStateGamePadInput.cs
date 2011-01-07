@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -58,7 +58,7 @@ namespace danmaq.nineball.state.input.low
 			array[(int)PlayerIndex.Two] = player2;
 			array[(int)PlayerIndex.Three] = player3;
 			array[(int)PlayerIndex.Four] = player4;
-			instanceList = Array.AsReadOnly<CStateGamePadInput>(array);
+			instanceList = new List<CStateGamePadInput>(array).AsReadOnly();
 		}
 
 		//* -----------------------------------------------------------------------*

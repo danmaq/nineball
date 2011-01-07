@@ -56,7 +56,7 @@ namespace danmaq.nineball.entity.input
 		public float threshold = 0.25f;
 
 		/// <summary>割り当て一覧。</summary>
-		private ReadOnlyCollection<int> m_assignList = Array.AsReadOnly<int>(new int[0]);
+		private ReadOnlyCollection<int> m_assignList = new List<int>().AsReadOnly();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*

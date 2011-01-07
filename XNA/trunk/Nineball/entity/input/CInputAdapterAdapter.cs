@@ -7,7 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
 using danmaq.nineball.state;
 using danmaq.nineball.state.input;
@@ -58,7 +57,7 @@ namespace danmaq.nineball.entity.input
 			int[] am = new int[buttons];
 			for (int i = am.Length; --i >= 0; am[i] = i)
 				;
-			assignList = Array.AsReadOnly(am);
+			assignList = new List<int>(am).AsReadOnly();
 		}
 	}
 }

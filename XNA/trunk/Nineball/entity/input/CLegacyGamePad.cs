@@ -53,7 +53,13 @@ namespace danmaq.nineball.entity.input
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		public CLegacyGamePad()
-			: this(CStateLegacyInput.instance)
+			: this(
+#if WINDOWS
+				CStateLegacyInput.instance
+#else
+				CState.empty
+#endif
+)
 		{
 		}
 

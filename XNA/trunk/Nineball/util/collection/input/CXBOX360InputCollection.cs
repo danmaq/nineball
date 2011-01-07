@@ -7,8 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.entity.input.low;
 using danmaq.nineball.state;
@@ -46,7 +46,7 @@ namespace danmaq.nineball.util.collection.input
 			{
 				array[i] = new CXNAInput<_T>((IState)stateList[i]);
 			}
-			inputList = Array.AsReadOnly<CXNAInput<_T>>(array);
+			inputList = new List<CXNAInput<_T>>(array).AsReadOnly();
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

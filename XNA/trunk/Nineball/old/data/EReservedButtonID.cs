@@ -8,8 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using Microsoft.DirectX.DirectInput;
 using Microsoft.Xna.Framework;
+
+#if WINDOWS
+using Microsoft.DirectX.DirectInput;
+#endif
 
 namespace danmaq.nineball.old.data
 {
