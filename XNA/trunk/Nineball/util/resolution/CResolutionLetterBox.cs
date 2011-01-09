@@ -16,7 +16,7 @@ namespace danmaq.nineball.util.resolution
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レターボックス座標変換する解像度管理クラス。</summary>
-	public abstract class CResolutionLetterBox
+	public sealed class CResolutionLetterBox
 		: CResolutionBase
 	{
 
@@ -40,6 +40,54 @@ namespace danmaq.nineball.util.resolution
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="source">変換元の解像度。</param>
+		/// <param name="destination">変換先の解像度。</param>
+		/// <param name="cut">
+		/// アスペクト比が異り、かつこの値が<c>true</c>である場合、拡大してはみ出した
+		/// 分をカットします。一方<c>false</c>の場合、縮小して余白を表示します。
+		/// アスペクト比が一致する場合、この引数によって何も変化しません。
+		/// </param>
+		public CResolutionLetterBox(EResolution source, EResolution destination, bool cut)
+			: this(source, destination, EAlign.Center, EAlign.Center, cut)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="source">変換元の解像度。</param>
+		/// <param name="destination">変換先の解像度。</param>
+		/// <param name="cut">
+		/// アスペクト比が異り、かつこの値が<c>true</c>である場合、拡大してはみ出した
+		/// 分をカットします。一方<c>false</c>の場合、縮小して余白を表示します。
+		/// アスペクト比が一致する場合、この引数によって何も変化しません。
+		/// </param>
+		public CResolutionLetterBox(Rectangle source, Rectangle destination, bool cut)
+			: this(source, destination, EAlign.Center, EAlign.Center, cut)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="source">変換元の解像度。</param>
+		/// <param name="destination">変換先の解像度。</param>
+		/// <param name="alignHorizontal">水平位置揃え情報。</param>
+		/// <param name="alignVertical">垂直位置揃え情報。</param>
+		/// <param name="cut">
+		/// アスペクト比が異り、かつこの値が<c>true</c>である場合、拡大してはみ出した
+		/// 分をカットします。一方<c>false</c>の場合、縮小して余白を表示します。
+		/// アスペクト比が一致する場合、この引数によって何も変化しません。
+		/// </param>
+		public CResolutionLetterBox(EResolution source, EResolution destination,
+			EAlign alignHorizontal, EAlign alignVertical, bool cut)
+			: this(source.toRect(), destination.toRect(), alignHorizontal, alignVertical, cut)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>

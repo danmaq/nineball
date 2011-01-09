@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using danmaq.nineball.data.animation;
 using danmaq.nineball.state;
+using danmaq.nineball.state.graphics;
 
 namespace danmaq.nineball.entity.graphics
 {
@@ -39,6 +40,16 @@ namespace danmaq.nineball.entity.graphics
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>既定の状態で初期化します。</para>
+		/// </summary>
+		public CAnimation()
+			: base(CStateAnimation<_T, _D>.instance)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
