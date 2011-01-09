@@ -48,6 +48,7 @@ namespace danmaq.nineball.util.resolution
 		public CResolutionSqueeze(Rectangle source, Rectangle destination)
 			: base(source, destination)
 		{
+			calcurate();
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -70,8 +71,8 @@ namespace danmaq.nineball.util.resolution
 			base.calcurate();
 			bool side = ((int)top & 1) == 1;
 			scale = new Vector2(
-				destination.Width / (side ? source.Height : source.Width),
-				destination.Height / (side ? source.Width : source.Height));
+				(float)destination.Width / (float)(side ? source.Height : source.Width),
+				(float)destination.Height / (float)(side ? source.Width : source.Height));
 		}
 	}
 }

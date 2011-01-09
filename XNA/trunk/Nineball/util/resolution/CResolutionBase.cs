@@ -91,7 +91,6 @@ namespace danmaq.nineball.util.resolution
 			// -----  ----- //
 			m_src = source;
 			m_dst = destination;
-			calcurate();
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

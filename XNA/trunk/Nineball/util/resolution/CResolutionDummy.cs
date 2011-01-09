@@ -33,6 +33,7 @@ namespace danmaq.nineball.util.resolution
 			: base(EResolution.VGA.toRect(), EResolution.VGA.toRect())
 		{
 			scale = Vector2.One;
+			calcurate();
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
