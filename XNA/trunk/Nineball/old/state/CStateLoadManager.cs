@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.nineball.old.state.manager
+namespace danmaq.nineball.old.state
 {
 
 	// TODO : object以外も返せるようにしなきゃ

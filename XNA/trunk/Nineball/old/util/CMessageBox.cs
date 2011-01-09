@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics;
 using danmaq.nineball.Properties;
+using danmaq.nineball.util;
 
 #if WINDOWS
 using System.Windows.Forms;
@@ -18,7 +19,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using danmaq.nineball.state.manager;
 #endif
 
-namespace danmaq.nineball.util
+namespace danmaq.nineball.old.util
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

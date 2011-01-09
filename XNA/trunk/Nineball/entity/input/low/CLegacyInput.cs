@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -192,14 +192,13 @@ namespace danmaq.nineball.entity.input.low
 				}
 				if ((doi.Flags & (int)ObjectInstanceFlags.Actuator) != 0)
 				{
-					int[] __anAxis;
 					if (anAxis == null)
 					{
 						anAxis = new int[1];
 					}
 					else
 					{
-						__anAxis = new int[anAxis.Length + 1];
+						int[] __anAxis = new int[anAxis.Length + 1];
 						anAxis.CopyTo(__anAxis, 0);
 						anAxis = __anAxis;
 					}

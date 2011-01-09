@@ -2,11 +2,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.nineball.data;
 using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,7 @@ namespace danmaq.nineball.old.core.raw
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>アスペクト比を4:3に固定した解像度管理クラス。</summary>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.util.resolution名前空間の各種クラスを使用してください。")]
 	public sealed class CResolutionAspectFix : CResolution
 	{
 

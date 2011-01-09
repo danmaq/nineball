@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -11,6 +11,7 @@ using System;
 using System.Threading;
 using danmaq.nineball.old.core.inner;
 using danmaq.nineball.old.core.manager;
+using danmaq.nineball.old.util;
 using danmaq.nineball.Properties;
 using danmaq.nineball.util;
 using danmaq.nineball.util.caps;

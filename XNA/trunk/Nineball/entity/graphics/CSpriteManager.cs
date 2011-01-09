@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -10,9 +10,9 @@
 using System;
 using System.Collections.Generic;
 using danmaq.nineball.data;
-using danmaq.nineball.old.core.raw;
 using danmaq.nineball.state;
 using danmaq.nineball.state.graphics;
+using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -85,10 +85,7 @@ namespace danmaq.nineball.entity.graphics
 		public SpriteBatch spriteBatch;
 
 		/// <summary>解像度管理クラス。</summary>
-		private CResolution m_resolution = null;
-
-		/// <summary>アスペクト比固定かどうか。</summary>
-		private bool m_aspectFixed;
+		private CResolutionBase m_resolution = CResolutionDummy.instance;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -114,7 +111,6 @@ namespace danmaq.nineball.entity.graphics
 			: base(firstState, new CPrivateMembers())
 		{
 			_private = (CPrivateMembers)privateMembers;
-			resolution = new CResolution();
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -124,7 +120,7 @@ namespace danmaq.nineball.entity.graphics
 		/// <summary>解像度管理クラスを取得/設定します。</summary>
 		/// 
 		/// <value>解像度管理クラス。</value>
-		public CResolution resolution
+		public CResolutionBase resolution
 		{
 			get
 			{
@@ -132,10 +128,7 @@ namespace danmaq.nineball.entity.graphics
 			}
 			set
 			{
-				m_resolution = value;
-				Type expect = typeof(CResolutionAspectFix);
-				Type got = value.GetType();
-				m_aspectFixed = got == expect || got.IsSubclassOf(expect);
+				m_resolution = value == null ? CResolutionDummy.instance : value;
 			}
 		}
 
@@ -231,6 +224,7 @@ namespace danmaq.nineball.entity.graphics
 		)
 		{
 			Vector2 origin = Vector2.Zero;
+			// TODO : これ変換なしにSpriteBatch.Drawに渡した方が処理早いんじゃね？
 			switch (halign)
 			{
 				case EAlign.Center:
@@ -292,12 +286,10 @@ namespace danmaq.nineball.entity.graphics
 			SSpriteDrawInfo info = new SSpriteDrawInfo();
 			info.initialize();
 			info.texture = tex;
-			info.destinationRectangle = resolution == null ?
-				dstRect : resolution.resizeFromVGA(dstRect);
+			info.destinationRectangle = resolution.convertRectangle(dstRect);
 			info.sourceRectangle = srcRect;
 			info.color = color;
-			info.fRotation = fRotate -
-				(resolution != null && resolution.vertical ? 0 : 0);
+			info.fRotation = fRotate + resolution.rotate;
 			info.origin = origin;
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
@@ -328,27 +320,12 @@ namespace danmaq.nineball.entity.graphics
 			info.initialize();
 			info.spriteFont = spriteFont;
 			info.text = text;
-			info.position = resolution == null ? pos : resolution.resizeFromVGA(pos);
+			info.position = resolution.convertPosition(pos);
 			info.color = color;
-			info.fRotation = fRotate;
+			info.fRotation = fRotate + resolution.rotate;
 			info.origin = origin;
 			info.blendMode = blend;
-			if (resolution == null)
-			{
-				info.scale = scale;
-			}
-			else
-			{
-				if (m_aspectFixed)
-				{
-					CResolutionAspectFix res = (CResolutionAspectFix)resolution;
-					info.scale = scale * res.scaleGapFromVGA;
-				}
-				else
-				{
-					info.scale = scale * resolution.scaleGapFromVGA;
-				}
-			}
+			info.scale = scale * resolution.scale;
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
 			_private.drawCache.Add(info);

@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ namespace danmaq.nineball.util
 		/// 
 		/// <typeparam name="_T">配列要素の型。</typeparam>
 		/// <param name="array">検索対象となる1次元配列。</param>
-		/// <param name="predicate">検索する要素の条件。</param>
+		/// <param name="match">検索する要素の条件。</param>
 		/// <returns>
 		/// 定義された条件と一致する要素が存在した場合、最もインデックス番号の大きい
 		/// 要素の 0 から始まるインデックス。それ以外の場合は –1。

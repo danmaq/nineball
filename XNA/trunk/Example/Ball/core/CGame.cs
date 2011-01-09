@@ -3,7 +3,7 @@
 //
 //	danmaq Nineball-Library SAMPLE PROGRAM #1
 //	赤い玉 青い玉 競走ゲーム
-//		Copyright (c) 1994-2010 danmaq all rights reserved.
+//		Copyright (c) 1994-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ namespace danmaq.ball.core
 		public readonly CInputManager inputManager = CInputManager.create();
 
 		/// <summary>解像度管理クラス。</summary>
-		public readonly CResolution resolution = new CResolution(EResolution.VGA);
+		public readonly CResolutionCollection resolution = new CResolutionCollection(EResolution.VGA);
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
