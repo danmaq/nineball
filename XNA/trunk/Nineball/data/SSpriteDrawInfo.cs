@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,23 +76,23 @@ namespace danmaq.nineball.data
 		public int CompareTo(SSpriteDrawInfo other)
 		{
 			int nResult = Math.Sign(other.fLayerDepth - fLayerDepth);
-			if(nResult == 0)
+			if (nResult == 0)
 			{
-				if(spriteFont == null && other.texture == null)
+				nResult = (int)other.blendMode - (int)blendMode;
+				if (nResult == 0)
 				{
-					nResult = -1;
-				}
-				else if(texture == null && other.spriteFont == null)
-				{
-					nResult = 1;
-				}
-				else if(blendMode < other.blendMode)
-				{
-					nResult = -1;
-				}
-				else if(blendMode > other.blendMode)
-				{
-					nResult = 1;
+					nResult = (int)other.effects - (int)effects;
+					if (nResult == 0)
+					{
+						if (spriteFont == null && other.texture == null)
+						{
+							nResult = -1;
+						}
+						else if (texture == null && other.spriteFont == null)
+						{
+							nResult = 1;
+						}
+					}
 				}
 			}
 			return nResult;

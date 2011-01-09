@@ -2,38 +2,41 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.nineball.data.animation;
 using danmaq.nineball.entity.graphics;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.state.graphics
 {
 
-	// TODO : アニメスプライトはまだしも、カメラパスとフォグアニメ、統合できるんじゃね？
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>フォグ アニメーション管理クラス用の既定の状態です。</summary>
-	public sealed class CStateFogAnimation
-		 : CState<CFogAnimation, object>
+	/// <summary>アニメーション管理クラス用の既定の状態です。</summary>
+	/// 
+	/// <typeparam name="_T">一定時間分のアニメーション データ。</typeparam>
+	/// <typeparam name="_D">
+	/// アニメーション データから1フレームだけを切り出したデータ。
+	/// </typeparam>
+	public sealed class CStateAnimation<_T, _D> : CState<CAnimation<_T, _D>, object>
+		where _T : IAnimationData<_D>
 	{
-
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CFogAnimation, object> instance
-			= new CStateFogAnimation();
+		public static readonly IState<CAnimation<_T, _D>, object> instance
+			= new CStateAnimation<_T, _D>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateFogAnimation()
+		private CStateAnimation()
 		{
 		}
 
@@ -50,7 +53,7 @@ namespace danmaq.nineball.state.graphics
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CFogAnimation entity, object privateMembers)
+		public override void setup(CAnimation<_T, _D> entity, object privateMembers)
 		{
 			entity.resetCounter();
 		}
@@ -63,9 +66,10 @@ namespace danmaq.nineball.state.graphics
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CFogAnimation entity, object privateMembers, GameTime gameTime)
+		public override void update(
+			CAnimation<_T, _D> entity, object privateMembers, GameTime gameTime)
 		{
-			CFogAnimation.SData now = entity.nowScene;
+			_T now = entity.nowScene;
 			if (entity.counter >= now.interval)
 			{
 				entity.resetCounter();
@@ -81,7 +85,8 @@ namespace danmaq.nineball.state.graphics
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CFogAnimation entity, object privateMembers, GameTime gameTime)
+		public override void draw(
+			CAnimation<_T, _D> entity, object privateMembers, GameTime gameTime)
 		{
 		}
 
@@ -97,7 +102,7 @@ namespace danmaq.nineball.state.graphics
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CFogAnimation entity, object privateMembers, IState nextState)
+			CAnimation<_T, _D> entity, object privateMembers, IState nextState)
 		{
 		}
 	}

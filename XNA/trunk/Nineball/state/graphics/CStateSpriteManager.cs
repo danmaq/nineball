@@ -2,7 +2,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ namespace danmaq.nineball.state.graphics
 			}
 			List<SSpriteDrawInfo> drawCache = privateMembers.drawCache;
 			int length = drawCache.Count;
-			privateMembers.drawCache.Sort(compare);
+			privateMembers.drawCache.Sort();
 
 			for (int i = length; --i >= 0; )
 			{
@@ -102,8 +102,7 @@ namespace danmaq.nineball.state.graphics
 				changeMode(spriteBatch, info);
 				if (info.spriteFont == null)
 				{
-					Rectangle rectDst = info.destinationRectangle;
-					spriteBatch.Draw(info.texture, rectDst,
+					spriteBatch.Draw(info.texture, info.destinationRectangle,
 						info.sourceRectangle, info.color, info.fRotation,
 						info.origin, info.effects, info.fLayerDepth);
 				}
@@ -172,22 +171,6 @@ namespace danmaq.nineball.state.graphics
 				spriteBatch.End();
 				m_drawMode.isBegin = false;
 			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>描画優先度を比較します。</summary>
-		/// 
-		/// <param name="x">比較対象の第1オブジェクト。</param>
-		/// <param name="y">比較対象の第2オブジェクト。</param>
-		/// <returns>x＜y…-1、x＞y…1。</returns>
-		private int compare(SSpriteDrawInfo x, SSpriteDrawInfo y)
-		{
-			int result = Math.Sign(y.fLayerDepth - x.fLayerDepth);
-			if (result == 0)
-			{
-				result = (int)y.blendMode - (int)x.blendMode;
-			}
-			return result == 0 ? (int)y.effects - (int)x.effects : result;
 		}
 	}
 }

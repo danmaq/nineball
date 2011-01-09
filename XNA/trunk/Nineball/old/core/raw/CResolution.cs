@@ -2,12 +2,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 //	danmaq Nineball-Library
-//		Copyright (c) 2008-2010 danmaq all rights reserved.
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
+using System;
 using danmaq.nineball.data;
 using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
@@ -18,17 +18,21 @@ namespace danmaq.nineball.old.core.raw
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>解像度管理クラス。</summary>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.util.resolution名前空間の各種クラスを使用してください。")]
 	public class CResolution
 	{
+
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>対応解像度コレクション。</summary>
+		protected static readonly CResolutionCollection supports = CResolutionCollection.instance;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>グラフィック アダプタのワイド画面サポート。</summary>
 		private static CValue<bool> m_bWide = null;
-
-		/// <summary>対応している解像度一覧。</summary>
-		private static List<EResolution> m_supports = null;
 
 		/// <summary>現在の解像度。</summary>
 		protected EResolution m_now = EResolution.VGA;
@@ -95,35 +99,6 @@ namespace danmaq.nineball.old.core.raw
 					m_bWide = GraphicsAdapter.DefaultAdapter.IsWideScreen;
 				}
 				return m_bWide;
-			}
-		}
-
-		/// <summary>対応している解像度一覧。</summary>
-		protected static List<EResolution> supports
-		{
-			get
-			{
-				if (m_supports == null)
-				{
-					m_supports = new List<EResolution>();
-					foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
-					{
-						for (EResolution i = EResolution.VGA; i < EResolution.__reserved; i++)
-						{
-							Rectangle rect = i.toRect();
-							if (
-								mode.Width == rect.Width && mode.Height == rect.Height &&
-								!m_supports.Contains(i)
-							)
-							{
-								m_supports.Add(i);
-								break;
-							}
-						}
-					}
-					m_supports.Sort();
-				}
-				return m_supports;
 			}
 		}
 
@@ -296,50 +271,6 @@ namespace danmaq.nineball.old.core.raw
 				(float)(res1.Height) / (float)(res2.Height));
 		}
 
-		// TODO : この辺オペレータ オーバーロードできないかなぁ
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>より上位のデバイスが対応している解像度を取得します。</summary>
-		/// <remarks>
-		/// もし与えられた解像度が最上位の場合、最下位の解像度を返します。
-		/// </remarks>
-		/// 
-		/// <param name="resolution">基準となる解像度列挙体。</param>
-		/// <returns>より上位の解像度列挙体。</returns>
-		public static EResolution getNext(EResolution resolution)
-		{
-			bool bWide = resolution.isWide();
-			for (EResolution __res = resolution + 1; __res < EResolution.__reserved; __res++)
-			{
-				if (supports.Contains(__res) && __res.isWide() == bWide)
-				{
-					return __res;
-				}
-			}
-			return getMinResolution(bWide);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>より上位のデバイスが対応している解像度を取得します。</summary>
-		/// <remarks>
-		/// もし与えられた解像度が最上位の場合、最下位の解像度を返します。
-		/// </remarks>
-		/// 
-		/// <param name="resolution">基準となる解像度列挙体。</param>
-		/// <returns>より上位の解像度列挙体。</returns>
-		public static EResolution getPrev(EResolution resolution)
-		{
-			bool bWide = resolution.isWide();
-			for (EResolution __res = resolution - 1; __res > EResolution.VGA; __res--)
-			{
-				if (supports.Contains(__res) && __res.isWide() == bWide)
-				{
-					return __res;
-				}
-			}
-			return getMinResolution(bWide);
-		}
-
 		//* -----------------------------------------------------------------------*
 		/// <summary>対応する最低解像度を取得します。</summary>
 		/// 
@@ -390,7 +321,7 @@ namespace danmaq.nineball.old.core.raw
 			do
 			{
 				resolution = resNext;
-				resNext = getNext(resolution);
+				resNext = supports.next(resolution);
 			}
 			while (resolution < resNext);
 			return resolution;
@@ -415,7 +346,7 @@ namespace danmaq.nineball.old.core.raw
 			EResolution resolution = CResolution.getMinResolution(bWide);
 			if (bFullScreen)
 			{
-				resolution = CResolution.getPrev(CResolution.getMaxResolution(bWide));
+				resolution = supports.prev(CResolution.getMaxResolution(bWide));
 			}
 			Rectangle screenRect = resolution.toRect();
 			bResult = (gdm.IsFullScreen != bFullScreen) ||

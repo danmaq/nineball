@@ -94,10 +94,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\animation\IAnimationData.cs" />
+    <Compile Include="data\animation\SCameraPathData.cs" />
+    <Compile Include="data\animation\SFogAnimationData.cs" />
     <Compile Include="data\content\CCache.cs" />
     <Compile Include="data\content\ICache.cs" />
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
+    <Compile Include="data\EDirection.cs" />
     <Compile Include="data\input\EDevice.cs" />
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="data\input\EKeyboardAxisButtons.cs" />
@@ -106,11 +110,16 @@
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
     <Compile Include="entity\CVariableOwner.cs" />
-    <Compile Include="entity\graphics\CFogAnimation.cs" />
+    <Compile Include="entity\graphics\CAnimation.cs" />
     <Compile Include="entity\graphics\CSpriteManager.cs" />
-    <Compile Include="state\graphics\CStateFogAnimation.cs" />
+    <Compile Include="state\graphics\CStateAnimation.cs" />
     <Compile Include="state\graphics\CStateSpriteManager.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
+    <Compile Include="util\resolution\CResolutionBase.cs" />
+    <Compile Include="util\resolution\CResolutionCollection.cs" />
+    <Compile Include="util\resolution\CResolutionDummy.cs" />
+    <Compile Include="util\resolution\CResolutionLetterBox.cs" />
+    <Compile Include="util\resolution\CResolutionSqueeze.cs" />
     <Compile Include="util\storage\CGuideWrapper.cs" />
     <Compile Include="entity\input\CGamePad.cs" />
     <Compile Include="entity\input\CInputAdapter.cs" />
@@ -135,7 +144,6 @@
     <Compile Include="util\collection\input\CLegacyInputCollection.cs" />
     <Compile Include="entity\input\low\CLegacyInput.cs" />
     <Compile Include="entity\input\low\CXNAInput.cs" />
-    <Compile Include="entity\graphics\CCameraPath.cs" />
     <Compile Include="entity\manager\CMapJudgeManager.cs" />
     <Compile Include="state\audio\CStateAudio.cs" />
     <Compile Include="state\input\low\CStateGamePadInput.cs" />
@@ -143,7 +151,6 @@
     <Compile Include="state\input\low\CStateLegacyInput.cs" />
     <Compile Include="state\input\low\CStateXNAInput.cs" />
     <Compile Include="state\input\low\CStateMouseInput.cs" />
-    <Compile Include="state\graphics\CStateCameraPath.cs" />
     <Compile Include="state\manager\CStateMapJudgeManager.cs" />
     <Compile Include="util\collection\input\CMouseInputCollection.cs" />
     <Compile Include="util\collection\input\CXBOX360InputCollection.cs" />
@@ -161,7 +168,7 @@
     <Compile Include="old\data\ButtonsExtension.cs" />
     <Compile Include="old\data\EAxisLegacy.cs" />
     <Compile Include="old\data\EAxisXBOX360.cs" />
-    <Compile Include="old\data\EDirection.cs" />
+    <Compile Include="old\data\EDirectionFlags.cs" />
     <Compile Include="old\data\EInputDevice.cs" />
     <Compile Include="old\data\EReservedButtonID.cs" />
     <Compile Include="old\data\GamePadStateExtention.cs" />
@@ -169,7 +176,6 @@
     <Compile Include="entity\graphics\CAnimationSprite.cs" />
     <Compile Include="entity\manager\CContentLoader.cs" />
     <Compile Include="entity\manager\CFlyweightFactory.cs" />
-    <Compile Include="entity\manager\CMainLoop.cs" />
     <Compile Include="data\CEventChangedState.cs" />
     <Compile Include="data\CEventMonoValue.cs" />
     <Compile Include="entity\component\CDrawableGameComponent.cs" />
@@ -225,8 +231,7 @@
     <Compile Include="state\fonts\CStateDefault.cs" />
     <Compile Include="state\fonts\CStateGradation.cs" />
     <Compile Include="state\IStateGenerics.cs" />
-    <Compile Include="old\state\manager\CStateLoadManager.cs" />
-    <Compile Include="state\manager\CStateMainLoopDefault.cs" />
+    <Compile Include="old\state\CStateLoadManager.cs" />
     <Compile Include="state\CState.cs" />
     <Compile Include="state\CStateGenerics.cs" />
     <Compile Include="state\IState.cs" />
@@ -236,7 +241,7 @@
     <Compile Include="util\caps\CCapsExtension.cs" />
     <Compile Include="util\collection\CDisposablePartialCollection.cs" />
     <Compile Include="util\CLogger.cs" />
-    <Compile Include="util\CMessageBox.cs" />
+    <Compile Include="old\util\CMessageBox.cs" />
     <Compile Include="util\collection\CFlyweight.cs" />
     <Compile Include="util\collection\CFlyweightNewDisposable.cs" />
     <Compile Include="util\collection\CGameComponentManager.cs" />

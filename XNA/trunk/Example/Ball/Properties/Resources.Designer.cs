@@ -61,7 +61,7 @@ namespace danmaq.ball.Properties {
         }
         
         /// <summary>
-        ///   (C)1994-2010 Mc/danmaq All rights reserved. に類似しているローカライズされた文字列を検索します。
+        ///   (C)1994-2011 Mc/danmaq All rights reserved. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CREDIT {
             get {
