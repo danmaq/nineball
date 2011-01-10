@@ -8,40 +8,60 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
-
-using danmaq.ball.core;
-using danmaq.ball.entity;
-using danmaq.nineball.entity.input;
+using danmaq.nineball.entity;
 using danmaq.nineball.state;
+using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.state.ball
+namespace danmaq.ball.state.scene.initialize
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>プレイヤーの玉の状態。</summary>
-	public sealed class CStatePlayer
-		: CState<CBall, object>
+	/// <summary>初期化AI用の状態の基底クラス。</summary>
+	abstract class CAIBase
+		: IState
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStatePlayer instance = new CStatePlayer();
+		/// <summary>状態開始時のログ出力される文字列。</summary>
+		private readonly string begin;
 
-		/// <summary>入力管理クラス。</summary>
-		private readonly CInput inputManager = CGame.instance.inputManager;
+		/// <summary>状態終了時のログ出力される文字列。</summary>
+		private readonly string final;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStatePlayer()
+		/// 
+		/// <param name="description">初期化内容。</param>
+		public CAIBase(string description)
 		{
+			begin = string.Format("{0}開始...", description);
+			final = string.Format("{0}完了。", description);
 		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>次に遷移すべき状態を取得します。</summary>
+		/// 
+		/// <value>次に遷移すべき状態。</value>
+		public abstract IState nextState
+		{
+			get;
+		}
+
+		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化処理を実行します。</summary>
+		public abstract void initialize();
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -53,10 +73,10 @@ namespace danmaq.ball.state.ball
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CBall entity, object privateMembers)
+		public virtual void setup(IEntity entity, object privateMembers)
 		{
-			entity.position.Y = 100;
-			base.setup(entity, privateMembers);
+			CLogger.add(begin);
+			initialize();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -67,13 +87,9 @@ namespace danmaq.ball.state.ball
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CBall entity, object privateMembers, GameTime gameTime)
+		public virtual void update(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			if (inputManager.buttonStateList[0].push)
-			{
-				entity.move();
-			}
-			base.update(entity, privateMembers, gameTime);
+			entity.nextState = nextState;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -84,11 +100,24 @@ namespace danmaq.ball.state.ball
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
+		public virtual void draw(IEntity entity, object privateMembers, GameTime gameTime)
 		{
-			base.draw(entity, privateMembers, gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public virtual void teardown(IEntity entity, object privateMembers, IState nextState)
+		{
+			CLogger.add(final);
 		}
 	}
 }
-
-#endif

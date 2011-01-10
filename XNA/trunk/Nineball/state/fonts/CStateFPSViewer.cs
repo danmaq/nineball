@@ -1,50 +1,61 @@
 ﻿////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //
-//	danmaq Nineball-Library SAMPLE PROGRAM #1
-//	赤い玉 青い玉 競走ゲーム
-//		Copyright (c) 1994-2011 danmaq all rights reserved.
+//	danmaq Nineball-Library
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
-
-using System.Collections;
-using danmaq.ball.Properties;
-using danmaq.nineball.data;
-using danmaq.nineball.entity;
+using System;
+using danmaq.nineball.entity.fonts;
+using danmaq.nineball.state.manager;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene
+namespace danmaq.nineball.state.fonts
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>クレジット画面シーン。</summary>
-	public sealed class CStateCredit : CSceneBase
+	/// <summary>FPS表示用の状態です。</summary>
+	public sealed class CStateFPSViewer
+		: CState<CFont, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateCredit instance = new CStateCredit();
+		public static readonly CStateFPSViewer instance = new CStateFPSViewer();
+
+		/// <summary>接続先。</summary>
+		private readonly IState adaptee = CStateDefault.instance;
+
+		/// <summary>FPS計測・計算クラス。</summary>
+		private readonly CStateFPSCalculator calcurator = CStateFPSCalculator.instance;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>透明度。</summary>
-		private float m_fAlpha = 0;
+		/// <summary>テキスト。</summary>
+		public string text = "FPS[UPDATE:{0} / DRAW:{1}]";
+
+		/// <summary>FPSが真っ赤になる誤差値。</summary>
+		public int redzone = 20;
+
+		/// <summary>前回計測時の更新FPS。</summary>
+		private int prevFPSUpdate;
+
+		/// <summary>前回計測時の描画FPS。</summary>
+		private int prevFPSDraw;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCredit()
-			: base(Resources.SCENE_CREDIT)
+		private CStateFPSViewer()
 		{
 		}
 
@@ -61,11 +72,9 @@ namespace danmaq.ball.state.scene
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(IEntity entity, object privateMembers)
+		public override void setup(CFont entity, object privateMembers)
 		{
-			base.setup(entity, privateMembers);
-			m_fAlpha = 0;
-			localCoRoutineManager.add(coAlpha());
+			adaptee.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -76,13 +85,23 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void update(CFont entity, object privateMembers, GameTime gameTime)
 		{
-			if(phaseManager.phase == 1)
+			if (entity.counter % 60 == 0)
 			{
-				entity.nextState = CStateTitle.instance;
+				int fpsUpdate = calcurator.fpsUpdate;
+				int fpsDraw = calcurator.fpsDraw;
+				if (prevFPSUpdate != fpsUpdate || prevFPSDraw != fpsDraw)
+				{
+					prevFPSUpdate = fpsUpdate;
+					prevFPSDraw = fpsDraw;
+					entity.color = Color.Lerp(Color.White, Color.Red,
+						CInterpolate._amountLoopSlowdown(
+							Math.Min(Math.Abs(60 - fpsUpdate), redzone), redzone));
+					entity.text = string.Format(text, fpsUpdate.ToString(), fpsDraw.ToString());
+				}
 			}
-			base.update(entity, privateMembers, gameTime);
+			adaptee.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -93,41 +112,25 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
 		{
-			systemSpriteManager.add(contentManager.Load<Texture2D>(Resources.IMAGE_LOGO),
-				new Vector2(320, 240), EAlign.Center, EAlign.Center,
-				new Rectangle(0, 0, 384, 384), new Color(Color.White, m_fAlpha), 0f,
-				SpriteBlendMode.AlphaBlend);
-			base.draw(entity, privateMembers, gameTime);
+			adaptee.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		private IEnumerator coAlpha()
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public override void teardown(CFont entity, object privateMembers, IState nextState)
 		{
-			const int FADETIME = 60;
-			for(
-				int i = 0; i < FADETIME;
-				m_fAlpha = CInterpolate._clampAccelerate(0, 1, ++i, FADETIME)
-			)
-			{
-				yield return null;
-			}
-			for(int i = 0; i < 120; i++)
-			{
-				yield return null;
-			}
-			for(
-				int i = 0; i < FADETIME;
-				m_fAlpha = CInterpolate._clampAccelerate(1, 0, ++i, FADETIME)
-			)
-			{
-				yield return null;
-			}
-			phaseManager.reserveNextPhase = true;
+			adaptee.teardown(entity, privateMembers, nextState);
 		}
 	}
 }
-
-#endif

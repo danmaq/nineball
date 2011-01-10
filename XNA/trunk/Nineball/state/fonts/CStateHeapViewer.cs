@@ -1,110 +1,76 @@
 ﻿////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //
-//	danmaq Nineball-Library SAMPLE PROGRAM #1
-//	赤い玉 青い玉 競走ゲーム
-//		Copyright (c) 1994-2011 danmaq all rights reserved.
+//	danmaq Nineball-Library
+//		Copyright (c) 2008-2011 danmaq all rights reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
-
 using System;
-using danmaq.ball.core;
-using danmaq.nineball.data.phase;
-using danmaq.nineball.entity;
-using danmaq.nineball.entity.input;
-using danmaq.nineball.entity.manager;
-using danmaq.nineball.state;
-using danmaq.nineball.state.manager;
-using danmaq.nineball.util;
-using danmaq.nineball.util.collection;
+using danmaq.nineball.entity.fonts;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene
+namespace danmaq.nineball.state.fonts
 {
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>シーン基底クラス。</summary>
-	public abstract class CSceneBase : CState
+	/// <summary>ヒープ メモリ使用量表示用の状態です。</summary>
+	public sealed class CStateHeapViewer
+		: CState<CFont, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>シーンの名前。</summary>
-		public readonly string sceneName;
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly CStateHeapViewer instance = new CStateHeapViewer();
 
-		/// <summary>ゲーム オブジェクト。</summary>
-		protected readonly CGame game = CGame.instance;
+		/// <summary>起動時ヒープ メモリ。</summary>
+		public readonly long firstHeap = GC.GetTotalMemory(true);
 
-		/// <summary>ゲーム コンポーネント管理クラス。</summary>
-		protected readonly CGameComponentManager localGameComponentManager;
-
-		/// <summary>コルーチン管理 クラス。</summary>
-		protected readonly CCoRoutineManager localCoRoutineManager = new CCoRoutineManager();
-
-		/// <summary>グラフィック デバイスの構成・管理クラス。</summary>
-		protected readonly GraphicsDeviceManager graphicDeviceManager;
-
-		/// <summary>入力管理クラス。</summary>
-		protected readonly CInput inputManager;
-
-		/// <summary>コンテンツ管理クラス。</summary>
-		protected readonly ContentManager contentManager;
-
-		/// <summary>メインループ用の既定の状態。</summary>
-		private readonly CStateMainLoopDefault stateMainLoop = CStateMainLoopDefault.instance;
+		/// <summary>接続先。</summary>
+		private readonly IState adaptee = CStateDefault.instance;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary>フェーズ・カウンタ管理クラス。</summary>
-		protected SPhase phaseManager = SPhase.initialized;
+		/// <summary>テキスト。</summary>
+		public string text = "MEM[USE:{0} KB / DELTA:{1}(+{2}) KB]";
+
+		/// <summary>デルタが連続して正数を示した回数。</summary>
+		private int plusCount;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="sceneName">シーン名称。</param>
-		protected CSceneBase(string sceneName)
+		private CStateHeapViewer()
 		{
-			this.sceneName = sceneName;
-			inputManager = game.inputManager;
-			graphicDeviceManager = game.graphicDeviceManager;
-			contentManager = game.Content;
-			localGameComponentManager = new CGameComponentManager(game);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>ゲーム共通のスプライト バッチ管理クラスを取得します。</summary>
+		/// <summary>ヒープ メモリの使用量を取得します。</summary>
 		/// 
-		/// <value>ゲーム共通のスプライト バッチ管理クラス。</value>
-		protected CSprite systemSpriteManager
+		/// <value>ヒープ メモリの使用量。</value>
+		public long heap
 		{
-			get
-			{
-				return stateMainLoop.sprite;
-			}
+			get;
+			private set;
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>ゲーム共通のゲーム コンポーネント管理クラスを取得します。</summary>
+		/// <summary>ヒープ メモリの秒ごとのデルタを取得します。</summary>
 		/// 
-		/// <value>ゲーム共通のゲーム コンポーネント管理クラス。</value>
-		protected CGameComponentManager systemGameComponentManager
+		/// <value>ヒープ メモリの秒ごとのデルタ。</value>
+		public long delta
 		{
-			get
-			{
-				return stateMainLoop.registedGameComponentList;
-			}
+			get;
+			private set;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -120,13 +86,11 @@ namespace danmaq.ball.state.scene
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(IEntity entity, object privateMembers)
+		public override void setup(CFont entity, object privateMembers)
 		{
-#if TRACE
-			CLogger.add(sceneName + "シーンを開始します。");
-#endif
-			localCoRoutineManager.initialize();
-			base.setup(entity, privateMembers);
+			entity.color = Color.YellowGreen;
+			plusCount = 0;
+			adaptee.setup(entity, privateMembers);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -137,11 +101,58 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void update(CFont entity, object privateMembers, GameTime gameTime)
 		{
-			localCoRoutineManager.update(gameTime);
-			phaseManager.count++;
-			base.update(entity, privateMembers, gameTime);
+			if (entity.counter % 30 == 0)
+			{
+				long use = GC.GetTotalMemory(false);
+				long newDelta = use - heap;
+				long newHeap = use;
+				if (delta != newDelta || heap != newHeap)
+				{
+					delta = newDelta;
+					heap = newHeap;
+					Color color = Color.White;
+					if (delta > 0)
+					{
+						if (++plusCount > 3)
+						{
+							color = Color.Orange;
+						}
+					}
+					else
+					{
+						plusCount = 0;
+						if (delta == 0)
+						{
+							color = Color.YellowGreen;
+						}
+						else if (delta < 0)
+						{
+							color = Color.Red;
+						}
+					}
+					entity.color = color;
+					entity.text = string.Format(text,
+						(heap / 1024).ToString(),
+						Math.Ceiling(delta / 1024f).ToString(),
+						((heap - firstHeap) / 1024).ToString());
+				}
+			}
+			adaptee.update(entity, privateMembers, gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
+		{
+			adaptee.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -155,18 +166,9 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(IEntity entity, object privateMembers, IState nextState)
+		public override void teardown(CFont entity, object privateMembers, IState nextState)
 		{
-			localCoRoutineManager.Dispose();
-			phaseManager.reset();
-			localGameComponentManager.Dispose();
-			GC.Collect();
-			base.teardown(entity, privateMembers, nextState);
-#if TRACE
-			CLogger.add(sceneName + "シーンを終了しました。");
-#endif
+			adaptee.teardown(entity, privateMembers, nextState);
 		}
 	}
 }
-
-#endif

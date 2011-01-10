@@ -112,6 +112,9 @@
     <Compile Include="entity\CVariableOwner.cs" />
     <Compile Include="entity\graphics\CAnimation.cs" />
     <Compile Include="entity\graphics\CSpriteManager.cs" />
+    <Compile Include="state\fonts\CStateFPSViewer.cs" />
+    <Compile Include="state\fonts\CStateHeapViewer.cs" />
+    <Compile Include="state\fonts\CStateTimeViewer.cs" />
     <Compile Include="state\graphics\CStateAnimation.cs" />
     <Compile Include="state\graphics\CStateSpriteManager.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />

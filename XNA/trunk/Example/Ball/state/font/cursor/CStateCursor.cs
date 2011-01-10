@@ -8,12 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+#if false
+
 using danmaq.ball.core;
 using danmaq.ball.entity.font;
 using danmaq.ball.state.scene;
 using danmaq.nineball;
-using danmaq.nineball.entity.input;
-using danmaq.nineball.entity.input.data;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
@@ -91,3 +91,5 @@ namespace danmaq.ball.state.font.cursor
 		}
 	}
 }
+
+#endif

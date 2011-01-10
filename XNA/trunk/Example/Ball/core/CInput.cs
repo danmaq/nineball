@@ -8,43 +8,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
+using danmaq.nineball.util.collection.input;
+using danmaq.ball.data;
 
-namespace danmaq.ball.state.font.cursor.view
+namespace danmaq.ball.core
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>カーソル消灯表示状態。</summary>
-	public sealed class CStateHidden : CStateBase
+	/// <summary>入力管理クラス。</summary>
+	sealed class CInput
+		: CInputHelper
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateHidden instance = new CStateHidden();
+		/// <summary>クラス インスタンス。</summary>
+		public static readonly CInputHelper instance = new CInput();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateHidden()
+		private CInput()
 		{
-		}
-
-		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-		//* methods ───────────────────────────────-*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>カーソルの明滅を切り替えます。</summary>
-		/// 
-		/// <returns>点灯状態。</returns>
-		protected override CStateBase onBlink()
-		{
-			return CStateVisible.instance;
+			collection.setDefaultAssign((int)EInputActionMap.__reserved);
 		}
 	}
 }
-
-#endif
