@@ -30,7 +30,7 @@
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>赤い玉 青い玉 競走ゲーム</ProductName>
     <PublisherName>danmaq</PublisherName>
-    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -93,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="core\CGame.cs" />
+    <Compile Include="core\CInput.cs" />
+    <Compile Include="data\CONTENT.cs" />
+    <Compile Include="data\EInputActionMap.cs" />
     <Compile Include="entity\CBall.cs" />
     <Compile Include="entity\font\CCursor.cs" />
     <Compile Include="entity\font\CPrint.cs" />
@@ -114,8 +117,12 @@
     <Compile Include="state\scene\CStateCountDown.cs" />
     <Compile Include="state\scene\CStateCredit.cs" />
     <Compile Include="state\scene\CStateGame.cs" />
-    <Compile Include="state\scene\CStateInitialize.cs" />
+    <Compile Include="state\scene\CSceneInitialize.cs" />
     <Compile Include="state\scene\CStateTitle.cs" />
+    <Compile Include="state\scene\initialize\CAIBase.cs" />
+    <Compile Include="state\scene\initialize\CAIComponents.cs" />
+    <Compile Include="state\scene\initialize\CAIInupt.cs" />
+    <Compile Include="state\scene\initialize\CAIScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HISTORY.txt" />

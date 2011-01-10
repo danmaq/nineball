@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nineball", "Nineball\Nineball.csproj", "{B61980C5-7B01-4BEA-A1B5-629A25F72661}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{1263FB1B-13EB-4C72-923B-14DBAF99C335}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonCPE", "Example\CommonCPE\CommonCPE.csproj", "{2FF73852-FF08-4125-85C1-674694860F1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ball", "Example\Ball\Ball.csproj", "{603DF31F-102F-4260-B370-66D7CD5B80DE}"
@@ -45,12 +43,12 @@ Global
 		{904F470F-4DEC-4DF1-B51F-41CF84A41ECC}.Debug|Xbox 360.ActiveCfg = Debug|x86
 		{904F470F-4DEC-4DF1-B51F-41CF84A41ECC}.Release|x86.ActiveCfg = Release|x86
 		{904F470F-4DEC-4DF1-B51F-41CF84A41ECC}.Release|Xbox 360.ActiveCfg = Release|x86
+		{3B7457FF-C41E-4AB8-BE0E-08130CBDA3CF}.Debug|x86.ActiveCfg = Debug|x86
+		{3B7457FF-C41E-4AB8-BE0E-08130CBDA3CF}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{3B7457FF-C41E-4AB8-BE0E-08130CBDA3CF}.Release|x86.ActiveCfg = Release|x86
+		{3B7457FF-C41E-4AB8-BE0E-08130CBDA3CF}.Release|Xbox 360.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{2FF73852-FF08-4125-85C1-674694860F1D} = {1263FB1B-13EB-4C72-923B-14DBAF99C335}
-		{603DF31F-102F-4260-B370-66D7CD5B80DE} = {1263FB1B-13EB-4C72-923B-14DBAF99C335}
 	EndGlobalSection
 EndGlobal
