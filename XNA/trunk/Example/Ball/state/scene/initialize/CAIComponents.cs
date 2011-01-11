@@ -10,6 +10,7 @@
 
 using danmaq.ball.core;
 using danmaq.ball.data;
+using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.component;
 using danmaq.nineball.entity.fonts;
@@ -36,6 +37,22 @@ namespace danmaq.ball.state.scene.initialize
 
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly IState instance = new CAIComponents();
+
+		/// <summary>デバッグ用HUD一覧。</summary>
+		private IState[] hudStates =
+		{
+			CStateFPSViewer.instance,
+#if DEBUG
+			CStateHeapViewer.instance,
+#endif
+		};
+
+		/// <summary>HUD座標一覧。</summary>
+		private Vector2[] pos =
+		{
+			Vector2.Zero,
+			new Vector2(0, 384),
+		};
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -69,30 +86,26 @@ namespace danmaq.ball.state.scene.initialize
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public override void initialize()
+		protected override void initialize()
 		{
 			CGame game = CGame.instance;
 			CSpriteManager sprite = CGame.sprite;
 			CONTENT.setContentManager(game.Content);
 			SpriteFont font = CONTENT.texFont98;
-			IState[] hudStates =
-			{
-				CStateFPSViewer.instance,
-#if DEBUG
-				CStateHeapViewer.instance,
-#endif
-			};
 			for (int i = hudStates.Length; --i >= 0; )
 			{
 				CFont hud = new CFont(font);
 				hud.nextState = hudStates[i];
+				hud.pos = pos[i];
 				hud.sprite = sprite;
 				hud.layer = 0;
 				hud.commitNextState(true);
+				hud.alignHorizontal = EAlign.LeftTop;
+				hud.alignVertical = EAlign.LeftTop;
 				new CDrawableGameComponent(game, hud, true);
 			}
 			new CDrawableGameComponent(game, new CEntity(CStateFPSCalculator.instance), true);
-			CGuideWrapper.instance.NotificationPosition = NotificationPosition.TopRight;
+			CGuideWrapper.instance.NotificationPosition = NotificationPosition.Center;
 		}
 	}
 }

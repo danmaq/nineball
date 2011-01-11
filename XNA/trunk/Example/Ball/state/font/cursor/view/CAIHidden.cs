@@ -8,28 +8,31 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
+using danmaq.ball.entity.font;
+using danmaq.nineball.entity;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.ball.state.font.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>カーソル消灯表示状態。</summary>
-	public sealed class CStateHidden : CStateBase
+	sealed class CAIHidden
+		: CAIBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateHidden instance = new CStateHidden();
+		public static readonly CAIBase instance = new CAIHidden();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateHidden()
+		private CAIHidden()
 		{
 		}
 
@@ -37,14 +40,24 @@ namespace danmaq.ball.state.font.cursor.view
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(CEntity entity, CCursor privateMembers, GameTime gameTime)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>カーソルの明滅を切り替えます。</summary>
 		/// 
 		/// <returns>点灯状態。</returns>
-		protected override CStateBase onBlink()
+		protected override CAIBase onBlink()
 		{
-			return CStateVisible.instance;
+			return CAIVisible.instance;
 		}
 	}
 }
-
-#endif

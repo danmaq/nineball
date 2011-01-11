@@ -23,7 +23,8 @@ namespace danmaq.ball.state.scene
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>初期化シーン。</summary>
-	sealed class CSceneInitialize : CState<CEntity, CGame>
+	sealed class CSceneInitialize
+		: CState<CEntity, CGame>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -59,7 +60,7 @@ namespace danmaq.ball.state.scene
 		/// </param>
 		public override void setup(CEntity entity, CGame privateMembers)
 		{
-			CLogger.add("初期化を開始します...");
+			CLogger.add(Resources.SCENE_INITIALIZE);
 			entity.allowSameState = true;
 			CGame.instance.Content.RootDirectory = Resources.DIR_CONTENT;
 			CStateCapsXNA xnastate = CStateCapsXNA.instance;
@@ -122,7 +123,7 @@ namespace danmaq.ball.state.scene
 		{
 			if (e.next == CState.empty)
 			{
-				CGame.instance.scene.nextState = CState.empty;
+				CGame.instance.scene.nextState = CSceneCredit.instance;
 			}
 		}
 	}

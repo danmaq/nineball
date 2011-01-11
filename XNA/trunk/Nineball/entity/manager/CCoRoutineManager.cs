@@ -117,7 +117,7 @@ namespace danmaq.nineball.entity.manager
 		//* -----------------------------------------------------------------------*
 		/// <summary>無限ループ用コルーチンです。</summary>
 		/// 
-		/// <returns>コルーチン。実行時は常時<c>null</c>。</returns>
+		/// <returns>コルーチン用オブジェクト。実行時は常時<c>null</c>。</returns>
 		public static IEnumerator coEternalWait()
 		{
 			while (true)

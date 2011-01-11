@@ -149,6 +149,10 @@
     <value>logo</value>
     <comment>danmaq Productsロゴ</comment>
   </data>
+  <data name="ROLL_SPACE" xml:space="preserve">
+    <value>SPACE キーを連打！</value>
+    <comment>ゲーム中の表示</comment>
+  </data>
   <data name="SCENE_COUNTDOWN" xml:space="preserve">
     <value>カウントダウン画面</value>
     <comment>カウントダウン画面実行時のトレース情報</comment>

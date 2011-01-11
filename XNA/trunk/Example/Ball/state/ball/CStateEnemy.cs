@@ -8,11 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
-
 using System;
 using danmaq.ball.entity;
-using danmaq.ball.state.scene;
+using danmaq.ball.entity.font;
 using danmaq.nineball.state;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
@@ -22,7 +20,8 @@ namespace danmaq.ball.state.ball
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>敵の玉の状態。</summary>
-	public sealed class CStateEnemy : CState<CBall, object>
+	sealed class CStateEnemy
+		: CState<CBall, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -36,9 +35,6 @@ namespace danmaq.ball.state.ball
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
-
-		/// <summary>ゲーム難易度。</summary>
-		private ushort m_wLevel = 0;
 
 		/// <summary>鬼畜加速モードかどうか。</summary>
 		private bool m_bAccelerateSpeed = false;
@@ -77,9 +73,7 @@ namespace danmaq.ball.state.ball
 		public override void setup(CBall entity, object privateMembers)
 		{
 			entity.position.Y = 200;
-			m_wLevel = CStateGame.instance.level;
-			movePattern = movePatterns[m_wLevel];
-			base.setup(entity, privateMembers);
+			movePattern = movePatterns[CCursor.instance.level];
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -96,7 +90,6 @@ namespace danmaq.ball.state.ball
 			{
 				entity.move();
 			}
-			base.update(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -109,7 +102,21 @@ namespace danmaq.ball.state.ball
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
 		{
-			base.draw(entity, privateMembers, gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public override void teardown(CBall entity, object privateMembers, IState nextState)
+		{
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -119,8 +126,8 @@ namespace danmaq.ball.state.ball
 		/// <returns>移動と判断した場合、<c>true</c>。</returns>
 		private bool movePatternLowLevel(CBall entity)
 		{
-			return entity.counter %
-				MathHelper.Lerp(40, 6, CInterpolate._amountSlowdown(m_wLevel, 5)) == 0;
+			return entity.counter % MathHelper.Lerp(
+				40, 6, CInterpolate._amountSlowdown(CCursor.instance.level, 5)) == 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -165,5 +172,3 @@ namespace danmaq.ball.state.ball
 		}
 	}
 }
-
-#endif

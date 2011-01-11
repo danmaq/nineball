@@ -54,6 +54,9 @@ namespace danmaq.ball.core
 		/// <summary>スプライト描画管理クラス。</summary>
 		public static CSpriteManager sprite;
 
+		/// <summary>背景色。</summary>
+		public Color bgColor = Color.Black;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -74,7 +77,7 @@ namespace danmaq.ball.core
 			graphicDeviceManager.PreferredBackBufferHeight = rect.Height;
 			new CGuideWrapper(this);
 			scene = new CEntity(CSceneInitialize.instance, this);
-			new CDrawableGameComponent(this, scene, true);
+			new CDrawableGameComponent(this, scene, true).DrawOrder = 1;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -158,8 +161,7 @@ namespace danmaq.ball.core
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			// TODO : フォグ実装と同時にDraw()ごと削除する
-			GraphicsDevice.Clear(Color.Black);
+			GraphicsDevice.Clear(bgColor);
 			base.Draw(gameTime);
 		}
 	}

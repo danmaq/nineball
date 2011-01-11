@@ -81,7 +81,7 @@ namespace danmaq.ball.state.scene.initialize
 		{
 			get
 			{
-				return CState.empty;
+				return CAIScreen.instance;
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace danmaq.ball.state.scene.initialize
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public override void initialize()
+		protected override void initialize()
 		{
 			CInputHelper input = CInput.instance;
 			input.activeDevice = activeDevice;

@@ -60,10 +60,6 @@ namespace danmaq.ball.state.scene.initialize
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>初期化処理を実行します。</summary>
-		public abstract void initialize();
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// <para>状態が開始された時に呼び出されます。</para>
 		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
@@ -119,5 +115,9 @@ namespace danmaq.ball.state.scene.initialize
 		{
 			CLogger.add(final);
 		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>初期化処理を実行します。</summary>
+		protected abstract void initialize();
 	}
 }

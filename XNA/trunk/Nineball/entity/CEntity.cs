@@ -185,7 +185,9 @@ namespace danmaq.nineball.entity
 		/// <summary>カウンタをリセットします。</summary>
 		public virtual void resetCounter()
 		{
+			counterStep = 1;
 			counter = 0;
+			lastStateChangeCounter = 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -199,13 +201,15 @@ namespace danmaq.nineball.entity
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public virtual void Dispose()
 		{
+			nextState = CState.empty;
+			commitNextState(allowSameState);
 			resetCounter();
-			// TODO : イベントを投げることも考えると、commitState()したほうがよいな……
-			currentState.teardown(this, privateMembers, CState.empty);
 			currentState = CState.empty;
 			previousState = CState.empty;
 			nextState = null;
 			changedState = null;
+			delayChangeState = 0;
+			allowSameState = false;
 		}
 
 		//* -----------------------------------------------------------------------*

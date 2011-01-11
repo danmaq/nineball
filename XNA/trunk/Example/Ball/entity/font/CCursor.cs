@@ -7,12 +7,10 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-#if false
 
 using danmaq.ball.state.font.cursor;
-using danmaq.ball.state.font.cursor.view;
 using danmaq.nineball.entity;
-using danmaq.nineball.state;
+using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.ball.entity.font
@@ -20,7 +18,7 @@ namespace danmaq.ball.entity.font
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>カーソル オブジェクト。</summary>
-	public sealed class CCursor : CEntity
+	sealed class CCursor : CEntity
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -30,16 +28,16 @@ namespace danmaq.ball.entity.font
 		public static readonly CCursor instance = new CCursor();
 
 		/// <summary>表示用のAI。</summary>
-		private readonly CAI<CCursor> aiView;
+		public readonly CEntity aiView;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>カーソル位置。</summary>
-		private Vector2 m_locate;
+		private Point m_locate = new Point(6, 16);
 
-		/// <summary>ワールド空間。</summary>
-		private Matrix m_world = Matrix.Identity;
+		/// <summary>ゲーム難易度。</summary>
+		private short m_level = 0;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -49,25 +47,39 @@ namespace danmaq.ball.entity.font
 		private CCursor()
 			: base(CStateCursor.instance)
 		{
-			locate = Vector2.Zero;
-			aiView = new CAI<CCursor>(this, CStateVisible.instance);
+			locate = Point.Zero;
+			aiView = new CEntity(null, this);
+			level = 0;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>次に変化する状態を設定します。</summary>
+		/// <summary>ワールド空間を取得します。</summary>
 		/// 
-		/// <value>次に変化する状態。</value>
-		/// <exception cref="System.ArgumentNullException">
-		/// 状態として、nullを設定しようとした場合。
-		/// </exception>
-		public new IState<CCursor, Matrix> nextState
+		/// <value>ワールド空間。</value>
+		public Matrix world
 		{
+			get;
+			private set;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ゲーム難易度を取得/設定します。</summary>
+		/// 
+		/// <value>ゲーム難易度。</value>
+		public short level
+		{
+			get
+			{
+				return m_level;
+			}
 			set
 			{
-				base.nextState = value;
+				short v = (short)CMisc.clampLoop(value, 0, 9);
+				m_level = v;
+				locate = new Point(6 + 8 * v, locate.Y);
 			}
 		}
 
@@ -75,31 +87,18 @@ namespace danmaq.ball.entity.font
 		/// <summary>カーソル位置を設定/取得します。</summary>
 		/// 
 		/// <value>カーソル位置。</value>
-		public Vector2 locate
+		public Point locate
 		{
 			get
 			{
 				return m_locate;
 			}
-			set
+			private set
 			{
 				m_locate = value;
-				m_world = Matrix.Identity;
-				m_world.Translation = getCursorTranslation(value);
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
-		/// </summary>
-		/// 
-		/// <value>オブジェクトと状態クラスのみがアクセス可能なフィールド。</value>
-		protected override object privateMembers
-		{
-			get
-			{
-				return m_world;
+				Matrix w = Matrix.Identity;
+				w.Translation = getCursorTranslation(value);
+				world = w;
 			}
 		}
 
@@ -111,17 +110,9 @@ namespace danmaq.ball.entity.font
 		/// 
 		/// <param name="locate">カーソル座標。</param>
 		/// <returns>3D空間座標。</returns>
-		public static Vector3 getCursorTranslation(Vector2 locate)
+		public static Vector3 getCursorTranslation(Point locate)
 		{
-			return new Vector3(((int)locate.X - 40f) * 8f, (-(int)locate.Y + 11.5f) * 16f, 0);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>初期化処理を実行します。</summary>
-		public override void initialize()
-		{
-			aiView.initialize();
-			base.initialize();
+			return new Vector3((locate.X - 40f) * 8f, (locate.Y + 4.5f) * -16f, 0);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -131,27 +122,5 @@ namespace danmaq.ball.entity.font
 			aiView.Dispose();
 			base.Dispose();
 		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(GameTime gameTime)
-		{
-			aiView.update(gameTime);
-			base.update(gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(GameTime gameTime)
-		{
-			aiView.draw(gameTime);
-			base.draw(gameTime);
-		}
 	}
 }
-
-#endif
