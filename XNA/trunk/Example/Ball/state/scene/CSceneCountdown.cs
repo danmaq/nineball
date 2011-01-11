@@ -8,15 +8,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+using System.Collections;
 using danmaq.ball.core;
+using danmaq.ball.data;
+using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.fonts;
 using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
-using danmaq.nineball.state.manager.task;
-using danmaq.nineball.util;
+using danmaq.nineball.state.manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -24,30 +25,36 @@ namespace danmaq.ball.state.scene
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>シーン基底クラス。</summary>
-	abstract class CSceneBase
-		: CState<CEntity, CGame>
+	/// <summary>ゲーム開始前カウントダウンのシーン。</summary>
+	sealed class CSceneCountdown
+		: CSceneBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>シーンの名前。</summary>
-		public readonly string sceneName;
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly IState<CEntity, CGame> instance = new CSceneCountdown();
 
-		/// <summary>タスク管理 クラス。</summary>
-		protected readonly CTaskManager taskManager = new CTaskManager();
+		/// <summary>コルーチン管理クラス。</summary>
+		private readonly CCoRoutineManager mgrCo = new CCoRoutineManager();
+
+		/// <summary>カウントダウン表示用フォント。</summary>
+		private readonly CFont countdown = new CFont(CONTENT.texFont98);
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="sceneName">シーン名称。</param>
-		protected CSceneBase(string sceneName)
+		private CSceneCountdown()
+			: base(Resources.SCENE_COUNTDOWN)
 		{
-			this.sceneName = sceneName;
+			countdown.pos = new Vector2(320, 200);
+			countdown.isDrawShadow = false;
+			countdown.sprite = CGame.sprite;
+			countdown.scale = new Vector2(20);
+			countdown.color = Color.Black;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -65,9 +72,14 @@ namespace danmaq.ball.state.scene
 		/// </param>
 		public override void setup(CEntity entity, CGame privateMembers)
 		{
-#if TRACE
-			CLogger.add(sceneName + "シーンを開始します。");
-#endif
+			base.setup(entity, privateMembers);
+			CGame.instance.bgColor = Color.Silver;
+			countdown.gradationMode = false;
+			mgrCo.nextState = CStateCoRoutineManager.instance;
+			mgrCo.Add(coCountdown());
+			taskManager.Add(countdown);
+			taskManager.Add(mgrCo);
+			print(new Point(40, 20), EAlign.Center, Color.DarkRed, Resources.ROLL_SPACE);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -80,56 +92,27 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
 		{
-			taskManager.update(gameTime);
+			base.update(entity, privateMembers, gameTime);
+			if (mgrCo.Count == 0)
+			{
+				entity.nextState = CSceneGame.instance;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// <summary>透明度を設定するコルーチンです。</summary>
 		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CEntity entity, CGame privateMembers, GameTime gameTime)
+		/// <returns>コルーチン用オブジェクト。実行時は常時<c>null</c>。</returns>
+		private IEnumerator coCountdown()
 		{
-			taskManager.draw(gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(CEntity entity, CGame privateMembers, IState nextState)
-		{
-			taskManager.Dispose();
-			taskManager.nextState = CStateDefault.instance;
-			GC.Collect();
-#if TRACE
-			CLogger.add(sceneName + "シーンを終了しました。");
-#endif
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>文字を表示します。</summary>
-		/// 
-		/// <param name="locate">基準カーソル位置。</param>
-		/// <param name="hAlign">水平位置揃え情報。</param>
-		/// <param name="color">文字色。</param>
-		/// <param name="text">テキスト。</param>
-		/// <returns>フォント オブジェクト。</returns>
-		protected CFont print(Point locate, EAlign hAlign, Color color, string text)
-		{
-			CFont result = danmaq.ball.misc.CMisc.create98Font(locate, hAlign, color, text);
-			taskManager.Add(result);
-			return result;
+			for (int i = 3; i > 0; i--)
+			{
+				countdown.text = i.ToString();
+				for (int j = 60; --j >= 0; )
+				{
+					yield return null;
+				}
+			}
 		}
 	}
 }

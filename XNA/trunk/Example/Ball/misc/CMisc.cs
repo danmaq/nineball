@@ -8,7 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.ball.core;
+using danmaq.ball.data;
+using danmaq.nineball.data;
+using danmaq.nineball.entity.fonts;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.ball.misc
 {
@@ -17,6 +22,26 @@ namespace danmaq.ball.misc
 	/// <summary>雑多な関数群クラス。</summary>
 	public static class CMisc
 	{
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>よゆ風固定ピッチフォントを生成します。</summary>
+		/// 
+		/// <param name="locate">基準カーソル位置。</param>
+		/// <param name="hAlign">水平位置揃え情報。</param>
+		/// <param name="color">文字色。</param>
+		/// <param name="text">テキスト。</param>
+		/// <returns>フォント オブジェクト。</returns>
+		public static CFont create98Font(Point locate, EAlign hAlign, Color color, string text)
+		{
+			CFont result = new CFont(CONTENT.texFont98, text);
+			result.alignHorizontal = hAlign;
+			result.alignVertical = EAlign.LeftTop;
+			result.color = color;
+			result.pos = new Vector2(locate.X * 8, locate.Y * 16);
+			result.sprite = CGame.sprite;
+			result.isDrawShadow = false;
+			return result;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>カーソル座標からVGAへ座標変換をします。</summary>

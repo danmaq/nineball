@@ -63,7 +63,7 @@ namespace danmaq.ball.state.scene.initialize
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>初期化処理を実行します。</summary>
-		public override void initialize()
+		protected override void initialize()
 		{
 			CGame game = CGame.instance;
 			GraphicsDeviceManager gdm = game.graphicDeviceManager;
@@ -71,7 +71,7 @@ namespace danmaq.ball.state.scene.initialize
 			game.IsFixedTimeStep = false;
 			gdm.IsFullScreen = false;
 			gdm.SynchronizeWithVerticalRetrace = true;
-			gdm.PreferMultiSampling = true;
+			gdm.PreferMultiSampling = false;
 			gdm.ApplyChanges();
 			CSpriteManager sprite = new CSpriteManager();
 			sprite.spriteBatch = new SpriteBatch(gdm.GraphicsDevice);
@@ -79,7 +79,9 @@ namespace danmaq.ball.state.scene.initialize
 			CGame.sprite = sprite;
 			initializeViewport();
 			game.GraphicsDevice.RenderState.PointSpriteEnable = true;
-			new CDrawableGameComponent(game, sprite, true);
+			game.GraphicsDevice.RenderState.MultiSampleAntiAlias = false;
+			game.GraphicsDevice.SamplerStates[0].MagFilter = TextureFilter.None;
+			new CDrawableGameComponent(game, sprite, true).DrawOrder = 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -88,7 +90,7 @@ namespace danmaq.ball.state.scene.initialize
 		{
 			CResolutionLetterBox res = (CResolutionLetterBox)CGame.sprite.resolution;
 			GraphicsDevice device = CGame.instance.GraphicsDevice;
-			Rectangle viewRect = res.convertRectangle(EResolution.VGA.toRect());
+			Rectangle viewRect = res.convertRectangle(EResolution.DCGA.toRect());
 			Viewport viewPort = device.Viewport;
 			viewPort.X = viewRect.X;
 			viewPort.Y = viewRect.Y;

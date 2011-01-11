@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.data.phase;
@@ -22,7 +21,7 @@ namespace danmaq.ball.entity
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>玉オブジェクト。</summary>
-	public sealed class CBall
+	sealed class CBall
 		: CEntity
 	{
 
@@ -39,17 +38,16 @@ namespace danmaq.ball.entity
 		/// <summary>加速度グラフ情報。</summary>
 		private static readonly ReadOnlyCollection<float> accelerateGraph;
 
+		// TODO : この辺もCEntityで分割したほうがよさげ
+
 		/// <summary>移動キュー。</summary>
-		private readonly int[] moveRequest = new int[accelerateGraph.Count];
+		private readonly int[] moveRequest = new int[accelerateGraph.Count + 1];
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>位置。</summary>
 		public Vector2 position = Vector2.Zero;
-
-		/// <summary>速度。</summary>
-		private float m_fSpeed = 0f;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -82,36 +80,6 @@ namespace danmaq.ball.entity
 			accelerateGraph = graph.AsReadOnly();
 		}
 
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>コンストラクタ。</para>
-		/// <para>指定の状態で初期化します。</para>
-		/// </summary>
-		/// 
-		/// <param name="state">状態。</param>
-		public CBall(IState state)
-			: base(state)
-		{
-		}
-
-		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>次に変化する状態を設定します。</summary>
-		/// 
-		/// <value>次に変化する状態。</value>
-		/// <exception cref="System.ArgumentNullException">
-		/// 状態として、nullを設定しようとした場合。
-		/// </exception>
-		public new IState<CBall, object> nextState
-		{
-			set
-			{
-				base.nextState = value;
-			}
-		}
-
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
@@ -122,8 +90,7 @@ namespace danmaq.ball.entity
 		public override void update(GameTime gameTime)
 		{
 			base.update(gameTime);
-			calcSpeed();
-			position.X += m_fSpeed;
+			position.X += calcSpeed();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -141,30 +108,29 @@ namespace danmaq.ball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>現在速度を更新します。</summary>
-		private void calcSpeed()
+		/// <summary>移動キューから現在速度を算出します。</summary>
+		/// 
+		/// <returns>現在速度。</returns>
+		private float calcSpeed()
 		{
+			float speed = 0;
+			int limit = accelerateGraph.Count;
 			for (int i = moveRequest.Length; --i >= 0; )
 			{
-				int qc = moveRequest[i];
+				int qc = counter - moveRequest[i];
 				if (qc > 0)
 				{
-					if (qc >= accelerateGraph.Count)
+					if (qc >= limit)
 					{
 						moveRequest[i] = 0;
 					}
 					else
 					{
-						m_fSpeed += accelerateGraph[qc];
+						speed += accelerateGraph[qc];
 					}
 				}
 			}
-			if (m_fSpeed < 0f)
-			{
-				m_fSpeed = 0f;
-			}
+			return speed;
 		}
 	}
 }
-
-#endif

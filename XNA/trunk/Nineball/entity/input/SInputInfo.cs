@@ -66,7 +66,7 @@ namespace danmaq.nineball.entity.input
 		{
 			get
 			{
-				return velocity.Z > 0;
+				return Math.Abs(velocity.Z) > 0;
 			}
 		}
 
@@ -121,7 +121,8 @@ namespace danmaq.nineball.entity.input
 		public bool pushLoopX(int delay, int interval)
 		{
 			int elapsed = counter - lastPressTimeX;
-			return velocity.X > 0 && (elapsed == 0 || (elapsed >= delay && elapsed % interval == 0));
+			return Math.Abs(velocity.X) > 0 &&
+				(elapsed == 0 || (elapsed >= delay && elapsed % interval == 0));
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -132,7 +133,8 @@ namespace danmaq.nineball.entity.input
 		public bool pushLoopY(int delay, int interval)
 		{
 			int elapsed = counter - lastPressTimeY;
-			return velocity.Y > 0 && (elapsed == 0 || (elapsed >= delay && elapsed % interval == 0));
+			return Math.Abs(velocity.Y) > 0 &&
+				(elapsed == 0 || (elapsed >= delay && elapsed % interval == 0));
 		}
 
 		//* -----------------------------------------------------------------------*

@@ -8,10 +8,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
-
 using danmaq.ball.core;
-using danmaq.ball.Properties;
+using danmaq.ball.data;
+using danmaq.ball.entity.font;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -22,14 +21,15 @@ namespace danmaq.ball.state.font.cursor.view
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>カーソル点灯表示状態。</summary>
-	public sealed class CStateVisible : CStateBase
+	sealed class CAIVisible
+		: CAIBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateVisible instance = new CStateVisible();
+		public static readonly CAIBase instance = new CAIVisible();
 
 		/// <summary>カーソル ポリゴンのための頂点情報。</summary>
 		private readonly VertexPositionNormalTexture[] vertex = {
@@ -53,13 +53,13 @@ namespace danmaq.ball.state.font.cursor.view
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateVisible()
+		private CAIVisible()
 		{
 			device.VertexDeclaration =
 				new VertexDeclaration(device, VertexPositionNormalTexture.VertexElements);
-			effect = contentManager.Load<Effect>(Resources.FX_CURSOR);
+			effect = CONTENT.fxCursor;
 			effect.Parameters["View"].SetValue(Matrix.CreateLookAt(
-				new Vector3(0, 0, 1), Vector3.Zero, new Vector3(0, 1, 0)));
+				Vector3.Backward, Vector3.Zero, Vector3.Up));
 			effect.Parameters["Projection"].SetValue(Matrix.CreateOrthographic(
 				device.Viewport.Width, device.Viewport.Height, 0.1f, 1000f));
 			effect.CurrentTechnique = effect.Techniques["XORTechnique"];
@@ -72,32 +72,34 @@ namespace danmaq.ball.state.font.cursor.view
 		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="world">カーソルの3D位置を示すワールド行列。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CEntity entity, Matrix world, GameTime gameTime)
+		public override void draw(CEntity entity, CCursor privateMembers, GameTime gameTime)
 		{
+			Matrix world = privateMembers.world;
 			effect.Parameters["World"].SetValue(world);
 			effect.Begin();
-			foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+			EffectPassCollection passes = effect.CurrentTechnique.Passes;
+			for (int i = passes.Count; --i >= 0; )
 			{
+				EffectPass pass = passes[i];
 				pass.Begin();
 				device.DrawUserPrimitives<VertexPositionNormalTexture>(
 					PrimitiveType.TriangleStrip, vertex, 0, 2);
 				pass.End();
 			}
 			effect.End();
-			base.draw(entity, world, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>カーソルの明滅を切り替えます。</summary>
 		/// 
 		/// <returns>消灯状態。</returns>
-		protected override CStateBase onBlink()
+		protected override CAIBase onBlink()
 		{
-			return CStateHidden.instance;
+			return CAIHidden.instance;
 		}
 	}
 }
-
-#endif

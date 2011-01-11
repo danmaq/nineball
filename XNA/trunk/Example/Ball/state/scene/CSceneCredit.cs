@@ -8,12 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-#if false
-
 using System.Collections;
+using danmaq.ball.core;
+using danmaq.ball.data;
 using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
+using danmaq.nineball.entity.manager;
+using danmaq.nineball.state;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,27 +25,30 @@ namespace danmaq.ball.state.scene
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>クレジット画面シーン。</summary>
-	public sealed class CStateCredit : CSceneBase
+	sealed class CSceneCredit : CSceneBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateCredit instance = new CStateCredit();
+		public static readonly IState<CEntity, CGame> instance = new CSceneCredit();
+
+		/// <summary>コルーチン管理クラス。</summary>
+		private readonly CCoRoutineManager mgrCo = new CCoRoutineManager();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
 		/// <summary>透明度。</summary>
-		private float m_fAlpha = 0;
+		private byte alpha = 0;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CStateCredit()
+		private CSceneCredit()
 			: base(Resources.SCENE_CREDIT)
 		{
 		}
@@ -61,11 +66,11 @@ namespace danmaq.ball.state.scene
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(IEntity entity, object privateMembers)
+		public override void setup(CEntity entity, CGame privateMembers)
 		{
 			base.setup(entity, privateMembers);
-			m_fAlpha = 0;
-			localCoRoutineManager.add(coAlpha());
+			alpha = 0;
+			mgrCo.Add(coAlpha());
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -76,11 +81,12 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
 		{
-			if(phaseManager.phase == 1)
+			mgrCo.update(gameTime);
+			if (mgrCo.Count == 0)
 			{
-				entity.nextState = CStateTitle.instance;
+				entity.nextState = CStateMenu.instance;
 			}
 			base.update(entity, privateMembers, gameTime);
 		}
@@ -93,41 +99,59 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void draw(CEntity entity, CGame privateMembers, GameTime gameTime)
 		{
-			systemSpriteManager.add(contentManager.Load<Texture2D>(Resources.IMAGE_LOGO),
-				new Vector2(320, 240), EAlign.Center, EAlign.Center,
-				new Rectangle(0, 0, 384, 384), new Color(Color.White, m_fAlpha), 0f,
+			mgrCo.draw(gameTime);
+			CGame.sprite.add(CONTENT.texLogo, new Vector2(320, 200), EAlign.Center, EAlign.Center,
+				new Rectangle(0, 0, 384, 384), new Color(Color.White, alpha), 0f,
 				SpriteBlendMode.AlphaBlend);
 			base.draw(entity, privateMembers, gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
+		/// <summary>透明度を設定するコルーチンです。</summary>
+		/// 
+		/// <returns>コルーチン用オブジェクト。実行時は常時<c>null</c>。</returns>
 		private IEnumerator coAlpha()
 		{
-			const int FADETIME = 60;
+			const int FADETIME = 30;
 			for(
 				int i = 0; i < FADETIME;
-				m_fAlpha = CInterpolate._clampAccelerate(0, 1, ++i, FADETIME)
+				alpha = interpolate(0, 255, ++i, FADETIME)
 			)
 			{
 				yield return null;
 			}
-			for(int i = 0; i < 120; i++)
+			for(int i = 0; i < 90; i++)
 			{
 				yield return null;
 			}
 			for(
 				int i = 0; i < FADETIME;
-				m_fAlpha = CInterpolate._clampAccelerate(1, 0, ++i, FADETIME)
+				alpha = interpolate(255, 0, ++i, FADETIME)
 			)
 			{
 				yield return null;
 			}
-			phaseManager.reserveNextPhase = true;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>加速変化する内分カウンタです。</summary>
+		/// 
+		/// <param name="start"><paramref name="now"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="now"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="now">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="now"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		private byte interpolate(float start, float end, float now, float limit)
+		{
+			float result = CInterpolate._clampAccelerate(start, end, now, limit);
+			return (byte)((int)(result / 16) * 16);
 		}
 	}
 }
-
-#endif
