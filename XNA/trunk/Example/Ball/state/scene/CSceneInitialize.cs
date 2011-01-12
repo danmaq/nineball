@@ -123,7 +123,7 @@ namespace danmaq.ball.state.scene
 		{
 			if (e.next == CState.empty)
 			{
-				CGame.instance.scene.nextState = CSceneCredit.instance;
+//				CGame.instance.scene.nextState = CSceneCredit.instance;
 			}
 		}
 	}

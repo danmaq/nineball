@@ -51,7 +51,6 @@ technique XORTechnique
 {
     pass Pass1
     {
-		Lighting = FALSE;
 		ZWriteEnable = FALSE;
 		AlphaBlendEnable = TRUE;
 		SrcBlend = INVDESTCOLOR;

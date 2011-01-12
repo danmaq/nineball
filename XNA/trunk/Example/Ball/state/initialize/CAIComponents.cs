@@ -43,7 +43,7 @@ namespace danmaq.ball.state.initialize
 		{
 			CStateFPSViewer.instance,
 #if DEBUG
-			CStateHeapViewer.instance,
+	//		CStateHeapViewer.instance,
 #endif
 		};
 
@@ -63,7 +63,9 @@ namespace danmaq.ball.state.initialize
 			: base("その他コンポーネントの初期化")
 		{
 			CStateFPSViewer.instance.text = "FPS: {0}/{1}";
-			CStateHeapViewer.instance.text = "mem: {0}/ delta: {1}({2})";
+#if DEBUG
+//			CStateHeapViewer.instance.text = "mem: {0}/ delta: {1}({2})";
+#endif
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

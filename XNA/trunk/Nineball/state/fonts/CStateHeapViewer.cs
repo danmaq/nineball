@@ -26,8 +26,10 @@ namespace danmaq.nineball.state.fonts
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly CStateHeapViewer instance = new CStateHeapViewer();
 
+		// NOTE : XBOX360版だとtrueにすると落ちるっぽい
+
 		/// <summary>起動時ヒープ メモリ。</summary>
-		public readonly long firstHeap = GC.GetTotalMemory(true);
+		public readonly long firstHeap = GC.GetTotalMemory(false);
 
 		/// <summary>接続先。</summary>
 		private readonly IState adaptee = CStateDefault.instance;
