@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using danmaq.nineball.data.phase;
 using danmaq.nineball.entity;
-using danmaq.nineball.state;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 
@@ -35,13 +34,13 @@ namespace danmaq.ball.entity
 		/// <summary>加速度グラフのアタック・サスティン・リリース時間。</summary>
 		private static readonly int[] accelerateTime = { 5, 5, 10 };
 
-		/// <summary>加速度グラフ情報。</summary>
-		private static readonly ReadOnlyCollection<float> accelerateGraph;
+		/// <summary>速度グラフ情報。</summary>
+		private static readonly ReadOnlyCollection<float> speedGraph;
 
 		// TODO : この辺もCEntityで分割したほうがよさげ
 
 		/// <summary>移動キュー。</summary>
-		private readonly int[] moveRequest = new int[accelerateGraph.Count + 1];
+		private readonly int[] moveRequest = new int[speedGraph.Count + 1];
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -73,11 +72,21 @@ namespace danmaq.ball.entity
 						fSpeed = CInterpolate._clampAccelerate(MAX_SPEED, 0, nPCount, nPLimit);
 						break;
 				}
-				graph.Add(fSpeed - fPrevSpeed);
+				graph.Add(fSpeed);
 				fPrevSpeed = fSpeed;
 				phase.reserveNextPhase = nPCount >= nPLimit;
 			}
-			accelerateGraph = graph.AsReadOnly();
+			speedGraph = graph.AsReadOnly();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		public CBall()
+		{
+			for (int i = moveRequest.Length; --i >= 0; )
+			{
+				moveRequest[i] = short.MinValue;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -99,7 +108,7 @@ namespace danmaq.ball.entity
 		{
 			for (int i = moveRequest.Length; --i >= 0; )
 			{
-				if (moveRequest[i] == 0)
+				if (moveRequest[i] == short.MinValue)
 				{
 					moveRequest[i] = counter;
 					break;
@@ -114,7 +123,7 @@ namespace danmaq.ball.entity
 		private float calcSpeed()
 		{
 			float speed = 0;
-			int limit = accelerateGraph.Count;
+			int limit = speedGraph.Count;
 			for (int i = moveRequest.Length; --i >= 0; )
 			{
 				int qc = counter - moveRequest[i];
@@ -122,14 +131,15 @@ namespace danmaq.ball.entity
 				{
 					if (qc >= limit)
 					{
-						moveRequest[i] = 0;
+						moveRequest[i] = short.MinValue;
 					}
 					else
 					{
-						speed += accelerateGraph[qc];
+						speed += speedGraph[qc];
 					}
 				}
 			}
+
 			return speed;
 		}
 	}

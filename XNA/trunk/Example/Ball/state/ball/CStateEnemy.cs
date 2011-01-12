@@ -9,11 +9,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using danmaq.ball.core;
+using danmaq.ball.data;
 using danmaq.ball.entity;
 using danmaq.ball.entity.font;
+using danmaq.nineball.data;
 using danmaq.nineball.state;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.ball.state.ball
 {
@@ -28,10 +32,13 @@ namespace danmaq.ball.state.ball
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly CStateEnemy instance = new CStateEnemy();
+		public static readonly IState<CBall, object> instance = new CStateEnemy();
 
 		/// <summary>難易度別行動パターン一覧。</summary>
 		private readonly Func<CBall, bool>[] movePatterns;
+
+		/// <summary>画像。</summary>
+		private readonly Texture2D texture = CONTENT.texBall;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -102,6 +109,8 @@ namespace danmaq.ball.state.ball
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
 		{
+			CGame.sprite.add(texture, entity.position, EAlign.Center, EAlign.Center,
+				new Rectangle(0, 0, 64, 64), Color.White, 0f, SpriteBlendMode.AlphaBlend);
 		}
 
 		//* -----------------------------------------------------------------------*

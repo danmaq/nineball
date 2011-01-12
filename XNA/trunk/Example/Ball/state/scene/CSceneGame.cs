@@ -66,8 +66,24 @@ namespace danmaq.ball.state.scene
 		{
 			base.setup(entity, privateMembers);
 			enemy.nextState = CStateEnemy.instance;
+			player.nextState = CStatePlayer.instance;
 			taskManager.Add(enemy);
+			taskManager.Add(player);
 			print(new Point(40, 20), EAlign.Center, Color.DarkRed, Resources.ROLL_SPACE);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
+		{
+
+			base.update(entity, privateMembers, gameTime);
 		}
 	}
 }

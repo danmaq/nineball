@@ -118,9 +118,7 @@
     <Compile Include="state\scene\CSceneGame.cs" />
     <Compile Include="state\scene\CSceneMenu.cs" />
     <Compile Include="state\scene\CSceneCredit.cs" />
-    <Compile Include="state\scene\CStateGame.cs" />
     <Compile Include="state\scene\CSceneInitialize.cs" />
-    <Compile Include="state\scene\CStateTitle.cs" />
     <Compile Include="state\scene\initialize\CAIBase.cs" />
     <Compile Include="state\scene\initialize\CAIComponents.cs" />
     <Compile Include="state\scene\initialize\CAIInupt.cs" />
