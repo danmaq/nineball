@@ -8,12 +8,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System.Collections.Generic;
 using danmaq.ball.core;
+using danmaq.ball.data;
 using danmaq.ball.entity;
 using danmaq.ball.Properties;
 using danmaq.ball.state.ball;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
+using danmaq.nineball.entity.input;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,11 +36,8 @@ namespace danmaq.ball.state.scene
 		/// <summary>クラス オブジェクト。</summary>
 		public static readonly IState<CEntity, CGame> instance = new CSceneGame();
 
-		/// <summary>自機。</summary>
-		private readonly CBall player = new CBall();
-
-		/// <summary>敵機。</summary>
-		private readonly CBall enemy = new CBall();
+		/// <summary>入力状態。</summary>
+		private readonly IList<SInputInfo> inputData = CInput.instance.collection.buttonList;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -65,10 +65,10 @@ namespace danmaq.ball.state.scene
 		public override void setup(CEntity entity, CGame privateMembers)
 		{
 			base.setup(entity, privateMembers);
-			enemy.nextState = CStateEnemy.instance;
-			player.nextState = CStatePlayer.instance;
-			taskManager.Add(enemy);
-			taskManager.Add(player);
+			CBall.enemy.nextState = CStateEnemy.instance;
+			CBall.player.nextState = CStatePlayer.instance;
+			taskManager.Add(CBall.enemy);
+			taskManager.Add(CBall.player);
 			print(new Point(40, 20), EAlign.Center, Color.DarkRed, Resources.ROLL_SPACE);
 		}
 
@@ -82,8 +82,16 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
 		{
-
 			base.update(entity, privateMembers, gameTime);
+			if (CBall.enemy.goal || CBall.player.goal)
+			{
+				entity.nextState = CBall.player.position.X > CBall.enemy.position.X ?
+					CSceneJudge.won : CSceneJudge.lose;
+			}
+			if (inputData[(int)EInputActionMap.cancel].push)
+			{
+				entity.nextState = CSceneMenu.instance;
+			}
 		}
 	}
 }

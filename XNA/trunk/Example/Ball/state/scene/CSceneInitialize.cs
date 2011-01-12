@@ -10,7 +10,7 @@
 
 using danmaq.ball.core;
 using danmaq.ball.Properties;
-using danmaq.ball.state.scene.initialize;
+using danmaq.ball.state.initialize;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
 using danmaq.nineball.state;

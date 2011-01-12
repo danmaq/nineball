@@ -17,7 +17,7 @@ using danmaq.nineball.state;
 using danmaq.nineball.util.collection.input;
 using Microsoft.Xna.Framework.Input;
 
-namespace danmaq.ball.state.scene.initialize
+namespace danmaq.ball.state.initialize
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -57,10 +57,13 @@ namespace danmaq.ball.state.scene.initialize
 			assignLegacyGamePad = new int[(int)EInputActionMap.__reserved];
 			assignKeyboard[(int)EInputActionMap.cursor] = (int)EKeyboardAxisButtons.arrow;
 			assignKeyboard[(int)EInputActionMap.enter] = (int)Keys.Space;
+			assignKeyboard[(int)EInputActionMap.cancel] = (int)Keys.Escape;
 			assignGamePad[(int)EInputActionMap.cursor] = (int)EGamePadButtons.dPad;
 			assignGamePad[(int)EInputActionMap.enter] = (int)EGamePadButtons.A;
+			assignGamePad[(int)EInputActionMap.cancel] = (int)EGamePadButtons.back;
 			assignLegacyGamePad[(int)EInputActionMap.cursor] = (int)ELegacyGamePadAxisButtons.analog;
 			assignLegacyGamePad[(int)EInputActionMap.enter] = 0;
+			assignLegacyGamePad[(int)EInputActionMap.cancel] = 1;
 			activeDevice = EDevice.keyboard | EDevice.gamePad;
 #if WINDOWS
 			if (CLegacyInputCollection.instance.inputList.Count > 0)

@@ -8,48 +8,43 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using danmaq.ball.core;
 using danmaq.ball.data;
 using danmaq.ball.entity.font;
-using danmaq.ball.Properties;
-using danmaq.ball.state.cursor;
-using danmaq.nineball.data;
-using danmaq.nineball.entity;
+using danmaq.ball.state.cursor.view;
 using danmaq.nineball.entity.input;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene
+namespace danmaq.ball.state.cursor
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>難易度選択シーン。</summary>
-	sealed class CSceneMenu
-		: CSceneBase
+	/// <summary>カーソル制御状態クラス。</summary>
+	sealed class CStateCursor :
+		CState<CCursor, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CEntity, CGame> instance = new CSceneMenu();
-
-		/// <summary>難易度メニュー。</summary>
-		private readonly string menu =
-			string.Format("１{0}２{0}３{0}４{0}５{0}６{0}７{0}８{0}９", "      ");
+		public static readonly IState<CCursor, object> instance = new CStateCursor();
 
 		/// <summary>入力状態。</summary>
 		private readonly IList<SInputInfo> inputData = CInput.instance.collection.buttonList;
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CSceneMenu()
-			: base(Resources.SCENE_TITLE)
+		private CStateCursor()
 		{
 		}
 
@@ -66,17 +61,9 @@ namespace danmaq.ball.state.scene
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(CEntity entity, CGame privateMembers)
+		public override void setup(CCursor entity, object privateMembers)
 		{
-			base.setup(entity, privateMembers);
-			CGame.instance.bgColor = Color.Black;
-			print(new Point(40, 7), EAlign.Center, Color.Aqua, CGame.name);
-			print(new Point(40, 9), EAlign.Center, Color.Aqua, Resources.CREDIT);
-			print(new Point(6, 14), EAlign.LeftTop, Color.White, Resources.DESC_LEVEL);
-			print(new Point(6, 16), EAlign.LeftTop, Color.White, menu);
-			CCursor.instance.nextState = CStateCursor.instance;
-			CCursor.instance.changedState += onCursorChanged;
-			taskManager.Add(CCursor.instance);
+			entity.aiView.nextState = CAIVisible.instance;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -87,26 +74,47 @@ namespace danmaq.ball.state.scene
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
+		public override void update(CCursor entity, object privateMembers, GameTime gameTime)
 		{
-			if (inputData[(int)EInputActionMap.cancel].push)
+			entity.aiView.update(gameTime);
+			SInputInfo move = inputData[(int)EInputActionMap.cursor];
+			if (move.pushLoop(24, 6))
 			{
-				CGame.instance.Exit();
+				entity.level +=
+					(short)Math.Sign(inputData[(int)EInputActionMap.cursor].velocity.X);
 			}
-			base.update(entity, privateMembers, gameTime);
+			if (inputData[(int)EInputActionMap.enter].push)
+			{
+				entity.Dispose();
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>初期化の状態が変化したときに呼び出されるメソッドです。</summary>
+		/// <summary>1フレーム分の描画処理を実行します。</summary>
 		/// 
-		/// <param name="sender">送信元。</param>
-		/// <param name="e">イベントの情報。</param>
-		private void onCursorChanged(object sender, CEventChangedState e)
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
+		public override void draw(CCursor entity, object privateMembers, GameTime gameTime)
 		{
-			if (e.next == CState.empty)
-			{
-				CGame.instance.scene.nextState = CSceneCountdown.instance;
-			}
+			entity.aiView.draw(gameTime);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を終了したオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
+		public override void teardown(CCursor entity, object privateMembers, IState nextState)
+		{
 		}
 	}
 }

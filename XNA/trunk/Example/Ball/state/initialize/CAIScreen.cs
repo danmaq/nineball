@@ -17,7 +17,7 @@ using danmaq.nineball.util.resolution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene.initialize
+namespace danmaq.ball.state.initialize
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

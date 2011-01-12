@@ -31,6 +31,12 @@ namespace danmaq.ball.entity
 		/// <summary>玉の最大速度。</summary>
 		private const float MAX_SPEED = 1f;
 
+		/// <summary>自機。</summary>
+		public static readonly CBall player;
+
+		/// <summary>敵機。</summary>
+		public static readonly CBall enemy;
+
 		/// <summary>加速度グラフのアタック・サスティン・リリース時間。</summary>
 		private static readonly int[] accelerateTime = { 5, 5, 10 };
 
@@ -47,6 +53,9 @@ namespace danmaq.ball.entity
 
 		/// <summary>位置。</summary>
 		public Vector2 position = Vector2.Zero;
+
+		/// <summary>鬼畜加速モードかどうか。</summary>
+		public bool accelerateSpeed;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -77,15 +86,32 @@ namespace danmaq.ball.entity
 				phase.reserveNextPhase = nPCount >= nPLimit;
 			}
 			speedGraph = graph.AsReadOnly();
+			enemy = new CBall();
+			player = new CBall();
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		public CBall()
+		private CBall()
 		{
 			for (int i = moveRequest.Length; --i >= 0; )
 			{
 				moveRequest[i] = short.MinValue;
+			}
+		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ゴールしたかどうかを取得します。</summary>
+		/// 
+		/// <value>ゴールした場合、<c>true</c>。</value>
+		public bool goal
+		{
+			get
+			{
+				return position.X > 640;
 			}
 		}
 

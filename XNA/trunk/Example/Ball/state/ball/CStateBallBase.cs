@@ -8,28 +8,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.entity;
+using danmaq.ball.core;
+using danmaq.ball.data;
+using danmaq.ball.entity;
+using danmaq.nineball.data;
 using danmaq.nineball.state;
-using danmaq.nineball.util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace danmaq.ball.state.scene.initialize
+namespace danmaq.ball.state.ball
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>初期化AI用の状態の基底クラス。</summary>
-	abstract class CAIBase
-		: IState
+	/// <summary>玉の状態の基底クラス。</summary>
+	abstract class CStateBallBase
+		: CState<CBall, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>状態開始時のログ出力される文字列。</summary>
-		private readonly string begin;
+		/// <summary>画像。</summary>
+		private readonly Texture2D texture = CONTENT.texBall;
 
-		/// <summary>状態終了時のログ出力される文字列。</summary>
-		private readonly string final;
+		/// <summary>画像の切り出し矩形。</summary>
+		private readonly Rectangle src;
+
+		/// <summary>描画先Y座標。</summary>
+		private readonly float y;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -37,23 +43,12 @@ namespace danmaq.ball.state.scene.initialize
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <param name="description">初期化内容。</param>
-		public CAIBase(string description)
+		/// <param name="y">描画先Y座標。</param>
+		/// <param name="src">画像の切り出し矩形。</param>
+		public CStateBallBase(float y, Rectangle src)
 		{
-			begin = string.Format("{0}開始...", description);
-			final = string.Format("{0}完了。", description);
-		}
-
-		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>次に遷移すべき状態を取得します。</summary>
-		/// 
-		/// <value>次に遷移すべき状態。</value>
-		public abstract IState nextState
-		{
-			get;
+			this.y = y;
+			this.src = src;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -69,10 +64,10 @@ namespace danmaq.ball.state.scene.initialize
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public virtual void setup(IEntity entity, object privateMembers)
+		public override void setup(CBall entity, object privateMembers)
 		{
-			CLogger.add(begin);
-			initialize();
+			entity.position = new Vector2(0, y);
+			entity.accelerateSpeed = false;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -83,9 +78,12 @@ namespace danmaq.ball.state.scene.initialize
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public virtual void update(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void update(CBall entity, object privateMembers, GameTime gameTime)
 		{
-			entity.nextState = nextState;
+			if (getMoveOrder(entity))
+			{
+				entity.move();
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -96,8 +94,10 @@ namespace danmaq.ball.state.scene.initialize
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public virtual void draw(IEntity entity, object privateMembers, GameTime gameTime)
+		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
 		{
+			CGame.sprite.add(texture, entity.position, EAlign.Center, EAlign.Center,
+				src, Color.White, 0f, SpriteBlendMode.AlphaBlend);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -111,13 +111,15 @@ namespace danmaq.ball.state.scene.initialize
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public virtual void teardown(IEntity entity, object privateMembers, IState nextState)
+		public override void teardown(CBall entity, object privateMembers, IState nextState)
 		{
-			CLogger.add(final);
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>初期化処理を実行します。</summary>
-		protected abstract void initialize();
+		/// <summary>玉に対し移動すべきかを指示します。</summary>
+		/// 
+		/// <param name="entity">この状態を適用されているオブジェクト。</param>
+		/// <returns>移動すべき場合、<c>true</c>。</returns>
+		protected abstract bool getMoveOrder(CBall entity);
 	}
 }

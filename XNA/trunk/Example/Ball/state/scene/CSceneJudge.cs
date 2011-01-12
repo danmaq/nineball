@@ -8,15 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Collections.Generic;
 using danmaq.ball.core;
 using danmaq.ball.data;
-using danmaq.ball.entity.font;
-using danmaq.ball.Properties;
-using danmaq.ball.state.cursor;
-using danmaq.nineball.data;
 using danmaq.nineball.entity;
-using danmaq.nineball.entity.input;
+using danmaq.nineball.entity.fonts;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,32 +20,45 @@ namespace danmaq.ball.state.scene
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>難易度選択シーン。</summary>
-	sealed class CSceneMenu
+	/// <summary>判定画面シーン。</summary>
+	sealed class CSceneJudge
 		: CSceneBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState<CEntity, CGame> instance = new CSceneMenu();
+		/// <summary>勝利時クラス オブジェクト。</summary>
+		public static readonly IState<CEntity, CGame> won =
+			new CSceneJudge("勝ち", Color.CornflowerBlue);
 
-		/// <summary>難易度メニュー。</summary>
-		private readonly string menu =
-			string.Format("１{0}２{0}３{0}４{0}５{0}６{0}７{0}８{0}９", "      ");
+		/// <summary>敗北時クラス オブジェクト。</summary>
+		public static readonly IState<CEntity, CGame> lose = new CSceneJudge("負け", Color.Tomato);
 
-		/// <summary>入力状態。</summary>
-		private readonly IList<SInputInfo> inputData = CInput.instance.collection.buttonList;
+		/// <summary>カウントダウン表示用フォント。</summary>
+		private readonly CFont description = new CFont(CONTENT.texFont98);
+
+		/// <summary>背景色。</summary>
+		private readonly Color bgColor;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private CSceneMenu()
-			: base(Resources.SCENE_TITLE)
+		/// 
+		/// <param name="text">判定テキスト。</param>
+		/// <param name="bgColor">背景色。</param>
+		private CSceneJudge(string text, Color bgColor)
+			: base(text)
 		{
+			description.pos = new Vector2(320, 200);
+			description.isDrawShadow = false;
+			description.sprite = CGame.sprite;
+			description.scale = new Vector2(20);
+			description.color = Color.Black;
+			description.text = text;
+			this.bgColor = bgColor;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -68,15 +76,10 @@ namespace danmaq.ball.state.scene
 		/// </param>
 		public override void setup(CEntity entity, CGame privateMembers)
 		{
+			CGame.instance.bgColor = bgColor;
+			description.gradationMode = false;
+			taskManager.Add(description);
 			base.setup(entity, privateMembers);
-			CGame.instance.bgColor = Color.Black;
-			print(new Point(40, 7), EAlign.Center, Color.Aqua, CGame.name);
-			print(new Point(40, 9), EAlign.Center, Color.Aqua, Resources.CREDIT);
-			print(new Point(6, 14), EAlign.LeftTop, Color.White, Resources.DESC_LEVEL);
-			print(new Point(6, 16), EAlign.LeftTop, Color.White, menu);
-			CCursor.instance.nextState = CStateCursor.instance;
-			CCursor.instance.changedState += onCursorChanged;
-			taskManager.Add(CCursor.instance);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -89,24 +92,11 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
 		{
-			if (inputData[(int)EInputActionMap.cancel].push)
+			if (entity.counter - entity.lastStateChangeCounter >= 30)
 			{
-				CGame.instance.Exit();
+				entity.nextState = CSceneMenu.instance;
 			}
 			base.update(entity, privateMembers, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>初期化の状態が変化したときに呼び出されるメソッドです。</summary>
-		/// 
-		/// <param name="sender">送信元。</param>
-		/// <param name="e">イベントの情報。</param>
-		private void onCursorChanged(object sender, CEventChangedState e)
-		{
-			if (e.next == CState.empty)
-			{
-				CGame.instance.scene.nextState = CSceneCountdown.instance;
-			}
 		}
 	}
 }

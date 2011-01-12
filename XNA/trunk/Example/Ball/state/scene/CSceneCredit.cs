@@ -86,7 +86,7 @@ namespace danmaq.ball.state.scene
 			mgrCo.update(gameTime);
 			if (mgrCo.Count == 0)
 			{
-				entity.nextState = CStateMenu.instance;
+				entity.nextState = CSceneMenu.instance;
 			}
 			base.update(entity, privateMembers, gameTime);
 		}

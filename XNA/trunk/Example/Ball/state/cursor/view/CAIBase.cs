@@ -13,7 +13,7 @@ using danmaq.nineball.entity;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.ball.state.font.cursor.view
+namespace danmaq.ball.state.cursor.view
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
