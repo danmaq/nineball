@@ -9,15 +9,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using danmaq.ball.core;
-using danmaq.ball.data;
 using danmaq.ball.entity;
 using danmaq.ball.entity.font;
-using danmaq.nineball.data;
 using danmaq.nineball.state;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.ball.state.ball
 {
@@ -25,7 +21,7 @@ namespace danmaq.ball.state.ball
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>敵の玉の状態。</summary>
 	sealed class CStateEnemy
-		: CState<CBall, object>
+		: CStateBallBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -37,17 +33,8 @@ namespace danmaq.ball.state.ball
 		/// <summary>難易度別行動パターン一覧。</summary>
 		private readonly Func<CBall, bool>[] movePatterns;
 
-		/// <summary>画像。</summary>
-		private readonly Texture2D texture = CONTENT.texBall;
-
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
-
-		/// <summary>鬼畜加速モードかどうか。</summary>
-		private bool m_bAccelerateSpeed = false;
-
-		/// <summary>難易度別行動パターン。</summary>
-		private Func<CBall, bool> movePattern;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -55,6 +42,7 @@ namespace danmaq.ball.state.ball
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		private CStateEnemy()
+			: base(240, new Rectangle(0, 0, 64, 64))
 		{
 			movePatterns = new Func<CBall, bool>[]
 			{
@@ -68,64 +56,13 @@ namespace danmaq.ball.state.ball
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>状態が開始された時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を適用されたオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		public override void setup(CBall entity, object privateMembers)
-		{
-			entity.position.Y = 200;
-			movePattern = movePatterns[CCursor.instance.level];
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
+		/// <summary>玉に対し移動すべきかを指示します。</summary>
 		/// 
 		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CBall entity, object privateMembers, GameTime gameTime)
+		/// <returns>移動すべき場合、<c>true</c>。</returns>
+		protected override bool getMoveOrder(CBall entity)
 		{
-			if (movePattern(entity))
-			{
-				entity.move();
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の描画処理を実行します。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CBall entity, object privateMembers, GameTime gameTime)
-		{
-			CGame.sprite.add(texture, entity.position, EAlign.Center, EAlign.Center,
-				new Rectangle(0, 0, 64, 64), Color.White, 0f, SpriteBlendMode.AlphaBlend);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>オブジェクトが別の状態へ移行する時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移先の<c>setup</c>よりも先に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を終了したオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
-		public override void teardown(CBall entity, object privateMembers, IState nextState)
-		{
+			return movePatterns[CCursor.instance.level](entity);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -135,7 +72,7 @@ namespace danmaq.ball.state.ball
 		/// <returns>移動と判断した場合、<c>true</c>。</returns>
 		private bool movePatternLowLevel(CBall entity)
 		{
-			return entity.counter % MathHelper.Lerp(
+			return entity.counter % (int)MathHelper.Lerp(
 				40, 6, CInterpolate._amountSlowdown(CCursor.instance.level, 5)) == 0;
 		}
 
@@ -146,18 +83,21 @@ namespace danmaq.ball.state.ball
 		/// <returns>移動と判断した場合、<c>true</c>。</returns>
 		private bool movePatternLevel7(CBall entity)
 		{
-			bool bResult = false;
-			int nCount = entity.counter;
-			if (nCount > 200)
+			int counter = entity.counter;
+			bool result = counter % 40 == 0;
+			if (!result)
 			{
-				bResult = (m_bAccelerateSpeed && nCount % 3 == 0) || nCount % 10 == 0;
+				if (counter > 200)
+				{
+					result = counter % (entity.accelerateSpeed ? 3 : 10) == 0;
+				}
+				else if(!entity.accelerateSpeed &&
+					CBall.player.position.X - entity.position.X > 10)
+				{
+					entity.accelerateSpeed = true;
+				}
 			}
-			else
-			{
-				// TODO : 鬼加速モード未実装
-				bResult = nCount % 10 == 0;
-			}
-			return bResult;
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*

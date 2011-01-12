@@ -44,13 +44,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="partPointSprite.fx">
-      <Name>partPointSprite</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="logo.png">
       <Name>logo</Name>
       <Importer>TextureImporter</Importer>
@@ -71,7 +64,6 @@
       <Name>ball</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
   </ItemGroup>

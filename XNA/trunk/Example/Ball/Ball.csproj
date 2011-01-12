@@ -30,7 +30,7 @@
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>赤い玉 青い玉 競走ゲーム</ProductName>
     <PublisherName>danmaq</PublisherName>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -106,23 +106,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="state\ball\CStateBallBase.cs" />
     <Compile Include="state\ball\CStateEnemy.cs" />
     <Compile Include="state\ball\CStatePlayer.cs" />
-    <Compile Include="state\font\CState98.cs" />
-    <Compile Include="state\font\cursor\CStateCursor.cs" />
-    <Compile Include="state\font\cursor\view\CAIBase.cs" />
-    <Compile Include="state\font\cursor\view\CAIHidden.cs" />
-    <Compile Include="state\font\cursor\view\CAIVisible.cs" />
+    <Compile Include="state\cursor\CStateCursor.cs" />
+    <Compile Include="state\cursor\view\CAIBase.cs" />
+    <Compile Include="state\cursor\view\CAIHidden.cs" />
+    <Compile Include="state\cursor\view\CAIVisible.cs" />
     <Compile Include="state\scene\CSceneBase.cs" />
     <Compile Include="state\scene\CSceneCountdown.cs" />
     <Compile Include="state\scene\CSceneGame.cs" />
+    <Compile Include="state\scene\CSceneJudge.cs" />
     <Compile Include="state\scene\CSceneMenu.cs" />
     <Compile Include="state\scene\CSceneCredit.cs" />
     <Compile Include="state\scene\CSceneInitialize.cs" />
-    <Compile Include="state\scene\initialize\CAIBase.cs" />
-    <Compile Include="state\scene\initialize\CAIComponents.cs" />
-    <Compile Include="state\scene\initialize\CAIInupt.cs" />
-    <Compile Include="state\scene\initialize\CAIScreen.cs" />
+    <Compile Include="state\initialize\CAIBase.cs" />
+    <Compile Include="state\initialize\CAIComponents.cs" />
+    <Compile Include="state\initialize\CAIInupt.cs" />
+    <Compile Include="state\initialize\CAIScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HISTORY.txt" />

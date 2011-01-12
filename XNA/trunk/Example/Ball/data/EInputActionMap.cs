@@ -22,6 +22,9 @@ namespace danmaq.ball.data
 		/// <summary>決定・自機移動ボタン。</summary>
 		enter,
 
+		/// <summary>キャンセルボタン。</summary>
+		cancel,
+
 		/// <summary>予約。(使用できません)</summary>
 		__reserved,
 
