@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+using System.Collections.Generic;
 using danmaq.ball.core;
 using danmaq.ball.data;
 using danmaq.nineball.data.input;
@@ -97,9 +97,9 @@ namespace danmaq.ball.state.initialize
 		{
 			CInputHelper input = CInput.instance;
 			input.activeDevice = activeDevice;
-			input.keyboard.assignList = Array.AsReadOnly(assignKeyboard);
-			input.gamePad.assignList = Array.AsReadOnly(assignGamePad);
-			input.legacy.assignList = Array.AsReadOnly(assignLegacyGamePad);
+			input.keyboard.assignList = new List<int>(assignKeyboard).AsReadOnly();
+			input.gamePad.assignList = new List<int>(assignGamePad).AsReadOnly();
+			input.legacy.assignList = new List<int>(assignLegacyGamePad).AsReadOnly();
 			new CGameComponent(CGame.instance, input.collection, true);
 			initializeSensitivity();
 		}
