@@ -77,7 +77,9 @@ namespace danmaq.ball.core
 			graphicDeviceManager.PreferredBackBufferHeight = rect.Height;
 			new CGuideWrapper(this);
 			scene = new CEntity(CSceneInitialize.instance, this);
-			new CDrawableGameComponent(this, scene, true).DrawOrder = 1;
+			CDrawableGameComponent gcScene = new CDrawableGameComponent(this, scene, true);
+			gcScene.DrawOrder = int.MaxValue;
+			gcScene.UpdateOrder = int.MaxValue;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
