@@ -100,7 +100,7 @@ namespace danmaq.ball.state.initialize
 			input.keyboard.assignList = new List<int>(assignKeyboard).AsReadOnly();
 			input.gamePad.assignList = new List<int>(assignGamePad).AsReadOnly();
 			input.legacy.assignList = new List<int>(assignLegacyGamePad).AsReadOnly();
-			new CGameComponent(CGame.instance, input.collection, true);
+			new CGameComponent(CGame.instance, input.collection, true).UpdateOrder = int.MinValue;
 			initializeSensitivity();
 		}
 
