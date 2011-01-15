@@ -106,9 +106,11 @@
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="data\input\EKeyboardAxisButtons.cs" />
     <Compile Include="data\input\ELegacyGamePadAxisButtons.cs" />
+    <Compile Include="data\SPresence.cs" />
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
+    <Compile Include="entity\manager\CGamerInfo.cs" />
     <Compile Include="entity\CVariableOwner.cs" />
     <Compile Include="entity\graphics\CAnimation.cs" />
     <Compile Include="entity\graphics\CSpriteManager.cs" />
@@ -134,7 +136,7 @@
     <Compile Include="state\input\CStateAdapterInput.cs" />
     <Compile Include="entity\input\IInputAdapter.cs" />
     <Compile Include="entity\input\low\ILowerInput.cs" />
-    <Compile Include="entity\input\SInputInfo.cs" />
+    <Compile Include="data\input\SInputInfo.cs" />
     <Compile Include="state\input\CStateGamePadInput.cs" />
     <Compile Include="state\input\CStateKeyboardInput.cs" />
     <Compile Include="state\input\CStateLegacyInput.cs" />

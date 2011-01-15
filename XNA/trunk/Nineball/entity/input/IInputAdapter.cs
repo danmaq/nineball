@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using danmaq.nineball.data.input;
 using danmaq.nineball.entity.manager;
 
 namespace danmaq.nineball.entity.input
