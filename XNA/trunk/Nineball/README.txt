@@ -57,7 +57,7 @@ http://danmaq.com/feedback/test/read.cgi/board/1228028892/l50
 _____________________________________________________________________
 ■著作権情報
 
-Copyright (c) 2008-2009 danmaq All rights reserved.
+Copyright (c) 2008-2011 danmaq All rights reserved.
 
 以下に定める条件に従い、本ソフトウェアおよび関連文書のファイ
 ル（以下「ソフトウェア」）の複製を取得するすべての人に対し、
