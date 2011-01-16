@@ -71,12 +71,12 @@ namespace danmaq.nineball.state.input.low
 			Device device = entity.device;
 			try
 			{
-				device.Poll();
+			    device.Poll();
 			}
 			catch (NotAcquiredException)
 			{
-				device.Acquire();
-				device.Poll();
+			    device.Acquire();
+			    device.Poll();
 			}
 			privateMembers.prevState = privateMembers.nowState;
 			privateMembers.nowState = device.CurrentJoystickState;

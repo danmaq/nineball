@@ -66,14 +66,20 @@ namespace danmaq.nineball.state.manager
 			CContentLoader entity, CContentLoader.CPrivateMembers privateMembers,
 			GameTime gameTime)
 		{
-			Queue<ICache> contents = privateMembers.contents;
-			if(contents.Count > 0)
+			if (entity.counter % entity.interval == 0)
 			{
-				contents.Dequeue().preload();
-			}
-			else
-			{
-				entity.setEmptyState();
+				for (int i = entity.loadPerFrame; --i >= 0; )
+				{
+					Queue<ICache> contents = privateMembers.contents;
+					if (contents.Count > 0)
+					{
+						contents.Dequeue().preload();
+					}
+					else
+					{
+						entity.setEmptyState();
+					}
+				}
 			}
 		}
 

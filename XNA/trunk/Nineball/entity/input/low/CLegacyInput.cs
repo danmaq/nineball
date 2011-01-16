@@ -92,6 +92,7 @@ namespace danmaq.nineball.entity.input.low
 			{
 				initializeForceFeedBack(ref errorReport);
 				initializeAxis();
+				device.Acquire();
 			}
 			catch (Exception e)
 			{

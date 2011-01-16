@@ -176,12 +176,6 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>初期化処理を実行します。</summary>
-		public virtual void initialize()
-		{
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>カウンタをリセットします。</summary>
 		public virtual void resetCounter()
 		{

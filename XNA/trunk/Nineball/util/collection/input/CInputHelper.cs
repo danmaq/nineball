@@ -83,6 +83,9 @@ namespace danmaq.nineball.util.collection.input
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アクティブなデバイス一覧を取得します。</summary>
+		/// <remarks>
+		/// レガシ ゲームパッドを使用する場合、毎フレーム ヒープを消費します。
+		/// </remarks>
 		/// 
 		/// <value>アクティブなデバイス一覧。</value>
 		public EDevice activeDevice
