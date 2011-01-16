@@ -17,6 +17,7 @@ using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
 using danmaq.nineball.state.manager.task;
 using danmaq.nineball.util;
+using danmaq.nineball.util.storage;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -80,7 +81,10 @@ namespace danmaq.ball.state.scene
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(CEntity entity, CGame privateMembers, GameTime gameTime)
 		{
-			taskManager.update(gameTime);
+			if (!CGuideWrapper.instance.IsVisible)
+			{
+				taskManager.update(gameTime);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
