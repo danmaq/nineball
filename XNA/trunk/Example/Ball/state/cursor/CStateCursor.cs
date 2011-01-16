@@ -14,7 +14,7 @@ using danmaq.ball.core;
 using danmaq.ball.data;
 using danmaq.ball.entity.font;
 using danmaq.ball.state.cursor.view;
-using danmaq.nineball.entity.input;
+using danmaq.nineball.data.input;
 using danmaq.nineball.state;
 using Microsoft.Xna.Framework;
 

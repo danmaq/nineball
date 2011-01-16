@@ -140,6 +140,12 @@ namespace danmaq.nineball.util.storage
 			new System.Windows.Forms.MessageBoxIcon[4];
 #endif
 
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>オフライン時の体験版状態。</summary>
+		public bool m_trialMode = false;
+
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -166,7 +172,7 @@ namespace danmaq.nineball.util.storage
 			{
 				CLogger.add(Resources.WARN_GAMER_SERVICE);
 				CLogger.add(e);
-				isAvaliableUseGamerService = false;
+				removeGamerServiceComponent();
 			}
 #if WINDOWS
 			iconset[(int)MessageBoxIcon.None] = System.Windows.Forms.MessageBoxIcon.None;
@@ -212,6 +218,23 @@ namespace danmaq.nineball.util.storage
 			get
 			{
 				return isAvaliableUseGamerService ? Guide.IsVisible : false;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>体験版であるかどうかを取得/設定します。</summary>
+		/// <remarks>書き込みはゲーマー サービスが無効時のみ反映されます。</remarks>
+		/// 
+		/// <value>体験版である場合、<c>true</c>。</value>
+		public bool IsTrialMode
+		{
+			get
+			{
+				return isAvaliableUseGamerService ? Guide.IsTrialMode : m_trialMode;
+			}
+			set
+			{
+				m_trialMode = value;
 			}
 		}
 

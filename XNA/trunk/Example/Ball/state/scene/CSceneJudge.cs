@@ -10,6 +10,7 @@
 
 using danmaq.ball.core;
 using danmaq.ball.data;
+using danmaq.ball.misc;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.fonts;
 using danmaq.nineball.state;
@@ -76,10 +77,11 @@ namespace danmaq.ball.state.scene
 		/// </param>
 		public override void setup(CEntity entity, CGame privateMembers)
 		{
+			base.setup(entity, privateMembers);
 			CGame.instance.bgColor = bgColor;
 			description.gradationMode = false;
 			taskManager.Add(description);
-			base.setup(entity, privateMembers);
+			CPresenceSender.sendAtJudge(this);
 		}
 
 		//* -----------------------------------------------------------------------*

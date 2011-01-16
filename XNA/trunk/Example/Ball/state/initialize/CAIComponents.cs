@@ -15,6 +15,7 @@ using danmaq.nineball.entity;
 using danmaq.nineball.entity.component;
 using danmaq.nineball.entity.fonts;
 using danmaq.nineball.entity.graphics;
+using danmaq.nineball.entity.manager;
 using danmaq.nineball.state;
 using danmaq.nineball.state.fonts;
 using danmaq.nineball.state.manager;
@@ -43,7 +44,7 @@ namespace danmaq.ball.state.initialize
 		{
 			CStateFPSViewer.instance,
 #if DEBUG
-	//		CStateHeapViewer.instance,
+			CStateHeapViewer.instance,
 #endif
 		};
 
@@ -64,7 +65,7 @@ namespace danmaq.ball.state.initialize
 		{
 			CStateFPSViewer.instance.text = "FPS: {0}/{1}";
 #if DEBUG
-//			CStateHeapViewer.instance.text = "mem: {0}/ delta: {1}({2})";
+			CStateHeapViewer.instance.text = "mem: {0}/ delta: {1}({2})";
 #endif
 		}
 
@@ -106,6 +107,7 @@ namespace danmaq.ball.state.initialize
 				hud.alignVertical = EAlign.LeftTop;
 				new CDrawableGameComponent(game, hud, true);
 			}
+			new CGameComponent(game, CPresenceManager.instance, true);
 			new CDrawableGameComponent(game, new CEntity(CStateFPSCalculator.instance), true);
 			CGuideWrapper.instance.NotificationPosition = NotificationPosition.Center;
 		}

@@ -9,6 +9,8 @@
 
 using System.Collections.Generic;
 using danmaq.nineball.data;
+using danmaq.nineball.state;
+using danmaq.nineball.state.manager;
 using danmaq.nineball.util.storage;
 using Microsoft.Xna.Framework.GamerServices;
 
@@ -16,16 +18,42 @@ namespace danmaq.nineball.entity.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>ゲーマー情報取得・制御クラス。</summary>
-	public sealed class CGamerInfo
+	/// <summary>ゲーマー情報制御クラス。</summary>
+	public sealed class CPresenceManager
 		: CEntity
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly CPresenceManager instance = new CPresenceManager();
+
 		/// <summary>設定されるプレゼンス一覧。</summary>
 		public readonly List<SPresence> presenceList = new List<SPresence>();
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>プレゼンスの更新間隔。</summary>
+		/// <remarks>
+		/// 10～60秒(600～3600フレーム)が理想値です。値を極端に小さくすると、
+		/// プレゼンス情報が反映される前に更新されてしまう可能性があります。
+		/// </remarks>
+		public ushort interval = 60 * 30;
+
+		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>既定の状態で初期化します。</para>
+		/// </summary>
+		private CPresenceManager()
+			: base(CStatePresenceManager.instance)
+		{
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*

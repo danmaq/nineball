@@ -11,6 +11,7 @@
 using System.Collections;
 using danmaq.ball.core;
 using danmaq.ball.data;
+using danmaq.ball.misc;
 using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
@@ -71,6 +72,7 @@ namespace danmaq.ball.state.scene
 			base.setup(entity, privateMembers);
 			alpha = 0;
 			mgrCo.Add(coAlpha());
+			CPresenceSender.sendAtCredit();
 		}
 
 		//* -----------------------------------------------------------------------*

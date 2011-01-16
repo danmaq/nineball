@@ -11,6 +11,7 @@
 using System.Collections;
 using danmaq.ball.core;
 using danmaq.ball.data;
+using danmaq.ball.misc;
 using danmaq.ball.Properties;
 using danmaq.nineball.data;
 using danmaq.nineball.entity;
@@ -80,6 +81,7 @@ namespace danmaq.ball.state.scene
 			taskManager.Add(countdown);
 			taskManager.Add(mgrCo);
 			print(new Point(40, 20), EAlign.Center, Color.DarkRed, Resources.ROLL_SPACE);
+			CPresenceSender.sendAtGame();
 		}
 
 		//* -----------------------------------------------------------------------*
