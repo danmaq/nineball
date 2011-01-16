@@ -116,14 +116,6 @@ namespace danmaq.nineball.entity.component
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>初期化処理を実行します。</summary>
-		public override void Initialize()
-		{
-			initialize();
-			base.Initialize();
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>1フレーム分の更新処理を実行します。</summary>
 		/// 
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
@@ -131,13 +123,6 @@ namespace danmaq.nineball.entity.component
 		{
 			update(gameTime);
 			base.Update(gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>初期化処理を実行します。</summary>
-		public void initialize()
-		{
-			entity.initialize();
 		}
 
 		//* -----------------------------------------------------------------------*
