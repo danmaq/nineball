@@ -10,9 +10,9 @@
 using System.Collections.Generic;
 using danmaq.nineball.data.animation;
 using danmaq.nineball.state;
-using danmaq.nineball.state.graphics;
+using danmaq.nineball.state.manager;
 
-namespace danmaq.nineball.entity.graphics
+namespace danmaq.nineball.entity.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -29,7 +29,10 @@ namespace danmaq.nineball.entity.graphics
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>カメラパス定義一覧。</summary>
+		/// <summary>既定の状態。</summary>
+		public readonly IState defaultState;
+
+		/// <summary>アニメーション定義一覧。</summary>
 		public readonly List<_T> data = new List<_T>();
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -47,7 +50,7 @@ namespace danmaq.nineball.entity.graphics
 		/// <para>既定の状態で初期化します。</para>
 		/// </summary>
 		public CAnimation()
-			: base(CStateAnimation<_T, _D>.instance)
+			: this(CStateAnimation<_T, _D>.instance)
 		{
 		}
 
@@ -59,7 +62,7 @@ namespace danmaq.nineball.entity.graphics
 		/// 
 		/// <param name="firstState">初期の状態。</param>
 		public CAnimation(IState firstState)
-			: base(firstState, null)
+			: this(firstState, null)
 		{
 		}
 
@@ -76,15 +79,16 @@ namespace danmaq.nineball.entity.graphics
 		public CAnimation(IState firstState, object privateMembers)
 			: base(firstState, privateMembers)
 		{
+			defaultState = CStateAnimation<_T, _D>.instance;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>現在のカメラパス定義を取得します。</summary>
+		/// <summary>現在のデータを取得します。</summary>
 		/// 
-		/// <value>現在のカメラパス定義。</value>
+		/// <value>現在のデータ。</value>
 		public _T nowScene
 		{
 			get
@@ -94,9 +98,9 @@ namespace danmaq.nineball.entity.graphics
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>現在のカメラパス定義を取得します。</summary>
+		/// <summary>現在のデータを取得します。</summary>
 		/// 
-		/// <value>現在のカメラパス定義。</value>
+		/// <value>現在のデータ。</value>
 		public _D nowData
 		{
 			get
