@@ -9,17 +9,16 @@
 
 using System;
 using danmaq.nineball.util.math;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.nineball.data.animation
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>フォグ アニメーションのためのコンテンツ データ。</summary>
+	/// <summary>フェードのためのコンテンツ データ。</summary>
 	[Serializable]
-	public struct SFogAnimationData
-		: IAnimationData<SFogAnimationData.SData>
+	public struct SFadeData
+		: IAnimationData<SFadeData.SData>
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -32,12 +31,6 @@ namespace danmaq.nineball.data.animation
 
 			/// <summary>色。</summary>
 			public Color color;
-
-			/// <summary>開始点。</summary>
-			public float near;
-
-			/// <summary>終了点。</summary>
-			public float far;
 		}
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -88,8 +81,6 @@ namespace danmaq.nineball.data.animation
 			SData data = new SData();
 			float amount = interpolate.interpolate(0, 1, now, interval);
 			data.color = Color.Lerp(start.color, end.color, amount);
-			data.far = MathHelper.Lerp(start.far, end.far, amount);
-			data.near = MathHelper.Lerp(start.near, end.near, amount);
 			return data;
 		}
 	}

@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="data\animation\IAnimationData.cs" />
     <Compile Include="data\animation\SCameraPathData.cs" />
+    <Compile Include="data\animation\SFadeData.cs" />
     <Compile Include="data\animation\SFogAnimationData.cs" />
     <Compile Include="data\content\CCache.cs" />
     <Compile Include="data\content\ICache.cs" />
@@ -110,15 +111,17 @@
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
+    <Compile Include="entity\manager\CAnimationLite.cs" />
     <Compile Include="entity\manager\CPresenceManager.cs" />
     <Compile Include="entity\CVariableOwner.cs" />
-    <Compile Include="entity\graphics\CAnimation.cs" />
+    <Compile Include="entity\manager\CAnimation.cs" />
     <Compile Include="entity\graphics\CSpriteManager.cs" />
     <Compile Include="state\fonts\CStateFPSViewer.cs" />
     <Compile Include="state\fonts\CStateHeapViewer.cs" />
     <Compile Include="state\fonts\CStateTimeViewer.cs" />
-    <Compile Include="state\graphics\CStateAnimation.cs" />
+    <Compile Include="state\manager\CStateAnimation.cs" />
     <Compile Include="state\graphics\CStateSpriteManager.cs" />
+    <Compile Include="state\manager\CStateAnimationLite.cs" />
     <Compile Include="state\manager\CStatePresenceManager.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
     <Compile Include="util\resolution\CResolutionBase.cs" />

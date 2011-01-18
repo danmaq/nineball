@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using danmaq.nineball.data.animation;
-using danmaq.nineball.entity.graphics;
+using danmaq.nineball.entity.manager;
 using Microsoft.Xna.Framework;
 
-namespace danmaq.nineball.state.graphics
+namespace danmaq.nineball.state.manager
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
