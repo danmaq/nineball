@@ -49,14 +49,10 @@ namespace danmaq.nineball.data
 		/// </para>
 		/// </summary>
 		/// 
-		/// <param name="fExpr">値</param>
-		public SGradation(float fExpr)
+		/// <param name="expr">値</param>
+		public SGradation(float expr)
+			: this(expr, expr, expr, expr)
 		{
-			start = fExpr;
-			end = fExpr;
-			limit1 = fExpr;
-			limit2 = fExpr;
-			interpolate = EInterpolate.clampSmooth;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -72,12 +68,58 @@ namespace danmaq.nineball.data
 		/// <param name="fLimit1">限界値1</param>
 		/// <param name="fLimit2">限界値2</param>
 		public SGradation(float fStart, float fEnd, float fLimit1, float fLimit2)
+			: this(fStart, fEnd, fLimit1, fLimit2, EInterpolate.clampSmooth)
+		{
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>コンストラクタ。</para>
+		/// <para>
+		/// グラデーション値を設定します。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="fStart">初期値</param>
+		/// <param name="fEnd">最終値</param>
+		/// <param name="fLimit1">限界値1</param>
+		/// <param name="fLimit2">限界値2</param>
+		/// <param name="interpolate">内分カウンタ。</param>
+		public SGradation(
+			float fStart, float fEnd, float fLimit1, float fLimit2, EInterpolate interpolate)
 		{
 			start = fStart;
 			end = fEnd;
 			limit1 = fLimit1;
 			limit2 = fLimit2;
-			interpolate = EInterpolate.clampSmooth;
+			this.interpolate = interpolate;
+		}
+
+		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* properties ──────────────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>グラデーションするかどうかを取得します。</summary>
+		/// 
+		/// <value>グラデーションする場合、<c>true</c>。</value>
+		public bool gradation
+		{
+			get
+			{
+				return start != end;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>値が常にゼロになるかどうかを取得します。</summary>
+		/// 
+		/// <value>常にゼロである場合、<c>true</c>。</value>
+		public bool zero
+		{
+			get
+			{
+				return start == end && start == 0f;
+			}
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*

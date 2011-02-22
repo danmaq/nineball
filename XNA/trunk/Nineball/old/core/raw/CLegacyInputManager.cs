@@ -30,6 +30,7 @@ namespace danmaq.nineball.old.core.raw
 	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
 	/// </para>
 	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.util.collection.input.CInputHelper使用してください。")]
 	public sealed class CLegacyInputManager : IDisposable
 	{
 

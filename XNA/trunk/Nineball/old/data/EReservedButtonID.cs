@@ -19,6 +19,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ用の予約されたボタンID。</summary>
+	[Obsolete]
 	public enum EReservedButtonAxisID : short
 	{
 
@@ -52,6 +53,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>レガシ ゲーム コントローラ状態の拡張機能。</summary>
+	[Obsolete]
 	public static class JoystickStateExtension
 	{
 

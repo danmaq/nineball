@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework.Input;
@@ -16,6 +17,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360用コントローラ 入力情報クラス 拡張機能。</summary>
+	[Obsolete]
 	public static class GamePadStateExtention
 	{
 

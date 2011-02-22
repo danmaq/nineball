@@ -16,6 +16,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>方向ボタンの入力状態を示す構造体。</summary>
+	[Obsolete]
 	public struct SDirArray
 	{
 

@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using danmaq.nineball.data.input;
 using danmaq.nineball.entity.manager;
 
 namespace danmaq.nineball.entity.input.low
@@ -39,6 +40,16 @@ namespace danmaq.nineball.entity.input.low
 		_T prevInputState
 		{
 			get;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>フォース情報を取得/設定します。</summary>
+		/// 
+		/// <value>フォース情報。</value>
+		SForceData force
+		{
+			get;
+			set;
 		}
 	}
 }

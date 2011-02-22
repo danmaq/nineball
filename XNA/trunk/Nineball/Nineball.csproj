@@ -103,6 +103,7 @@
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="data\EDirection.cs" />
+    <Compile Include="data\input\SForceData.cs" />
     <Compile Include="data\input\EDevice.cs" />
     <Compile Include="data\input\EGamePadButtons.cs" />
     <Compile Include="data\input\EKeyboardAxisButtons.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="state\fonts\CStateFPSViewer.cs" />
     <Compile Include="state\fonts\CStateHeapViewer.cs" />
     <Compile Include="state\fonts\CStateTimeViewer.cs" />
+    <Compile Include="state\input\low\CStateGamePadForceFeedback.cs" />
     <Compile Include="state\manager\CStateAnimation.cs" />
     <Compile Include="state\graphics\CStateSpriteManager.cs" />
     <Compile Include="state\manager\CStateAnimationLite.cs" />
@@ -211,7 +213,7 @@
     <Compile Include="util\math\CStaticRandom.cs" />
     <Compile Include="old\core\data\CDataIOManager.cs" />
     <Compile Include="old\core\data\CResource.cs" />
-    <Compile Include="old\core\data\EForcePreset.cs" />
+    <Compile Include="data\input\EForcePreset.cs" />
     <Compile Include="old\core\data\SStarter.cs" />
     <Compile Include="old\core\inner\CGuideManager.cs" />
     <Compile Include="old\core\inner\CValidateDirectX.cs" />
