@@ -14,6 +14,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイス 列挙体。</summary>
+	[Obsolete]
 	[Flags]
 	public enum EInputDevice : byte
 	{

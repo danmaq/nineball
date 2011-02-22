@@ -7,37 +7,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
+using danmaq.nineball.entity;
 using danmaq.nineball.entity.input.low;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace danmaq.nineball.state.input.low
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-	/// <summary>キーボード入力制御・管理クラスの既定の状態。</summary>
-	public abstract class CStateXNAInput<_T>
-		: CState<CXNAInput<_T>, CXNAInput<_T>.CPrivateMembers>
+	/// <summary>XBOX360ゲームパッド用のフォース フィードバックの状態。</summary>
+	public sealed class CStateGamePadForceFeedback<_T>
+		: CState<CEntity, CXNAInput<_T>>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>キーボードの状態を取得するためのデリゲート。</summary>
-		private Func<_T> getState;
+		/// <summary>クラス オブジェクト。</summary>
+		public static readonly IState<CEntity, CXNAInput<_T>> instance =
+			new CStateGamePadForceFeedback<_T>();
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="getState">
-		/// キーボードの状態を取得するためのデリゲート。
-		/// </param>
-		public CStateXNAInput(Func<_T> getState)
+		public CStateGamePadForceFeedback()
 		{
-			this.getState = getState;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -53,9 +50,9 @@ namespace danmaq.nineball.state.input.low
 		/// <param name="privateMembers">
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
-		public override void setup(
-			CXNAInput<_T> entity, CXNAInput<_T>.CPrivateMembers privateMembers)
+		public override void setup(CEntity entity, CXNAInput<_T> privateMembers)
 		{
+			entity.resetCounter();
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -66,12 +63,17 @@ namespace danmaq.nineball.state.input.low
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(CXNAInput<_T> entity,
-			CXNAInput<_T>.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void update(
+			CEntity entity, CXNAInput<_T> privateMembers, GameTime gameTime)
 		{
-			privateMembers.prevState = privateMembers.nowState;
-			privateMembers.nowState = getState();
-			privateMembers.aiForce.update(gameTime);
+			int counter = entity.counter;
+			GamePad.SetVibration(privateMembers.playerIndex,
+				privateMembers.force.strengthL.smooth(counter, privateMembers.force.durationL),
+				privateMembers.force.strengthS.smooth(counter, privateMembers.force.durationS));
+			if (counter > privateMembers.force.duration)
+			{
+				entity.nextState = CState.empty;
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -82,10 +84,8 @@ namespace danmaq.nineball.state.input.low
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
 		/// </param>
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void draw(CXNAInput<_T> entity,
-			CXNAInput<_T>.CPrivateMembers privateMembers, GameTime gameTime)
+		public override void draw(CEntity entity, CXNAInput<_T> privateMembers, GameTime gameTime)
 		{
-			privateMembers.aiForce.draw(gameTime);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -100,10 +100,9 @@ namespace danmaq.nineball.state.input.low
 		/// </param>
 		/// <param name="nextState">オブジェクトが次に適用する状態。</param>
 		public override void teardown(
-			CXNAInput<_T> entity, CXNAInput<_T>.CPrivateMembers privateMembers, IState nextState)
+			CEntity entity, CXNAInput<_T> privateMembers, IState nextState)
 		{
-			// 入力されたデータだけは破棄する
-			privateMembers.Dispose();
+			GamePad.SetVibration(privateMembers.playerIndex, 0, 0);
 		}
 	}
 }

@@ -15,6 +15,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>方向ボタン列挙体。</summary>
+	[Obsolete]
 	[Flags]
 	public enum EDirectionFlags : byte
 	{

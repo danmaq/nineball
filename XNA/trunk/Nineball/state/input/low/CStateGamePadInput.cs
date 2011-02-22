@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using danmaq.nineball.entity.input.low;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -82,6 +83,23 @@ namespace danmaq.nineball.state.input.low
 		public static CStateGamePadInput getInstance(PlayerIndex playerIndex)
 		{
 			return instanceList[(int)playerIndex];
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>状態が開始された時に呼び出されます。</para>
+		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
+		/// </summary>
+		/// 
+		/// <param name="entity">この状態を適用されたオブジェクト。</param>
+		/// <param name="privateMembers">
+		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		/// </param>
+		public override void setup(
+			CXNAInput<GamePadState> entity, CXNAInput<GamePadState>.CPrivateMembers privateMembers)
+		{
+			privateMembers.playerIndex = playerIndex;
+			base.setup(entity, privateMembers);
 		}
 	}
 }

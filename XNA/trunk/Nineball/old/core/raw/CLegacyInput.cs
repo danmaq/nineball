@@ -11,7 +11,7 @@
 
 using System;
 using System.Collections.Generic;
-using danmaq.nineball.old.core.data;
+using danmaq.nineball.data.input;
 using danmaq.nineball.Properties;
 using danmaq.nineball.util;
 using danmaq.nineball.util.caps;
@@ -26,6 +26,7 @@ namespace danmaq.nineball.old.core.raw
 	/// このクラスは旧バージョンとの互換性維持のために残されています。近い将来、順次
 	/// 新バージョンの物と置換されたり、機能自体が削除されたりする可能性があります。
 	/// </remarks>
+	[Obsolete("このクラスは今後サポートされません。danmaq.nineball.util.collection.input.CInputHelper使用してください。")]
 	public sealed class CLegacyInput : IDisposable
 	{
 

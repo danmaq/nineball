@@ -27,8 +27,8 @@ namespace danmaq.nineball.entity.input
 		public sealed class CPrivateMembers : IDisposable
 		{
 
-			//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-			//* constants ──────────────────────────────-*
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
 
 			/// <summary>入力情報一覧。</summary>
 			public List<SInputInfo> buttonList = new List<SInputInfo>(1);

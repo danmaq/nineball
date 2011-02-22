@@ -8,7 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using danmaq.nineball.data.input;
 using danmaq.nineball.state;
+using danmaq.nineball.state.input.low;
+using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.entity.input.low
 {
@@ -29,11 +32,17 @@ namespace danmaq.nineball.entity.input.low
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
 
+			/// <summary>フォース フィードバック用AI。</summary>
+			public CEntity aiForce;
+
 			/// <summary>最新の入力状態。</summary>
 			public _T nowState;
 
 			/// <summary>前回の入力状態。</summary>
 			public _T prevState;
+
+			/// <summary>割り当てられたプレイヤー番号。</summary>
+			public PlayerIndex playerIndex;
 
 			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 			//* methods ───────────────────────────────-*
@@ -42,6 +51,7 @@ namespace danmaq.nineball.entity.input.low
 			/// <summary>このオブジェクトの終了処理を行います。</summary>
 			public void Dispose()
 			{
+				aiForce.Dispose();
 				nowState = default(_T);
 				prevState = default(_T);
 			}
@@ -52,6 +62,12 @@ namespace danmaq.nineball.entity.input.low
 
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		private readonly CPrivateMembers _privateMembers;
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>フォース情報。</summary>
+		private SForceData m_force;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -71,6 +87,7 @@ namespace danmaq.nineball.entity.input.low
 			: base(firstState, new CPrivateMembers())
 		{
 			_privateMembers = (CPrivateMembers)privateMembers;
+			_privateMembers.aiForce = new CEntity(null, this);
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -97,6 +114,35 @@ namespace danmaq.nineball.entity.input.low
 			get
 			{
 				return _privateMembers.prevState;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>割り当てられたプレイヤー番号を取得します。</summary>
+		/// 
+		/// <value>割り当てられたプレイヤー番号。</value>
+		public PlayerIndex playerIndex
+		{
+			get
+			{
+				return _privateMembers.playerIndex;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>フォース情報を取得/設定します。</summary>
+		/// 
+		/// <value>フォース情報。</value>
+		public SForceData force
+		{
+			get
+			{
+				return m_force;
+			}
+			set
+			{
+				m_force = value;
+				_privateMembers.aiForce.nextState = CStateGamePadForceFeedback<_T>.instance;
 			}
 		}
 

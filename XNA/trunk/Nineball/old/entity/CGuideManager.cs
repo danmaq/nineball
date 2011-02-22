@@ -24,6 +24,7 @@ namespace danmaq.nineball.old.entity {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XBOX360ガイド 補助クラス。</summary>
+	[Obsolete]
 	public sealed class CGuideManager : CGameComponent {
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *

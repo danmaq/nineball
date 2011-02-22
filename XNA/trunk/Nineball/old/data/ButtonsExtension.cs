@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
@@ -17,6 +18,7 @@ namespace danmaq.nineball.old.data
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>入力デバイスのボタン列挙体 拡張機能。</summary>
+	[Obsolete]
 	public static class ButtonsExtension
 	{
 
