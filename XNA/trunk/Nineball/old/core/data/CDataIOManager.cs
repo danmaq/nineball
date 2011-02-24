@@ -12,6 +12,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Xml.Serialization;
 using danmaq.nineball.data;
+using danmaq.nineball.Properties;
 using danmaq.nineball.util;
 
 #if XBOX360
@@ -99,7 +100,7 @@ namespace danmaq.nineball.old.core.data
 			{
 				if(m_titleName != null && m_titleName != value)
 				{
-					throw new InvalidOperationException("アプリケーション タイトルの変更はできません。");
+					throw new InvalidOperationException(Resources.IO_ERR_MODIFY_TITLE);
 				}
 				m_titleName = value;
 			}
@@ -159,7 +160,7 @@ namespace danmaq.nineball.old.core.data
 			}
 			catch(Exception e)
 			{
-				CLogger.add("ゲーム 設定データI/Oクラスの解放時に例外が発生しました。");
+				CLogger.add(string.Format(Resources.GENERAL_ERR_RELEASE, "I/O"));
 				CLogger.add(e);
 			}
 			GC.SuppressFinalize(this);
@@ -244,7 +245,7 @@ namespace danmaq.nineball.old.core.data
 		/// </remarks>
 		public void resetData()
 		{
-			CLogger.add(typeName + "は初期化されました。");
+			CLogger.add(string.Format(Resources.GENERAL_INFO_INITIALIZED, typeName));
 			data = new _T();
 		}
 
@@ -262,7 +263,7 @@ namespace danmaq.nineball.old.core.data
 		/// </remarks>
 		public void load()
 		{
-			CLogger.add(FILE + "を" + typeName + "へ読込しています...");
+			CLogger.add(string.Format(Resources.IO_INFO_LOADING, FILE, typeName));
 #if WINDOWS
 			load(FILE);
 #else
@@ -284,7 +285,7 @@ namespace danmaq.nineball.old.core.data
 		/// <returns>保存に成功した場合、true</returns>
 		public bool save()
 		{
-			CLogger.add(typeName + "を" + FILE + "へ保存しています...");
+			CLogger.add(string.Format(Resources.IO_INFO_SAVING, FILE, typeName));
 			bool bResult = false;
 #if WINDOWS
 			save(FILE);
@@ -295,7 +296,8 @@ namespace danmaq.nineball.old.core.data
 				bResult = save(staticMembers.getPath(FILE));
 			}
 #endif
-			CLogger.add(typeName + "を" + FILE + "へ保存" + (bResult ? "完了。" : "に失敗。"));
+			CLogger.add(string.Format(Resources.IO_INFO_SAVED,
+				typeName, FILE, bResult ? Resources.SUCCEEDED : Resources.FAILED));
 			if(saved != null)
 			{
 				saved(this, bResult);
@@ -345,12 +347,12 @@ namespace danmaq.nineball.old.core.data
 					if(data != null)
 					{
 						bReaded = true;
-						CLogger.add(FILE + "を" + typeName + "へ読み込みました。");
+						CLogger.add(string.Format(Resources.IO_INFO_LOADED, FILE, typeName));
 					}
 				}
 				catch(Exception e)
 				{
-					CLogger.add("設定データに互換性がありません。解決するためにデータをリセットします。");
+					CLogger.add(Resources.IO_WARN_XML_COLLISION);
 					CLogger.add(e);
 				}
 				if(stream != null)
@@ -360,7 +362,7 @@ namespace danmaq.nineball.old.core.data
 			}
 			else
 			{
-				CLogger.add("指定した補助記憶装置に" + FILE + "が存在しません。");
+				CLogger.add(string.Format(Resources.IO_WARN_NOT_FOUND, FILE));
 			}
 			if(!bReaded)
 			{

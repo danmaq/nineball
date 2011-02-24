@@ -8,10 +8,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using danmaq.nineball.Properties;
 
 #if WINDOWS
 using System.Threading;
-using danmaq.nineball.Properties;
 #endif
 
 namespace danmaq.nineball.util
@@ -32,7 +32,6 @@ namespace danmaq.nineball.util
 	public sealed class CMutexObject : IDisposable
 	{
 
-#if WINDOWS
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
 
@@ -41,13 +40,25 @@ namespace danmaq.nineball.util
 		/// 
 		/// <exception cref="System.ApplicationException">多重起動した場合。</exception>
 		public CMutexObject()
+			: this(Resources.NAME)
 		{
-			Mutex _mutex = new Mutex(false, Resources.NAME);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		/// 
+		/// <param name="name">識別のためのユニークな名称。</param>
+		/// <exception cref="System.ApplicationException">多重起動した場合。</exception>
+		public CMutexObject(string name)
+		{
+#if WINDOWS
+			Mutex _mutex = new Mutex(false, name);
 			if (!_mutex.WaitOne(0, false))
 			{
-				throw new ApplicationException(Resources.ERR_MUTEX);
+				throw new ApplicationException(Resources.IO_ERR_MUTEX);
 			}
 			mutex = _mutex;
+#endif
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -56,7 +67,6 @@ namespace danmaq.nineball.util
 		{
 			Dispose();
 		}
-#endif
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*

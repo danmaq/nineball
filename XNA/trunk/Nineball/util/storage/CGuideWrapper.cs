@@ -158,7 +158,7 @@ namespace danmaq.nineball.util.storage
 			if (instance != null)
 			{
 				throw new InvalidOperationException(
-					string.Format(Resources.ERR_SINGLETON, typeof(CGuideWrapper).FullName));
+					string.Format(Resources.CLASS_ERR_SINGLETON, typeof(CGuideWrapper).FullName));
 			}
 			instance = this;
 			this.game = game;
@@ -170,7 +170,7 @@ namespace danmaq.nineball.util.storage
 			}
 			catch (Exception e)
 			{
-				CLogger.add(Resources.WARN_GAMER_SERVICE);
+				CLogger.add(Resources.LIVE_WARN_FAILED);
 				CLogger.add(e);
 				removeGamerServiceComponent();
 			}

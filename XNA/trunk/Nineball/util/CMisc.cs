@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System;
+using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
 
 namespace danmaq.nineball.util
@@ -129,7 +130,7 @@ namespace danmaq.nineball.util
 				catch (Exception e)
 				{
 					CLogger.add(
-						string.Format("{0}の解放に失敗しました。", obj.GetType().FullName));
+						string.Format(Resources.GENERAL_ERR_RELEASE, obj.GetType().FullName));
 					CLogger.add(e);
 				}
 				obj = null;
