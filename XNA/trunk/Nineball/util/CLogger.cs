@@ -25,9 +25,6 @@ namespace danmaq.nineball.util
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
-		/// <summary>標準出力の解説。</summary>
-		private const string DESCRIPTION_STDOUT = "標準出力";
-
 		/// <summary>デフォルトの標準出力先。</summary>
 		private static readonly TextWriter DEFAULT_OUT = Console.Out;
 
@@ -102,13 +99,12 @@ namespace danmaq.nineball.util
 						}
 						bCompleted = true;
 #else
-						throw new PlatformNotSupportedException(
-							"現行のバージョンのXBOX360版では、ログ出力先を標準出力以外に設定することができません。" );
+						throw new PlatformNotSupportedException(Resources.TRACE_ERR_CHANGE_FAILED);
 #endif
 					}
 					catch(Exception e)
 					{
-						add("出力先を切り替えることが出来ませんでした。" +
+						add(Resources.TRACE_INFO_CHANGE_FAILED +
 							Environment.NewLine + e.ToString());
 					}
 					logStart();
@@ -116,8 +112,7 @@ namespace danmaq.nineball.util
 					{
 						string strPrevOutFile = m_strOutFile;
 						m_strOutFile = value;
-						Console.WriteLine("出力先が切り替わりました。" + Environment.NewLine +
-							"以前の出力先は {0} で、現在の変更された出力先は {1} です。",
+						Console.WriteLine(Resources.TRACE_INFO_CHANGE_SUCCEEDED,
 							getDestDescription(strPrevOutFile), getDestDescription(value));
 					}
 				}
@@ -157,7 +152,7 @@ namespace danmaq.nineball.util
 		private static void logStart()
 		{
 			string strText = DateTime.Now.ToString() +
-				Environment.NewLine + Environment.NewLine + now + " > ログ出力開始";
+				Environment.NewLine + Environment.NewLine + now + " > " + Resources.TRACE_INFO_START;
 #if WINDOWS
 			Console.WriteLine(strText);
 #else
@@ -177,7 +172,7 @@ namespace danmaq.nineball.util
 		/// <param name="strDest">出力先ファイル名</param>
 		private static string getDestDescription(string strDest)
 		{
-			return strDest ?? DESCRIPTION_STDOUT;
+			return strDest ?? Resources.STDOUT;
 		}
 	}
 }

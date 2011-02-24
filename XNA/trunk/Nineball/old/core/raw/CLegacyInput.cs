@@ -69,7 +69,7 @@ namespace danmaq.nineball.old.core.raw
 				}
 				catch(Exception e)
 				{
-					CLogger.add(Resources.WARN_LEGACY_CENTER);
+					CLogger.add(Resources.INPUT_WARN_LEGACY_CENTER);
 					CLogger.add(e);
 					hWnd = IntPtr.Zero;
 				}
@@ -85,8 +85,8 @@ namespace danmaq.nineball.old.core.raw
 					}
 					catch(Exception e)
 					{
-						CLogger.add(Resources.WARN_LEGACY_EXCLUSIVE);
-						CLogger.add(Resources.WARN_LEGACY_COOP);
+						CLogger.add(Resources.INPUT_WARN_LEGACY_EXCLUSIVE);
+						CLogger.add(Resources.INPUT_WARN_LEGACY_COOP);
 						CLogger.add(e);
 						hWnd = IntPtr.Zero;
 						device.SetCooperativeLevel(null, CooperativeLevelFlags.NonExclusive | coLevel);
@@ -141,7 +141,7 @@ namespace danmaq.nineball.old.core.raw
 			}
 			catch(Exception e)
 			{
-				CLogger.add(Resources.ERR_LEGACY_INIT_FAILED);
+				CLogger.add(Resources.INPUT_ERR_LEGACY_INIT_FAILED);
 				CLogger.add(e);
 				exception = e;
 				Dispose();

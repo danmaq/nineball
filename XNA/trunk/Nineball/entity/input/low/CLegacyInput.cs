@@ -128,7 +128,7 @@ namespace danmaq.nineball.entity.input.low
 			catch (Exception e)
 			{
 				errorReport +=
-					Resources.ERR_LEGACY_INIT_FAILED + Environment.NewLine + e.ToString();
+					Resources.INPUT_ERR_LEGACY_INIT_FAILED + Environment.NewLine + e.ToString();
 			}
 			this.errorReport = errorReport;
 		}
@@ -210,18 +210,18 @@ namespace danmaq.nineball.entity.input.low
 				}
 				catch (Exception e)
 				{
-					throw new ApplicationException(Resources.WARN_LEGACY_CENTER, e);
+					throw new ApplicationException(Resources.INPUT_WARN_LEGACY_CENTER, e);
 				}
 				if (hWnd == IntPtr.Zero)
 				{
-					throw new ApplicationException(Resources.WARN_LEGACY_EXCLUSIVE);
+					throw new ApplicationException(Resources.INPUT_WARN_LEGACY_EXCLUSIVE);
 				}
 				device.SetCooperativeLevel(hWnd, CooperativeLevelFlags.Exclusive | coLevel);
 			}
 			catch (Exception e)
 			{
 				result = false;
-				errorReport += Resources.WARN_LEGACY_COOP + enter + e.ToString();
+				errorReport += Resources.INPUT_WARN_LEGACY_COOP + enter + e.ToString();
 				device.SetCooperativeLevel(null, CooperativeLevelFlags.NonExclusive | coLevel);
 			}
 			return result;

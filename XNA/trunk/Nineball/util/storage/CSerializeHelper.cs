@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using System.Xml.Serialization;
 using danmaq.nineball.data;
+using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework.GamerServices;
 
 #if WINDOWS
@@ -100,7 +101,7 @@ namespace danmaq.nineball.util.storage
 		/// </remarks>
 		public void resetData()
 		{
-			CLogger.add(string.Format("{0}は初期化されました。", typeName));
+			CLogger.add(string.Format(Resources.GENERAL_INFO_INITIALIZED, typeName));
 			data = new _T();
 		}
 
@@ -113,7 +114,7 @@ namespace danmaq.nineball.util.storage
 		/// </remarks>
 		public void load()
 		{
-			CLogger.add(string.Format("{0}を{1}へ読込しています...。", fileName, typeName));
+			CLogger.add(string.Format(Resources.IO_INFO_LOADING, fileName, typeName));
 			CIOInfo info = CIOInfo.instance;
 			if (info.deviceReady)
 			{
@@ -138,14 +139,14 @@ namespace danmaq.nineball.util.storage
 		/// <returns>保存に成功した場合、true</returns>
 		public bool save()
 		{
-			CLogger.add(string.Format("{0}を{1}へ保存しています...。", typeName, fileName));
+			CLogger.add(string.Format(Resources.IO_INFO_SAVING, typeName, fileName));
 			bool result = false;
 			if (CIOInfo.instance.deviceReady)
 			{
 				result = save(CIOInfo.instance.getPath(fileName));
 			}
-			CLogger.add(string.Format("{0}を{1}へ保存{2}。",
-				typeName, fileName, result ? "完了" : "に失敗"));
+			CLogger.add(string.Format(Resources.IO_INFO_SAVED,
+				typeName, fileName, result ? Resources.SUCCEEDED : Resources.FAILED));
 			if (saved != null)
 			{
 				saved(this, result);
@@ -184,13 +185,12 @@ namespace danmaq.nineball.util.storage
 					if (data != null)
 					{
 						readed = true;
-						CLogger.add(string.Format("{0}を{1}へ読み込みました。",
-							fileName, typeName));
+						CLogger.add(string.Format(Resources.IO_INFO_LOADED, fileName, typeName));
 					}
 				}
 				catch (Exception e)
 				{
-					CLogger.add("設定データに互換性がありません。解決するためにデータをリセットします。");
+					CLogger.add(Resources.IO_WARN_XML_COLLISION);
 					CLogger.add(e);
 				}
 				if (stream != null)
@@ -200,7 +200,7 @@ namespace danmaq.nineball.util.storage
 			}
 			else
 			{
-				CLogger.add(string.Format("指定した補助記憶装置に{0}が存在しません。", fileName));
+				CLogger.add(string.Format(Resources.IO_WARN_NOT_FOUND, fileName));
 			}
 			if (!readed)
 			{

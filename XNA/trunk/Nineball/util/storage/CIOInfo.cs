@@ -97,7 +97,7 @@ namespace danmaq.nineball.util.storage
 			{
 				if (m_titleName != null && m_titleName != value)
 				{
-					throw new InvalidOperationException(Resources.ERR_MODIFY_TITLE);
+					throw new InvalidOperationException(Resources.IO_ERR_MODIFY_TITLE);
 				}
 				m_titleName = value;
 #if WINDOWS

@@ -71,7 +71,7 @@ namespace danmaq.nineball.old.util
 		/// <param name="e">例外</param>
 		public static void show(Exception e)
 		{
-			show(Resources.ERR_EXCEPTION + Environment.NewLine + Environment.NewLine +
+			show(Resources.GENERAL_ERR_EXCEPTION + Environment.NewLine + Environment.NewLine +
 				e.ToString());
 		}
 

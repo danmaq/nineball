@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using danmaq.nineball.data;
 using danmaq.nineball.entity.graphics;
+using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -90,7 +91,7 @@ namespace danmaq.nineball.state.graphics
 			SpriteBatch spriteBatch = entity.spriteBatch;
 			if (spriteBatch == null)
 			{
-				throw new InvalidOperationException("描画に使用するSpriteBatchがありません。");
+				throw new InvalidOperationException(Resources.DRAW_ERR_SPRITEBATCH);
 			}
 			List<SSpriteDrawInfo> drawCache = privateMembers.drawCache;
 			int length = drawCache.Count;

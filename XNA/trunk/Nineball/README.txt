@@ -27,7 +27,7 @@ _____________________________________________________________________
 ■システム要件
 
 ・Microsoft .NET Framework 3.5以降
-・Microsoft XNA Framework 3.0以降
+・Microsoft XNA Framework 3.1以降
 ・Microsoft Visual Studio 2008 または Microsoft Visual C# 2008
 　(開発者のみ必要)
 ・C#言語とXNA Frameworkの基礎知識、およびモノづくりのネタ

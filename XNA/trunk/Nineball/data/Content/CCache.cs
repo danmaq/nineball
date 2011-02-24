@@ -141,7 +141,7 @@ namespace danmaq.nineball.data.content
 			{
 				if (mgrContent == null)
 				{
-					throw new InvalidOperationException(Resources.ERR_NULL_MGR_CONTENT);
+					throw new InvalidOperationException(Resources.IO_ERR_NULL_MGR_CONTENT);
 				}
 				value = mgrContent.Load<_T>(asset);
 			}
