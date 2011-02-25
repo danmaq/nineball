@@ -47,24 +47,5 @@ namespace danmaq.nineball.entity.input
 			: base(firstState)
 		{
 		}
-
-		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* properties ──────────────────────────────*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>フォース情報を取得/設定します。</summary>
-		/// 
-		/// <value>フォース情報。</value>
-		public SForceData force
-		{
-			get
-			{
-				return lowerInput.force;
-			}
-			set
-			{
-				lowerInput.force = value;
-			}
-		}
 	}
 }

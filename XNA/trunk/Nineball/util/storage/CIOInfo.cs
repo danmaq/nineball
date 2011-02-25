@@ -95,16 +95,19 @@ namespace danmaq.nineball.util.storage
 			}
 			set
 			{
-				if (m_titleName != null && m_titleName != value)
+				if (m_titleName == null)
+				{
+					m_titleName = value;
+#if WINDOWS
+					windowsXNARoot = Path.Combine(
+						Path.Combine(windowsXNARoot, value), "AllPlayers");
+					new DirectoryInfo(windowsXNARoot).Create();
+#endif
+				}
+				else if (m_titleName != value)
 				{
 					throw new InvalidOperationException(Resources.IO_ERR_MODIFY_TITLE);
 				}
-				m_titleName = value;
-#if WINDOWS
-				windowsXNARoot = Path.Combine(
-					Path.Combine(windowsXNARoot, value), "AllPlayers");
-				new DirectoryInfo(windowsXNARoot).Create();
-#endif
 			}
 		}
 

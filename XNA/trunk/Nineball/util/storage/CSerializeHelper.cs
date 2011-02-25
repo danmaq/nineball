@@ -83,7 +83,7 @@ namespace danmaq.nineball.util.storage
 			}
 			if (titleName == null && CIOInfo.instance.titleName == null)
 			{
-				throw new ArgumentNullException("strFile");
+				throw new ArgumentNullException("titleName");
 			}
 			CIOInfo.instance.titleName = titleName;
 			this.fileName = fileName;
