@@ -25,8 +25,15 @@ namespace danmaq.nineball.entity.manager
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>墓場タスク一覧。</summary>
+		protected readonly List<IEntity> grave = new List<IEntity>();
+
 		/// <summary>登録されているタスク一覧。</summary>
 		protected readonly List<IEntity> tasks;
+
+		/// <summary>ゾンビ検索用のラムダ式。</summary>
+		private readonly Predicate<IEntity> findZombie =
+			e => e.currentState == CState.empty && e.nextState == null;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -100,11 +107,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
-			for (int i = tasks.Count; --i >= 0; )
-			{
-				tasks[i].Dispose();
-			}
-			tasks.Clear();
+			Clear();
 			base.Dispose();
 		}
 
@@ -121,18 +124,23 @@ namespace danmaq.nineball.entity.manager
 		/// <returns>実際に追加されたタスク オブジェクト。</returns>
 		public IEntity Add(IState state)
 		{
-			IEntity task;
-			task = tasks.Find(item => item.currentState == CState.empty && item.nextState == null);
-			if (task == null)
+			IEntity task = null;
+			if (grave.Count > 0)
 			{
-				task = createInstance();
-				task.nextState = state;
+				task = grave[0];
+				grave.RemoveAt(0);
 				tasks.Add(task);
 			}
 			else
 			{
-				task.nextState = state;
+				task = tasks.Find(findZombie);
+				if (task == null)
+				{
+					task = createInstance();
+					tasks.Add(task);
+				}
 			}
+			task.nextState = state;
 			return task;
 		}
 
@@ -163,7 +171,12 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>管理しているタスクを全て削除します。</summary>
 		public void Clear()
 		{
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				tasks[i].Dispose();
+			}
 			tasks.Clear();
+			grave.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
