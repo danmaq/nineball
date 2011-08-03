@@ -90,7 +90,7 @@ namespace danmaq.nineball.old.entity {
 				bool bResult = false;
 				if( !Guide.IsVisible ) {
 					try {
-						Guide.BeginShowMessageBox( PlayerIndex.One, Resources.ERR_MESSAGE,
+						Guide.BeginShowMessageBox( PlayerIndex.One, Resources.NAME,
 							MESSAGE, BUTTONS, 0, MessageBoxIcon.Error, CALLBACK, null );
 						bResult = true;
 					}
