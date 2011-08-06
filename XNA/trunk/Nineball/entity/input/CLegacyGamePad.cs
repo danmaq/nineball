@@ -7,12 +7,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using danmaq.nineball.entity.input.low;
 using danmaq.nineball.state;
-using danmaq.nineball.state.input;
 
 #if WINDOWS
 using System.Collections.Generic;
+using danmaq.nineball.entity.input.low;
+using danmaq.nineball.state.input;
 using danmaq.nineball.util.collection.input;
 using Microsoft.DirectX.DirectInput;
 #endif
