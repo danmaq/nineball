@@ -104,6 +104,25 @@ namespace danmaq.nineball.entity.manager
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>ゾンビタスクを墓場に送り込みます。</summary>
+		/// 
+		/// <returns>墓場送りにした数。</returns>
+		public int cleanup()
+		{
+			int result = 0;
+			for (int i = tasks.Count; --i >= 0; )
+			{
+				if (findZombie(tasks[i]))
+				{
+					grave.Add(tasks[i]);
+					tasks.RemoveAt(i);
+					result++;
+				}
+			}
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
