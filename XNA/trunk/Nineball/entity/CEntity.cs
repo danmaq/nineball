@@ -34,6 +34,12 @@ namespace danmaq.nineball.entity
 		/// <summary>状態が遷移された時に呼び出されるイベント。</summary>
 		public event EventHandler<CEventChangedState> changedState;
 
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>状態の排他制御。</summary>
+		private readonly object syncState = new object();
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -45,6 +51,9 @@ namespace danmaq.nineball.entity
 
 		/// <summary>同じ状態同志で遷移することを認めるかどうか。</summary>
 		public bool allowSameState = false;
+
+		/// <summary>現在の状態。</summary>
+		private IState m_stateCurrent = CState.empty;
 
 		/// <summary>型名のキャッシュ。</summary>
 		private string m_strTypeName = null;
@@ -87,7 +96,6 @@ namespace danmaq.nineball.entity
 		public CEntity(IState firstState, object privateMembers)
 		{
 			previousState = CState.empty;
-			currentState = CState.empty;
 			nextState = firstState;
 			this.privateMembers = privateMembers;
 		}
@@ -111,8 +119,22 @@ namespace danmaq.nineball.entity
 		/// <value>現在の状態。初期値は<c>CState.empty</c>。</value>
 		public IState currentState
 		{
-			get;
-			private set;
+			get
+			{
+				IState result;
+				lock (syncState)
+				{
+					result = m_stateCurrent;
+				}
+				return result;
+			}
+			private set
+			{
+				lock (syncState)
+				{
+					m_stateCurrent = value;
+				}
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
