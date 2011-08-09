@@ -29,7 +29,7 @@ namespace danmaq.nineball.entity.manager
 		protected readonly List<IEntity> grave = new List<IEntity>();
 
 		/// <summary>登録されているタスク一覧。</summary>
-		protected readonly List<IEntity> tasks;
+		private readonly List<IEntity> tasks;
 
 		/// <summary>ゾンビ検索用のラムダ式。</summary>
 		private readonly Predicate<IEntity> findZombie =
@@ -96,7 +96,12 @@ namespace danmaq.nineball.entity.manager
 		{
 			get
 			{
-				return tasks[index];
+				IEntity result;
+				lock (((ICollection)tasks).SyncRoot)
+				{
+					result = tasks[index];
+				}
+				return result;
 			}
 		}
 
@@ -110,13 +115,16 @@ namespace danmaq.nineball.entity.manager
 		public int cleanup()
 		{
 			int result = 0;
-			for (int i = tasks.Count; --i >= 0; )
+			lock (((ICollection)tasks).SyncRoot)
 			{
-				if (findZombie(tasks[i]))
+				for (int i = tasks.Count; --i >= 0; )
 				{
-					grave.Add(tasks[i]);
-					tasks.RemoveAt(i);
-					result++;
+					if (findZombie(tasks[i]))
+					{
+						grave.Add(tasks[i]);
+						tasks.RemoveAt(i);
+						result++;
+					}
 				}
 			}
 			return result;
@@ -144,19 +152,22 @@ namespace danmaq.nineball.entity.manager
 		public IEntity Add(IState state)
 		{
 			IEntity task = null;
-			if (grave.Count > 0)
+			lock (((ICollection)tasks).SyncRoot)
 			{
-				task = grave[0];
-				grave.RemoveAt(0);
-				tasks.Add(task);
-			}
-			else
-			{
-				task = tasks.Find(findZombie);
-				if (task == null)
+				if (grave.Count > 0)
 				{
-					task = createInstance();
+					task = grave[0];
+					grave.RemoveAt(0);
 					tasks.Add(task);
+				}
+				else
+				{
+					task = tasks.Find(findZombie);
+					if (task == null)
+					{
+						task = createInstance();
+						tasks.Add(task);
+					}
 				}
 			}
 			task.nextState = state;
@@ -173,7 +184,10 @@ namespace danmaq.nineball.entity.manager
 		/// </exception>
 		public void AddRange(IEnumerable<IEntity> collection)
 		{
-			tasks.AddRange(collection);
+			lock (((ICollection)tasks).SyncRoot)
+			{
+				tasks.AddRange(collection);
+			}
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -190,12 +204,15 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>管理しているタスクを全て削除します。</summary>
 		public void Clear()
 		{
-			for (int i = tasks.Count; --i >= 0; )
+			lock (((ICollection)tasks).SyncRoot)
 			{
-				tasks[i].Dispose();
+				for (int i = tasks.Count; --i >= 0; )
+				{
+					tasks[i].Dispose();
+				}
+				tasks.Clear();
+				grave.Clear();
 			}
-			tasks.Clear();
-			grave.Clear();
 		}
 
 		//* -----------------------------------------------------------------------*
