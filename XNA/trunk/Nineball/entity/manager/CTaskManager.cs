@@ -126,7 +126,9 @@ namespace danmaq.nineball.entity.manager
 		private bool m_allClear = false;
 
 		/// <summary>全削除時に呼ばれるコールバック。</summary>
-		private Action<ITask> m_callBackOnClear = null;
+		private Action<ITask> m_callBackOnClear = t =>
+		{
+		};
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -275,7 +277,9 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>管理しているタスクを全て解放するための予約を入れます。</summary>
 		public void Clear()
 		{
-			Clear(null);
+			Clear(t =>
+			{
+			});
 		}
 
 		//* -----------------------------------------------------------------------*
