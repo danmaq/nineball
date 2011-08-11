@@ -24,6 +24,9 @@ namespace danmaq.nineball.data.phase
 		// TODO : phaseのスタック積みできないかなぁ
 		// TODO : リードオンリ版対応
 
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
 		/// <summary>初期化された構造体。</summary>
 		public static readonly SPhase initialized;
 
