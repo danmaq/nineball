@@ -79,6 +79,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
@@ -124,6 +125,7 @@
     <Compile Include="state\graphics\CStateSpriteManager.cs" />
     <Compile Include="state\manager\CStateAnimationLite.cs" />
     <Compile Include="state\manager\CStatePresenceManager.cs" />
+    <Compile Include="util\CArray.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
     <Compile Include="util\resolution\CResolutionBase.cs" />
     <Compile Include="util\resolution\CResolutionCollection.cs" />
