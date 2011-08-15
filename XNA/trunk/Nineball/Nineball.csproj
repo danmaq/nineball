@@ -125,6 +125,8 @@
     <Compile Include="state\graphics\CStateSpriteManager.cs" />
     <Compile Include="state\manager\CStateAnimationLite.cs" />
     <Compile Include="state\manager\CStatePresenceManager.cs" />
+    <Compile Include="state\misc\CStateCapsBase.cs" />
+    <Compile Include="state\misc\CStateCapsEnvironment.cs" />
     <Compile Include="util\CArray.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
     <Compile Include="util\CThreadPool.cs" />

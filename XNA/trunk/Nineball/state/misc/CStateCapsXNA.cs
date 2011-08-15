@@ -9,7 +9,6 @@
 
 using System;
 using System.Collections.Generic;
-using danmaq.nineball.entity;
 using danmaq.nineball.util.caps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,7 +19,8 @@ namespace danmaq.nineball.state.misc
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>XNA・ビデオ環境検証クラス。</summary>
-	public sealed class CStateCapsXNA : CState
+	public sealed class CStateCapsXNA
+		: CStateCapsBase
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -32,18 +32,6 @@ namespace danmaq.nineball.state.misc
 		/// <summary>接続されているXBOX360コントローラ一覧。</summary>
 		private readonly List<PlayerIndex> connectedXBOX360ControllersList =
 			new List<PlayerIndex>(4);
-
-		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-		//* fields ────────────────────────────────*
-
-		/// <summary>
-		/// <para>次に移行する状態。</para>
-		/// <para>
-		/// 呼び出し時にリセットされますので、この状態を
-		/// 適用する際に毎回設定し直す必要があります。
-		/// </para>
-		/// </summary>
-		public IState nextState = empty;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -77,53 +65,14 @@ namespace danmaq.nineball.state.misc
 			private set;
 		}
 
-		//* -----------------------------------------------------------------------*
-		/// <summary>XNA・ビデオ環境レポートを取得します。</summary>
-		/// 
-		/// <value>XNA・ビデオ環境レポート文字列。</value>
-		public string report
-		{
-			get;
-			private set;
-		}
-
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>状態が開始された時に呼び出されます。</para>
-		/// <para>このメソッドは、遷移元の<c>teardown</c>よりも後に呼び出されます。</para>
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を適用されたオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		public override void setup(IEntity entity, object privateMembers)
-		{
-			report = createReport();
-			base.setup(entity, privateMembers);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>1フレーム分の更新処理を実行します。</summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <param name="privateMembers">
-		/// オブジェクトと状態クラスのみがアクセス可能なフィールド。
-		/// </param>
-		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
-		public override void update(IEntity entity, object privateMembers, GameTime gameTime)
-		{
-			entity.nextState = nextState;
-			nextState = empty;
-			base.update(entity, privateMembers, gameTime);
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>XNA・ビデオ環境レポートを生成します。</summary>
-		private string createReport()
+		/// 
+		/// <returns>レポート文字列。</returns>
+		protected override string createReport()
 		{
 			string strResult = "◆◆◆ DirectX環境情報" + Environment.NewLine;
 			int length = GraphicsAdapter.Adapters.Count;
@@ -133,7 +82,8 @@ namespace danmaq.nineball.state.misc
 				bool bCurrentDevice;
 				ShaderProfile ps;
 				ShaderProfile vs;
-				strResult += adapter.createCapsReport(out bCurrentDevice, out ps, out vs) + Environment.NewLine;
+				strResult += adapter.createCapsReport(out bCurrentDevice, out ps, out vs)
+					+ Environment.NewLine;
 				if (bCurrentDevice)
 				{
 					PixelShaderProfile = ps;
@@ -142,8 +92,13 @@ namespace danmaq.nineball.state.misc
 			}
 			try
 			{
-				PlayerIndex[] all = {
-					PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
+				PlayerIndex[] all =
+				{
+					PlayerIndex.One,
+					PlayerIndex.Two,
+					PlayerIndex.Three,
+					PlayerIndex.Four
+				};
 				foreach (PlayerIndex i in all)
 				{
 					strResult += GamePad.GetCapabilities(i).createCapsReport(i);
@@ -151,7 +106,8 @@ namespace danmaq.nineball.state.misc
 			}
 			catch (Exception e)
 			{
-				strResult += "!▲! XBOX360コントローラ デバイスの性能取得に失敗。" + Environment.NewLine + e.ToString();
+				strResult += "!▲! XBOX360コントローラ デバイスの性能取得に失敗。"
+					+ Environment.NewLine + e.ToString();
 			}
 			return strResult;
 		}
