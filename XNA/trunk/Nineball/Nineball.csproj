@@ -127,6 +127,7 @@
     <Compile Include="state\manager\CStatePresenceManager.cs" />
     <Compile Include="util\CArray.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
+    <Compile Include="util\CThreadPool.cs" />
     <Compile Include="util\resolution\CResolutionBase.cs" />
     <Compile Include="util\resolution\CResolutionCollection.cs" />
     <Compile Include="util\resolution\CResolutionDummy.cs" />
