@@ -82,21 +82,27 @@ namespace danmaq.nineball.util
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アイドル状態になるまで現在のスレッドを待機し続けます。</summary>
-		public static void waitUntilIdle()
+		/// 
+		/// <returns>待機したミリ秒数。</returns>
+		public static int waitUntilIdle()
 		{
-			waitUntilIdle(1);
+			return waitUntilIdle(1);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アイドル状態になるまで現在のスレッドを待機し続けます。</summary>
 		/// 
 		/// <param name="ms">スレッドの状態を確認する間隔(ミリ秒単位)。</param>
-		public static void waitUntilIdle(int ms)
+		/// <returns>待機した単位時間数。</returns>
+		public static int waitUntilIdle(int ms)
 		{
+			int result = 0;
 			while (!idle)
 			{
 				Thread.Sleep(ms);
+				result++;
 			}
+			return result;
 		}
 	}
 }
