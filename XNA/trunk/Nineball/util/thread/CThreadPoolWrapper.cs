@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using System.Threading;
+using System;
 
 namespace danmaq.nineball.util.thread
 {
@@ -39,6 +40,10 @@ namespace danmaq.nineball.util.thread
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
+
+		/// <summary>アクティブなスレッド プール追加メソッド。</summary>
+		public static Func<WaitCallback, object, bool> activeThreadPool =
+			ThreadPool.QueueUserWorkItem;
 
 		/// <summary>アクティブなスレッドの数。</summary>
 		private static int m_activeCount = 0;
@@ -76,7 +81,7 @@ namespace danmaq.nineball.util.thread
 			{
 				m_activeCount++;
 				// TODO : ヒープ喰いを避けるためとはいえ、これだけのためにstateを潰すのは余り賢いやり方ではない。
-				ThreadPool.QueueUserWorkItem(CThreadPoolWrapper.callback, callback);
+				activeThreadPool(CThreadPoolWrapper.callback, callback);
 			}
 		}
 
