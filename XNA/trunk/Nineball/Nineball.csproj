@@ -129,6 +129,7 @@
     <Compile Include="state\misc\CStateCapsEnvironment.cs" />
     <Compile Include="util\CArray.cs" />
     <Compile Include="util\collection\input\CInputHelper.cs" />
+    <Compile Include="util\thread\CThreadPool.cs" />
     <Compile Include="util\thread\CThreadPoolWrapper.cs" />
     <Compile Include="util\resolution\CResolutionBase.cs" />
     <Compile Include="util\resolution\CResolutionCollection.cs" />
