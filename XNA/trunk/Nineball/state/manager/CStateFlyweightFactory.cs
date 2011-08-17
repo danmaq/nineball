@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System.Collections;
 using System.Collections.Generic;
 using danmaq.nineball.entity;
 using danmaq.nineball.entity.manager;
@@ -65,9 +66,12 @@ namespace danmaq.nineball.state.manager
 		public override void update(
 			CFlyweightFactory entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
-			for (int i = privateMembers.Count; --i >= 0; )
+			lock (((ICollection)privateMembers).SyncRoot)
 			{
-				privateMembers[i].update(gameTime);
+				for (int i = privateMembers.Count; --i >= 0; )
+				{
+					privateMembers[i].update(gameTime);
+				}
 			}
 		}
 
@@ -82,9 +86,12 @@ namespace danmaq.nineball.state.manager
 		public override void draw(
 			CFlyweightFactory entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
-			for (int i = privateMembers.Count; --i >= 0; )
+			lock (((ICollection)privateMembers).SyncRoot)
 			{
-				privateMembers[i].draw(gameTime);
+				for (int i = privateMembers.Count; --i >= 0; )
+				{
+					privateMembers[i].draw(gameTime);
+				}
 			}
 		}
 

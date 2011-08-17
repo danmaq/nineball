@@ -224,9 +224,12 @@ namespace danmaq.nineball.entity.manager
 		/// </exception>
 		public void ForEach(Action<IEntity> action)
 		{
-			for (int i = tasks.Count; --i >= 0; )
+			lock (((ICollection)tasks).SyncRoot)
 			{
-				action(tasks[i]);
+				for (int i = tasks.Count; --i >= 0; )
+				{
+					action(tasks[i]);
+				}
 			}
 		}
 
