@@ -83,7 +83,6 @@ namespace danmaq.nineball.util.thread
 				{
 					m_terminate = true;
 				}
-				thread.Join();
 			}
 		}
 
