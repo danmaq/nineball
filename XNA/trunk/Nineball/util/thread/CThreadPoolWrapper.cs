@@ -9,7 +9,7 @@
 
 using System.Threading;
 
-namespace danmaq.nineball.util
+namespace danmaq.nineball.util.thread
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -18,7 +18,7 @@ namespace danmaq.nineball.util
 	/// 内部にカウンタを設け、すべてのスレッドがアイドル
 	/// 状態になったかどうかを確認することができます。
 	/// </remarks>
-	public static class CThreadPool
+	public static class CThreadPoolWrapper
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -76,7 +76,7 @@ namespace danmaq.nineball.util
 			{
 				m_activeCount++;
 				// TODO : ヒープ喰いを避けるためとはいえ、これだけのためにstateを潰すのは余り賢いやり方ではない。
-				ThreadPool.QueueUserWorkItem(CThreadPool.callback, callback);
+				ThreadPool.QueueUserWorkItem(CThreadPoolWrapper.callback, callback);
 			}
 		}
 
