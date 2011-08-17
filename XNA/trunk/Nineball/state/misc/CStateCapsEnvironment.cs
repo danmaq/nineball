@@ -54,8 +54,10 @@ namespace danmaq.nineball.state.misc
 		{
 			string strResult = "◆◆◆ 基本環境情報" + Environment.NewLine;
 			strResult += "  DNL デバッグ版    : " + DEBUG.ToStringOX() + Environment.NewLine;
+#if WINDOWS
 			strResult += "  ユーザ対話モード  : " + Environment.UserInteractive.ToStringOX() + Environment.NewLine;
 			strResult += "  コマンドライン    : " + Environment.CommandLine + Environment.NewLine;
+#endif
 			strResult += "  演算プロセッサ数  : " + Environment.ProcessorCount + " 個" + Environment.NewLine;
 			int workerThreads, completionPortThreads;
 			ThreadPool.GetMaxThreads(out workerThreads, out completionPortThreads);
