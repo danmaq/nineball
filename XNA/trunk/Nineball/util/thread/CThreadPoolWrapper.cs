@@ -7,8 +7,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System.Threading;
 using System;
+using System.Threading;
 
 namespace danmaq.nineball.util.thread
 {
@@ -52,6 +52,23 @@ namespace danmaq.nineball.util.thread
 		//* properties ──────────────────────────────*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>現在の積みタスク数(実行中も含む)を取得します。</summary>
+		/// 
+		/// <value>積みタスク数。</value>
+		public static int tasks
+		{
+			get
+			{
+				int result;
+				lock (syncLock)
+				{
+					result = tasks;
+				}
+				return result;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>スレッドがアイドル状態となったかどうかを取得します。</summary>
 		/// 
 		/// <value>スレッドがアイドル状態となった場合、<c>true</c>。</value>
@@ -75,29 +92,35 @@ namespace danmaq.nineball.util.thread
 		/// <summary>実行の予約をします。</summary>
 		/// 
 		/// <param name="callback">実行されるデリゲート。</param>
-		public static void add(WaitCallback callback)
+		/// <returns>現在の残タスク数。</returns>
+		public static int add(WaitCallback callback)
 		{
+			int result;
 			lock (syncLock)
 			{
-				m_activeCount++;
+				result = ++m_activeCount;
 				// TODO : ヒープ喰いを避けるためとはいえ、これだけのためにstateを潰すのは余り賢いやり方ではない。
 				activeThreadPool(CThreadPoolWrapper.callback, callback);
 			}
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アイドル状態になるまで現在のスレッドを待機し続けます。</summary>
 		/// 
-		/// <returns>待機したミリ秒数。</returns>
+		/// <returns>スレッドを明け渡した回数。</returns>
 		public static int waitUntilIdle()
 		{
-			return waitUntilIdle(1);
+			return waitUntilIdle(0);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>アイドル状態になるまで現在のスレッドを待機し続けます。</summary>
 		/// 
-		/// <param name="ms">スレッドの状態を確認する間隔(ミリ秒単位)。</param>
+		/// <param name="ms">
+		/// スレッドの状態を確認する間隔(ミリ秒単位)。
+		/// <c>0</c>を設定した場合、スレッドを一時明け渡すのみで休止はしません。
+		/// </param>
 		/// <returns>待機した単位時間数。</returns>
 		public static int waitUntilIdle(int ms)
 		{
