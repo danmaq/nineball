@@ -67,11 +67,12 @@ namespace danmaq.nineball.util.thread
 						{
 							info.Key(info.Value);
 						}
-						Thread.Sleep(10);
+						Thread.Sleep(0);
 					}
 				};
 				thread = new Thread(method);
-				thread.Name = "danmaq.nineball.util.thread.CThreadPool";
+				thread.Name = "Nineball:CThreadPool";
+				thread.Priority = ThreadPriority.BelowNormal;
 				thread.Start();
 			}
 
@@ -123,17 +124,12 @@ namespace danmaq.nineball.util.thread
 				lock (syncLock)
 				{
 					int gap = value - threads.Count;
-					while (gap > 0)
+					for (int g = gap; --g >= 0; threads.Add(new CThreadInfo()))
+						;
+					for (int g = gap; ++g <= 0; )
 					{
-						threads.Add(new CThreadInfo());
-						gap--;	// gap-- > 0とかやるとまずいのでここで
-					}
-					while (gap < 0)
-					{
-						// TODO : Deadlockする。↑のsyncLockとterm後の最後のpopで死ぬ
 						threads[0].Dispose();
 						threads.RemoveAt(0);
-						gap++;	// gap++ < 0とかやるとまずいのでここで
 					}
 				}
 			}
@@ -144,17 +140,32 @@ namespace danmaq.nineball.util.thread
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>タスクを追加します。</summary>
+		/// <remarks>
+		/// プールが空の場合、現在のスレッドでタスクが即時実行されます。
+		/// </remarks>
 		/// 
 		/// <param name="callback">タスク。</param>
 		/// <param name="state">タスクに渡す値。</param>
-		/// <returns><c>true</c>。</returns>
+		/// <returns>
+		/// 予約に成功した場合、<c>true</c>。
+		/// プールが空で、現在のスレッドを使い即時実行した場合、<c>false</c>。
+		/// </returns>
 		public static bool pushTask(WaitCallback callback, object state)
 		{
+			bool result;
 			lock (syncLock)
 			{
-				queue.Add(new KeyValuePair<WaitCallback, object>(callback, state));
+				result = threads.Count > 0;
+				if (result)
+				{
+					queue.Add(new KeyValuePair<WaitCallback, object>(callback, state));
+				}
 			}
-			return true;
+			if (!result)
+			{
+				callback(state);
+			}
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*
