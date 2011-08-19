@@ -89,7 +89,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>現在のデータを取得します。</summary>
 		/// 
 		/// <value>現在のデータ。</value>
-		public _T nowScene
+		public virtual _T nowScene
 		{
 			get
 			{
@@ -101,7 +101,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>現在のデータを取得します。</summary>
 		/// 
 		/// <value>現在のデータ。</value>
-		public _D nowData
+		public virtual _D nowData
 		{
 			get
 			{
