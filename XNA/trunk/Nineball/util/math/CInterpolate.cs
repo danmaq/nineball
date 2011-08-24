@@ -23,19 +23,19 @@ namespace danmaq.nineball.util.math
 
 		/// <summary>等速変化する内分カウンタ。</summary>
 		public static readonly Func<float, float, float> _amountSmooth = (fTarget, fLimit) =>
-			fTarget / fLimit;
+			MathHelper.Clamp(fTarget, 0, fLimit) / fLimit;
 
 		/// <summary>加速変化する内分カウンタ。</summary>
 		public static readonly Func<float, float, float> _amountSlowdown = (fTarget, fLimit) =>
-			1 - (float)Math.Pow(1 - fTarget / fLimit, 2);
+			1 - (float)Math.Pow(1 - MathHelper.Clamp(fTarget, 0, fLimit) / fLimit, 2);
 
 		/// <summary>減速変化する内分カウンタ。</summary>
 		public static readonly Func<float, float, float> _amountAccelerate = (fTarget, fLimit) =>
-			(float)Math.Pow(fTarget / fLimit, 2);
+			(float)Math.Pow(MathHelper.Clamp(fTarget, 0, fLimit) / fLimit, 2);
 
 		/// <summary>等速変化ループする内分カウンタ。</summary>
 		public static readonly Func<float, float, float> _amountLoopSmooth = (fTarget, fLimit) =>
-			CMisc.clampLoop(fTarget, 0, fLimit) / fLimit;
+			CMisc.clampLoop(MathHelper.Clamp(fTarget, 0, fLimit), 0, fLimit) / fLimit;
 
 		/// <summary>加速変化ループする内分カウンタ。</summary>
 		public static readonly Func<float, float, float> _amountLoopSlowdown = (fTarget, fLimit) =>
@@ -47,17 +47,7 @@ namespace danmaq.nineball.util.math
 
 		/// <summary>範囲丸め込み付きの線形補完。</summary>
 		public static readonly Func<float, float, float, float> _clampLerp =
-			(fStart, fEnd, fAmount) =>
-			{
-				float fResult = MathHelper.Lerp(fStart, fEnd, fAmount);
-				if(fStart > fEnd)
-				{
-					float fTemp = fEnd;
-					fEnd = fStart;
-					fStart = fTemp;
-				}
-				return MathHelper.Clamp(fResult, fStart, fEnd);
-			};
+			(fStart, fEnd, fAmount) => MathHelper.Lerp(fStart, fEnd, MathHelper.Clamp(fAmount, 0, 1));
 
 		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSmooth =
