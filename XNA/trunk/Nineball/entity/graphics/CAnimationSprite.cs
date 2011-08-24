@@ -17,8 +17,6 @@ using Microsoft.Xna.Framework.Graphics;
 namespace danmaq.nineball.entity.graphics
 {
 
-	// TODO : アニメスプライトはまだしも、カメラパスとフォグアニメ、統合できるんじゃね？
-
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>アニメーション スプライト。</summary>
 	public class CAnimationSprite
