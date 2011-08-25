@@ -169,6 +169,20 @@ namespace danmaq.nineball.entity
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
+		/// 現在の状態が完全に空(<c>CState.empty</c>)かどうかを取得します。
+		/// </summary>
+		/// 
+		/// <value>現在の状態が空である場合、<c>true</c>。</value>
+		public bool emptyState
+		{
+			get
+			{
+				return currentState == CState.empty && nextState == null;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
 		/// </summary>
 		/// 
