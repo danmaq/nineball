@@ -37,10 +37,10 @@ namespace danmaq.nineball.entity.fonts
 		public Vector2 pos = Vector2.Zero;
 
 		/// <summary>スプライトフォント リソース。</summary>
-		public SpriteFont font = null;
+		public SpriteFont font;
 
 		/// <summary>スプライト管理クラス。</summary>
-		public CSpriteManager sprite = null;
+		public CSpriteManager sprite;
 
 		/// <summary>グラデーション情報(X座標誤差)</summary>
 		public SGradation gapX = new SGradation();
@@ -112,30 +112,23 @@ namespace danmaq.nineball.entity.fonts
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		///	<param name="font">スプライトフォント リソース。</param>
-		public CFont(SpriteFont font) : this()
+		public CFont(SpriteFont font)
+			: this()
 		{
 			this.font = font;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>コンストラクタ。</summary>
-		/// 
-		/// <param name="strText">テキスト。</param>
-		public CFont(string strText) : this()
-		{
-			text = strText;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="font">フォントリソース。</param>
-		/// <param name="strText">テキスト。</param>
-		public CFont(SpriteFont font, string strText)
-			: this()
+		/// <param name="privateMembers">
+		///	オブジェクトと状態クラスのみがアクセス可能なフィールド。
+		///	</param>
+		public CFont(SpriteFont font, object privateMembers)
+			: base(CStateDefault.instance, privateMembers)
 		{
 			this.font = font;
-			text = strText;
 		}
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
