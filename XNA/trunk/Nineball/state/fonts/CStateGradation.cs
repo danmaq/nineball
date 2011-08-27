@@ -16,7 +16,8 @@ namespace danmaq.nineball.state.fonts
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>グラデーション付きのフォント状態。</summary>
-	public sealed class CStateGradation : CState<CFont, object>
+	public sealed class CStateGradation
+		: CState<CFont, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
