@@ -152,7 +152,7 @@ namespace danmaq.nineball.state.graphics
 				}
 				if (!m_drawMode.isBegin)
 				{
-					spriteBatch.Begin(info.blendMode, SpriteSortMode.FrontToBack, SaveStateMode.None);
+					spriteBatch.Begin(info.blendMode, SpriteSortMode.Immediate, SaveStateMode.None);
 					m_drawMode.isBegin = true;
 					m_drawMode.blendMode = info.blendMode;
 					spriteBatch.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
