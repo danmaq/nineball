@@ -38,6 +38,24 @@ namespace danmaq.nineball.entity.graphics
 
 			/// <summary>合成モード。</summary>
 			public SpriteBlendMode blendMode;
+
+			/// <summary>テクスチャ・アドレッシング。</summary>
+			public TextureAddressMode addressMode;
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>描画状態を変更すべきかどうかを判定します。</summary>
+			/// 
+			/// <param name="info">描画情報。</param>
+			/// <returns>描画状態を変更すべき場合、<c>true</c>。</returns>
+			public bool changeDrawMode(SSpriteDrawInfo info)
+			{
+				return !(
+					blendMode == info.blendMode &&
+					addressMode == info.addressMode);
+			}
 		}
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -283,14 +301,36 @@ namespace danmaq.nineball.entity.graphics
 			Vector2 origin, SpriteEffects effects, float fLayer, SpriteBlendMode blend
 		)
 		{
-			SSpriteDrawInfo info = new SSpriteDrawInfo();
-			info.initialize();
+			add(tex, dstRect, srcRect, color, fRotate, origin, TextureAddressMode.Clamp,
+				effects, fLayer, blend);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>描画処理を予約します。</summary>
+		/// 
+		/// <param name="tex">テクスチャ。</param>
+		/// <param name="dstRect">描画先矩形。</param>
+		/// <param name="srcRect">描画元矩形。</param>
+		/// <param name="color">色。</param>
+		/// <param name="fRotate">回転(ラジアン)。</param>
+		/// <param name="origin">原点座標。</param>
+		/// <param name="addressMode">テクスチャ アドレッシング モード。</param>
+		/// <param name="effects">反転効果。</param>
+		/// <param name="fLayer">レイヤ番号。</param>
+		/// <param name="blend">合成モード。</param>
+		public void add(
+			Texture2D tex, Rectangle dstRect, Rectangle srcRect, Color color, float fRotate,
+			Vector2 origin, TextureAddressMode addressMode, SpriteEffects effects,
+			float fLayer, SpriteBlendMode blend)
+		{
+			SSpriteDrawInfo info = SSpriteDrawInfo.initialized;
 			info.texture = tex;
 			info.destinationRectangle = resolution.convertRectangle(dstRect);
 			info.sourceRectangle = srcRect;
 			info.color = color;
 			info.fRotation = fRotate + resolution.rotate;
 			info.origin = origin;
+			info.addressMode = addressMode;
 			info.effects = effects;
 			info.fLayerDepth = fLayer;
 			info.blendMode = blend;
@@ -316,8 +356,7 @@ namespace danmaq.nineball.entity.graphics
 			SpriteBlendMode blend
 		)
 		{
-			SSpriteDrawInfo info = new SSpriteDrawInfo();
-			info.initialize();
+			SSpriteDrawInfo info = SSpriteDrawInfo.initialized;
 			info.spriteFont = spriteFont;
 			info.text = text;
 			info.position = resolution.convertPosition(pos);

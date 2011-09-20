@@ -145,16 +145,19 @@ namespace danmaq.nineball.state.graphics
 		{
 			if (!spriteBatch.IsDisposed)
 			{
-				if (m_drawMode.isBegin && (m_drawMode.blendMode != info.blendMode))
+				if (m_drawMode.isBegin && m_drawMode.changeDrawMode(info))
 				{
 					spriteBatch.End();
 					m_drawMode.isBegin = false;
 				}
 				if (!m_drawMode.isBegin)
 				{
-					spriteBatch.Begin(info.blendMode, SpriteSortMode.Immediate, SaveStateMode.None);
+					SpriteSortMode sortmode = info.addressMode == TextureAddressMode.Clamp ?
+						SpriteSortMode.FrontToBack : SpriteSortMode.Immediate;
+					spriteBatch.Begin(info.blendMode, sortmode, SaveStateMode.None);
 					m_drawMode.isBegin = true;
 					m_drawMode.blendMode = info.blendMode;
+					m_drawMode.addressMode = info.addressMode;
 					spriteBatch.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
 					spriteBatch.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
 				}

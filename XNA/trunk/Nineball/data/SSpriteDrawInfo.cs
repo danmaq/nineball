@@ -19,6 +19,12 @@ namespace danmaq.nineball.data
 	public struct SSpriteDrawInfo : IComparable<SSpriteDrawInfo>
 	{
 
+		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+		//* constants ──────────────────────────────-*
+
+		/// <summary>初期化された構造体。</summary>
+		public static readonly SSpriteDrawInfo initialized;
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -36,6 +42,9 @@ namespace danmaq.nineball.data
 
 		/// <summary>エフェクト種類。</summary>
 		public SpriteEffects effects;
+
+		/// <summary>テクスチャ・アドレッシング。</summary>
+		public TextureAddressMode addressMode;
 
 		/// <summary>レイヤ深度。</summary>
 		public float fLayerDepth;
@@ -60,6 +69,16 @@ namespace danmaq.nineball.data
 
 		/// <summary>拡大率。</summary>
 		public Vector2 scale;
+
+		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>静的なコンストラクタ。</summary>
+		static SSpriteDrawInfo()
+		{
+			initialized.initialize();
+		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -111,6 +130,7 @@ namespace danmaq.nineball.data
 			effects = SpriteEffects.None;
 			fLayerDepth = 0f;
 			texture = null;
+			addressMode = TextureAddressMode.Clamp;
 			destinationRectangle = Rectangle.Empty;
 			sourceRectangle = Rectangle.Empty;
 			spriteFont = null;

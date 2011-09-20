@@ -241,8 +241,7 @@ namespace danmaq.nineball.old.core.raw
 			Vector2 origin, SpriteEffects effects, float fLayer, SpriteBlendMode blend
 		)
 		{
-			SSpriteDrawInfo info = new SSpriteDrawInfo();
-			info.initialize();
+			SSpriteDrawInfo info = SSpriteDrawInfo.initialized;
 			info.texture = tex;
 			info.destinationRectangle = resolution == null ?
 				dstRect : resolution.resizeFromVGA(dstRect);
@@ -276,8 +275,7 @@ namespace danmaq.nineball.old.core.raw
 			SpriteBlendMode blend
 		)
 		{
-			SSpriteDrawInfo info = new SSpriteDrawInfo();
-			info.initialize();
+			SSpriteDrawInfo info = SSpriteDrawInfo.initialized;
 			info.spriteFont = spriteFont;
 			info.text = text;
 			info.position = resolution == null ? pos : resolution.resizeFromVGA(pos);
