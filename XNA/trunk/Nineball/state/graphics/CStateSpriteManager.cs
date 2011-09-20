@@ -153,7 +153,7 @@ namespace danmaq.nineball.state.graphics
 				if (!m_drawMode.isBegin)
 				{
 					SpriteSortMode sortmode = info.addressMode == TextureAddressMode.Clamp ?
-						SpriteSortMode.FrontToBack : SpriteSortMode.Immediate;
+						SpriteSortMode.Deferred : SpriteSortMode.Immediate;
 					spriteBatch.Begin(info.blendMode, sortmode, SaveStateMode.None);
 					m_drawMode.isBegin = true;
 					m_drawMode.blendMode = info.blendMode;
