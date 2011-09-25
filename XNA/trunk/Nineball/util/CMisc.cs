@@ -10,12 +10,16 @@
 using System;
 using danmaq.nineball.Properties;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace danmaq.nineball.util
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>雑多な関数集クラス。</summary>
+	/// <remarks>
+	/// 注意：ここに置かれている関数は、近いうちに他の名前空間に移動する場合があります。
+	/// </remarks>
 	public static class CMisc
 	{
 
@@ -177,6 +181,65 @@ namespace danmaq.nineball.util
 		public static Vector3 rotate(this Vector3 source, Vector3 axis, float angle)
 		{
 			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
+		}
+
+
+		// TODO : Nineballへ移植する。
+		//* -----------------------------------------------------------------------*
+		/// <summary>テクスチャをコピーします。</summary>
+		/// <remarks>あまり最適化していないため、重いです。</remarks>
+		/// 
+		/// <typeparam name="_T">画素の型。</typeparam>
+		/// <param name="src">コピー元。</param>
+		/// <param name="dst">コピー先。</param>
+		/// <param name="srcPoint">コピー元の左上座標。</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// テクスチャが<c>null</c>である場合。
+		/// </exception>
+		/// <exception cref="System.ArgumentException">
+		/// テクスチャのピクセル フォーマットが一致しない場合。
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <paramref name="srcPoint"/>が<paramref name="src"/>の範囲外にある場合。
+		/// および、<paramref name="src"/>または<paramref name="srcPoint"/>による
+		/// 切り出し範囲がが<paramref name="dst"/>より小さい場合。
+		/// </exception>
+		public static void copyTexture<_T>(Texture2D src, Texture2D dst, Point srcPoint)
+			where _T : struct
+		{
+			if (src == null)
+			{
+				throw new ArgumentNullException("src");
+			}
+			if (dst == null)
+			{
+				throw new ArgumentNullException("dst");
+			}
+			if (src.Format != dst.Format)
+			{
+				throw new ArgumentException(Resources.TEX_ERR_FORMAT);
+			}
+			Rectangle srcMaxRect = new Rectangle(0, 0, src.Width, src.Height);
+			Rectangle dstMaxRect = new Rectangle(0, 0, dst.Width, dst.Height);
+			Rectangle srcRect =
+				new Rectangle(srcPoint.X, srcPoint.Y, dstMaxRect.Width, dstMaxRect.Height);
+			if (!srcMaxRect.Contains(srcRect))
+			{
+				throw new ArgumentOutOfRangeException("srcPoint");
+			}
+			_T[] srcData = new _T[srcMaxRect.Width * srcMaxRect.Height];
+			_T[] dstData = new _T[dstMaxRect.Width * dstMaxRect.Height];
+			src.GetData(srcData);
+			for (int y = dstMaxRect.Height; --y >= 0; )
+			{
+				int sy = y + srcPoint.Y;
+				for (int x = dstMaxRect.Width; --x >= 0; )
+				{
+					int sx = x + srcPoint.X;
+					dstData[y * dstMaxRect.Width + x] = srcData[sy * srcMaxRect.Width + sx];
+				}
+			}
+			dst.SetData(dstData);
 		}
 	}
 }
