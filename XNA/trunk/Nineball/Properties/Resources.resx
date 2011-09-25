@@ -221,6 +221,9 @@
     <value>成功</value>
     <comment>成功時</comment>
   </data>
+  <data name="TEX_ERR_FORMAT" xml:space="preserve">
+    <value>テクスチャのピクセル フォーマットが一致しません。</value>
+  </data>
   <data name="TRACE_ERR_CHANGE_FAILED" xml:space="preserve">
     <value>現行のバージョンのXBOX360版では、ログ出力先を標準出力以外に設定することができません。</value>
     <comment>出力先切り替え失敗時</comment>
