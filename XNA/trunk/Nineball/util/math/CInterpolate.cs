@@ -54,6 +54,10 @@ namespace danmaq.nineball.util.math
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>内分カウンタ機能の関数集クラス。</summary>
+	/// <remarks>
+	/// 参考Webページ。
+	/// http://www.tonpoo.com/tweener/misc/transitions.html
+	/// </remarks>
 	public static class CInterpolate
 	{
 
@@ -2665,6 +2669,30 @@ namespace danmaq.nineball.util.math
 			return MathHelper.Lerp(expr1, expr2, MathHelper.Clamp(amount, 0, 1));
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampLinear(float start, float end, float target, float limit)
+		{
+			return lerpClamp(start, end, amountLinear(target, limit));
+		}
+
 		#region quad
 
 		//* -----------------------------------------------------------------------*
@@ -3061,738 +3089,7 @@ namespace danmaq.nineball.util.math
 		}
 
 		#endregion
-/*		
 		#region sin
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInSin(float start, float end, float target, float limit)
-		{
-			float c = end - start;
-			return -c * (float)Math.Cos(target / limit * MathHelper.PiOver2) + c + start;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutSin(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountOutSin(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutSin(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountInOutSin(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInSin(float start, float end, float target, float limit)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutSin(start, start + hc, target * 2, limit) :
-				lerpInSin(start + hc, end, target * 2 - limit, limit);
-		}
-
-		#endregion
-		#region expo
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInExpo(float start, float end, float target, float limit)
-		{
-			float c = end - start;
-			return (target == 0) ? start :
-				c * (float)Math.Pow(2, 10 * (target / limit - 1)) + start - c * 0.001f;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutExpo(float start, float end, float target, float limit)
-		{
-			float c = end - start;
-			return (target == limit) ? end :
-				c * 1.001f * (1 - (float)Math.Pow(2, -10 * target / limit)) + start;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutExpo(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountInOutSin(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInExpo(float start, float end, float target, float limit)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutExpo(start, start + hc, target * 2, limit) :
-				lerpInExpo(start + hc, end, target * 2 - limit, limit);
-		}
-
-		#endregion
-		#region circ
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInCirc(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountInCirc(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutCirc(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountOutCirc(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutCirc(float start, float end, float target, float limit)
-		{
-			float hc = (end - start) * 0.5f;
-			return ((target /= limit * 0.5f) < 1) ?
-				-hc * ((float)Math.Sqrt(1 - target * target) - 1) + start :
-				hc * ((float)Math.Sqrt(1 - (target -= 2) * target) + 1) + start;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInCirc(float start, float end, float target, float limit)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutCirc(start, start + hc, target * 2, limit) :
-				lerpInCirc(start + hc, end, target * 2 - limit, limit);
-		}
-
-		#endregion
-		#region elastic
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInElastic(float start, float end, float target, float limit)
-		{
-			return lerpInElastic(start, end, target, limit, 0, limit * 0.3f);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="amp">振り切る大きさ。</param>
-		/// <param name="period">周期。</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInElastic(
-			float start, float end, float target, float limit, float amp, float period)
-		{
-			float result = start;
-			if (target != 0)
-			{
-				if ((target /= limit) == 1)
-				{
-					result = end;
-				}
-				else
-				{
-					float s = calcElastic(end - start, ref amp, ref period);
-					result = start - (amp * (float)Math.Pow(2, 10 * (target -= 1)) *
-						(float)Math.Sin((target * limit - s) * MathHelper.TwoPi / period));
-				}
-			}
-			return result;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutElastic(float start, float end, float target, float limit)
-		{
-			return lerpOutElastic(start, end, target, limit, 0, limit * 0.3f);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="amp">振り切る大きさ。</param>
-		/// <param name="period">周期。</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutElastic(
-			float start, float end, float target, float limit, float amp, float period)
-		{
-			float result = start;
-			if (target != 0)
-			{
-				if ((target /= limit) == 1)
-				{
-					result = end;
-				}
-				else
-				{
-					float c = end - start;
-					float s = calcElastic(c, ref amp, ref period);
-					result = amp * (float)Math.Pow(2, -10 * target) *
-						(float)Math.Sin((target * limit - s) *
-						MathHelper.TwoPi / period) + c + start;
-				}
-			}
-			return result;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutElastic(float start, float end, float target, float limit)
-		{
-			return lerpInOutElastic(start, end, target, limit, 0, limit * 0.3f);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="amp">振り切る大きさ。</param>
-		/// <param name="period">周期。</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutElastic(
-			float start, float end, float target, float limit, float amp, float period)
-		{
-			float result = start;
-			if (target != 0)
-			{
-				if ((target /= limit * 0.5f) == 2)
-				{
-					result = end;
-				}
-				else
-				{
-					float c = end - start;
-					float s = calcElastic(c, ref amp, ref period);
-					result = (target < 1) ?
-						start - 0.5f * (amp * (float)Math.Pow(2, 10 * (target -= 1)) *
-							(float)Math.Sin((target * limit - s) * MathHelper.TwoPi / period)) :
-						amp * (float)Math.Pow(2, -10 * (target -= 1)) *
-							(float)Math.Sin((target * limit - s) * MathHelper.TwoPi / period) *
-							0.5f + c + start;
-				}
-			}
-			return result;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInElastic(float start, float end, float target, float limit)
-		{
-			return lerpOutInElastic(start, end, target, limit, 0, limit * 0.3f);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="amp">振り切る大きさ。</param>
-		/// <param name="period">周期。</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInElastic(
-			float start, float end, float target, float limit, float amp, float period)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutElastic(start, start + hc, target * 2, limit, amp, period) :
-				lerpInElastic(start + hc, end, target * 2 - limit, limit, amp, period);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>線形補間に必要な値を計算します。</summary>
-		/// 
-		/// <param name="delta">差分値。</param>
-		/// <param name="amp">振り切る大きさ。</param>
-		/// <param name="period">周期。</param>
-		/// <returns>値。</returns>
-		private static float calcElastic(float delta, ref float amp, ref float period)
-		{
-			float result;
-			if (amp != 0 || amp < Math.Abs(delta))
-			{
-				amp = delta;
-				result = period * 0.25f;
-			}
-			else
-			{
-				result = period / MathHelper.TwoPi * (float)Math.Asin(delta / amp);
-			}
-			return result;
-		}
-
-		#endregion
-		#region back
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInBack(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountInBack(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="overshoot">
-		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
-		/// </param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInBack(
-			float start, float end, float target, float limit, float overshoot)
-		{
-			return MathHelper.Lerp(start, end, amountInBack(target, limit, overshoot));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutBack(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountOutBack(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="overshoot">
-		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
-		/// </param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutBack(
-			float start, float end, float target, float limit, float overshoot)
-		{
-			return MathHelper.Lerp(start, end, amountOutBack(target, limit, overshoot));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutBack(float start, float end, float target, float limit)
-		{
-			return lerpInOutBack(start, end, target, limit, 1.70158f);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="overshoot">
-		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
-		/// </param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutBack(
-			float start, float end, float target, float limit, float overshoot)
-		{
-			float hc = (end - start) * 0.5f;
-			return ((target /= limit * 0.5f) < 1) ?
-				hc * (target * target * (((overshoot *= 1.525f) + 1) * target - overshoot)) + start :
-				hc * ((target -= 2) * target * (((overshoot *= 1.525f) + 1) * target + overshoot) + 2) * start;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInBack(float start, float end, float target, float limit)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutBack(start, start + hc, target * 2, limit) :
-				lerpInBack(start + hc, end, target * 2 - limit, limit);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <param name="overshoot">
-		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
-		/// </param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInBack(
-			float start, float end, float target, float limit, float overshoot)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutBack(start, start + hc, target * 2, limit, overshoot) :
-				lerpInBack(start + hc, end, target * 2 - limit, limit, overshoot);
-		}
-
-		#endregion
-		#region bounce
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInBounce(float start, float end, float target, float limit)
-		{
-			float c = end - start;
-			return c - lerpOutBounce(0, c, limit - target, limit) + start;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutBounce(float start, float end, float target, float limit)
-		{
-			return MathHelper.Lerp(start, end, amountOutBounce(target, limit));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpInOutBounce(float start, float end, float target, float limit)
-		{
-			float c = end - start;
-			return (target < limit * 0.5f) ?
-				lerpInBounce(0, c, target * 2, limit) * 0.5f + start :
-				lerpOutBounce(0, c, target * 2 - limit, limit) * 0.5f + c * 0.5f + start;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>2つの値の間を線形補間します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="end">
-		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
-		/// </param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>から<paramref name="end"/>までの値
-		/// </returns>
-		public static float lerpOutInBounce(float start, float end, float target, float limit)
-		{
-			float hc = (end - start) * 0.5f;
-			return (target < limit * 0.5f) ?
-				lerpOutBounce(start, start + hc, target * 2, limit) :
-				lerpInBounce(start + hc, end, target * 2 - limit, limit);
-		}
-
-		#endregion
-*/
-		#endregion
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -3800,6 +3097,825 @@ namespace danmaq.nineball.util.math
 		/// <para>
 		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
 		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInSin(float start, float end, float target, float limit)
+		{
+			return lerpInSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutSin(float start, float end, float target, float limit)
+		{
+			return lerpOutSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutSin(float start, float end, float target, float limit)
+		{
+			return lerpInOutSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInSin(float start, float end, float target, float limit)
+		{
+			return lerpOutInSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region expo
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInExpo(float start, float end, float target, float limit)
+		{
+			return lerpInExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutExpo(float start, float end, float target, float limit)
+		{
+			return lerpOutExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutExpo(float start, float end, float target, float limit)
+		{
+			return lerpInOutExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInExpo(float start, float end, float target, float limit)
+		{
+			return lerpOutInExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region circ
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInCirc(float start, float end, float target, float limit)
+		{
+			return lerpInCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutCirc(float start, float end, float target, float limit)
+		{
+			return lerpOutCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutCirc(float start, float end, float target, float limit)
+		{
+			return lerpInOutCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInCirc(float start, float end, float target, float limit)
+		{
+			return lerpOutInCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region elastic
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInElastic(float start, float end, float target, float limit)
+		{
+			return lerpInElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpInElastic(start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutElastic(float start, float end, float target, float limit)
+		{
+			return lerpOutElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpOutElastic(start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutElastic(
+			float start, float end, float target, float limit)
+		{
+			return lerpInOutElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpInOutElastic(
+				start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInElastic(
+			float start, float end, float target, float limit)
+		{
+			return lerpOutInElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpOutInElastic(
+				start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+		}
+
+		#endregion
+		#region back
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInBack(float start, float end, float target, float limit)
+		{
+			return lerpInBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpInBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutBack(float start, float end, float target, float limit)
+		{
+			return lerpOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutBack(float start, float end, float target, float limit)
+		{
+			return lerpInOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpInOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInBack(float start, float end, float target, float limit)
+		{
+			return lerpOutInBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpOutInBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+		}
+
+		#endregion
+		#region bounce
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampInOutBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内に丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpClampOutInBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+		}
+
+		#endregion
+		#endregion
+		#region lerpLoop
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
 		/// </para>
 		/// </summary>
 		/// 
@@ -3814,5 +3930,1242 @@ namespace danmaq.nineball.util.math
 			return MathHelper.Lerp(expr1, expr2, CMisc.clampLoop(amount, 0, 1));
 		}
 
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopLinear(float start, float end, float target, float limit)
+		{
+			return lerpLoop(start, end, amountLinear(target, limit));
+		}
+
+		#region quad
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInQuad(float start, float end, float target, float limit)
+		{
+			return lerpInQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutQuad(float start, float end, float target, float limit)
+		{
+			return lerpOutQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutQuad(float start, float end, float target, float limit)
+		{
+			return lerpInOutQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInQuad(float start, float end, float target, float limit)
+		{
+			return lerpOutInQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region cubic
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInCubic(float start, float end, float target, float limit)
+		{
+			return lerpInCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutCubic(float start, float end, float target, float limit)
+		{
+			return lerpOutCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutCubic(float start, float end, float target, float limit)
+		{
+			return lerpInOutCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInCubic(float start, float end, float target, float limit)
+		{
+			return lerpOutInCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region quart
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInQuart(float start, float end, float target, float limit)
+		{
+			return lerpInQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutQuart(float start, float end, float target, float limit)
+		{
+			return lerpOutQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutQuart(float start, float end, float target, float limit)
+		{
+			return lerpInOutQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInQuart(float start, float end, float target, float limit)
+		{
+			return lerpOutInQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region quint
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInQuint(float start, float end, float target, float limit)
+		{
+			return lerpInQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutQuint(float start, float end, float target, float limit)
+		{
+			return lerpOutQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutQuint(float start, float end, float target, float limit)
+		{
+			return lerpInOutQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInQuint(float start, float end, float target, float limit)
+		{
+			return lerpOutInQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region sin
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInSin(float start, float end, float target, float limit)
+		{
+			return lerpInSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutSin(float start, float end, float target, float limit)
+		{
+			return lerpOutSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutSin(float start, float end, float target, float limit)
+		{
+			return lerpInOutSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInSin(float start, float end, float target, float limit)
+		{
+			return lerpOutInSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region expo
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInExpo(float start, float end, float target, float limit)
+		{
+			return lerpInExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutExpo(float start, float end, float target, float limit)
+		{
+			return lerpOutExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutExpo(float start, float end, float target, float limit)
+		{
+			return lerpInOutExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInExpo(float start, float end, float target, float limit)
+		{
+			return lerpOutInExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region circ
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInCirc(float start, float end, float target, float limit)
+		{
+			return lerpInCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutCirc(float start, float end, float target, float limit)
+		{
+			return lerpOutCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutCirc(float start, float end, float target, float limit)
+		{
+			return lerpInOutCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInCirc(float start, float end, float target, float limit)
+		{
+			return lerpOutInCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#region elastic
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInElastic(float start, float end, float target, float limit)
+		{
+			return lerpInElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpInElastic(start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutElastic(float start, float end, float target, float limit)
+		{
+			return lerpOutElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpOutElastic(start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutElastic(float start, float end, float target, float limit)
+		{
+			return lerpInOutElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpInOutElastic(
+				start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInElastic(float start, float end, float target, float limit)
+		{
+			return lerpOutInElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="amp">振り切る大きさ。</param>
+		/// <param name="period">周期。</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInElastic(
+			float start, float end, float target, float limit, float amp, float period)
+		{
+			return lerpOutInElastic(
+				start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+		}
+
+		#endregion
+		#region back
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInBack(float start, float end, float target, float limit)
+		{
+			return lerpInBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpInBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutBack(float start, float end, float target, float limit)
+		{
+			return lerpOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutBack(float start, float end, float target, float limit)
+		{
+			return lerpInOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpInOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInBack(float start, float end, float target, float limit)
+		{
+			return lerpOutInBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <param name="overshoot">
+		/// <c>1.0</c>を突破する量(<c>1.70158</c>で10%突破します)。
+		/// </param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInBack(
+			float start, float end, float target, float limit, float overshoot)
+		{
+			return lerpOutInBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+		}
+
+		#endregion
+		#region bounce
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopInOutBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <para>2つの値の間を線形補間します。</para>
+		/// <para>
+		/// <paramref name="amount"/>が<c>0.0</c>から<c>1.0</c>
+		/// までの範囲を超過した場合、範囲内にループして丸め込まれます。
+		/// </para>
+		/// </summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end">
+		/// <paramref name="target"/>が<paramref name="limit"/>と等しい場合の値
+		/// </param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
+		/// </returns>
+		public static float lerpLoopOutInBounce(float start, float end, float target, float limit)
+		{
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+		}
+
+		#endregion
+		#endregion
 	}
 }

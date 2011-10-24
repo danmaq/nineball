@@ -41,6 +41,15 @@ namespace danmaq.nineball.util.math
 		/// <summary>範囲ループ付きの加速線形補完。</summary>
 		loopAccelerate,
 
+		/// <summary>等速線形補完。</summary>
+		lerpLinear,
+
+		/// <summary>加速線形補完。</summary>
+		lerpInQuad,
+
+		/// <summary>減速線形補完。</summary>
+		lerpOutQuad,
+
 		/// <summary>予約(使用してはいけません)。</summary>
 		__reserved,
 	}
