@@ -547,7 +547,7 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountInOutQuad(float target, float limit)
+		public static float amountOutInQuad(float target, float limit)
 		{
 			return target < limit * 0.5f ?
 				amountOutQuad(target * 2, limit) : amountInQuad(target * 2 - limit, limit);
@@ -589,27 +589,6 @@ namespace danmaq.nineball.util.math
 		public static float amountOutCubic(float target, float limit)
 		{
 			return (target = target / limit - 1) * target * target;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
-		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
-		/// </summary>
-		/// 
-		/// <param name="target">対象の値。</param>
-		/// <param name="limit">
-		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
-		/// </param>
-		/// <returns>
-		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
-		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
-		/// </returns>
-		public static float amountInOutCubic(float target, float limit)
-		{
-			// TODO : ここから
-			return target < limit * 0.5f ?
-				amountOutCubic(target * 2, limit) : amountInCubic(target * 2 - limit, limit);
 		}
 	}
 }
