@@ -22,231 +22,231 @@ namespace danmaq.nineball.util.math
 		//* constants ──────────────────────────────-*
 
 		/// <summary>等速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountSmooth = (fTarget, fLimit) =>
-			MathHelper.Clamp(fTarget, 0, fLimit) / fLimit;
+		public static readonly Func<float, float, float> _amountSmooth = (target, limit) =>
+			MathHelper.Clamp(target, 0, limit) / limit;
 
 		/// <summary>加速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountSlowdown = (fTarget, fLimit) =>
-			1 - (float)Math.Pow(1 - MathHelper.Clamp(fTarget, 0, fLimit) / fLimit, 2);
+		public static readonly Func<float, float, float> _amountSlowdown = (target, limit) =>
+			1 - (float)Math.Pow(1 - MathHelper.Clamp(target, 0, limit) / limit, 2);
 
 		/// <summary>減速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountAccelerate = (fTarget, fLimit) =>
-			(float)Math.Pow(MathHelper.Clamp(fTarget, 0, fLimit) / fLimit, 2);
+		public static readonly Func<float, float, float> _amountAccelerate = (target, limit) =>
+			(float)Math.Pow(MathHelper.Clamp(target, 0, limit) / limit, 2);
 
 		/// <summary>等速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopSmooth = (fTarget, fLimit) =>
-			CMisc.clampLoop(MathHelper.Clamp(fTarget, 0, fLimit), 0, fLimit) / fLimit;
+		public static readonly Func<float, float, float> _amountLoopSmooth = (target, limit) =>
+			CMisc.clampLoop(MathHelper.Clamp(target, 0, limit), 0, limit) / limit;
 
 		/// <summary>加速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopSlowdown = (fTarget, fLimit) =>
-			1 - (float)Math.Pow(1 - CMisc.clampLoop(fTarget, 0, fLimit) / fLimit, 2);
+		public static readonly Func<float, float, float> _amountLoopSlowdown = (target, limit) =>
+			1 - (float)Math.Pow(1 - CMisc.clampLoop(target, 0, limit) / limit, 2);
 
 		/// <summary>減速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopAccelerate = (fTarget, fLimit) =>
-			(float)Math.Pow(CMisc.clampLoop(fTarget, 0, fLimit) / fLimit, 2);
+		public static readonly Func<float, float, float> _amountLoopAccelerate = (target, limit) =>
+			(float)Math.Pow(CMisc.clampLoop(target, 0, limit) / limit, 2);
 
 		/// <summary>範囲丸め込み付きの線形補完。</summary>
 		public static readonly Func<float, float, float, float> _clampLerp =
-			(fStart, fEnd, fAmount) => MathHelper.Lerp(fStart, fEnd, MathHelper.Clamp(fAmount, 0, 1));
+			(start, end, fAmount) => MathHelper.Lerp(start, end, MathHelper.Clamp(fAmount, 0, 1));
 
 		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSmooth =
-			(fStart, fEnd, fNow, fLimit) =>
-				_clampLerp(fStart, fEnd, _amountSmooth(fNow, fLimit));
+			(start, end, target, limit) =>
+				_clampLerp(start, end, _amountSmooth(target, limit));
 
 		/// <summary>範囲丸め込み付きの減速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSlowdown =
-			(fStart, fEnd, fNow, fLimit) =>
-				_clampLerp(fStart, fEnd, _amountSlowdown(fNow, fLimit));
+			(start, end, target, limit) =>
+				_clampLerp(start, end, _amountSlowdown(target, limit));
 
 		/// <summary>範囲丸め込み付きの加速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampAccelerate =
-			(fStart, fEnd, fNow, fLimit) =>
-				_clampLerp(fStart, fEnd, _amountAccelerate(fNow, fLimit));
+			(start, end, target, limit) =>
+				_clampLerp(start, end, _amountAccelerate(target, limit));
 
 		/// <summary>範囲丸め込み付きの加速→減速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampSlowFastSlow =
-			(fStart, fEnd, fNow, fLimit) =>
+			(start, end, target, limit) =>
 			{
-				if(fNow <= 0.0f)
+				if(target <= 0.0f)
 				{
-					return fStart;
+					return start;
 				}
-				if(fNow >= fLimit)
+				if(target >= limit)
 				{
-					return fEnd;
+					return end;
 				}
-				float fCenter = MathHelper.Lerp(fStart, fEnd, 0.5f);
-				float fHalfLimit = fLimit * 0.5f;
-				return fNow < fHalfLimit ?
-					MathHelper.Lerp(fStart, fCenter, _amountAccelerate(fNow, fHalfLimit)) :
-					MathHelper.Lerp(fCenter, fEnd, _amountSlowdown(fNow - fHalfLimit, fHalfLimit));
+				float fCenter = MathHelper.Lerp(start, end, 0.5f);
+				float fHallimit = limit * 0.5f;
+				return target < fHallimit ?
+					MathHelper.Lerp(start, fCenter, _amountAccelerate(target, fHallimit)) :
+					MathHelper.Lerp(fCenter, end, _amountSlowdown(target - fHallimit, fHallimit));
 			};
 
 		/// <summary>範囲丸め込み付きの減速→加速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _clampFastSlowFast =
-			(fStart, fEnd, fNow, fLimit) =>
+			(start, end, target, limit) =>
 			{
-				if(fNow <= 0.0f)
+				if(target <= 0.0f)
 				{
-					return fStart;
+					return start;
 				}
-				if(fNow >= fLimit)
+				if(target >= limit)
 				{
-					return fEnd;
+					return end;
 				}
-				float fCenter = MathHelper.Lerp(fStart, fEnd, 0.5f);
-				float fHalfLimit = fLimit * 0.5f;
-				return fNow < fHalfLimit ?
-					MathHelper.Lerp(fStart, fCenter, _amountSlowdown(fNow, fHalfLimit)) :
-					MathHelper.Lerp(fCenter, fEnd, _amountAccelerate(fNow - fHalfLimit, fHalfLimit));
+				float fCenter = MathHelper.Lerp(start, end, 0.5f);
+				float fHallimit = limit * 0.5f;
+				return target < fHallimit ?
+					MathHelper.Lerp(start, fCenter, _amountSlowdown(target, fHallimit)) :
+					MathHelper.Lerp(fCenter, end, _amountAccelerate(target - fHallimit, fHallimit));
 			};
 
 		/// <summary>範囲ループ付きの等速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _loopSmooth =
-			(fStart, fEnd, fNow, fLimit) =>
-				MathHelper.Lerp(fStart, fEnd, _amountLoopSmooth(fNow, fLimit));
+			(start, end, target, limit) =>
+				MathHelper.Lerp(start, end, _amountLoopSmooth(target, limit));
 
 		/// <summary>範囲ループ付きの減速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _loopSlowdown =
-			(fStart, fEnd, fNow, fLimit) =>
-				MathHelper.Lerp(fStart, fEnd, _amountLoopSlowdown(fNow, fLimit));
+			(start, end, target, limit) =>
+				MathHelper.Lerp(start, end, _amountLoopSlowdown(target, limit));
 
 		/// <summary>範囲ループ付きの加速線形補完。</summary>
 		public static readonly Func<float, float, float, float, float> _loopAccelerate =
-			(fStart, fEnd, fNow, fLimit) =>
-				MathHelper.Lerp(fStart, fEnd, _amountLoopAccelerate(fNow, fLimit));
+			(start, end, target, limit) =>
+				MathHelper.Lerp(start, end, _amountLoopAccelerate(target, limit));
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ等分で置換します。
 		/// </summary>
 		/// 
-		/// <param name="fTarget">対象の値。</param>
-		/// <param name="fLimit">
-		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
 		/// </param>
 		/// <returns>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountSmooth(float fTarget, float fLimit)
+		public static float amountSmooth(float target, float limit)
 		{
-			return _amountSmooth(fTarget, fLimit);
+			return _amountSmooth(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>1.0</c>にやや重みを置いて置換します。
 		/// </summary>
 		/// 
-		/// <param name="fTarget">対象の値。</param>
-		/// <param name="fLimit">
-		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
 		/// </param>
 		/// <returns>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountSlowdown(float fTarget, float fLimit)
+		public static float amountSlowdown(float target, float limit)
 		{
-			return _amountSlowdown(fTarget, fLimit);
+			return _amountSlowdown(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>0.0</c>にやや重みを置いて置換します。
 		/// </summary>
 		/// 
-		/// <param name="fTarget">対象の値。</param>
-		/// <param name="fLimit">
-		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
 		/// </param>
 		/// <returns>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountAccelerate(float fTarget, float fLimit)
+		public static float amountAccelerate(float target, float limit)
 		{
-			return _amountAccelerate(fTarget, fLimit);
+			return _amountAccelerate(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// <para>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ等分で置換します。
 		/// </para>
 		/// <para>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの範囲を超過した場合、ループします。
+		/// <c>0.0</c>から<paramref name="limit"/>までの範囲を超過した場合、ループします。
 		/// </para>
 		/// </summary>
 		/// 
-		/// <param name="fTarget">対象の値。</param>
-		/// <param name="fLimit">
-		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
 		/// </param>
 		/// <returns>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountLoopSmooth(float fTarget, float fLimit)
+		public static float amountLoopSmooth(float target, float limit)
 		{
-			return _amountLoopSmooth(fTarget, fLimit);
+			return _amountLoopSmooth(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// <para>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>1.0</c>にやや重みを置いて置換します。
 		/// </para>
 		/// <para>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの範囲を超過した場合、ループします。
+		/// <c>0.0</c>から<paramref name="limit"/>までの範囲を超過した場合、ループします。
 		/// </para>
 		/// </summary>
 		/// 
-		/// <param name="fTarget">対象の値。</param>
-		/// <param name="fLimit">
-		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
 		/// </param>
 		/// <returns>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountLoopSlowdown(float fTarget, float fLimit)
+		public static float amountLoopSlowdown(float target, float limit)
 		{
-			return _amountLoopSlowdown(fTarget, fLimit);
+			return _amountLoopSlowdown(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// <para>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ<c>0.0</c>にやや重みを置いて置換します。
 		/// </para>
 		/// <para>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの範囲を超過した場合、ループします。
+		/// <c>0.0</c>から<paramref name="limit"/>までの範囲を超過した場合、ループします。
 		/// </para>
 		/// </summary>
 		/// 
-		/// <param name="fTarget">対象の値。</param>
-		/// <param name="fLimit">
-		/// <paramref name="fTarget"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
 		/// </param>
 		/// <returns>
-		/// <c>0.0</c>から<paramref name="fLimit"/>までの<paramref name="fTarget"/>に
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
-		public static float amountLoopAccelerate(float fTarget, float fLimit)
+		public static float amountLoopAccelerate(float target, float limit)
 		{
-			return _amountLoopAccelerate(fTarget, fLimit);
+			return _amountLoopAccelerate(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -258,63 +258,63 @@ namespace danmaq.nineball.util.math
 		/// </para>
 		/// </summary>
 		/// 
-		/// <param name="fValue1">ソース値。</param>
-		/// <param name="fValue2">ソース値。</param>
+		/// <param name="expr1">ソース値。</param>
+		/// <param name="expr2">ソース値。</param>
 		/// <param name="fAmount">
-		/// <paramref name="fValue2"/>の重みを示す<c>0.0</c>から<c>1.0</c>までの値。
+		/// <paramref name="expr2"/>の重みを示す<c>0.0</c>から<c>1.0</c>までの値。
 		/// </param>
 		/// <returns>補完された値。</returns>
-		public static float clampLerp(float fValue1, float fValue2, float fAmount)
+		public static float clampLerp(float expr1, float expr2, float fAmount)
 		{
-			return _clampLerp(fValue1, fValue2, fAmount);
+			return _clampLerp(expr1, expr2, fAmount);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>等速変化する内分カウンタです。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
-		public static float clampSmooth(float fStart, float fEnd, float fNow, float fLimit)
+		public static float clampSmooth(float start, float end, float target, float limit)
 		{
-			return _clampSmooth(fStart, fEnd, fNow, fLimit);
+			return _clampSmooth(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>減速変化する内分カウンタです。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
-		public static float clampSlowdown(float fStart, float fEnd, float fNow, float fLimit)
+		public static float clampSlowdown(float start, float end, float target, float limit)
 		{
-			return _clampSlowdown(fStart, fEnd, fNow, fLimit);
+			return _clampSlowdown(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>加速変化する内分カウンタです。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
-		public static float clampAccelerate(float fStart, float fEnd, float fNow, float fLimit)
+		public static float clampAccelerate(float start, float end, float target, float limit)
 		{
-			return _clampAccelerate(fStart, fEnd, fNow, fLimit);
+			return _clampAccelerate(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -326,19 +326,19 @@ namespace danmaq.nineball.util.math
 		/// <para>低速→高速→低速と変化します。</para>
 		/// </summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
 		public static float clampSlowFastSlow(
-			float fStart, float fEnd, float fNow, float fLimit
+			float start, float end, float target, float limit
 		)
 		{
-			return _clampSlowFastSlow(fStart, fEnd, fNow, fLimit);
+			return _clampSlowFastSlow(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -350,129 +350,266 @@ namespace danmaq.nineball.util.math
 		/// <para>高速→低速→高速と変化します。</para>
 		/// </summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
 		public static float clampFastSlowFast(
-			float fStart, float fEnd, float fNow, float fLimit
+			float start, float end, float target, float limit
 		)
 		{
-			return _clampFastSlowFast(fStart, fEnd, fNow, fLimit);
+			return _clampFastSlowFast(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>等速変化でループする内分カウンタです。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
-		public static float loopSmooth(float fStart, float fEnd, float fNow, float fLimit)
+		public static float loopSmooth(float start, float end, float target, float limit)
 		{
-			return _loopSmooth(fStart, fEnd, fNow, fLimit);
+			return _loopSmooth(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>減速変化でループする内分カウンタです。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
-		public static float loopSlowdown(float fStart, float fEnd, float fNow, float fLimit)
+		public static float loopSlowdown(float start, float end, float target, float limit)
 		{
-			return _loopSlowdown(fStart, fEnd, fNow, fLimit);
+			return _loopSlowdown(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>加速変化でループする内分カウンタです。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>から<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
-		public static float loopAccelerate(float fStart, float fEnd, float fNow, float fLimit)
+		public static float loopAccelerate(float start, float end, float target, float limit)
 		{
-			return _loopAccelerate(fStart, fEnd, fNow, fLimit);
+			return _loopAccelerate(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ネヴィル曲線を計算します。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
 		/// <param name="fMiddle">制御点</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>～(<paramref name="fMiddle"/>)～<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>～(<paramref name="fMiddle"/>)～<paramref name="end"/>までの値
 		/// </returns>
 		public static float neville(
-			float fStart, float fMiddle, float fEnd, float fNow, float fLimit
+			float start, float fMiddle, float end, float target, float limit
 		)
 		{
-			if(fNow >= fLimit || fStart == fEnd || fLimit <= 0)
+			if(target >= limit || start == end || limit <= 0)
 			{
-				return fEnd;
+				return end;
 			}
-			if(fNow <= 0)
+			if(target <= 0)
 			{
-				return fStart;
+				return start;
 			}
-			float fTimePoint = fNow / fLimit * 2;
-			fMiddle = fEnd + (fEnd - fMiddle) * (fTimePoint - 2);
-			return fMiddle + (fMiddle - (fMiddle + (fMiddle - fStart) * (fTimePoint - 1))) *
+			float fTimePoint = target / limit * 2;
+			fMiddle = end + (end - fMiddle) * (fTimePoint - 2);
+			return fMiddle + (fMiddle - (fMiddle + (fMiddle - start) * (fTimePoint - 1))) *
 				(fTimePoint - 2) * 0.5f;
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>ベジェ曲線を計算します。</summary>
 		/// 
-		/// <param name="fStart"><paramref name="fNow"/>が0と等しい場合の値</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
 		/// <param name="fMiddle">制御点</param>
-		/// <param name="fEnd"><paramref name="fNow"/>が<paramref name="fLimit"/>と等しい場合の値</param>
-		/// <param name="fNow">現在時間</param>
-		/// <param name="fLimit"><paramref name="fEnd"/>に到達する時間</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="fLimit"/>までの<paramref name="fNow"/>に相当する
-		/// <paramref name="fStart"/>～(<paramref name="fMiddle"/>)～<paramref name="fEnd"/>までの値
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>～(<paramref name="fMiddle"/>)～<paramref name="end"/>までの値
 		/// </returns>
 		public static float bezier(
-			float fStart, float fMiddle, float fEnd, float fNow, float fLimit
+			float start, float fMiddle, float end, float target, float limit
 		)
 		{
-			if(fNow >= fLimit || fStart == fEnd || fLimit <= 0)
+			if(target >= limit || start == end || limit <= 0)
 			{
-				return fEnd;
+				return end;
 			}
-			if(fNow <= 0)
+			if(target <= 0)
 			{
-				return fStart;
+				return start;
 			}
-			float fTimePoint = fNow / fLimit * 2;
+			float fTimePoint = target / limit * 2;
 			float fResidual = 1 - fTimePoint;
 			return
-				(float)Math.Pow(fResidual, 2) * fStart +
-				(float)Math.Pow(fTimePoint, 2) * fEnd +
+				(float)Math.Pow(fResidual, 2) * start +
+				(float)Math.Pow(fTimePoint, 2) * end +
 				(2 * fResidual * fTimePoint * fMiddle);
+		}
+
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountLinear(float target, float limit)
+		{
+			return target / limit;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountInQuad(float target, float limit)
+		{
+			return (target /= limit) * target;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountOutQuad(float target, float limit)
+		{
+			return -(target /= limit) * (target - 2);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountInOutQuad(float target, float limit)
+		{
+			return target < limit * 0.5f ?
+				amountOutQuad(target * 2, limit) : amountInQuad(target * 2 - limit, limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountInCubic(float target, float limit)
+		{
+			return (target /= limit) * target * target;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountOutCubic(float target, float limit)
+		{
+			return (target = target / limit - 1) * target * target;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する値を<c>0.0</c>から<c>1.0</c>までの値へ置換します。
+		/// </summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>
+		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
+		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
+		/// </returns>
+		public static float amountInOutCubic(float target, float limit)
+		{
+			// TODO : ここから
+			return target < limit * 0.5f ?
+				amountOutCubic(target * 2, limit) : amountInCubic(target * 2 - limit, limit);
 		}
 	}
 }
