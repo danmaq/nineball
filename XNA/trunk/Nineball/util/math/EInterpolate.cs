@@ -547,21 +547,39 @@ namespace danmaq.nineball.util.math
 		/// <summary>線形補完を計算します。</summary>
 		/// 
 		/// <param name="interpolate">線形補完列挙体。</param>
-		/// <param name="start"><paramref name="now"/>が0と等しい場合の値</param>
-		/// <param name="end"><paramref name="now"/>が<paramref name="limit"/>と等しい場合の値</param>
-		/// <param name="now">現在時間</param>
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
 		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
 		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="now"/>に相当する
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
 		/// <exception cref="System.IndexOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
 		public static float interpolate(
-			this EInterpolate interpolate, float start, float end, float now, float limit)
+			this EInterpolate interpolate, float start, float end, float target, float limit)
 		{
-			return interpolate.getFunction()(start, end, now, limit);
+			return interpolate.getFunction()(start, end, target, limit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>線形補完の比較ログを生成します。</summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>各種線形補完の比較用文字列。</returns>
+		public static string interpolate(float start, float end, float target, float limit)
+		{
+			string result = string.Format("[{0}/{1}]", target, limit);
+			for (int i = (int)EInterpolate.__reserved; --i >= 0; )
+			{
+				result += string.Format("{0} ", interpolateList[i](start, end, target, limit));
+			}
+			return result;
 		}
 	}
 }
