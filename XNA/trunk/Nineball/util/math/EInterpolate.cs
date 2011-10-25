@@ -339,7 +339,7 @@ namespace danmaq.nineball.util.math
 		loopOutInQuint,
 
 		/// <summary>加速線形補完。</summary>
-		loopIinSin,
+		loopInSin,
 
 		/// <summary>減速線形補完。</summary>
 		loopOutSin,
@@ -524,6 +524,47 @@ namespace danmaq.nineball.util.math
 			interpolateList[(int)EInterpolate.clampOutBounce] = CInterpolate.lerpClampOutBounce;
 			interpolateList[(int)EInterpolate.clampInOutBounce] = CInterpolate.lerpClampInOutBounce;
 			interpolateList[(int)EInterpolate.clampOutInBounce] = CInterpolate.lerpClampOutInBounce;
+			interpolateList[(int)EInterpolate.loopLinear] = CInterpolate.lerpLoopLinear;
+			interpolateList[(int)EInterpolate.loopInQuad] = CInterpolate.lerpLoopInQuad;
+			interpolateList[(int)EInterpolate.loopOutQuad] = CInterpolate.lerpLoopOutQuad;
+			interpolateList[(int)EInterpolate.loopInOutQuad] = CInterpolate.lerpLoopInOutQuad;
+			interpolateList[(int)EInterpolate.loopOutInQuad] = CInterpolate.lerpLoopOutInQuad;
+			interpolateList[(int)EInterpolate.loopInCubic] = CInterpolate.lerpLoopInCubic;
+			interpolateList[(int)EInterpolate.loopOutCubic] = CInterpolate.lerpLoopOutCubic;
+			interpolateList[(int)EInterpolate.loopInOutCubic] = CInterpolate.lerpLoopInOutCubic;
+			interpolateList[(int)EInterpolate.loopOutInCubic] = CInterpolate.lerpLoopOutInCubic;
+			interpolateList[(int)EInterpolate.loopInQuart] = CInterpolate.lerpLoopInQuart;
+			interpolateList[(int)EInterpolate.loopOutQuart] = CInterpolate.lerpLoopOutQuart;
+			interpolateList[(int)EInterpolate.loopInOutQuart] = CInterpolate.lerpLoopInOutQuart;
+			interpolateList[(int)EInterpolate.loopOutInQuart] = CInterpolate.lerpLoopOutInQuart;
+			interpolateList[(int)EInterpolate.loopInQuint] = CInterpolate.lerpLoopInQuint;
+			interpolateList[(int)EInterpolate.loopOutQuint] = CInterpolate.lerpLoopOutQuint;
+			interpolateList[(int)EInterpolate.loopInOutQuint] = CInterpolate.lerpLoopInOutQuint;
+			interpolateList[(int)EInterpolate.loopOutInQuint] = CInterpolate.lerpLoopOutInQuint;
+			interpolateList[(int)EInterpolate.loopInSin] = CInterpolate.lerpLoopInSin;
+			interpolateList[(int)EInterpolate.loopOutSin] = CInterpolate.lerpLoopOutSin;
+			interpolateList[(int)EInterpolate.loopInOutSin] = CInterpolate.lerpLoopInOutSin;
+			interpolateList[(int)EInterpolate.loopOutInSin] = CInterpolate.lerpLoopOutInSin;
+			interpolateList[(int)EInterpolate.loopInExpo] = CInterpolate.lerpLoopInExpo;
+			interpolateList[(int)EInterpolate.loopOutExpo] = CInterpolate.lerpLoopOutExpo;
+			interpolateList[(int)EInterpolate.loopInOutExpo] = CInterpolate.lerpLoopInOutExpo;
+			interpolateList[(int)EInterpolate.loopOutInExpo] = CInterpolate.lerpLoopOutInExpo;
+			interpolateList[(int)EInterpolate.loopInCirc] = CInterpolate.lerpLoopInCirc;
+			interpolateList[(int)EInterpolate.loopOutCirc] = CInterpolate.lerpLoopOutCirc;
+			interpolateList[(int)EInterpolate.loopInOutCirc] = CInterpolate.lerpLoopInOutCirc;
+			interpolateList[(int)EInterpolate.loopOutInCirc] = CInterpolate.lerpLoopOutInCirc;
+			interpolateList[(int)EInterpolate.loopInElastic] = CInterpolate.lerpLoopInElastic;
+			interpolateList[(int)EInterpolate.loopOutElastic] = CInterpolate.lerpLoopOutElastic;
+			interpolateList[(int)EInterpolate.loopInOutElastic] = CInterpolate.lerpLoopInOutElastic;
+			interpolateList[(int)EInterpolate.loopOutInElastic] = CInterpolate.lerpLoopOutInElastic;
+			interpolateList[(int)EInterpolate.loopInBack] = CInterpolate.lerpLoopInBack;
+			interpolateList[(int)EInterpolate.loopOutBack] = CInterpolate.lerpLoopOutBack;
+			interpolateList[(int)EInterpolate.loopInOutBack] = CInterpolate.lerpLoopInOutBack;
+			interpolateList[(int)EInterpolate.loopOutInBack] = CInterpolate.lerpLoopOutInBack;
+			interpolateList[(int)EInterpolate.loopInBounce] = CInterpolate.lerpLoopInBounce;
+			interpolateList[(int)EInterpolate.loopOutBounce] = CInterpolate.lerpLoopOutBounce;
+			interpolateList[(int)EInterpolate.loopInOutBounce] = CInterpolate.lerpLoopInOutBounce;
+			interpolateList[(int)EInterpolate.loopOutInBounce] = CInterpolate.lerpLoopOutInBounce;
 		}
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -577,7 +618,7 @@ namespace danmaq.nineball.util.math
 			string result = string.Format("[{0}/{1}]", target, limit);
 			for (int i = (int)EInterpolate.__reserved; --i >= 0; )
 			{
-				result += string.Format("{0} ", interpolateList[i](start, end, target, limit));
+				result += string.Format("{0}\t", interpolateList[i](start, end, target, limit));
 			}
 			return result;
 		}
