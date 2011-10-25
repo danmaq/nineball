@@ -118,11 +118,13 @@ namespace danmaq.nineball.data.animation
 		public SData getNow(int now)
 		{
 			SData data = new SData();
-			float amount = interpolate.interpolate(0, 1, now, interval);
+			float amount = 0.5f * 
+				(interpolate.interpolate(0, 1, now, interval) +
+				CInterpolate.amountLinear(now, interval));
 			data.up = Vector3.Lerp(start.up, end.up, amount);
 			data.from = Vector3.Lerp(start.from, end.from, amount);
 			data.to = Vector3.Lerp(start.to, end.to, amount);
-			data.fov = interpolate.interpolate(start.fov, end.fov, now, interval);
+			data.fov = MathHelper.Lerp(start.fov, end.fov, amount);
 			return data;
 		}
 	}
