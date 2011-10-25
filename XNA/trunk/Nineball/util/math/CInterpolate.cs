@@ -64,106 +64,74 @@ namespace danmaq.nineball.util.math
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+#pragma warning disable 618
+
 		/// <summary>等速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountSmooth = (target, limit) =>
-			MathHelper.Clamp(target, 0, limit) / limit;
+		[Obsolete("この機能は今後サポートされません。amountLinearClampを使用してください。")]
+		public static readonly Func<float, float, float> _amountSmooth = amountSmooth;
 
 		/// <summary>加速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountSlowdown = (target, limit) =>
-			1 - (float)Math.Pow(1 - MathHelper.Clamp(target, 0, limit) / limit, 2);
+		[Obsolete("この機能は今後サポートされません。amountOutQuadClampを使用してください。")]
+		public static readonly Func<float, float, float> _amountSlowdown = amountSlowdown;
 
 		/// <summary>減速変化する内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountAccelerate = (target, limit) =>
-			(float)Math.Pow(MathHelper.Clamp(target, 0, limit) / limit, 2);
+		[Obsolete("この機能は今後サポートされません。amountInQuadClampを使用してください。")]
+		public static readonly Func<float, float, float> _amountAccelerate = amountAccelerate;
 
 		/// <summary>等速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopSmooth = (target, limit) =>
-			CMisc.clampLoop(target, 0, limit) / limit;
+		[Obsolete("この機能は今後サポートされません。amountLinearLoopを使用してください。")]
+		public static readonly Func<float, float, float> _amountLoopSmooth = amountLoopSmooth;
 
 		/// <summary>加速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopSlowdown = (target, limit) =>
-			1 - (float)Math.Pow(1 - CMisc.clampLoop(target, 0, limit) / limit, 2);
+		[Obsolete("この機能は今後サポートされません。amountOutQuadLoopを使用してください。")]
+		public static readonly Func<float, float, float> _amountLoopSlowdown = amountLoopSlowdown;
 
 		/// <summary>減速変化ループする内分カウンタ。</summary>
-		public static readonly Func<float, float, float> _amountLoopAccelerate = (target, limit) =>
-			(float)Math.Pow(CMisc.clampLoop(target, 0, limit) / limit, 2);
+		[Obsolete("この機能は今後サポートされません。amountInQuadLoopを使用してください。")]
+		public static readonly Func<float, float, float> _amountLoopAccelerate = amountLoopAccelerate;
 
 		/// <summary>範囲丸め込み付きの線形補完。</summary>
-		public static readonly Func<float, float, float, float> _clampLerp =
-			(start, end, amount) => MathHelper.Lerp(start, end, MathHelper.Clamp(amount, 0, 1));
+		[Obsolete("この機能は今後サポートされません。lerpClampを使用してください。")]
+		public static readonly Func<float, float, float, float> _clampLerp = lerpClamp;
 
 		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _clampSmooth =
-			(start, end, target, limit) =>
-				_clampLerp(start, end, _amountSmooth(target, limit));
+		[Obsolete("この機能は今後サポートされません。lerpClampLinearを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _clampSmooth = clampSmooth;
 
 		/// <summary>範囲丸め込み付きの減速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _clampSlowdown =
-			(start, end, target, limit) =>
-				_clampLerp(start, end, _amountSlowdown(target, limit));
+		[Obsolete("この機能は今後サポートされません。lerpClampOutQuadを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _clampSlowdown = clampSlowdown;
 
 		/// <summary>範囲丸め込み付きの加速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _clampAccelerate =
-			(start, end, target, limit) =>
-				_clampLerp(start, end, _amountAccelerate(target, limit));
+		[Obsolete("この機能は今後サポートされません。lerpClampInQuadを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _clampAccelerate = clampAccelerate;
 
 		/// <summary>範囲丸め込み付きの加速→減速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _clampSlowFastSlow =
-			(start, end, target, limit) =>
-			{
-				if(target <= 0.0f)
-				{
-					return start;
-				}
-				if(target >= limit)
-				{
-					return end;
-				}
-				float fCenter = MathHelper.Lerp(start, end, 0.5f);
-				float fHallimit = limit * 0.5f;
-				return target < fHallimit ?
-					MathHelper.Lerp(start, fCenter, _amountAccelerate(target, fHallimit)) :
-					MathHelper.Lerp(fCenter, end, _amountSlowdown(target - fHallimit, fHallimit));
-			};
+		[Obsolete("この機能は今後サポートされません。lerpClampInOutQuadを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _clampSlowFastSlow = clampSlowFastSlow;
 
 		/// <summary>範囲丸め込み付きの減速→加速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _clampFastSlowFast =
-			(start, end, target, limit) =>
-			{
-				if(target <= 0.0f)
-				{
-					return start;
-				}
-				if(target >= limit)
-				{
-					return end;
-				}
-				float fCenter = MathHelper.Lerp(start, end, 0.5f);
-				float fHallimit = limit * 0.5f;
-				return target < fHallimit ?
-					MathHelper.Lerp(start, fCenter, _amountSlowdown(target, fHallimit)) :
-					MathHelper.Lerp(fCenter, end, _amountAccelerate(target - fHallimit, fHallimit));
-			};
+		[Obsolete("この機能は今後サポートされません。lerpClampOutInQuadを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _clampFastSlowFast = clampFastSlowFast;
 
 		/// <summary>範囲ループ付きの等速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _loopSmooth =
-			(start, end, target, limit) =>
-				MathHelper.Lerp(start, end, _amountLoopSmooth(target, limit));
+		[Obsolete("この機能は今後サポートされません。lerpLoopLinearを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _loopSmooth = loopSmooth;
 
 		/// <summary>範囲ループ付きの減速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _loopSlowdown =
-			(start, end, target, limit) =>
-				MathHelper.Lerp(start, end, _amountLoopSlowdown(target, limit));
+		[Obsolete("この機能は今後サポートされません。lerpLoopOutQuadを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _loopSlowdown = loopSlowdown;
 
 		/// <summary>範囲ループ付きの加速線形補完。</summary>
-		public static readonly Func<float, float, float, float, float> _loopAccelerate =
-			(start, end, target, limit) =>
-				MathHelper.Lerp(start, end, _amountLoopAccelerate(target, limit));
+		[Obsolete("この機能は今後サポートされません。lerpLoopInQuadを使用してください。")]
+		public static readonly Func<float, float, float, float, float> _loopAccelerate = loopAccelerate;
+
+#pragma warning restore 618
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
 
-		#region Obsolete
+		#region obsolete
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -179,9 +147,10 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。amountLinearClampを使用してください。")]
 		public static float amountSmooth(float target, float limit)
 		{
-			return _amountSmooth(target, limit);
+			return amountLinearClamp(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -198,9 +167,10 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。amountOutQuadClampを使用してください。")]
 		public static float amountSlowdown(float target, float limit)
 		{
-			return _amountSlowdown(target, limit);
+			return amountOutQuadClamp(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -217,9 +187,10 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。amountInQuadClampを使用してください。")]
 		public static float amountAccelerate(float target, float limit)
 		{
-			return _amountAccelerate(target, limit);
+			return amountInQuadClamp(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -241,9 +212,10 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。amountLinearLoopを使用してください。")]
 		public static float amountLoopSmooth(float target, float limit)
 		{
-			return _amountLoopSmooth(target, limit);
+			return amountLinearLoop(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -265,9 +237,10 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。amountOutQuadLoopを使用してください。")]
 		public static float amountLoopSlowdown(float target, float limit)
 		{
-			return _amountLoopSlowdown(target, limit);
+			return amountOutQuadLoop(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -289,9 +262,10 @@ namespace danmaq.nineball.util.math
 		/// <c>0.0</c>から<paramref name="limit"/>までの<paramref name="target"/>に
 		/// 相当する、<c>0.0</c>から<c>1.0</c>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。amountInQuadLoopを使用してください。")]
 		public static float amountLoopAccelerate(float target, float limit)
 		{
-			return _amountLoopAccelerate(target, limit);
+			return amountInQuadLoop(target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -305,9 +279,10 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpClampLinearを使用してください。")]
 		public static float clampSmooth(float start, float end, float target, float limit)
 		{
-			return _clampSmooth(start, end, target, limit);
+			return lerpClampLinear(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -321,9 +296,10 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpClampOutQuadを使用してください。")]
 		public static float clampSlowdown(float start, float end, float target, float limit)
 		{
-			return _clampSlowdown(start, end, target, limit);
+			return lerpClampOutQuad(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -337,9 +313,10 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpClampInQuadを使用してください。")]
 		public static float clampAccelerate(float start, float end, float target, float limit)
 		{
-			return _clampAccelerate(start, end, target, limit);
+			return lerpClampInQuad(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -359,11 +336,12 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpClampInOutQuadを使用してください。")]
 		public static float clampSlowFastSlow(
 			float start, float end, float target, float limit
 		)
 		{
-			return _clampSlowFastSlow(start, end, target, limit);
+			return lerpClampInOutQuad(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -383,11 +361,12 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpClampOutInQuadを使用してください。")]
 		public static float clampFastSlowFast(
 			float start, float end, float target, float limit
 		)
 		{
-			return _clampFastSlowFast(start, end, target, limit);
+			return lerpClampOutInQuad(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -401,9 +380,10 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpLoopLinearを使用してください。")]
 		public static float loopSmooth(float start, float end, float target, float limit)
 		{
-			return _loopSmooth(start, end, target, limit);
+			return lerpLoopLinear(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -417,9 +397,10 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpLoopOutQuadを使用してください。")]
 		public static float loopSlowdown(float start, float end, float target, float limit)
 		{
-			return _loopSlowdown(start, end, target, limit);
+			return lerpLoopOutQuad(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -433,71 +414,10 @@ namespace danmaq.nineball.util.math
 		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
 		/// <paramref name="start"/>から<paramref name="end"/>までの値
 		/// </returns>
+		[Obsolete("この機能は今後サポートされません。lerpLoopInQuadを使用してください。")]
 		public static float loopAccelerate(float start, float end, float target, float limit)
 		{
-			return _loopAccelerate(start, end, target, limit);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ネヴィル曲線を計算します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="fMiddle">制御点</param>
-		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>～(<paramref name="fMiddle"/>)～<paramref name="end"/>までの値
-		/// </returns>
-		public static float neville(
-			float start, float fMiddle, float end, float target, float limit
-		)
-		{
-			if(target >= limit || start == end || limit <= 0)
-			{
-				return end;
-			}
-			if(target <= 0)
-			{
-				return start;
-			}
-			float fTimePoint = target / limit * 2;
-			fMiddle = end + (end - fMiddle) * (fTimePoint - 2);
-			return fMiddle + (fMiddle - (fMiddle + (fMiddle - start) * (fTimePoint - 1))) *
-				(fTimePoint - 2) * 0.5f;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ベジェ曲線を計算します。</summary>
-		/// 
-		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
-		/// <param name="fMiddle">制御点</param>
-		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
-		/// <param name="target">現在時間</param>
-		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
-		/// <returns>
-		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
-		/// <paramref name="start"/>～(<paramref name="fMiddle"/>)～<paramref name="end"/>までの値
-		/// </returns>
-		public static float bezier(
-			float start, float fMiddle, float end, float target, float limit
-		)
-		{
-			if(target >= limit || start == end || limit <= 0)
-			{
-				return end;
-			}
-			if(target <= 0)
-			{
-				return start;
-			}
-			float fTimePoint = target / limit * 2;
-			float fResidual = 1 - fTimePoint;
-			return
-				(float)Math.Pow(fResidual, 2) * start +
-				(float)Math.Pow(fTimePoint, 2) * end +
-				(2 * fResidual * fTimePoint * fMiddle);
+			return lerpLoopInQuad(start, end, target, limit);
 		}
 
 		#endregion
@@ -596,7 +516,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutCubic(float target, float limit)
 		{
-			return (target = target / limit - 1) * target * target;
+			return (target = target / limit - 1) * target * target + 1;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -1729,7 +1649,7 @@ namespace danmaq.nineball.util.math
 			float hc = (end - start) * 0.5f;
 			return ((target /= limit * 0.5f) < 1) ?
 				hc * target * target * target + start :
-				-hc * ((target -= 2) * target * target + 2) + start;
+				hc * ((target -= 2) * target * target + 2) + start;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -1891,7 +1811,7 @@ namespace danmaq.nineball.util.math
 			float hc = (end - start) * 0.5f;
 			return ((target /= limit * 0.5f) < 1) ?
 				hc * target * target * target * target * target + start :
-				-hc * ((target -= 2) * target * target * target * target + 2) + start;
+				hc * ((target -= 2) * target * target * target * target + 2) + start;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2513,7 +2433,7 @@ namespace danmaq.nineball.util.math
 			float hc = (end - start) * 0.5f;
 			return ((target /= limit * 0.5f) < 1) ?
 				hc * (target * target * (((overshoot *= 1.525f) + 1) * target - overshoot)) + start :
-				hc * ((target -= 2) * target * (((overshoot *= 1.525f) + 1) * target + overshoot) + 2) * start;
+				hc * ((target -= 2) * target * (((overshoot *= 1.525f) + 1) * target + overshoot) + 2) + start;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2716,7 +2636,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInQuad(float start, float end, float target, float limit)
 		{
-			return lerpInQuad(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInQuad(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2740,7 +2660,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutQuad(float start, float end, float target, float limit)
 		{
-			return lerpOutQuad(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutQuad(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2764,7 +2684,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutQuad(float start, float end, float target, float limit)
 		{
-			return lerpInOutQuad(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutQuad(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2788,7 +2708,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInQuad(float start, float end, float target, float limit)
 		{
-			return lerpOutInQuad(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInQuad(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -2815,7 +2735,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInCubic(float start, float end, float target, float limit)
 		{
-			return lerpInCubic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInCubic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2839,7 +2759,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutCubic(float start, float end, float target, float limit)
 		{
-			return lerpOutCubic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutCubic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2863,7 +2783,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutCubic(float start, float end, float target, float limit)
 		{
-			return lerpInOutCubic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutCubic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2887,7 +2807,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInCubic(float start, float end, float target, float limit)
 		{
-			return lerpOutInCubic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInCubic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -2914,7 +2834,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInQuart(float start, float end, float target, float limit)
 		{
-			return lerpInQuart(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInQuart(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2938,7 +2858,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutQuart(float start, float end, float target, float limit)
 		{
-			return lerpOutQuart(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutQuart(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2962,7 +2882,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutQuart(float start, float end, float target, float limit)
 		{
-			return lerpInOutQuart(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutQuart(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -2986,7 +2906,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInQuart(float start, float end, float target, float limit)
 		{
-			return lerpOutInQuart(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInQuart(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -3013,7 +2933,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInQuint(float start, float end, float target, float limit)
 		{
-			return lerpInQuint(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInQuint(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3037,7 +2957,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutQuint(float start, float end, float target, float limit)
 		{
-			return lerpOutQuint(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutQuint(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3061,7 +2981,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutQuint(float start, float end, float target, float limit)
 		{
-			return lerpInOutQuint(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutQuint(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3085,7 +3005,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInQuint(float start, float end, float target, float limit)
 		{
-			return lerpOutInQuint(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInQuint(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -3112,7 +3032,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInSin(float start, float end, float target, float limit)
 		{
-			return lerpInSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInSin(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3136,7 +3056,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutSin(float start, float end, float target, float limit)
 		{
-			return lerpOutSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutSin(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3160,7 +3080,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutSin(float start, float end, float target, float limit)
 		{
-			return lerpInOutSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutSin(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3184,7 +3104,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInSin(float start, float end, float target, float limit)
 		{
-			return lerpOutInSin(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInSin(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -3211,7 +3131,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInExpo(float start, float end, float target, float limit)
 		{
-			return lerpInExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInExpo(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3235,7 +3155,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutExpo(float start, float end, float target, float limit)
 		{
-			return lerpOutExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutExpo(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3259,7 +3179,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutExpo(float start, float end, float target, float limit)
 		{
-			return lerpInOutExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutExpo(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3283,7 +3203,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInExpo(float start, float end, float target, float limit)
 		{
-			return lerpOutInExpo(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInExpo(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -3310,7 +3230,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInCirc(float start, float end, float target, float limit)
 		{
-			return lerpInCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInCirc(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3334,7 +3254,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutCirc(float start, float end, float target, float limit)
 		{
-			return lerpOutCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutCirc(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3358,7 +3278,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutCirc(float start, float end, float target, float limit)
 		{
-			return lerpInOutCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutCirc(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3382,7 +3302,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInCirc(float start, float end, float target, float limit)
 		{
-			return lerpOutInCirc(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInCirc(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -3409,7 +3329,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInElastic(float start, float end, float target, float limit)
 		{
-			return lerpInElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInElastic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3436,7 +3356,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampInElastic(
 			float start, float end, float target, float limit, float amp, float period)
 		{
-			return lerpInElastic(start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+			return lerpInElastic(start, end, MathHelper.Clamp(target, 0, limit), limit, amp, period);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3460,7 +3380,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutElastic(float start, float end, float target, float limit)
 		{
-			return lerpOutElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutElastic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3487,7 +3407,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampOutElastic(
 			float start, float end, float target, float limit, float amp, float period)
 		{
-			return lerpOutElastic(start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+			return lerpOutElastic(start, end, MathHelper.Clamp(target, 0, limit), limit, amp, period);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3512,7 +3432,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampInOutElastic(
 			float start, float end, float target, float limit)
 		{
-			return lerpInOutElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutElastic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3540,7 +3460,7 @@ namespace danmaq.nineball.util.math
 			float start, float end, float target, float limit, float amp, float period)
 		{
 			return lerpInOutElastic(
-				start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+				start, end, MathHelper.Clamp(target, 0, limit), limit, amp, period);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3565,7 +3485,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampOutInElastic(
 			float start, float end, float target, float limit)
 		{
-			return lerpOutInElastic(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInElastic(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3593,7 +3513,7 @@ namespace danmaq.nineball.util.math
 			float start, float end, float target, float limit, float amp, float period)
 		{
 			return lerpOutInElastic(
-				start, end, MathHelper.Clamp(target, 0, 1), limit, amp, period);
+				start, end, MathHelper.Clamp(target, 0, limit), limit, amp, period);
 		}
 
 		#endregion
@@ -3620,7 +3540,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInBack(float start, float end, float target, float limit)
 		{
-			return lerpInBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInBack(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3648,7 +3568,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampInBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpInBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+			return lerpInBack(start, end, MathHelper.Clamp(target, 0, limit), limit, overshoot);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3672,7 +3592,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutBack(float start, float end, float target, float limit)
 		{
-			return lerpOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutBack(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3700,7 +3620,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampOutBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+			return lerpOutBack(start, end, MathHelper.Clamp(target, 0, limit), limit, overshoot);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3724,7 +3644,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutBack(float start, float end, float target, float limit)
 		{
-			return lerpInOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpInOutBack(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3752,7 +3672,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampInOutBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpInOutBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+			return lerpInOutBack(start, end, MathHelper.Clamp(target, 0, limit), limit, overshoot);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3776,7 +3696,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInBack(float start, float end, float target, float limit)
 		{
-			return lerpOutInBack(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInBack(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3804,7 +3724,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpClampOutInBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpOutInBack(start, end, MathHelper.Clamp(target, 0, 1), limit, overshoot);
+			return lerpOutInBack(start, end, MathHelper.Clamp(target, 0, limit), limit, overshoot);
 		}
 
 		#endregion
@@ -3831,7 +3751,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3855,7 +3775,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3879,7 +3799,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampInOutBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -3903,7 +3823,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpClampOutInBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, MathHelper.Clamp(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -3977,7 +3897,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInQuad(float start, float end, float target, float limit)
 		{
-			return lerpInQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInQuad(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4001,7 +3921,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutQuad(float start, float end, float target, float limit)
 		{
-			return lerpOutQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutQuad(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4025,7 +3945,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutQuad(float start, float end, float target, float limit)
 		{
-			return lerpInOutQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutQuad(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4049,7 +3969,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInQuad(float start, float end, float target, float limit)
 		{
-			return lerpOutInQuad(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInQuad(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4076,7 +3996,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInCubic(float start, float end, float target, float limit)
 		{
-			return lerpInCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInCubic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4100,7 +4020,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutCubic(float start, float end, float target, float limit)
 		{
-			return lerpOutCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutCubic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4124,7 +4044,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutCubic(float start, float end, float target, float limit)
 		{
-			return lerpInOutCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutCubic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4148,7 +4068,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInCubic(float start, float end, float target, float limit)
 		{
-			return lerpOutInCubic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInCubic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4175,7 +4095,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInQuart(float start, float end, float target, float limit)
 		{
-			return lerpInQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInQuart(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4199,7 +4119,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutQuart(float start, float end, float target, float limit)
 		{
-			return lerpOutQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutQuart(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4223,7 +4143,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutQuart(float start, float end, float target, float limit)
 		{
-			return lerpInOutQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutQuart(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4247,7 +4167,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInQuart(float start, float end, float target, float limit)
 		{
-			return lerpOutInQuart(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInQuart(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4274,7 +4194,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInQuint(float start, float end, float target, float limit)
 		{
-			return lerpInQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInQuint(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4298,7 +4218,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutQuint(float start, float end, float target, float limit)
 		{
-			return lerpOutQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutQuint(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4322,7 +4242,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutQuint(float start, float end, float target, float limit)
 		{
-			return lerpInOutQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutQuint(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4346,7 +4266,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInQuint(float start, float end, float target, float limit)
 		{
-			return lerpOutInQuint(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInQuint(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4373,7 +4293,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInSin(float start, float end, float target, float limit)
 		{
-			return lerpInSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInSin(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4397,7 +4317,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutSin(float start, float end, float target, float limit)
 		{
-			return lerpOutSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutSin(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4421,7 +4341,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutSin(float start, float end, float target, float limit)
 		{
-			return lerpInOutSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutSin(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4445,7 +4365,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInSin(float start, float end, float target, float limit)
 		{
-			return lerpOutInSin(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInSin(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4472,7 +4392,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInExpo(float start, float end, float target, float limit)
 		{
-			return lerpInExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInExpo(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4496,7 +4416,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutExpo(float start, float end, float target, float limit)
 		{
-			return lerpOutExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutExpo(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4520,7 +4440,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutExpo(float start, float end, float target, float limit)
 		{
-			return lerpInOutExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutExpo(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4544,7 +4464,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInExpo(float start, float end, float target, float limit)
 		{
-			return lerpOutInExpo(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInExpo(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4571,7 +4491,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInCirc(float start, float end, float target, float limit)
 		{
-			return lerpInCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInCirc(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4595,7 +4515,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutCirc(float start, float end, float target, float limit)
 		{
-			return lerpOutCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutCirc(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4619,7 +4539,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutCirc(float start, float end, float target, float limit)
 		{
-			return lerpInOutCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutCirc(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4643,7 +4563,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInCirc(float start, float end, float target, float limit)
 		{
-			return lerpOutInCirc(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInCirc(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
@@ -4670,7 +4590,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInElastic(float start, float end, float target, float limit)
 		{
-			return lerpInElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInElastic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4697,7 +4617,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpLoopInElastic(
 			float start, float end, float target, float limit, float amp, float period)
 		{
-			return lerpInElastic(start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+			return lerpInElastic(start, end, CMisc.clampLoop(target, 0, limit), limit, amp, period);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4721,7 +4641,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutElastic(float start, float end, float target, float limit)
 		{
-			return lerpOutElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutElastic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4748,7 +4668,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpLoopOutElastic(
 			float start, float end, float target, float limit, float amp, float period)
 		{
-			return lerpOutElastic(start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+			return lerpOutElastic(start, end, CMisc.clampLoop(target, 0, limit), limit, amp, period);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4772,7 +4692,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutElastic(float start, float end, float target, float limit)
 		{
-			return lerpInOutElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutElastic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4800,7 +4720,7 @@ namespace danmaq.nineball.util.math
 			float start, float end, float target, float limit, float amp, float period)
 		{
 			return lerpInOutElastic(
-				start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+				start, end, CMisc.clampLoop(target, 0, limit), limit, amp, period);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4824,7 +4744,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInElastic(float start, float end, float target, float limit)
 		{
-			return lerpOutInElastic(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInElastic(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4852,7 +4772,7 @@ namespace danmaq.nineball.util.math
 			float start, float end, float target, float limit, float amp, float period)
 		{
 			return lerpOutInElastic(
-				start, end, CMisc.clampLoop(target, 0, 1), limit, amp, period);
+				start, end, CMisc.clampLoop(target, 0, limit), limit, amp, period);
 		}
 
 		#endregion
@@ -4879,7 +4799,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInBack(float start, float end, float target, float limit)
 		{
-			return lerpInBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInBack(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4907,7 +4827,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpLoopInBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpInBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+			return lerpInBack(start, end, CMisc.clampLoop(target, 0, limit), limit, overshoot);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4931,7 +4851,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutBack(float start, float end, float target, float limit)
 		{
-			return lerpOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutBack(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4959,7 +4879,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpLoopOutBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+			return lerpOutBack(start, end, CMisc.clampLoop(target, 0, limit), limit, overshoot);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -4983,7 +4903,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutBack(float start, float end, float target, float limit)
 		{
-			return lerpInOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpInOutBack(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -5011,7 +4931,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpLoopInOutBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpInOutBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+			return lerpInOutBack(start, end, CMisc.clampLoop(target, 0, limit), limit, overshoot);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -5035,7 +4955,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInBack(float start, float end, float target, float limit)
 		{
-			return lerpOutInBack(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInBack(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -5063,7 +4983,7 @@ namespace danmaq.nineball.util.math
 		public static float lerpLoopOutInBack(
 			float start, float end, float target, float limit, float overshoot)
 		{
-			return lerpOutInBack(start, end, CMisc.clampLoop(target, 0, 1), limit, overshoot);
+			return lerpOutInBack(start, end, CMisc.clampLoop(target, 0, limit), limit, overshoot);
 		}
 
 		#endregion
@@ -5090,7 +5010,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -5114,7 +5034,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -5138,7 +5058,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopInOutBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -5162,10 +5082,75 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float lerpLoopOutInBounce(float start, float end, float target, float limit)
 		{
-			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, 1), limit);
+			return lerpOutInBounce(start, end, CMisc.clampLoop(target, 0, limit), limit);
 		}
 
 		#endregion
+		#endregion
+		#region spline
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ネヴィル曲線を計算します。</summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="fMiddle">制御点</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>～(<paramref name="fMiddle"/>)～<paramref name="end"/>までの値
+		/// </returns>
+		public static float neville(
+			float start, float fMiddle, float end, float target, float limit
+		)
+		{
+			if (target >= limit || start == end || limit <= 0)
+			{
+				return end;
+			}
+			if (target <= 0)
+			{
+				return start;
+			}
+			float fTimePoint = target / limit * 2;
+			fMiddle = end + (end - fMiddle) * (fTimePoint - 2);
+			return fMiddle + (fMiddle - (fMiddle + (fMiddle - start) * (fTimePoint - 1))) *
+				(fTimePoint - 2) * 0.5f;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベジェ曲線を計算します。</summary>
+		/// 
+		/// <param name="start"><paramref name="target"/>が0と等しい場合の値</param>
+		/// <param name="fMiddle">制御点</param>
+		/// <param name="end"><paramref name="target"/>が<paramref name="limit"/>と等しい場合の値</param>
+		/// <param name="target">現在時間</param>
+		/// <param name="limit"><paramref name="end"/>に到達する時間</param>
+		/// <returns>
+		/// 0から<paramref name="limit"/>までの<paramref name="target"/>に相当する
+		/// <paramref name="start"/>～(<paramref name="fMiddle"/>)～<paramref name="end"/>までの値
+		/// </returns>
+		public static float bezier(
+			float start, float fMiddle, float end, float target, float limit
+		)
+		{
+			if (target >= limit || start == end || limit <= 0)
+			{
+				return end;
+			}
+			if (target <= 0)
+			{
+				return start;
+			}
+			float fTimePoint = target / limit * 2;
+			float fResidual = 1 - fTimePoint;
+			return
+				(float)Math.Pow(fResidual, 2) * start +
+				(float)Math.Pow(fTimePoint, 2) * end +
+				(2 * fResidual * fTimePoint * fMiddle);
+		}
+
 		#endregion
 	}
 }

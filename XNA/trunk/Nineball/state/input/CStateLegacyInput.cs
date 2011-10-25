@@ -100,7 +100,7 @@ namespace danmaq.nineball.state.input
 				if (id >= 0)
 				{
 					buttons[i] = buttons[i].updateVelocity(Vector3.UnitZ *
-						CInterpolate._amountSmooth(buffer[id], byte.MaxValue));
+						CInterpolate.amountLinearClamp(buffer[id], byte.MaxValue));
 				}
 				else
 				{

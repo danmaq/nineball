@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,11 @@ namespace InterpolateTest
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 
+		//* „Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ-QQQQQQQQQQQQQQQQQQQQQQQ*
+		//* constructor & destructor „Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ„Ÿ*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ƒRƒ“ƒXƒgƒ‰ƒNƒ^B</summary>
 		public Game1()
 		{
 			graphics = new GraphicsDeviceManager(this);
@@ -33,8 +39,18 @@ namespace InterpolateTest
 			// TODO: Add your initialization logic here
 
 			base.Initialize();
-			for(int i = 0; i <= 100; i++)
+			string heading = "";
+			for (int i = (int)EInterpolate.__reserved; --i >= 0; )
 			{
+				string item = ((EInterpolate)i).ToString();
+				heading += string.Format("\t{0}", item.Substring(Math.Max(0, item.Length - 7)));
+			}
+			for (int i = 0; i <= 100; i++)
+			{
+				if (i % 10 == 0)
+				{
+					Trace.WriteLine(heading);
+				}
 				Trace.WriteLine(EInterpolateExtention.interpolate(0, 1000, i, 100));
 			}
 		}

@@ -68,7 +68,7 @@ namespace danmaq.nineball.data
 		/// <param name="fLimit1">限界値1</param>
 		/// <param name="fLimit2">限界値2</param>
 		public SGradation(float fStart, float fEnd, float fLimit1, float fLimit2)
-			: this(fStart, fEnd, fLimit1, fLimit2, EInterpolate.clampSmooth)
+			: this(fStart, fEnd, fLimit1, fLimit2, EInterpolate.clampLinear)
 		{
 		}
 
