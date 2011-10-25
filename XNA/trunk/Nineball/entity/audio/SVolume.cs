@@ -90,8 +90,8 @@ namespace danmaq.nineball.entity.audio
 			get
 			{
 				return (volume > 1 ?
-					CInterpolate._clampSmooth(0, 6, volume - 1, 1) :
-					CInterpolate._clampSlowdown(-96, 0, volume, 1));
+					CInterpolate.lerpClampLinear(0, 6, volume - 1, 1) :
+					CInterpolate.lerpClampOutQuad(-96, 0, volume, 1));
 			}
 		}
 
@@ -170,7 +170,7 @@ namespace danmaq.nineball.entity.audio
 		/// <returns>ノーマライズされた値。</returns>
 		public static SVolume normalize(SVolume expr, SVolume peak)
 		{
-			return CInterpolate._clampLerp(0, peak.volume, expr / MAX_VOLUME);
+			return CInterpolate.lerpClamp(0, peak.volume, expr / MAX_VOLUME);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -186,7 +186,7 @@ namespace danmaq.nineball.entity.audio
 			{
 				char[] szVolume = new string('.', 10).ToCharArray();
 				int cursor = (int)MathHelper.Min(
-					CInterpolate._clampSmooth(0, 10, volume, MAX_VOLUME), 9);
+					CInterpolate.lerpClampLinear(0, 10, volume, MAX_VOLUME), 9);
 				szVolume[cursor] = 'V';
 				strResult += new string(szVolume) + Environment.NewLine;
 				strDB = string.Format("({0})", strDB);

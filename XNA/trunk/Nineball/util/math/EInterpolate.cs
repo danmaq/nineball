@@ -17,30 +17,6 @@ namespace danmaq.nineball.util.math
 	public enum EInterpolate
 	{
 
-		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
-		clampSmooth,
-
-		/// <summary>範囲丸め込み付きの減速線形補完。</summary>
-		clampSlowdown,
-
-		/// <summary>範囲丸め込み付きの加速線形補完。</summary>
-		clampAccelerate,
-
-		/// <summary>範囲丸め込み付きの加速→減速線形補完。</summary>
-		clampSlowFastSlow,
-
-		/// <summary>範囲丸め込み付きの減速→加速線形補完。</summary>
-		clampFastSlowFast,
-
-		/// <summary>範囲ループ付きの等速線形補完。</summary>
-		loopSmooth,
-
-		/// <summary>範囲ループ付きの減速線形補完。</summary>
-		loopSlowdown,
-
-		/// <summary>範囲ループ付きの加速線形補完。</summary>
-		loopAccelerate,
-
 		/// <summary>等速線形補完。</summary>
 		linear,
 
@@ -410,6 +386,38 @@ namespace danmaq.nineball.util.math
 		/// <summary>減速→加速線形補完。</summary>
 		loopOutInBounce,
 
+		/// <summary>範囲丸め込み付きの等速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。clampLinearを使用してください。")]
+		clampSmooth,
+
+		/// <summary>範囲丸め込み付きの減速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。clampOutQuadを使用してください。")]
+		clampSlowdown,
+
+		/// <summary>範囲丸め込み付きの加速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。clampInQuadを使用してください。")]
+		clampAccelerate,
+
+		/// <summary>範囲丸め込み付きの加速→減速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。clampInOutQuadを使用してください。")]
+		clampSlowFastSlow,
+
+		/// <summary>範囲丸め込み付きの減速→加速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。clampOutInQuadを使用してください。")]
+		clampFastSlowFast,
+
+		/// <summary>範囲ループ付きの等速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。loopLinearを使用してください。")]
+		loopSmooth,
+
+		/// <summary>範囲ループ付きの減速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。loopOutQuadを使用してください。")]
+		loopSlowdown,
+
+		/// <summary>範囲ループ付きの加速線形補完。</summary>
+		[Obsolete("この機能は今後サポートされません。loopInQuadを使用してください。")]
+		loopAccelerate,
+
 		/// <summary>予約(使用してはいけません)。</summary>
 		__reserved,
 	}
@@ -433,14 +441,16 @@ namespace danmaq.nineball.util.math
 		/// <summary>静的なコンストラクタ。</summary>
 		static EInterpolateExtention()
 		{
-			interpolateList[(int)EInterpolate.clampSmooth] = CInterpolate._clampSmooth;
-			interpolateList[(int)EInterpolate.clampSlowdown] = CInterpolate._clampSlowdown;
-			interpolateList[(int)EInterpolate.clampAccelerate] = CInterpolate._clampAccelerate;
-			interpolateList[(int)EInterpolate.clampSlowFastSlow] = CInterpolate._clampSlowFastSlow;
-			interpolateList[(int)EInterpolate.clampFastSlowFast] = CInterpolate._clampFastSlowFast;
-			interpolateList[(int)EInterpolate.loopSmooth] = CInterpolate._loopSmooth;
-			interpolateList[(int)EInterpolate.loopSlowdown] = CInterpolate._loopSlowdown;
-			interpolateList[(int)EInterpolate.loopAccelerate] = CInterpolate._loopAccelerate;
+#pragma warning disable 618
+			interpolateList[(int)EInterpolate.clampSmooth] = CInterpolate.lerpClampLinear;
+			interpolateList[(int)EInterpolate.clampSlowdown] = CInterpolate.lerpClampOutQuad;
+			interpolateList[(int)EInterpolate.clampAccelerate] = CInterpolate.lerpClampInQuad;
+			interpolateList[(int)EInterpolate.clampSlowFastSlow] = CInterpolate.lerpClampInOutQuad;
+			interpolateList[(int)EInterpolate.clampFastSlowFast] = CInterpolate.lerpClampOutInQuad;
+			interpolateList[(int)EInterpolate.loopSmooth] = CInterpolate.lerpLoopLinear;
+			interpolateList[(int)EInterpolate.loopSlowdown] = CInterpolate.lerpLoopOutQuad;
+			interpolateList[(int)EInterpolate.loopAccelerate] = CInterpolate.lerpLoopInQuad;
+#pragma warning restore 618
 
 			interpolateList[(int)EInterpolate.linear] = CInterpolate.lerpLinear;
 			interpolateList[(int)EInterpolate.inQuad] = CInterpolate.lerpInQuad;
@@ -618,7 +628,7 @@ namespace danmaq.nineball.util.math
 			string result = string.Format("[{0}/{1}]", target, limit);
 			for (int i = (int)EInterpolate.__reserved; --i >= 0; )
 			{
-				result += string.Format("{0}\t", interpolateList[i](start, end, target, limit));
+				result += string.Format("{0:F1}\t", interpolateList[i](start, end, target, limit));
 			}
 			return result;
 		}

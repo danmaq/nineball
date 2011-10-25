@@ -96,7 +96,7 @@ namespace danmaq.nineball.state.fonts
 					prevFPSUpdate = fpsUpdate;
 					prevFPSDraw = fpsDraw;
 					entity.color = Color.Lerp(Color.White, Color.Red,
-						CInterpolate._amountLoopSlowdown(
+						CInterpolate.amountOutQuadLoop(
 							Math.Min(Math.Abs(60 - fpsUpdate), redzone), redzone));
 					entity.text = string.Format(text, fpsUpdate.ToString(), fpsDraw.ToString());
 				}

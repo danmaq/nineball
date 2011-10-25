@@ -75,7 +75,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>値を初期化します。</summary>
 		private void reset()
 		{
-			reset(0f, 0f, 60, EInterpolate.clampSmooth);
+			reset(0f, 0f, 60, EInterpolate.clampLinear);
 		}
 
 		//* -----------------------------------------------------------------------*

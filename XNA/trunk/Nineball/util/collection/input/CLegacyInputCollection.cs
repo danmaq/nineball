@@ -85,7 +85,7 @@ namespace danmaq.nineball.util.collection.input
 		{
 			CLegacyInput result = null;
 			int threshold =
-				(int)CInterpolate._clampSmooth(0, CLegacyInput.RANGE, this.threshold, 1);
+				(int)CInterpolate.lerpClampLinear(0, CLegacyInput.RANGE, this.threshold, 1);
 			for (int i = inputList.Count; --i >= 0 && result == null; )
 			{
 				CLegacyInput input = inputList[i];
