@@ -61,6 +61,8 @@ namespace danmaq.nineball.util.math
 	public static class CInterpolate
 	{
 
+		#region obsolete
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
@@ -127,6 +129,7 @@ namespace danmaq.nineball.util.math
 		public static readonly Func<float, float, float, float, float> _loopAccelerate = loopAccelerate;
 
 #pragma warning restore 618
+		#endregion
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -440,7 +443,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountLinear(float target, float limit)
 		{
-			return target / limit;
+			return validateParameters(target, limit) ? target / limit : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -459,7 +462,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInQuad(float target, float limit)
 		{
-			return (target /= limit) * target;
+			return validateParameters(target, limit) ? (target /= limit) * target : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -478,7 +481,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutQuad(float target, float limit)
 		{
-			return -(target /= limit) * (target - 2);
+			return validateParameters(target, limit) ? -(target /= limit) * (target - 2) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -497,7 +500,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInCubic(float target, float limit)
 		{
-			return (target /= limit) * target * target;
+			return validateParameters(target, limit) ? (target /= limit) * target * target : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -516,7 +519,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutCubic(float target, float limit)
 		{
-			return (target = target / limit - 1) * target * target + 1;
+			return validateParameters(target, limit) ? 
+				(target = target / limit - 1) * target * target + 1 : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -535,7 +539,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInQuart(float target, float limit)
 		{
-			return (target /= limit) * target * target * target;
+			return validateParameters(target, limit) ?
+				(target /= limit) * target * target * target : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -554,7 +559,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutQuart(float target, float limit)
 		{
-			return -((target = target / limit - 1) * target * target * target - 1);
+			return validateParameters(target, limit) ?
+				-((target = target / limit - 1) * target * target * target - 1) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -573,7 +579,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInQuint(float target, float limit)
 		{
-			return (target /= limit) * target * target * target * target;
+			return validateParameters(target, limit) ?
+				(target /= limit) * target * target * target * target : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -592,7 +599,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutQuint(float target, float limit)
 		{
-			return ((target = target / limit - 1) * target * target * target * target + 1);
+			return validateParameters(target, limit) ?
+				(target = target / limit - 1) * target * target * target * target + 1 : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -611,7 +619,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutSin(float target, float limit)
 		{
-			return (float)Math.Sin(target / limit * MathHelper.PiOver2);
+			return validateParameters(target, limit) ?
+				(float)Math.Sin(target / limit * MathHelper.PiOver2) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -630,7 +639,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInOutSin(float target, float limit)
 		{
-			return -0.5f * ((float)Math.Cos(MathHelper.Pi * target / limit) - 1);
+			return validateParameters(target, limit) ?
+				-0.5f * ((float)Math.Cos(MathHelper.Pi * target / limit) - 1) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -649,7 +659,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInCirc(float target, float limit)
 		{
-			return -((float)Math.Sqrt(1 - (target /= limit) * target) - 1);
+			return validateParameters(target, limit) ?
+				-((float)Math.Sqrt(1 - (target /= limit) * target) - 1) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -668,7 +679,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutCirc(float target, float limit)
 		{
-			return (float)Math.Sqrt(1 - (target = target / limit - 1) * target);
+			return validateParameters(target, limit) ?
+				(float)Math.Sqrt(1 - (target = target / limit - 1) * target) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -687,7 +699,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInBack(float target, float limit)
 		{
-			return amountInBack(target, limit, 1.70158f);
+			return validateParameters(target, limit) ? amountInBack(target, limit, 1.70158f) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -709,7 +721,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountInBack(float target, float limit, float overshoot)
 		{
-			return (target /= limit) * target * ((overshoot + 1) * target - overshoot);
+			return validateParameters(target, limit) ?
+				(target /= limit) * target * ((overshoot + 1) * target - overshoot) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -728,7 +741,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutBack(float target, float limit)
 		{
-			return amountOutBack(target, limit, 1.70158f);
+			return validateParameters(target, limit) ? amountOutBack(target, limit, 1.70158f) : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -750,8 +763,8 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float amountOutBack(float target, float limit, float overshoot)
 		{
-			return (target = target / limit - 1) *
-				target * ((overshoot + 1) * target + overshoot) + 1;
+			return validateParameters(target, limit) ? (target = target / limit - 1) *
+				target * ((overshoot + 1) * target + overshoot) + 1 : 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -771,7 +784,11 @@ namespace danmaq.nineball.util.math
 		public static float amountOutBounce(float target, float limit)
 		{
 			float result;
-			if ((target /= limit) < (1 / 2.75f))
+			if (!validateParameters(target, limit))
+			{
+				result = 0;
+			}
+			else if ((target /= limit) < (1 / 2.75f))
 			{
 				result = 7.5625f * target * target;
 			}
@@ -5152,5 +5169,18 @@ namespace danmaq.nineball.util.math
 		}
 
 		#endregion
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>引数の検証を行います。</summary>
+		/// 
+		/// <param name="target">対象の値。</param>
+		/// <param name="limit">
+		/// <paramref name="target"/>がこの値と等しい時、<c>1.0</c>となる値。
+		/// </param>
+		/// <returns>正当な値である場合、<c>true</c>。</returns>
+		private static bool validateParameters(float target, float limit)
+		{
+			return !(limit == 0 || float.IsNaN(target) || float.IsNaN(limit));
+		}
 	}
 }

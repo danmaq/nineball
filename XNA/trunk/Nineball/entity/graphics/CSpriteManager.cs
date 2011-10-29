@@ -370,11 +370,18 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="effects">反転効果</param>
 		/// <param name="layer">レイヤ番号</param>
 		/// <param name="blend">合成モード</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// <paramref name="text"/>が<c>null</c>と等しい場合。
+		/// </exception>
 		public void add(
 			SpriteFont spriteFont, string text, Vector2 pos, Color color, float fRotate,
 			Vector2 origin, Vector2 scale, SpriteEffects effects, float layer,
 			SpriteBlendMode blend)
 		{
+			if (text == null)
+			{
+				throw new ArgumentNullException("text");
+			}
 			SSpriteDrawInfo info = SSpriteDrawInfo.initialized;
 			info.spriteFont = spriteFont;
 			info.text = text;
