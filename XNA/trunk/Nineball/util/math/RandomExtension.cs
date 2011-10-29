@@ -29,7 +29,7 @@ namespace danmaq.nineball.util.math
 		/// </returns>
 		public static float nextBlur(this Random rnd, float range)
 		{
-			return rnd.nextFloat() * 2 - 1 ;
+			return (rnd.nextFloat() - 0.5f) * range * 2;
 		}
 
 		//* -----------------------------------------------------------------------*
