@@ -431,6 +431,10 @@ namespace danmaq.nineball.util.math
 		//* constants ──────────────────────────────-*
 
 		/// <summary>線形補完一覧。</summary>
+		private static Func<float, float, float>[] amountList =
+			new Func<float, float, float>[(int)EInterpolate.__reserved];
+
+		/// <summary>線形補完一覧。</summary>
 		private static Func<float, float, float, float, float>[] interpolateList =
 			new Func<float, float, float, float, float>[(int)EInterpolate.__reserved];
 
@@ -442,6 +446,12 @@ namespace danmaq.nineball.util.math
 		static EInterpolateExtention()
 		{
 #pragma warning disable 618
+			amountList[(int)EInterpolate.clampSmooth] = CInterpolate.amountLinearClamp;
+			amountList[(int)EInterpolate.clampSlowdown] = CInterpolate.amountOutQuadClamp;
+			amountList[(int)EInterpolate.clampAccelerate] = CInterpolate.amountInQuadClamp;
+			amountList[(int)EInterpolate.loopSmooth] = CInterpolate.amountLinearLoop;
+			amountList[(int)EInterpolate.loopSlowdown] = CInterpolate.amountOutQuadLoop;
+			amountList[(int)EInterpolate.loopAccelerate] = CInterpolate.amountInQuadLoop;
 			interpolateList[(int)EInterpolate.clampSmooth] = CInterpolate.lerpClampLinear;
 			interpolateList[(int)EInterpolate.clampSlowdown] = CInterpolate.lerpClampOutQuad;
 			interpolateList[(int)EInterpolate.clampAccelerate] = CInterpolate.lerpClampInQuad;
@@ -451,6 +461,54 @@ namespace danmaq.nineball.util.math
 			interpolateList[(int)EInterpolate.loopSlowdown] = CInterpolate.lerpLoopOutQuad;
 			interpolateList[(int)EInterpolate.loopAccelerate] = CInterpolate.lerpLoopInQuad;
 #pragma warning restore 618
+
+			amountList[(int)EInterpolate.linear] = CInterpolate.amountLinear;
+			amountList[(int)EInterpolate.inQuad] = CInterpolate.amountInQuad;
+			amountList[(int)EInterpolate.outQuad] = CInterpolate.amountOutQuad;
+			amountList[(int)EInterpolate.inCubic] = CInterpolate.amountInCubic;
+			amountList[(int)EInterpolate.outCubic] = CInterpolate.amountOutCubic;
+			amountList[(int)EInterpolate.inQuart] = CInterpolate.amountInQuart;
+			amountList[(int)EInterpolate.outQuart] = CInterpolate.amountOutQuart;
+			amountList[(int)EInterpolate.inQuint] = CInterpolate.amountInQuint;
+			amountList[(int)EInterpolate.outQuint] = CInterpolate.amountOutQuint;
+			amountList[(int)EInterpolate.outSin] = CInterpolate.amountOutSin;
+			amountList[(int)EInterpolate.inOutSin] = CInterpolate.amountInOutSin;
+			amountList[(int)EInterpolate.inCirc] = CInterpolate.amountInCirc;
+			amountList[(int)EInterpolate.outCirc] = CInterpolate.amountOutCirc;
+			amountList[(int)EInterpolate.inBack] = CInterpolate.amountInBack;
+			amountList[(int)EInterpolate.outBack] = CInterpolate.amountOutBack;
+			amountList[(int)EInterpolate.outBounce] = CInterpolate.amountOutBounce;
+			amountList[(int)EInterpolate.clampLinear] = CInterpolate.amountLinearClamp;
+			amountList[(int)EInterpolate.clampInQuad] = CInterpolate.amountInQuadClamp;
+			amountList[(int)EInterpolate.clampOutQuad] = CInterpolate.amountOutQuadClamp;
+			amountList[(int)EInterpolate.clampInCubic] = CInterpolate.amountInCubicClamp;
+			amountList[(int)EInterpolate.clampOutCubic] = CInterpolate.amountOutCubicClamp;
+			amountList[(int)EInterpolate.clampInQuart] = CInterpolate.amountInQuartClamp;
+			amountList[(int)EInterpolate.clampOutQuart] = CInterpolate.amountOutQuartClamp;
+			amountList[(int)EInterpolate.clampInQuint] = CInterpolate.amountInQuintClamp;
+			amountList[(int)EInterpolate.clampOutQuint] = CInterpolate.amountOutQuintClamp;
+			amountList[(int)EInterpolate.clampOutSin] = CInterpolate.amountOutSinClamp;
+			amountList[(int)EInterpolate.clampInOutSin] = CInterpolate.amountInOutSinClamp;
+			amountList[(int)EInterpolate.clampInCirc] = CInterpolate.amountInCircClamp;
+			amountList[(int)EInterpolate.clampOutCirc] = CInterpolate.amountOutCircClamp;
+			amountList[(int)EInterpolate.clampInBack] = CInterpolate.amountInBackClamp;
+			amountList[(int)EInterpolate.clampOutBack] = CInterpolate.amountOutBackClamp;
+			amountList[(int)EInterpolate.clampOutBounce] = CInterpolate.amountOutBounceClamp;
+			amountList[(int)EInterpolate.loopLinear] = CInterpolate.amountLinearLoop;
+			amountList[(int)EInterpolate.loopInQuad] = CInterpolate.amountInQuadLoop;
+			amountList[(int)EInterpolate.loopOutQuad] = CInterpolate.amountOutQuadLoop;
+			amountList[(int)EInterpolate.loopInCubic] = CInterpolate.amountInCubicLoop;
+			amountList[(int)EInterpolate.loopOutCubic] = CInterpolate.amountOutCubicLoop;
+			amountList[(int)EInterpolate.loopInQuart] = CInterpolate.amountInQuartLoop;
+			amountList[(int)EInterpolate.loopOutQuart] = CInterpolate.amountOutQuartLoop;
+			amountList[(int)EInterpolate.loopInQuint] = CInterpolate.amountInQuintLoop;
+			amountList[(int)EInterpolate.loopOutQuint] = CInterpolate.amountOutQuintLoop;
+			amountList[(int)EInterpolate.loopOutSin] = CInterpolate.amountOutSinLoop;
+			amountList[(int)EInterpolate.loopInOutSin] = CInterpolate.amountInOutSinLoop;
+			amountList[(int)EInterpolate.loopInCirc] = CInterpolate.amountInCircLoop;
+			amountList[(int)EInterpolate.loopOutCirc] = CInterpolate.amountOutCircLoop;
+			amountList[(int)EInterpolate.loopInBack] = CInterpolate.amountInBackLoop;
+			amountList[(int)EInterpolate.loopOutBack] = CInterpolate.amountOutBackLoop;
 
 			interpolateList[(int)EInterpolate.linear] = CInterpolate.lerpLinear;
 			interpolateList[(int)EInterpolate.inQuad] = CInterpolate.lerpInQuad;
@@ -582,13 +640,30 @@ namespace danmaq.nineball.util.math
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>線形補完列挙体に対応する関数を取得します。</summary>
+		/// <remarks>
+		/// 下記の列挙体に対してはこの関数に対応していません。(<c>null</c>が戻ります)
+		/// </remarks>
 		/// 
 		/// <param name="interpolate">線形補完列挙体。</param>
 		/// <returns>対応する関数へのデリゲート。</returns>
 		/// <exception cref="System.IndexOutOfRangeException">
 		/// 予約値を設定しようとした場合。
 		/// </exception>
-		public static Func<float, float, float, float, float> getFunction(
+		public static Func<float, float, float> getAmountFunction(
+			this EInterpolate interpolate)
+		{
+			return amountList[(int)interpolate];
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>線形補完列挙体に対応する関数を取得します。</summary>
+		/// 
+		/// <param name="interpolate">線形補完列挙体。</param>
+		/// <returns>対応する関数へのデリゲート。</returns>
+		/// <exception cref="System.IndexOutOfRangeException">
+		/// 予約値を設定しようとした場合。
+		/// </exception>
+		public static Func<float, float, float, float, float> getLerpFunction(
 			this EInterpolate interpolate)
 		{
 			return interpolateList[(int)interpolate];
@@ -612,7 +687,7 @@ namespace danmaq.nineball.util.math
 		public static float interpolate(
 			this EInterpolate interpolate, float start, float end, float target, float limit)
 		{
-			return interpolate.getFunction()(start, end, target, limit);
+			return interpolate.getLerpFunction()(start, end, target, limit);
 		}
 
 		//* -----------------------------------------------------------------------*
