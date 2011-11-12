@@ -159,6 +159,17 @@ namespace danmaq.nineball.util
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>速度・角度からベクトルを取得します。</summary>
+		/// 
+		/// <param name="speed">速度。</param>
+		/// <param name="angle">角度(ラジアン)。</param>
+		/// <returns>ベクトル。</returns>
+		public static Vector2 createVector2(float speed, float angle)
+		{
+			return new Vector2(speed, 0).rotate(angle);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>ベクトルを回転した結果を取得します。</summary>
 		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
 		/// 
@@ -167,7 +178,7 @@ namespace danmaq.nineball.util
 		/// <returns>回転されたベクトル。</returns>
 		public static Vector2 rotate(this Vector2 source, float angle)
 		{
-			return Vector2.Transform(source, Quaternion.CreateFromAxisAngle(-Vector3.UnitZ, angle));
+			return Vector2.Transform(source, Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle));
 		}
 
 		//* -----------------------------------------------------------------------*
