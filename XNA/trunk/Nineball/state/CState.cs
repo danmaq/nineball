@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+using System;
 using danmaq.nineball.entity;
 using Microsoft.Xna.Framework;
 
@@ -34,6 +35,7 @@ namespace danmaq.nineball.state
 		/// <c>empty</c>を使用せずに(たとえば自動削除回避のため)、
 		/// 空の状態を再現するために使用します。
 		/// </remarks>
+		[Obsolete("この変数は今後サポートされません。CFlyweightFactoryで使用している場合は、CFlyweightFactory.reservedを使用してください。")]
 		public static readonly IState emptyClone = new CState();
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
