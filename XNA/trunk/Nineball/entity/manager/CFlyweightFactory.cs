@@ -25,6 +25,9 @@ namespace danmaq.nineball.entity.manager
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>ゾンビではない空の状態。</summary>
+		public static readonly IState reserved = new CState();
+
 		/// <summary>墓場タスク一覧。</summary>
 		protected readonly List<IEntity> grave = new List<IEntity>();
 
@@ -32,8 +35,8 @@ namespace danmaq.nineball.entity.manager
 		private readonly List<IEntity> tasks;
 
 		/// <summary>ゾンビ検索用のラムダ式。</summary>
-		private readonly Predicate<IEntity> findZombie =
-			e => e.currentState == CState.empty && e.nextState == null;
+		private readonly Predicate<IEntity> findZombie = e =>
+			e.currentState == CState.empty && e.nextState == null;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
