@@ -50,5 +50,16 @@ namespace danmaq.nineball.util
 			for (int i = array.Length; --i >= 0; array[i] = i)
 				;
 		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>配列の値をインデックス値で埋め、ランダムで並び替えます。</summary>
+		/// 
+		/// <param name="array">配列。</param>
+		/// <param name="random">乱数ジェネレータ。</param>
+		public static void fillIndexRandom(int[] array, Random random)
+		{
+			fillIndex(array);
+			sortRandom(array, random);
+		}
 	}
 }
