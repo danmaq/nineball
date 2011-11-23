@@ -194,8 +194,6 @@ namespace danmaq.nineball.util
 			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
 		}
 
-
-		// TODO : Nineballへ移植する。
 		//* -----------------------------------------------------------------------*
 		/// <summary>テクスチャをコピーします。</summary>
 		/// <remarks>あまり最適化していないため、重いです。</remarks>
