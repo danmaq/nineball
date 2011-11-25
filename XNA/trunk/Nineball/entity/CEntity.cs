@@ -182,6 +182,20 @@ namespace danmaq.nineball.entity
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>オブジェクトが解放可能な状態であるかどうかを取得します。</summary>
+		/// <remarks>
+		/// このプロパティは、<c>Dispose</c>メソッドが実行されると
+		/// 自動的に<c>true</c>に書き換えられます。
+		/// </remarks>
+		/// 
+		/// <value>オブジェクトが解放可能な状態である場合、<c>true</c>。</value>
+		public bool disposed
+		{
+			get;
+			protected set;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// オブジェクトと状態クラスのみがアクセス可能なフィールドを取得します。
 		/// </summary>
@@ -240,6 +254,7 @@ namespace danmaq.nineball.entity
 			changedState = null;
 			delayChangeState = 0;
 			allowSameState = false;
+			disposed = true;
 		}
 
 		//* -----------------------------------------------------------------------*
