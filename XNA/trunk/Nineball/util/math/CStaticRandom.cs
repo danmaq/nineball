@@ -7,8 +7,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-using System;
-
 namespace danmaq.nineball.util.math
 {
 
@@ -43,7 +41,7 @@ namespace danmaq.nineball.util.math
 		/// <summary>擬似乱数ジェネレータを取得します。</summary>
 		/// 
 		/// <returns>擬似乱数ジェネレータ。</returns>
-		public static Random random
+		public static CRandom random
 		{
 			get;
 			private set;
@@ -76,7 +74,7 @@ namespace danmaq.nineball.util.math
 		/// <returns>擬似乱数系列の開始値を計算するために使用する数値。</returns>
 		public static int reset()
 		{
-			reset((random ?? new Random()).Next());
+			reset((random ?? new CRandom()).Next());
 			return seed;
 		}
 
@@ -94,7 +92,7 @@ namespace danmaq.nineball.util.math
 		public static void reset(int nSeed)
 		{
 			m_nSeed = nSeed;
-			random = new Random(nSeed);
+			random = new CRandom(nSeed);
 		}
 	}
 }
