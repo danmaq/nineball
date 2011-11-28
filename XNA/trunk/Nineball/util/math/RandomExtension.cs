@@ -18,12 +18,26 @@ namespace danmaq.nineball.util.math
 	{
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>指定した範囲内の乱数を返します。</summary>
+		/// 
+		/// <param name="rnd">疑似乱数ジェネレータ。</param>
+		/// <param name="expr1">返される乱数の下限値。</param>
+		/// <param name="expr2">返される乱数の上限値。</param>
+		/// <returns>
+		/// <paramref name="expr1"/>から<paramref name="expr2"/>までの単精度浮動小数点数。
+		/// </returns>
+		public static float Next(this Random rnd, float expr1, float expr2)
+		{
+			return expr1 + rnd.nextFloat() * (expr2 - expr1);
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>
 		/// -<paramref name="range"/>と+<paramref name="range"/>の間の乱数を返します。
 		/// </summary>
 		/// 
-		/// <param name="range">ブレ幅。</param>
 		/// <param name="rnd">疑似乱数ジェネレータ。</param>
+		/// <param name="range">ブレ幅。</param>
 		/// <returns>
 		/// -<paramref name="range"/>～+<paramref name="range"/>の単精度浮動小数点数。
 		/// </returns>
