@@ -159,6 +159,38 @@ namespace danmaq.nineball.util
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを単位ベクトルに変換します。</summary>
+		/// 
+		/// <param name="expr">ベクトル。</param>
+		/// <param name="alternative">
+		/// <paramref name="expr"/>がゼロだった際の代替ベクトル。
+		/// </param>
+		/// <returns>単位ベクトル。</returns>
+		public static Vector2 normalize(Vector2 expr, Vector2 alternative)
+		{
+			return normalize(expr, alternative, 1);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを指定した長さに変換します。</summary>
+		/// 
+		/// <param name="expr">ベクトル。</param>
+		/// <param name="alternative">
+		/// <paramref name="expr"/>がゼロだった際の代替ベクトル。
+		/// </param>
+		/// <param name="unit">長さ。</param>
+		/// <returns>ベクトル。</returns>
+		public static Vector2 normalize(Vector2 expr, Vector2 alternative, float unit)
+		{
+			if (expr == Vector2.Zero)
+			{
+				expr = alternative;
+			}
+			expr.Normalize();
+			return expr * unit;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>速度・角度からベクトルを取得します。</summary>
 		/// 
 		/// <param name="speed">速度。</param>
