@@ -9,6 +9,7 @@
 
 using System;
 using danmaq.nineball.Properties;
+using danmaq.nineball.util.math;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -159,74 +160,6 @@ namespace danmaq.nineball.util
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>ベクトルを単位ベクトルに変換します。</summary>
-		/// 
-		/// <param name="expr">ベクトル。</param>
-		/// <param name="alternative">
-		/// <paramref name="expr"/>がゼロだった際の代替ベクトル。
-		/// </param>
-		/// <returns>単位ベクトル。</returns>
-		public static Vector2 normalize(Vector2 expr, Vector2 alternative)
-		{
-			return normalize(expr, alternative, 1);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ベクトルを指定した長さに変換します。</summary>
-		/// 
-		/// <param name="expr">ベクトル。</param>
-		/// <param name="alternative">
-		/// <paramref name="expr"/>がゼロだった際の代替ベクトル。
-		/// </param>
-		/// <param name="unit">長さ。</param>
-		/// <returns>ベクトル。</returns>
-		public static Vector2 normalize(Vector2 expr, Vector2 alternative, float unit)
-		{
-			if (expr == Vector2.Zero)
-			{
-				expr = alternative;
-			}
-			expr.Normalize();
-			return expr * unit;
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>速度・角度からベクトルを取得します。</summary>
-		/// 
-		/// <param name="speed">速度。</param>
-		/// <param name="angle">角度(ラジアン)。</param>
-		/// <returns>ベクトル。</returns>
-		public static Vector2 createVector2(float speed, float angle)
-		{
-			return new Vector2(speed, 0).rotate(angle);
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ベクトルを回転した結果を取得します。</summary>
-		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
-		/// 
-		/// <param name="source">元のベクトル。</param>
-		/// <param name="angle">角度(ラジアン)。</param>
-		/// <returns>回転されたベクトル。</returns>
-		public static Vector2 rotate(this Vector2 source, float angle)
-		{
-			return Vector2.Transform(source, Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle));
-		}
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>ベクトルを回転した結果を取得します。</summary>
-		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
-		/// 
-		/// <param name="source">元のベクトル。</param>
-		/// <param name="axis">回転軸。</param>
-		/// <param name="angle">角度(ラジアン)。</param>
-		/// <returns>回転されたベクトル。</returns>
-		public static Vector3 rotate(this Vector3 source, Vector3 axis, float angle)
-		{
-			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>テクスチャをコピーします。</summary>
 		/// <remarks>あまり最適化していないため、重いです。</remarks>
 		/// 
@@ -281,6 +214,74 @@ namespace danmaq.nineball.util
 				}
 			}
 			dst.SetData(dstData);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを単位ベクトルに変換します。</summary>
+		/// 
+		/// <param name="expr">ベクトル。</param>
+		/// <param name="alternative">
+		/// <paramref name="expr"/>がゼロだった際の代替ベクトル。
+		/// </param>
+		/// <returns>単位ベクトル。</returns>
+		[Obsolete("この関数は移動しました。今後はdanmaq.nineball.util.math.CVectorUtilクラスの同名関数を使用してください。")]
+		public static Vector2 normalize(Vector2 expr, Vector2 alternative)
+		{
+			return CVectorUtil.normalize(expr, alternative);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを指定した長さに変換します。</summary>
+		/// 
+		/// <param name="expr">ベクトル。</param>
+		/// <param name="alternative">
+		/// <paramref name="expr"/>がゼロだった際の代替ベクトル。
+		/// </param>
+		/// <param name="unit">長さ。</param>
+		/// <returns>ベクトル。</returns>
+		[Obsolete("この関数は移動しました。今後はdanmaq.nineball.util.math.CVectorUtilクラスの同名関数を使用してください。")]
+		public static Vector2 normalize(Vector2 expr, Vector2 alternative, float unit)
+		{
+			return CVectorUtil.normalize(expr, alternative, unit);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>速度・角度からベクトルを取得します。</summary>
+		/// 
+		/// <param name="speed">速度。</param>
+		/// <param name="angle">角度(ラジアン)。</param>
+		/// <returns>ベクトル。</returns>
+		[Obsolete("この関数は移動しました。今後はdanmaq.nineball.util.math.CVectorUtilクラスの同名関数を使用してください。")]
+		public static Vector2 createVector2(float speed, float angle)
+		{
+			return CVectorUtil.createVector2(speed, angle);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを回転した結果を取得します。</summary>
+		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
+		/// 
+		/// <param name="source">元のベクトル。</param>
+		/// <param name="angle">角度(ラジアン)。</param>
+		/// <returns>回転されたベクトル。</returns>
+		[Obsolete("この関数は移動しました。今後はdanmaq.nineball.util.math.CVectorUtilクラスの同名関数を使用してください。")]
+		public static Vector2 rotate(this Vector2 source, float angle)
+		{
+			return CVectorUtil.rotate(source, angle);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>ベクトルを回転した結果を取得します。</summary>
+		/// <remarks>この計算によって、元のベクトルが変化することはありません。</remarks>
+		/// 
+		/// <param name="source">元のベクトル。</param>
+		/// <param name="axis">回転軸。</param>
+		/// <param name="angle">角度(ラジアン)。</param>
+		/// <returns>回転されたベクトル。</returns>
+		[Obsolete("この関数は移動しました。今後はdanmaq.nineball.util.math.CVectorUtilクラスの同名関数を使用してください。")]
+		public static Vector3 rotate(this Vector3 source, Vector3 axis, float angle)
+		{
+			return CVectorUtil.rotate(source, axis, angle);
 		}
 	}
 }
