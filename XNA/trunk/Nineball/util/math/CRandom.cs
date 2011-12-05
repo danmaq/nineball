@@ -84,6 +84,23 @@ namespace danmaq.nineball.util.math
 		//* methods ───────────────────────────────-*
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>0 以上の乱数を返します。</summary>
+		/// 
+		/// <returns>
+		/// 0 以上で<c>System.Int32.MaxValue</c> より小さい 32 ビット符号付整数。
+		/// </returns>
+		public override int Next()
+		{
+			int t = (m_x ^ (m_x << 11));
+			m_x = m_y;
+			m_y = m_z;
+			m_z = m_w;
+			int result = (m_w = (m_w ^ (m_w >> 19)) ^ (t ^ (t >> 8)));
+			counter++;
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>0.0 と 1.0 の間の乱数を返します。</summary>
 		/// <remarks>
 		/// 乱数生成アルゴリズムとして高速・高周期なxorshift法を使用しています。
@@ -93,13 +110,7 @@ namespace danmaq.nineball.util.math
 		/// <returns>0.0 以上 1.0 未満の倍精度浮動小数点数。</returns>
 		protected override double Sample()
 		{
-			int t = (m_x ^ (m_x << 11));
-			m_x = m_y;
-			m_y = m_z;
-			m_z = m_w;
-			int result = (m_w = (m_w ^ (m_w >> 19)) ^ (t ^ (t >> 8)));
-			counter++;
-			return result / (double)int.MaxValue;
+			return Next() / (double)int.MaxValue;
 		}
 	}
 }
