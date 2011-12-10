@@ -101,6 +101,49 @@ namespace danmaq.nineball.util.math
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>0 以上の乱数を返します。</summary>
+		/// 
+		/// <param name="maxValue">上限値。</param>
+		/// <returns>
+		/// 0 以上で<paramref name="maxValue"/>より小さい 32 ビット符号付整数。
+		/// </returns>
+		public override int Next(int maxValue)
+		{
+			return Next() % maxValue;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary><paramref name="minValue"/>以上の乱数を返します。</summary>
+		/// 
+		/// <param name="minValue">下限値。</param>
+		/// <param name="maxValue">上限値。</param>
+		/// <returns>
+		/// <paramref name="minValue"/>以上で<paramref name="maxValue"/>より小さい 32 ビット符号付整数。
+		/// </returns>
+		public override int Next(int minValue, int maxValue)
+		{
+			if (maxValue < minValue)
+			{
+				minValue ^= maxValue;
+				maxValue ^= minValue;
+				minValue ^= maxValue;
+			}
+			return minValue + Next(maxValue - minValue);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定したバイト配列の要素に乱数を格納します。</summary>
+		/// 
+		/// <param name="buffer">乱数を格納するバイト配列。</param>
+		public override void NextBytes(byte[] buffer)
+		{
+			for (int i = buffer.Length; --i >= 0; )
+			{
+				buffer[i] = (byte)Next(byte.MaxValue);
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>0.0 と 1.0 の間の乱数を返します。</summary>
 		/// <remarks>
 		/// 乱数生成アルゴリズムとして高速・高周期なxorshift法を使用しています。
