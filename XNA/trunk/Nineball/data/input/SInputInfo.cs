@@ -43,6 +43,24 @@ namespace danmaq.nineball.data.input
 		/// <summary>最後に押下した時間。</summary>
 		public int lastPressTimeZ;
 
+		/// <summary>最後に押下をやめた時間。</summary>
+		public int lastReleaseTimeX;
+
+		/// <summary>最後に押下をやめた時間。</summary>
+		public int lastReleaseTimeY;
+
+		/// <summary>最後に押下をやめた時間。</summary>
+		public int lastReleaseTimeZ;
+
+		/// <summary>最後に押下状態が変化した時間。</summary>
+		public int lastChangeTimeX;
+
+		/// <summary>最後に押下状態が変化した時間。</summary>
+		public int lastChangeTimeY;
+
+		/// <summary>最後に押下状態が変化した時間。</summary>
+		public int lastChangeTimeZ;
+
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
@@ -99,6 +117,12 @@ namespace danmaq.nineball.data.input
 			lastPressTimeX = 0;
 			lastPressTimeY = 0;
 			lastPressTimeZ = 0;
+			lastReleaseTimeX = 0;
+			lastReleaseTimeY = 0;
+			lastReleaseTimeZ = 0;
+			lastChangeTimeX = 0;
+			lastChangeTimeY = 0;
+			lastChangeTimeZ = 0;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -169,6 +193,21 @@ namespace danmaq.nineball.data.input
 			{
 				lastPressTimeZ = counter;
 			}
+			if (Math.Abs(this.velocity.X) > 0 && velocity.X == 0)
+			{
+				lastReleaseTimeX = counter;
+			}
+			if (Math.Abs(this.velocity.Y) > 0 && velocity.Y == 0)
+			{
+				lastReleaseTimeY = counter;
+			}
+			if (Math.Abs(this.velocity.Z) > 0 && velocity.Z == 0)
+			{
+				lastReleaseTimeZ = counter;
+			}
+			lastChangeTimeX = Math.Max(lastPressTimeX, lastReleaseTimeX);
+			lastChangeTimeY = Math.Max(lastPressTimeY, lastReleaseTimeY);
+			lastChangeTimeZ = Math.Max(lastPressTimeZ, lastReleaseTimeZ);
 			this.velocity = velocity;
 			return this;
 		}
