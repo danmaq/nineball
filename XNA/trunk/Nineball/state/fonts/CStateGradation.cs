@@ -86,14 +86,17 @@ namespace danmaq.nineball.state.fonts
 				{
 					SFontGradationInfo info = _gradation[i];
 					_pos = entity.pos + info.pos - origin;
-					if (entity.isDrawShadow)
+					if (info.strByte != null)
 					{
-						entity.sprite.add(entity.font, info.strByte, _pos + entity.gapShadow,
-							info.argbShadow, info.rotate, Vector2.Zero, info.scale,
-							SpriteEffects.None, fShadowLayer, entity.blend);
+						if (entity.isDrawShadow)
+						{
+							entity.sprite.add(entity.font, info.strByte, _pos + entity.gapShadow,
+								info.argbShadow, info.rotate, Vector2.Zero, info.scale,
+								SpriteEffects.None, fShadowLayer, entity.blend);
+						}
+						entity.sprite.add(entity.font, info.strByte, _pos, info.argbText, info.rotate,
+							Vector2.Zero, info.scale, SpriteEffects.None, fLayer, entity.blend);
 					}
-					entity.sprite.add(entity.font, info.strByte, _pos, info.argbText, info.rotate,
-						Vector2.Zero, info.scale, SpriteEffects.None, fLayer, entity.blend);
 				}
 			}
 		}
