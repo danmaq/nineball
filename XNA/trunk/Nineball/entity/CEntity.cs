@@ -263,7 +263,7 @@ namespace danmaq.nineball.entity
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public virtual void update(GameTime gameTime)
 		{
-			if (nextState != null && delayChangeState-- <= 0)
+			if (delayChangeState-- <= 0 && nextState != null)
 			{
 				commitNextState(allowSameState);
 			}
