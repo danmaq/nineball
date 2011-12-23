@@ -82,7 +82,7 @@ namespace danmaq.nineball.state.fonts
 			int counter = entity.counter;
 			if (counter % 12 == 0)
 			{
-				entity.text = string.Format("frame{0:00000} / Time{1}:{2:00.0}",
+				entity.text = string.Format("frame{0:000000} / Time{1}:{2:00.0}",
 					counter,
 					counter / 3600,
 					(counter / 60f) % 60);
