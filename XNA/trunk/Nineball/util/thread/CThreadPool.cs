@@ -53,26 +53,25 @@ namespace danmaq.nineball.util.thread
 			{
 				ThreadStart method = () =>
 				{
-					while (true)
+					bool loop = true;
+					do
 					{
-						lock (syncLock)
-						{
-							if (m_terminate)
-							{
-								break;
-							}
-						}
 						KeyValuePair<WaitCallback, object> info = CThreadPool.pop();
 						if (info.Key != null)
 						{
 							info.Key(info.Value);
 						}
 						Thread.Sleep(0);
+						lock (syncLock)
+						{
+							loop = !m_terminate;
+						}
 					}
+					while (loop);
 				};
 				thread = new Thread(method);
 				thread.Name = "Nineball:CThreadPool";
-				thread.Priority = ThreadPriority.BelowNormal;
+				thread.Priority = priority;
 				thread.Start();
 			}
 
@@ -99,6 +98,13 @@ namespace danmaq.nineball.util.thread
 
 		/// <summary>スレッド一覧。</summary>
 		private static readonly List<CThreadInfo> threads = new List<CThreadInfo>();
+
+		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+		//* fields ────────────────────────────────*
+
+		/// <summary>優先度。</summary>
+		/// <remarks>注意：一旦スレッドの数をリセットしないと反映されません。</remarks>
+		public static ThreadPriority priority = ThreadPriority.Normal;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -175,7 +181,7 @@ namespace danmaq.nineball.util.thread
 		private static KeyValuePair<WaitCallback, object> pop()
 		{
 			KeyValuePair<WaitCallback, object> result =
-				new KeyValuePair<WaitCallback,object>(null, null);
+				new KeyValuePair<WaitCallback, object>(null, null);
 			lock (syncLock)
 			{
 				if (queue.Count > 0)
