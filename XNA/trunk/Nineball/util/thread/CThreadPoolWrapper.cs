@@ -62,7 +62,7 @@ namespace danmaq.nineball.util.thread
 				int result;
 				lock (syncLock)
 				{
-					result = tasks;
+					result = m_activeCount;
 				}
 				return result;
 			}
