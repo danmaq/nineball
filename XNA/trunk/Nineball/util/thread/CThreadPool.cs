@@ -104,7 +104,7 @@ namespace danmaq.nineball.util.thread
 
 		/// <summary>優先度。</summary>
 		/// <remarks>注意：一旦スレッドの数をリセットしないと反映されません。</remarks>
-		public static ThreadPriority priority = ThreadPriority.Normal;
+		private static ThreadPriority m_priority = ThreadPriority.Normal;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -137,6 +137,31 @@ namespace danmaq.nineball.util.thread
 						threads[0].Dispose();
 						threads.RemoveAt(0);
 					}
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スレッドの優先度を取得/設定します。</summary>
+		/// <remarks>
+		/// 注意：優先度を変更すると、いったん全てのスレッドがリセットされます。
+		/// </remarks>
+		/// 
+		/// <value>スレッドの数。</value>
+		public static ThreadPriority priority
+		{
+			get
+			{
+				return m_priority;
+			}
+			set
+			{
+				if (value != m_priority)
+				{
+					int count = CThreadPool.count;
+					CThreadPool.count = 0;
+					m_priority = value;
+					CThreadPool.count = count;
 				}
 			}
 		}
