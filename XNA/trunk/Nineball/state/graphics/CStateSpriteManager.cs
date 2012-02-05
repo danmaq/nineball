@@ -24,6 +24,39 @@ namespace danmaq.nineball.state.graphics
 		: CState<CSpriteManager, CSpriteManager.CPrivateMembers>
 	{
 
+		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
+		/// <summary>現在の描画状態が格納された構造体。</summary>
+		private struct SDrawMode
+		{
+
+			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
+			//* fields ────────────────────────────────*
+
+			/// <summary>描画中かどうか。</summary>
+			public bool isBegin;
+
+			/// <summary>合成モード。</summary>
+			public SpriteBlendMode blendMode;
+
+			/// <summary>テクスチャ・アドレッシング。</summary>
+			public TextureAddressMode addressMode;
+
+			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
+			//* methods ───────────────────────────────-*
+
+			//* -----------------------------------------------------------------------*
+			/// <summary>描画状態を変更すべきかどうかを判定します。</summary>
+			/// 
+			/// <param name="info">描画情報。</param>
+			/// <returns>描画状態を変更すべき場合、<c>true</c>。</returns>
+			public bool changeDrawMode(SSpriteDrawInfo info)
+			{
+				return !(
+					blendMode == info.blendMode &&
+					addressMode == info.addressMode);
+			}
+		}
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
@@ -44,7 +77,7 @@ namespace danmaq.nineball.state.graphics
 		//* fields ────────────────────────────────*
 
 		/// <summary>現在の描画状態。</summary>
-		private CSpriteManager.SDrawMode m_drawMode;
+		private SDrawMode m_drawMode;
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
@@ -95,7 +128,7 @@ namespace danmaq.nineball.state.graphics
 			}
 			List<SSpriteDrawInfo> drawCache = privateMembers.drawCache;
 			int length = drawCache.Count;
-			privateMembers.drawCache.Sort();
+			drawCache.Sort();
 
 			for (int i = length; --i >= 0; )
 			{

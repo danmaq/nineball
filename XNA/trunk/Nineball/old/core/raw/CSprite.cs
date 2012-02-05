@@ -182,25 +182,8 @@ namespace danmaq.nineball.old.core.raw
 			float fRotate, Vector2 scale, SpriteEffects effects, float fLayer, SpriteBlendMode blend
 		)
 		{
-			Vector2 origin = Vector2.Zero;
-			switch(halign)
-			{
-				case EAlign.Center:
-					origin.X = (float)(srcRect.Width) * 0.5f;
-					break;
-				case EAlign.RightBottom:
-					origin.X = srcRect.Width;
-					break;
-			}
-			switch(valign)
-			{
-				case EAlign.Center:
-					origin.Y = (float)(srcRect.Height) * 0.5f;
-					break;
-				case EAlign.RightBottom:
-					origin.Y = srcRect.Height;
-					break;
-			}
+			Vector2 origin = new Vector2(
+				halign.origin(srcRect.Width), valign.origin(srcRect.Height));
 			add(tex, new Rectangle((int)(pos.X), (int)(pos.Y),
 					(int)(srcRect.Width * scale.X), (int)(srcRect.Height * scale.Y)),
 				srcRect, color, fRotate, origin, effects, fLayer, blend);

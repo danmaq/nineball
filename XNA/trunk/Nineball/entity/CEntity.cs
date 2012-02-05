@@ -177,7 +177,7 @@ namespace danmaq.nineball.entity
 		{
 			get
 			{
-				return currentState == CState.empty && nextState == null;
+				return isEmptyState(this);
 			}
 		}
 
@@ -209,6 +209,18 @@ namespace danmaq.nineball.entity
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>
+		/// 指定したオブジェクトの状態が完全に空(<c>CState.empty</c>)かどうかを取得します。
+		/// </summary>
+		/// 
+		/// <param name="entity">判定対象</param>
+		/// <returns>状態が完全に空の場合、<c>true</c>。</returns>
+		public static bool isEmptyState(IEntity entity)
+		{
+			return entity.currentState == CState.empty && entity.nextState == null;
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの状態を含めた文字列情報を取得します。</summary>

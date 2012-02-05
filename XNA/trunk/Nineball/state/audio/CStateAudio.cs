@@ -79,7 +79,7 @@ namespace danmaq.nineball.state.audio
 			for (int i = reservedList.Count; --i >= 0; )
 			{
 				string name = reservedList[i];
-				Cue cue = cueList.Find(c => c.Name == name);
+				Cue cue = entity.find(name);
 				if (cue == null || cue.GetVariable("AttackTime") >= entity.loopInterval)
 				{
 					Cue newCue = entity.soundBank.GetCue(name);

@@ -97,14 +97,14 @@ namespace danmaq.nineball.state.input
 			for (int i = assign.Count; --i >= 0; )
 			{
 				int id = assign[i];
-				if (id >= 0)
+				if (id < 0)
+				{
+					buttons[i] = processorList[-id](buttons[i], nowState, entity);
+				}
+				else if (buffer != null)
 				{
 					buttons[i] = buttons[i].updateVelocity(Vector3.UnitZ *
 						CInterpolate.amountLinearClamp(buffer[id], byte.MaxValue));
-				}
-				else
-				{
-					buttons[i] = processorList[-id](buttons[i], nowState, entity);
 				}
 			}
 		}
@@ -147,7 +147,7 @@ namespace danmaq.nineball.state.input
 		{
 			Vector3 result = Vector3.Zero;
 			int[] povList = state.GetPointOfView();
-			if (povList.Length > 0)
+			if (!(povList == null || povList.Length == 0))
 			{
 				int pov = povList[0];
 				if (pov >= 0)

@@ -119,6 +119,11 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		private readonly CPrivateMembers _private;
 
+		/// <summary>何もしないコールバック。</summary>
+		private readonly Action<ITask> callbackNOOP = t =>
+		{
+		};
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
@@ -126,9 +131,7 @@ namespace danmaq.nineball.entity.manager
 		private bool m_allClear = false;
 
 		/// <summary>全削除時に呼ばれるコールバック。</summary>
-		private Action<ITask> m_callBackOnClear = t =>
-		{
-		};
+		private Action<ITask> m_callBackOnClear;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* constructor & destructor ───────────────────────*
@@ -153,6 +156,7 @@ namespace danmaq.nineball.entity.manager
 		public CTaskManager(IState firstState)
 			: base(firstState, new CPrivateMembers())
 		{
+			m_callBackOnClear = callbackNOOP;
 			_private = (CPrivateMembers)privateMembers;
 		}
 
@@ -277,9 +281,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>管理しているタスクを全て解放するための予約を入れます。</summary>
 		public void Clear()
 		{
-			Clear(t =>
-			{
-			});
+			Clear(callbackNOOP);
 		}
 
 		//* -----------------------------------------------------------------------*
