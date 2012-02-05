@@ -333,32 +333,7 @@ namespace danmaq.nineball.old.core.raw
 		/// <returns>原点座標</returns>
 		private Vector2 getOrigin(Vector2 srcRect)
 		{
-			Vector2 origin = Vector2.Zero;
-			switch(alignHorizontal)
-			{
-				case EAlign.LeftTop:
-					origin.X = 0;
-					break;
-				case EAlign.Center:
-					origin.X = srcRect.X / 2;
-					break;
-				case EAlign.RightBottom:
-					origin.X = srcRect.X;
-					break;
-			}
-			switch(alignVertical)
-			{
-				case EAlign.LeftTop:
-					origin.Y = 0;
-					break;
-				case EAlign.Center:
-					origin.Y = srcRect.Y / 2;
-					break;
-				case EAlign.RightBottom:
-					origin.Y = srcRect.Y;
-					break;
-			}
-			return origin;
+			return new Vector2(alignHorizontal.origin(srcRect.X), alignVertical.origin(srcRect.Y));
 		}
 	}
 }

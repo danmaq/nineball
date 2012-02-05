@@ -35,8 +35,7 @@ namespace danmaq.nineball.entity.manager
 		private readonly List<IEntity> tasks;
 
 		/// <summary>ゾンビ検索用のラムダ式。</summary>
-		private readonly Predicate<IEntity> findZombie = e =>
-			e.currentState == CState.empty && e.nextState == null;
+		private readonly Predicate<IEntity> findZombie = CEntity.isEmptyState;
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
@@ -84,7 +83,12 @@ namespace danmaq.nineball.entity.manager
 		{
 			get
 			{
-				return tasks.Count;
+				int result;
+				lock (((ICollection)tasks).SyncRoot)
+				{
+					result = tasks.Count;
+				}
+				return result;
 			}
 		}
 
@@ -134,6 +138,16 @@ namespace danmaq.nineball.entity.manager
 		}
 
 		//* -----------------------------------------------------------------------*
+		/// <summary>タスクを備蓄します。</summary>
+		/// 
+		/// <param name="count">備蓄数。</param>
+		public void stock(int count)
+		{
+			for (int i = count; --i >= 0; grave.Add(createInstance()))
+				;
+		}
+
+		//* -----------------------------------------------------------------------*
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public override void Dispose()
 		{
@@ -142,13 +156,7 @@ namespace danmaq.nineball.entity.manager
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// <para>タスクを追加します。</para>
-		/// <para>
-		/// また、このメソッドに<c>CState.Empty</c>を指定することで、
-		/// 空のタスクを備蓄することができます。
-		/// </para>
-		/// </summary>
+		/// <summary>タスクを追加します。</summary>
 		/// 
 		/// <param name="state">追加する状態。</param>
 		/// <returns>実際に追加されたタスク オブジェクト。</returns>

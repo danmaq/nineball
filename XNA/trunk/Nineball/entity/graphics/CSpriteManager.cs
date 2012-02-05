@@ -26,39 +26,6 @@ namespace danmaq.nineball.entity.graphics
 	{
 
 		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
-		/// <summary>現在の描画状態が格納された構造体。</summary>
-		public struct SDrawMode
-		{
-
-			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
-			//* fields ────────────────────────────────*
-
-			/// <summary>描画中かどうか。</summary>
-			public bool isBegin;
-
-			/// <summary>合成モード。</summary>
-			public SpriteBlendMode blendMode;
-
-			/// <summary>テクスチャ・アドレッシング。</summary>
-			public TextureAddressMode addressMode;
-
-			//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
-			//* methods ───────────────────────────────-*
-
-			//* -----------------------------------------------------------------------*
-			/// <summary>描画状態を変更すべきかどうかを判定します。</summary>
-			/// 
-			/// <param name="info">描画情報。</param>
-			/// <returns>描画状態を変更すべき場合、<c>true</c>。</returns>
-			public bool changeDrawMode(SSpriteDrawInfo info)
-			{
-				return !(
-					blendMode == info.blendMode &&
-					addressMode == info.addressMode);
-			}
-		}
-
-		//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 		/// <summary>オブジェクトと状態クラスのみがアクセス可能なフィールド。</summary>
 		public sealed class CPrivateMembers
 			: IDisposable
@@ -68,7 +35,7 @@ namespace danmaq.nineball.entity.graphics
 			//* constants ──────────────────────────────-*
 
 			/// <summary>描画情報リスト。</summary>
-			public readonly List<SSpriteDrawInfo> drawCache = new List<SSpriteDrawInfo>(1);
+			public readonly List<SSpriteDrawInfo> drawCache = new List<SSpriteDrawInfo>();
 
 			//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 			//* fields ────────────────────────────────*
@@ -95,9 +62,6 @@ namespace danmaq.nineball.entity.graphics
 
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
-
-		/// <summary>予約可能な最大数。</summary>
-		public int reserveLimit = 10000;
 
 		/// <summary>スプライトバッチ。</summary>
 		public SpriteBatch spriteBatch;
@@ -146,7 +110,7 @@ namespace danmaq.nineball.entity.graphics
 			}
 			set
 			{
-				m_resolution = value == null ? CResolutionDummy.instance : value;
+				m_resolution = value ?? CResolutionDummy.instance;
 			}
 		}
 
@@ -194,7 +158,7 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="tex">テクスチャ</param>
 		/// <param name="rect">描画元・先矩形</param>
 		/// <param name="color">色</param>
-		/// <param name="layer">レイヤ番号</param>
+		/// <param name="layer">重ね合わせ深度。</param>
 		/// <param name="blend">合成モード</param>
 		public void add(
 			Texture2D tex, Rectangle rect, Color color, float layer, SpriteBlendMode blend)
@@ -211,7 +175,7 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="valign">位置揃え(縦)</param>
 		/// <param name="srcRect">描画元矩形</param>
 		/// <param name="color">色</param>
-		/// <param name="layer">レイヤ番号</param>
+		/// <param name="layer">重ね合わせ深度。</param>
 		/// <param name="blend">合成モード</param>
 		public void add(
 			Texture2D tex, Vector2 pos, EAlign halign, EAlign valign, Rectangle srcRect,
@@ -230,16 +194,16 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="valign">位置揃え(縦)</param>
 		/// <param name="srcRect">描画元矩形</param>
 		/// <param name="color">色</param>
-		/// <param name="fRotate">回転(ラジアン)</param>
+		/// <param name="rotate">回転(ラジアン)</param>
 		/// <param name="scale">拡大率</param>
 		/// <param name="effects">反転効果</param>
-		/// <param name="layer">レイヤ番号</param>
+		/// <param name="layer">重ね合わせ深度。</param>
 		/// <param name="blend">合成モード</param>
 		public void add(
 			Texture2D tex, Vector2 pos, EAlign halign, EAlign valign, Rectangle srcRect, Color color,
-			float fRotate, Vector2 scale, SpriteEffects effects, float layer, SpriteBlendMode blend)
+			float rotate, Vector2 scale, SpriteEffects effects, float layer, SpriteBlendMode blend)
 		{
-			add(tex, pos, halign, valign, srcRect, color, fRotate, scale, TextureAddressMode.Clamp,
+			add(tex, pos, halign, valign, srcRect, color, rotate, scale, TextureAddressMode.Clamp,
 				SpriteEffects.None, layer, blend);
 		}
 
@@ -252,40 +216,22 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="valign">位置揃え(縦)。</param>
 		/// <param name="srcRect">描画元矩形。</param>
 		/// <param name="color">色。</param>
-		/// <param name="fRotate">回転(ラジアン)。</param>
+		/// <param name="rotate">回転(ラジアン)。</param>
 		/// <param name="scale">拡大率。</param>
 		/// <param name="addressMode">テクスチャ アドレッシング モード。</param>
 		/// <param name="effects">反転効果。</param>
-		/// <param name="layer">レイヤ番号。</param>
+		/// <param name="layer">重ね合わせ深度。。</param>
 		/// <param name="blend">合成モード。</param>
 		public void add(
 			Texture2D tex, Vector2 pos, EAlign halign, EAlign valign, Rectangle srcRect,
-			Color color, float fRotate, Vector2 scale, TextureAddressMode addressMode,
+			Color color, float rotate, Vector2 scale, TextureAddressMode addressMode,
 			SpriteEffects effects, float layer, SpriteBlendMode blend)
 		{
-			Vector2 origin = Vector2.Zero;
-			// TODO : これ変換なしにSpriteBatch.Drawに渡した方が処理早いんじゃね？
-			switch (halign)
-			{
-				case EAlign.Center:
-					origin.X = (float)(srcRect.Width) * 0.5f;
-					break;
-				case EAlign.RightBottom:
-					origin.X = srcRect.Width;
-					break;
-			}
-			switch (valign)
-			{
-				case EAlign.Center:
-					origin.Y = (float)(srcRect.Height) * 0.5f;
-					break;
-				case EAlign.RightBottom:
-					origin.Y = srcRect.Height;
-					break;
-			}
+			Vector2 origin = new Vector2(
+				halign.origin(srcRect.Width), valign.origin(srcRect.Height));
 			add(tex, new Rectangle((int)(pos.X), (int)(pos.Y),
 					(int)(srcRect.Width * scale.X), (int)(srcRect.Height * scale.Y)),
-				srcRect, color, fRotate, origin, addressMode, effects, layer, blend);
+				srcRect, color, rotate, origin, addressMode, effects, layer, blend);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -295,7 +241,7 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="dstRect">描画先矩形</param>
 		/// <param name="srcRect">描画元矩形</param>
 		/// <param name="color">色</param>
-		/// <param name="layer">レイヤ番号</param>
+		/// <param name="layer">重ね合わせ深度。</param>
 		/// <param name="blend">合成モード</param>
 		public void add(
 			Texture2D tex, Rectangle dstRect, Rectangle srcRect,
@@ -312,16 +258,16 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="dstRect">描画先矩形</param>
 		/// <param name="srcRect">描画元矩形</param>
 		/// <param name="color">色</param>
-		/// <param name="fRotate">回転(ラジアン)</param>
+		/// <param name="rotate">回転(ラジアン)</param>
 		/// <param name="origin">原点座標</param>
 		/// <param name="effects">反転効果</param>
-		/// <param name="layer">レイヤ番号</param>
+		/// <param name="layer">重ね合わせ深度。</param>
 		/// <param name="blend">合成モード</param>
 		public void add(
-			Texture2D tex, Rectangle dstRect, Rectangle srcRect, Color color, float fRotate,
+			Texture2D tex, Rectangle dstRect, Rectangle srcRect, Color color, float rotate,
 			Vector2 origin, SpriteEffects effects, float layer, SpriteBlendMode blend)
 		{
-			add(tex, dstRect, srcRect, color, fRotate, origin, TextureAddressMode.Clamp,
+			add(tex, dstRect, srcRect, color, rotate, origin, TextureAddressMode.Clamp,
 				effects, layer, blend);
 		}
 
@@ -332,14 +278,14 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="dstRect">描画先矩形。</param>
 		/// <param name="srcRect">描画元矩形。</param>
 		/// <param name="color">色。</param>
-		/// <param name="fRotate">回転(ラジアン)。</param>
+		/// <param name="rotate">回転(ラジアン)。</param>
 		/// <param name="origin">原点座標。</param>
 		/// <param name="addressMode">テクスチャ アドレッシング モード。</param>
 		/// <param name="effects">反転効果。</param>
-		/// <param name="layer">レイヤ番号。</param>
+		/// <param name="layer">重ね合わせ深度。。</param>
 		/// <param name="blend">合成モード。</param>
 		public void add(
-			Texture2D tex, Rectangle dstRect, Rectangle srcRect, Color color, float fRotate,
+			Texture2D tex, Rectangle dstRect, Rectangle srcRect, Color color, float rotate,
 			Vector2 origin, TextureAddressMode addressMode, SpriteEffects effects,
 			float layer, SpriteBlendMode blend)
 		{
@@ -348,7 +294,7 @@ namespace danmaq.nineball.entity.graphics
 			info.destinationRectangle = resolution.convertRectangle(dstRect);
 			info.sourceRectangle = srcRect;
 			info.color = color;
-			info.fRotation = fRotate + resolution.rotate;
+			info.fRotation = rotate + resolution.rotate;
 			info.origin = origin;
 			info.addressMode = addressMode;
 			info.effects = effects;
@@ -364,17 +310,17 @@ namespace danmaq.nineball.entity.graphics
 		/// <param name="text">描画したいテキスト</param>
 		/// <param name="pos">座標</param>
 		/// <param name="color">色</param>
-		/// <param name="fRotate">回転(ラジアン)</param>
+		/// <param name="rotate">回転(ラジアン)</param>
 		/// <param name="origin">原点座標</param>
 		/// <param name="scale">拡大率</param>
 		/// <param name="effects">反転効果</param>
-		/// <param name="layer">レイヤ番号</param>
+		/// <param name="layer">重ね合わせ深度。</param>
 		/// <param name="blend">合成モード</param>
 		/// <exception cref="System.ArgumentNullException">
 		/// <paramref name="text"/>が<c>null</c>と等しい場合。
 		/// </exception>
 		public void add(
-			SpriteFont spriteFont, string text, Vector2 pos, Color color, float fRotate,
+			SpriteFont spriteFont, string text, Vector2 pos, Color color, float rotate,
 			Vector2 origin, Vector2 scale, SpriteEffects effects, float layer,
 			SpriteBlendMode blend)
 		{
@@ -387,7 +333,7 @@ namespace danmaq.nineball.entity.graphics
 			info.text = text;
 			info.position = resolution.convertPosition(pos);
 			info.color = color;
-			info.fRotation = fRotate + resolution.rotate;
+			info.fRotation = rotate + resolution.rotate;
 			info.origin = origin;
 			info.blendMode = blend;
 			info.scale = scale * resolution.scale;

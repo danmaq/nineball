@@ -49,7 +49,10 @@ namespace danmaq.nineball.util.thread
 
 			//* -----------------------------------------------------------------------*
 			/// <summary>コンストラクタ。</summary>
-			public CThreadInfo()
+			/// 
+			/// <param name="priority">スレッドの優先度。</param>
+			/// <param name="sleep">スレッドが動作するたびに休眠する時間(ミリ秒)。</param>
+			public CThreadInfo(ThreadPriority priority, int sleep)
 			{
 				ThreadStart method = () =>
 				{
@@ -61,7 +64,7 @@ namespace danmaq.nineball.util.thread
 						{
 							info.Key(info.Value);
 						}
-						Thread.Sleep(0);
+						Thread.Sleep(sleep);
 						lock (syncLock)
 						{
 							loop = !m_terminate;
@@ -103,8 +106,10 @@ namespace danmaq.nineball.util.thread
 		//* fields ────────────────────────────────*
 
 		/// <summary>優先度。</summary>
-		/// <remarks>注意：一旦スレッドの数をリセットしないと反映されません。</remarks>
 		private static ThreadPriority m_priority = ThreadPriority.Normal;
+
+		/// <summary>休眠時間。</summary>
+		private static int m_wait = 0;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
@@ -130,7 +135,7 @@ namespace danmaq.nineball.util.thread
 				lock (syncLock)
 				{
 					int gap = value - threads.Count;
-					for (int g = gap; --g >= 0; threads.Add(new CThreadInfo()))
+					for (int g = gap; --g >= 0; threads.Add(new CThreadInfo(priority, wait)))
 						;
 					for (int g = gap; ++g <= 0; )
 					{
@@ -161,6 +166,33 @@ namespace danmaq.nineball.util.thread
 					int count = CThreadPool.count;
 					CThreadPool.count = 0;
 					m_priority = value;
+					CThreadPool.count = count;
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スレッドの1タスク消化ごとの休眠時間を取得/設定します。</summary>
+		/// <remarks>
+		/// 注意：優先度を変更すると、いったん全てのスレッドがリセットされます。
+		/// また、<c>CMMSystem.timeBeginPeriod</c>メソッドを実行するまでは、
+		/// 実際の時間以上に休眠してしまうことがあります。
+		/// </remarks>
+		/// 
+		/// <value>休眠時間(ミリ秒)。</value>
+		public static int wait
+		{
+			get
+			{
+				return m_wait;
+			}
+			set
+			{
+				if (value != m_wait)
+				{
+					int count = CThreadPool.count;
+					CThreadPool.count = 0;
+					m_wait = value;
 					CThreadPool.count = count;
 				}
 			}

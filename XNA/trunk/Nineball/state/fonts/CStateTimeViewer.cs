@@ -80,7 +80,7 @@ namespace danmaq.nineball.state.fonts
 		public override void draw(CFont entity, object privateMembers, GameTime gameTime)
 		{
 			int counter = entity.counter;
-			if (counter % 12 == 0)
+			if (counter % 30 == 0)
 			{
 				entity.text = string.Format("frame{0:000000} / Time{1}:{2:00.0}",
 					counter,

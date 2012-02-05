@@ -132,6 +132,7 @@
     <Compile Include="util\math\CRandom.cs" />
     <Compile Include="util\math\CVectorUtil.cs" />
     <Compile Include="util\math\RandomExtension.cs" />
+    <Compile Include="util\thread\CMMSystem.cs" />
     <Compile Include="util\thread\CThreadPool.cs" />
     <Compile Include="util\thread\CThreadPoolWrapper.cs" />
     <Compile Include="util\resolution\CResolutionBase.cs" />

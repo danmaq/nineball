@@ -105,7 +105,7 @@ namespace danmaq.nineball.state.fonts
 		/// <param name="gameTime">前フレームが開始してからの経過時間。</param>
 		public override void update(CFont entity, object privateMembers, GameTime gameTime)
 		{
-			if (entity.counter % 30 == 0)
+			if (entity.counter % 120 == 0)
 			{
 				long use = GC.GetTotalMemory(false);
 				long newDelta = use - heap;

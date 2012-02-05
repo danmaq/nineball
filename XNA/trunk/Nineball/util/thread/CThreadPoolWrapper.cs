@@ -45,7 +45,7 @@ namespace danmaq.nineball.util.thread
 		public static Func<WaitCallback, object, bool> activeThreadPool =
 			ThreadPool.QueueUserWorkItem;
 
-		/// <summary>アクティブなスレッドの数。</summary>
+		/// <summary>現在の積みタスク数(実行中も含む)。</summary>
 		private static int m_activeCount = 0;
 
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*

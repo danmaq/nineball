@@ -231,9 +231,15 @@ namespace danmaq.nineball.entity.audio
 		/// <param name="name">フレンドリ名。</param>
 		public void play(string name)
 		{
-			if (_privateMembers.reservedList.Find(s => s == name) == null)
+			bool found = false;
+			List<string> reserved = _privateMembers.reservedList;
+			for (int i = reserved.Count; --i >= 0 && !found; )
 			{
-				_privateMembers.reservedList.Add(name);
+				found = reserved[i] == name;
+			}
+			if (!found)
+			{
+				reserved.Add(name);
 			}
 		}
 
@@ -309,7 +315,17 @@ namespace danmaq.nineball.entity.audio
 		/// <returns>キュー。</returns>
 		public Cue find(string name)
 		{
-			return _privateMembers.cueList.Find(c => c.Name == name);
+			Cue result = null;
+			List<Cue> cues = _privateMembers.cueList;
+			for (int i = cues.Count; --i >= 0; )
+			{
+				Cue cue = cues[i];
+				if (cue.Name == name)
+				{
+					result = cue;
+				}
+			}
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*

@@ -75,10 +75,19 @@ namespace danmaq.nineball.util.collection
 		/// <summary>インスタンス一覧。</summary>
 		protected readonly List<SData> list = new List<SData>();
 
+		/// <summary>
+		/// 既定の<c>Dispose()</c>メソッドが呼び出された際に実行されるアクション。
+		/// </summary>
+		private readonly Action<_T> defaultDisposeAction = obj =>
+		{
+		};
+
 		//* ───-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* fields ────────────────────────────────*
 
-		/// <summary><c>Dispose()</c>メソッドが呼び出された際に実行されるアクション。</summary>
+		/// <summary>
+		/// <c>Dispose()</c>メソッドが呼び出された際に実行されるアクション。
+		/// </summary>
 		private Action<_T> m_onDisposeAction;
 
 		//* ────────────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
@@ -108,9 +117,7 @@ namespace danmaq.nineball.util.collection
 			}
 			set
 			{
-				m_onDisposeAction = value ?? (obj =>
-				{
-				});
+				m_onDisposeAction = value ?? defaultDisposeAction;
 			}
 		}
 
@@ -138,13 +145,21 @@ namespace danmaq.nineball.util.collection
 		public virtual _T get()
 		{
 			_T result = default(_T);
-			int nIndex = list.FindIndex(info => !info.m_bActive);
-			if(nIndex >= 0)
+			int index = -1;
+			for (int i = list.Count; --i >= 0; )
 			{
-				SData data = list[nIndex];
+				if (!list[i].m_bActive)
+				{
+					index = i;
+					break;
+				}
+			}
+			if(index >= 0)
+			{
+				SData data = list[index];
 				data.m_bActive = true;
 				result = data.m_instance;
-				list[nIndex] = data;
+				list[index] = data;
 			}
 			return result;
 		}
@@ -165,7 +180,7 @@ namespace danmaq.nineball.util.collection
 			{
 				throw new ArgumentNullException("instance");
 			}
-			if(list.FindIndex(info => info.m_instance == instance) >= 0)
+			if(getIndex(instance) >= 0)
 			{
 				throw new ArgumentException("instance");
 			}
@@ -179,7 +194,7 @@ namespace danmaq.nineball.util.collection
 		///	<returns>インスタンスが休眠した場合、<c>true</c>。</returns>
 		public virtual bool sleep(_T instance)
 		{
-			int nIndex = list.FindIndex(info => info.m_instance == instance);
+			int nIndex = getIndex(instance);
 			bool bResult = nIndex >= 0;
 			if(bResult)
 			{
@@ -197,7 +212,13 @@ namespace danmaq.nineball.util.collection
 		///	<returns>インスタンスを削除出来た場合、<c>true</c>。</returns>
 		public virtual bool Remove(_T instance)
 		{
-			return list.RemoveAll(info => info.m_instance == instance) > 0;
+			int index = getIndex(instance);
+			bool result = index >= 0;
+			if (result)
+			{
+				list.RemoveAt(index);
+			}
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -210,6 +231,25 @@ namespace danmaq.nineball.util.collection
 			}
 			list.Clear();
 			list.TrimExcess();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>該当インスタンスのインデックスを取得します。</summary>
+		/// 
+		///	<param name="instance">インスタンス。</param>
+		///	<returns>該当インスタンスのインデックス。存在しない場合、負数。</returns>
+		protected int getIndex(_T instance)
+		{
+			int result = -1;
+			for (int i = list.Count; --i >= 0; )
+			{
+				if (list[i].m_instance == instance)
+				{
+					result = i;
+					break;
+				}
+			}
+			return result;
 		}
 	}
 }

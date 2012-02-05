@@ -79,6 +79,8 @@ namespace danmaq.nineball.state.input.low
 			    device.Poll();
 			}
 			privateMembers.prevState = privateMembers.nowState;
+			// NOTE : Device.CurrentJoystickStateプロパティ内で1回辺り
+			// 256byte(15KB/秒)程度のヒープを消費する上、回避方法が見当たらない。
 			privateMembers.nowState = device.CurrentJoystickState;
 		}
 

@@ -16,7 +16,8 @@ namespace danmaq.nineball.state.fonts
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>通常のフォント状態。</summary>
-	public sealed class CStateDefault : CState<CFont, object>
+	public sealed class CStateDefault
+		: CState<CFont, object>
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -36,18 +37,6 @@ namespace danmaq.nineball.state.fonts
 
 		//* ────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* methods ───────────────────────────────-*
-
-		//* -----------------------------------------------------------------------*
-		/// <summary>
-		/// 登録されているスプライトフォントを基準に原点を算出します。
-		/// </summary>
-		/// 
-		/// <param name="entity">この状態を適用されているオブジェクト。</param>
-		/// <returns>原点座標</returns>
-		public static Vector2 getOrigin(CFont entity)
-		{
-			return entity.getOrigin(entity.font.MeasureString(entity.text) * entity.scale);
-		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>
@@ -87,23 +76,23 @@ namespace danmaq.nineball.state.fonts
 		{
 			if(entity.sprite != null && entity.font != null && entity.text.Length > 0)
 			{
-				Vector2 origin = getOrigin(entity);
-				float fLayer;
-				float fShadowLayer;
-				entity.getShadowLayer(out fLayer, out fShadowLayer);
+				Vector2 pos = entity.pos - entity.getOrigin(
+					entity.font.MeasureString(entity.text) * entity.scale);
+				float layer;
+				float shadowLayer;
+				entity.getShadowLayer(out layer, out shadowLayer);
 				if(entity.isDrawShadow)
 				{
-					entity.sprite.add(entity.font, entity.text,
-						entity.pos - origin + entity.gapShadow,
-						new Color(Color.Black, (byte)(entity.colorAlpha / 1.5f)), 0.0f,
-						Vector2.Zero, entity.scale, SpriteEffects.None, fShadowLayer,
+					entity.sprite.add(entity.font, entity.text, pos + entity.gapShadow,
+						new Color(Color.Black, (byte)(entity.colorAlpha * 0.666666666666667f)), 0f,
+						Vector2.Zero, entity.scale, SpriteEffects.None, shadowLayer,
 						entity.blend);
 				}
-				entity.sprite.add(entity.font, entity.text, entity.pos - origin,
+				entity.sprite.add(entity.font, entity.text, pos,
 					new Color(
 						(byte)entity.colorRed, (byte)entity.colorGreen,
 						(byte)entity.colorBlue, (byte)entity.colorAlpha),
-					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, fLayer, entity.blend);
+					0.0f, Vector2.Zero, entity.scale, SpriteEffects.None, layer, entity.blend);
 			}
 		}
 
