@@ -22,6 +22,8 @@ namespace danmaq.nineball.entity.manager
 		: CEntity, IEnumerable<IEntity>, ICollection
 	{
 
+		// TODO : ReadOnlyCollectionを継承して、IEntityを実装するとか
+
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
