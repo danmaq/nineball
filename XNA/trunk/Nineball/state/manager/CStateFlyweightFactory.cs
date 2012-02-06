@@ -66,7 +66,7 @@ namespace danmaq.nineball.state.manager
 		public override void update(
 			CFlyweightFactory entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
-			lock (((ICollection)privateMembers).SyncRoot)
+			lock (entity.SyncRoot)
 			{
 				for (int i = privateMembers.Count; --i >= 0; )
 				{
@@ -86,7 +86,7 @@ namespace danmaq.nineball.state.manager
 		public override void draw(
 			CFlyweightFactory entity, List<IEntity> privateMembers, GameTime gameTime)
 		{
-			lock (((ICollection)privateMembers).SyncRoot)
+			lock (entity.SyncRoot)
 			{
 				for (int i = privateMembers.Count; --i >= 0; )
 				{
