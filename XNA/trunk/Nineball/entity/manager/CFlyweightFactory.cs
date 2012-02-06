@@ -19,7 +19,7 @@ namespace danmaq.nineball.entity.manager
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>再利用を前提としたタスク管理クラス。</summary>
 	public class CFlyweightFactory
-		: CEntity, IEnumerable<IEntity>
+		: CEntity, IEnumerable<IEntity>, ICollection
 	{
 
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
@@ -84,7 +84,7 @@ namespace danmaq.nineball.entity.manager
 			get
 			{
 				int result;
-				lock (((ICollection)tasks).SyncRoot)
+				lock (SyncRoot)
 				{
 					result = tasks.Count;
 				}
@@ -104,11 +104,35 @@ namespace danmaq.nineball.entity.manager
 			get
 			{
 				IEntity result;
-				lock (((ICollection)tasks).SyncRoot)
+				lock (SyncRoot)
 				{
 					result = tasks[index];
 				}
 				return result;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>同期用オブジェクトを取得します。</summary>
+		/// 
+		/// <value>同期用オブジェクト。</value>
+		public object SyncRoot
+		{
+			get
+			{
+				return ((ICollection)tasks).SyncRoot;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スレッド セーフであるかどうかを取得します。</summary>
+		/// 
+		/// <value>スレッド セーフである場合、<c>true</c>。</value>
+		bool ICollection.IsSynchronized
+		{
+			get
+			{
+				return true;
 			}
 		}
 
@@ -122,7 +146,7 @@ namespace danmaq.nineball.entity.manager
 		public int cleanup()
 		{
 			int result = 0;
-			lock (((ICollection)tasks).SyncRoot)
+			lock (SyncRoot)
 			{
 				for (int i = tasks.Count; --i >= 0; )
 				{
@@ -163,7 +187,7 @@ namespace danmaq.nineball.entity.manager
 		public IEntity Add(IState state)
 		{
 			IEntity task = null;
-			lock (((ICollection)tasks).SyncRoot)
+			lock (SyncRoot)
 			{
 				if (grave.Count > 0)
 				{
@@ -195,7 +219,7 @@ namespace danmaq.nineball.entity.manager
 		/// </exception>
 		public void AddRange(IEnumerable<IEntity> collection)
 		{
-			lock (((ICollection)tasks).SyncRoot)
+			lock (SyncRoot)
 			{
 				tasks.AddRange(collection);
 			}
@@ -215,7 +239,7 @@ namespace danmaq.nineball.entity.manager
 		/// <summary>管理しているタスクを全て削除します。</summary>
 		public void Clear()
 		{
-			lock (((ICollection)tasks).SyncRoot)
+			lock (SyncRoot)
 			{
 				for (int i = tasks.Count; --i >= 0; )
 				{
@@ -235,7 +259,7 @@ namespace danmaq.nineball.entity.manager
 		/// </exception>
 		public void ForEach(Action<IEntity> action)
 		{
-			lock (((ICollection)tasks).SyncRoot)
+			lock (SyncRoot)
 			{
 				for (int i = tasks.Count; --i >= 0; )
 				{
@@ -264,6 +288,17 @@ namespace danmaq.nineball.entity.manager
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return ((IEnumerable)tasks).GetEnumerator();
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>要素をコピーします。</summary>
+		/// <remarks>注意：墓場データはコピーされません。</remarks>
+		/// 
+		/// <param name="array">格納する配列。</param>
+		/// <param name="index">開始インデックス。</param>
+		void ICollection.CopyTo(Array array, int index)
+		{
+			((ICollection)tasks).CopyTo(array, index);
 		}
 	}
 }
