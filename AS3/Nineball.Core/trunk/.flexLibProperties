@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="danmaq.nineball.core.component.IDisposable"/>
+    <classEntry path="danmaq.nineball.core.component.task.ITask"/>
+    <classEntry path="danmaq.nineball.core.component.context.IContext"/>
+    <classEntry path="danmaq.nineball.core.component.state.IState"/>
+    <classEntry path="danmaq.nineball.core.component.context.CContextProxy"/>
+    <classEntry path="danmaq.nineball.core.component.state.CStateEmpty"/>
+    <classEntry path="danmaq.nineball.core.component.context.CContext"/>
+    <classEntry path="danmaq.nineball.core.component.state.CStateDelegate"/>
+    <classEntry path="danmaq.nineball.core.events.CDisposableEventDispatcher"/>
+    <classEntry path="danmaq.nineball.core.util.list.iterator.IAggregate"/>
+    <classEntry path="danmaq.nineball.core.util.list.iterator.IIterator"/>
+    <classEntry path="danmaq.nineball.core.util.list.random.IRandom"/>
+    <classEntry path="danmaq.nineball.core.util.list.random.CRandom"/>
+    <classEntry path="danmaq.nineball.core.util.list.random.CRandomIterator"/>
+    <classEntry path="danmaq.nineball.core.util.list.random.CLCG"/>
+    <classEntry path="danmaq.nineball.core.util.list.random.CXORShift"/>
+    <classEntry path="danmaq.nineball.core.util.list.random.CSFMT"/>
+    <classEntry path="danmaq.nineball.core.component.task.CTaskManager"/>
+    <classEntry path="danmaq.nineball.core.component.task.CTaskManagerProxy"/>
+    <classEntry path="danmaq.nineball.core.component.task.CStateTaskManager"/>
+    <classEntry path="danmaq.nineball.core.component.task.CTaskManagerIterator"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
