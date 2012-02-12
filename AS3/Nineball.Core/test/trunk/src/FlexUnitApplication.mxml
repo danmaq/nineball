@@ -6,7 +6,8 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:flexui="flexunit.flexui.*"
-			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
+			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()"
+			   viewSourceURL="srcview/index.html">
 	<fx:Script>
 		<![CDATA[
 			import danmaq.nineball.core.util.math.TMath;
