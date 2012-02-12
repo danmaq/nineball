@@ -5,14 +5,14 @@ package danmaq.nineball.core.component.task
 	
 	/**
 	 * タスク管理クラスと状態との橋渡しをするクラス。
-	 * 
+	 *
 	 * @author Mc(danmaq)
 	 */
 	public final class CTaskManagerProxy extends CContextProxy
 	{
 
 		//* constants ──────────────────────────────-*
-		
+
 		/** 現在稼働中のタスク一覧。 */
 		public const tasks:Vector.<ITask> = new Vector.<ITask>();
 		
@@ -38,7 +38,7 @@ package danmaq.nineball.core.component.task
 		
 		/**
 		 * タスク管理クラスを取得します。
-		 * 
+		 *
 		 * @return タスク管理クラス。
 		 */
 		public function get taskManager():CTaskManager
@@ -50,7 +50,7 @@ package danmaq.nineball.core.component.task
 
 		/**
 		 * 登録タスクに対し、1フレーム分の更新処理を実行するためのコールバックです。
-		 * 
+		 *
 		 * @param item タスク。
 		 * @param index インデックス番号。
 		 * @param vector タスク一覧。
@@ -92,7 +92,7 @@ package danmaq.nineball.core.component.task
 
 		/**
 		 * 登録タスクに対し、明示的に解放可能な状態にするためのコールバックです。
-		 * 
+		 *
 		 * @param item タスク。
 		 * @param index インデックス番号。
 		 * @param vector タスク一覧。
@@ -104,7 +104,7 @@ package danmaq.nineball.core.component.task
 		
 		/**
 		 * 追加予約されているタスクを登録するためのコールバックです。
-		 * 
+		 *
 		 * @param item タスク。
 		 * @param index インデックス番号。
 		 * @param vector タスク一覧。
@@ -116,7 +116,7 @@ package danmaq.nineball.core.component.task
 		
 		/**
 		 * 削除予約されているタスクを削除するためのコールバックです。
-		 * 
+		 *
 		 * @param item タスク。
 		 * @param index インデックス番号。
 		 * @param vector タスク一覧。
