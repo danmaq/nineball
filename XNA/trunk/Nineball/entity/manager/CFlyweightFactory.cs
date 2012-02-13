@@ -19,7 +19,7 @@ namespace danmaq.nineball.entity.manager
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>再利用を前提としたタスク管理クラス。</summary>
 	public class CFlyweightFactory
-		: CEntity, IEnumerable<IEntity>, ICollection
+		: CEntity, IList<IEntity>, ICollection
 	{
 
 		// TODO : ReadOnlyCollectionを継承して、IEntityを実装するとか
@@ -105,12 +105,7 @@ namespace danmaq.nineball.entity.manager
 		{
 			get
 			{
-				IEntity result;
-				lock (SyncRoot)
-				{
-					result = tasks[index];
-				}
-				return result;
+				return ((IList<IEntity>)this)[index];
 			}
 		}
 
@@ -129,12 +124,51 @@ namespace danmaq.nineball.entity.manager
 		//* -----------------------------------------------------------------------*
 		/// <summary>スレッド セーフであるかどうかを取得します。</summary>
 		/// 
-		/// <value>スレッド セーフである場合、<c>true</c>。</value>
+		/// <value><c>true</c>。</value>
 		bool ICollection.IsSynchronized
 		{
 			get
 			{
 				return true;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>読み込み専用であるかどうかを取得します。</summary>
+		/// 
+		/// <value>
+		/// <c>true</c>。Flyweightの原則上、通常の追加・削除は制限されています。
+		/// </value>
+		bool ICollection<IEntity>.IsReadOnly
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>指定したインデックスにある要素を取得します。</summary>
+		/// <remarks>Flyweightの原則上、書き込みは実装していません。</remarks>
+		/// 
+		/// <param name="index">
+		/// 取得する要素の、<c>0</c>から始まるインデックス番号。
+		/// </param>
+		/// <value>指定したインデックスにある要素。</value>
+		IEntity IList<IEntity>.this[int index]
+		{
+			get
+			{
+				IEntity result;
+				lock (SyncRoot)
+				{
+					result = tasks[index];
+				}
+				return result;
+			}
+			set
+			{
+				throw new NotImplementedException();
 			}
 		}
 
@@ -212,29 +246,35 @@ namespace danmaq.nineball.entity.manager
 		}
 
 		//* -----------------------------------------------------------------------*
-		/// <summary>タスクをまとめて追加します。</summary>
-		/// <remarks>このメソッドではFlyweightな再利用はできません。</remarks>
-		/// 
-		/// <param name="collection">追加するタスク一覧。</param>
-		/// <exception cref="System.ArgumentNullException">
-		/// 引数が<c>null</c>の場合。
-		/// </exception>
-		public void AddRange(IEnumerable<IEntity> collection)
-		{
-			lock (SyncRoot)
-			{
-				tasks.AddRange(collection);
-			}
-		}
-
-		//* -----------------------------------------------------------------------*
 		/// <summary>特定の値が格納されているかどうかを判断します。</summary>
 		/// 
 		/// <param name="task">検索するオブジェクト。</param>
 		/// <returns>存在する場合、<c>true</c>。</returns>
 		public bool Contains(IEntity task)
 		{
-			return tasks.Contains(task);
+			bool result;
+			lock (SyncRoot)
+			{
+				result = tasks.Contains(task);
+			}
+			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>特定の値が格納されているかどうかを判断します。</summary>
+		/// 
+		/// <param name="item">検索するオブジェクト。</param>
+		/// <returns>
+		/// 存在する場合、該当タスクのインデックス。そうでない場合、負数。
+		/// </returns>
+		public int IndexOf(IEntity item)
+		{
+			int result;
+			lock (SyncRoot)
+			{
+				result = tasks.IndexOf(item);
+			}
+			return result;
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -301,6 +341,37 @@ namespace danmaq.nineball.entity.manager
 		void ICollection.CopyTo(Array array, int index)
 		{
 			((ICollection)tasks).CopyTo(array, index);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>要素をコピーします。</summary>
+		/// <remarks>注意：墓場データはコピーされません。</remarks>
+		/// 
+		/// <param name="array">格納する配列。</param>
+		/// <param name="arrayIndex">開始インデックス。</param>
+		void ICollection<IEntity>.CopyTo(IEntity[] array, int arrayIndex)
+		{
+			((ICollection<IEntity>)tasks).CopyTo(array, arrayIndex);
+		}
+
+		void IList<IEntity>.Insert(int index, IEntity item)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IList<IEntity>.RemoveAt(int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		void ICollection<IEntity>.Add(IEntity item)
+		{
+			throw new NotImplementedException();
+		}
+
+		bool ICollection<IEntity>.Remove(IEntity item)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
