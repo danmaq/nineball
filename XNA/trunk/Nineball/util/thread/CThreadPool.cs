@@ -192,9 +192,10 @@ namespace danmaq.nineball.util.thread
 			}
 			set
 			{
-				if (value != m_wait)
+				int v = Math.Max(0, value);
+				if (v != m_wait)
 				{
-					int count = CThreadPool.count;
+					m_wait = v;
 					reboot();
 				}
 			}
