@@ -52,11 +52,13 @@ namespace danmaq.nineball.util.thread
 			/// 
 			/// <param name="priority">スレッドの優先度。</param>
 			/// <param name="sleep">スレッドが動作するたびに休眠する時間(ミリ秒)。</param>
-			public CThreadInfo(ThreadPriority priority, int sleep)
+			/// <param name="interval">休眠までのタスク消化回数。</param>
+			public CThreadInfo(ThreadPriority priority, int sleep, int interval)
 			{
 				ThreadStart method = () =>
 				{
 					bool loop = true;
+					int counter = 0;
 					do
 					{
 						KeyValuePair<WaitCallback, object> info = CThreadPool.pop();
@@ -64,7 +66,7 @@ namespace danmaq.nineball.util.thread
 						{
 							info.Key(info.Value);
 						}
-						Thread.Sleep(sleep);
+						Thread.Sleep(++counter % interval == 0 ? sleep : 0);
 						lock (syncLock)
 						{
 							loop = !m_terminate;
@@ -111,6 +113,9 @@ namespace danmaq.nineball.util.thread
 		/// <summary>休眠時間。</summary>
 		private static int m_wait = 0;
 
+		/// <summary>休眠する間隔。</summary>
+		private static int m_interval = 1;
+
 		//* ─────-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿*
 		//* properties ──────────────────────────────*
 
@@ -135,7 +140,8 @@ namespace danmaq.nineball.util.thread
 				lock (syncLock)
 				{
 					int gap = value - threads.Count;
-					for (int g = gap; --g >= 0; threads.Add(new CThreadInfo(priority, wait)))
+					for (int g = gap; --g >= 0;
+						threads.Add(new CThreadInfo(priority, wait, interval)))
 						;
 					for (int g = gap; ++g <= 0; )
 					{
@@ -164,9 +170,7 @@ namespace danmaq.nineball.util.thread
 				if (value != m_priority)
 				{
 					int count = CThreadPool.count;
-					CThreadPool.count = 0;
-					m_priority = value;
-					CThreadPool.count = count;
+					reboot();
 				}
 			}
 		}
@@ -191,9 +195,31 @@ namespace danmaq.nineball.util.thread
 				if (value != m_wait)
 				{
 					int count = CThreadPool.count;
-					CThreadPool.count = 0;
-					m_wait = value;
-					CThreadPool.count = count;
+					reboot();
+				}
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スレッド休眠が発生するタスク消化回数を取得/設定します。</summary>
+		/// <remarks>
+		/// 注意：優先度を変更すると、いったん全てのスレッドがリセットされます。
+		/// </remarks>
+		/// 
+		/// <value>タスク消化回数。</value>
+		public static int interval
+		{
+			get
+			{
+				return m_interval;
+			}
+			set
+			{
+				int v = Math.Max(1, value);
+				if (v != m_interval)
+				{
+					m_interval = v;
+					reboot();
 				}
 			}
 		}
@@ -229,6 +255,15 @@ namespace danmaq.nineball.util.thread
 				callback(state);
 			}
 			return result;
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>スレッドを再起動します。</summary>
+		public static void reboot()
+		{
+			int count = CThreadPool.count;
+			CThreadPool.count = 0;
+			CThreadPool.count = count;
 		}
 
 		//* -----------------------------------------------------------------------*
