@@ -44,7 +44,7 @@ package danmaq.nineball.core.util.list.random
 		 */
 		override public function get max():uint
 		{
-			return 32767;
+			return 0x7FFF;
 		}
 		
 		/**

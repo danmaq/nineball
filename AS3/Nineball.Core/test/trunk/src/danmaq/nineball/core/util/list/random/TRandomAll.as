@@ -17,7 +17,7 @@ package danmaq.nineball.core.util.list.random
 		public function setUp():void
 		{
 			rnds.splice(0, rnds.length);
-			rnds.push(new CLCG(), new CXORShift(), new CSFMT());
+			rnds.push(new CLCG(), new CXORShift(), new CSFMT(), new CSystem());
 		}
 		
 		[After]
