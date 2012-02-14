@@ -3,16 +3,16 @@ package danmaq.nineball.core.util.list.random
 	
 	/**
 	 * SFMT法(改良版Mersenne twister)を用いた疑似乱数ジェネレータ。
-	 * 
+	 *
 	 * @author Mc(danmaq)
-	 * 
+	 *
 	 *	Copyright (c) 2006,2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima
 	 *	University. All rights reserved.
-	 *	
+	 *
 	 *	Redistribution and use in source and binary forms, with or without
 	 *	modification, are permitted provided that the following conditions are
 	 *	met:
-	 *	
+	 *
 	 *	    * Redistributions of source code must retain the above copyright
 	 *	      notice, this list of conditions and the following disclaimer.
 	 *	    * Redistributions in binary form must reproduce the above
@@ -23,7 +23,7 @@ package danmaq.nineball.core.util.list.random
 	 *	      its contributors may be used to endorse or promote products
 	 *	      derived from this software without specific prior written
 	 *	      permission.
-	 *	
+	 *
 	 *	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 	 *	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 	 *	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -35,7 +35,7 @@ package danmaq.nineball.core.util.list.random
 	 *	THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 	 *	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	 *	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	 * 
+	 *
 	 */
 	public final class CSFMT extends CRandom
 	{
@@ -55,7 +55,7 @@ package danmaq.nineball.core.util.list.random
 		/**
 		 * コンストラクタ。
 		 * 初期シード値に負数を指定した場合、システム依存値が設定されます。
-		 * 
+		 *
 		 * @param seed シード値。
 		 */
 		public function CSFMT(seed:int=int.MIN_VALUE)
@@ -66,7 +66,9 @@ package danmaq.nineball.core.util.list.random
 		//* instance properties ─────────────────────────-*
 		
 		/**
-		 * @inheritDoc
+		 * 最大値を取得します。
+		 *
+		 * @return 最大値。
 		 */
 		override public function get max():uint
 		{
@@ -75,7 +77,7 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
-		 * 
+		 *
 		 * @return 乱数値。
 		 */
 		override public function get next():uint
