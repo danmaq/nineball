@@ -17,7 +17,7 @@ package danmaq.nineball.core.util.list.random
 		private const bitmap:BitmapData = new BitmapData(16, 16);
 		
 		/** 座標インデックス情報。 */
-		private const posiion:Point = new Point();
+		private const position:Point = new Point();
 		
 		//* constructor & destructor ───────────────────────*
 		
@@ -41,7 +41,7 @@ package danmaq.nineball.core.util.list.random
 		 */
 		override public function get max():uint
 		{
-			return 255;
+			return 0xFFFFFF;
 		}
 		
 		/**
@@ -52,7 +52,17 @@ package danmaq.nineball.core.util.list.random
 		override public function get next():uint
 		{
 			addCounter();
-			return 0;
+			var result:int = bitmap.getPixel(position.x, position.y);
+			if(++position.x >= bitmap.width)
+			{
+				position.x = 0;
+				if(++position.y >= bitmap.height)
+				{
+					position.y = 0;
+					bitmap.noise(result);
+				}
+			}
+			return result & max;
 		}
 		
 		//* instance methods ───────────────────────────*
@@ -64,9 +74,8 @@ package danmaq.nineball.core.util.list.random
 		{
 			super.reset(seed);
 			bitmap.noise(seed);
-			posiion.x = 0;
-			posiion.y = 0;
+			position.x = 0;
+			position.y = 0;
 		}
 	}
-
 }

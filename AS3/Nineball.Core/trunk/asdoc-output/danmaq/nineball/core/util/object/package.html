@@ -19,6 +19,9 @@
 	 ロジックとしては引数がすべてnullでない場合にSingleton違反と見なし例外を発生させます。
 	 原理的に内部における余計な生成の場合、対応しきれない場合があります。
 	 
+	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#blockStatic()" class="signatureLink">blockStatic</a>():void</div><div class="summaryTableDescription">
+	 静的クラスのインスタンス生成を抑制します。
+	 
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader"> Function detail </div><a name="blockAbstract()"></a><a name="blockAbstract(Object,Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockAbstract</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td></tr></table><div class="detailBody"><code> public function blockAbstract(instance:Object, constructor:Object):void</code><p></p><p></p><p>
 	 抽象クラスのコンストラクタに記述することで、抽象クラスが直接生成されることを阻止します。
 	 
@@ -34,4 +37,8 @@
 	 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">expr</span>:Object</code> &mdash; 現在のインスタンス。
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code>... <span class="label">args</span></code> &mdash; Singletonオブジェクト一覧。
 	 </td></tr></table></p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ArgumentError </code> &mdash; 引数が不足しているか、またはSingleton違反を検出した場合。
-	 </td></tr></table></div><p></p><center class="copyright"><footer></footer><br/>Sun Feb 12 2012, 10:35 PM +09:00  </center></div></body></html>
+	 </td></tr></table></div><a name="blockStatic()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockStatic</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockStatic():void</code><p></p><p></p><p>
+	 静的クラスのインスタンス生成を抑制します。
+	 
+	 </p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ArgumentError </code> &mdash; 常に発生します。
+	 </td></tr></table></div><p></p><center class="copyright"><footer></footer><br/>Tue Feb 14 2012, 11:45 PM +09:00  </center></div></body></html>
