@@ -6,8 +6,8 @@ package danmaq.nineball.core.util.list.random
 	import flash.utils.getTimer;
 	
 	/**
-	 * 疑似乱数ジェネレータの基底クラス。
-	 * 
+	 * 疑似乱数ジェネレータの基底となる抽象クラス。
+	 *
 	 * @author Mc(danmaq)
 	 */
 	public class CRandom implements IRandom
@@ -28,7 +28,9 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * コンストラクタ。
-		 * 
+		 *
+		 * これは抽象クラスです。このクラスを直接生成することはできません。
+		 *
 		 * @param seed シード値。負数を指定した場合、システム依存値が設定されます。
 		 */
 		public function CRandom(seed:int=int.MIN_VALUE)
@@ -42,7 +44,7 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 擬似乱数系列の開始値を計算するために使用するシード値を取得します。
-		 * 
+		 *
 		 * @return シード値。
 		 */
 		public function get seed():uint
@@ -52,7 +54,7 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 乱数の使用カウンタを取得します。
-		 * 
+		 *
 		 * @return 乱数の使用カウント値。
 		 */
 		public function get counter():uint
@@ -62,9 +64,9 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 最大値を取得します。
-		 * 
+		 *
 		 * このメソッドは抽象メソッドです。継承先で上書きしないと例外が発生します。
-		 * 
+		 *
 		 * @return 最大値。
 		 */
 		public function get max():uint
@@ -74,9 +76,9 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
-		 * 
+		 *
 		 * このメソッドは抽象メソッドです。継承先で上書きしないと例外が発生します。
-		 * 
+		 *
 		 * @return 乱数値。
 		 */
 		public function get next():uint
@@ -86,9 +88,9 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 集合を反復処理する列挙子を取得します。
-		 * 
+		 *
 		 * このクラスの反復子は常に同一のオブジェクトを返します。
-		 * 
+		 *
 		 * @return 列挙子。
 		 */
 		public function get iterator():IIterator
@@ -100,7 +102,7 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 乱数を初期化します。
-		 * 
+		 *
 		 * @param seed シード値。負数を指定した場合、システム依存値が設定されます。
 		 */
 		public function reset(seed:int=int.MIN_VALUE):void
