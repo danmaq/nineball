@@ -3,7 +3,7 @@ package danmaq.nineball.core.util.list.random
 	
 	/**
 	 * 線形合同法を用いた疑似乱数ジェネレータ。
-	 * 
+	 *
 	 * @author Mc(danmaq)
 	 */
 	public final class CLCG extends CRandom
@@ -27,7 +27,7 @@ package danmaq.nineball.core.util.list.random
 		/**
 		 * コンストラクタ。
 		 * 初期シード値に負数を指定した場合、システム依存値が設定されます。
-		 * 
+		 *
 		 * @param seed シード値。
 		 */
 		public function CLCG(seed:int=int.MIN_VALUE)
@@ -38,7 +38,9 @@ package danmaq.nineball.core.util.list.random
 		//* instance properties ─────────────────────────-*
 		
 		/**
-		 * @inheritDoc
+		 * 最大値を取得します。
+		 *
+		 * @return 最大値。
 		 */
 		override public function get max():uint
 		{
@@ -47,7 +49,7 @@ package danmaq.nineball.core.util.list.random
 		
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
-		 * 
+		 *
 		 * @return 乱数値。
 		 */
 		override public function get next():uint

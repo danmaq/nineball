@@ -1,27 +1,23 @@
 package danmaq.nineball.core.util.list.random
 {
+	import flash.display.BitmapData;
+	import flash.geom.Point;
 
 	/**
-	 * XOR Shift法を用いた疑似乱数ジェネレータ。
+	 * (恐らく)システム既定のものを用いた疑似乱数ジェネレータ。
 	 *
 	 * @author Mc(danmaq)
 	 */
-	public final class CXORShift extends CRandom
+	public final class CSystem extends CRandom
 	{
 		
-		//* fields ────────────────────────────────*
+		//* constants ──────────────────────────────-*
 		
-		/** 擬似乱数を計算するために使用する数値。 */
-		private var _x:uint;
+		/** 擬似乱数を計算に使用するビットマップ画像。 */
+		private const bitmap:BitmapData = new BitmapData(16, 16);
 		
-		/** 擬似乱数を計算するために使用する数値。 */
-		private var _y:uint;
-		
-		/** 擬似乱数を計算するために使用する数値。 */
-		private var _z:uint;
-		
-		/** 擬似乱数を計算するために使用する数値。 */
-		private var _w:uint;
+		/** 座標インデックス情報。 */
+		private const posiion:Point = new Point();
 		
 		//* constructor & destructor ───────────────────────*
 		
@@ -31,7 +27,7 @@ package danmaq.nineball.core.util.list.random
 		 *
 		 * @param seed シード値。
 		 */
-		public function CXORShift(seed:int=int.MIN_VALUE)
+		public function CSystem(seed:int=int.MIN_VALUE)
 		{
 			super(seed);
 		}
@@ -45,7 +41,7 @@ package danmaq.nineball.core.util.list.random
 		 */
 		override public function get max():uint
 		{
-			return uint.MAX_VALUE;
+			return 255;
 		}
 		
 		/**
@@ -56,11 +52,7 @@ package danmaq.nineball.core.util.list.random
 		override public function get next():uint
 		{
 			addCounter();
-			var t:uint = (_x ^ (_x << 11));
-			_x = _y;
-			_y = _z;
-			_z = _w;
-			return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
+			return 0;
 		}
 		
 		//* instance methods ───────────────────────────*
@@ -71,11 +63,10 @@ package danmaq.nineball.core.util.list.random
 		override public function reset(seed:int=int.MIN_VALUE):void
 		{
 			super.reset(seed);
-			seed = this.seed;
-			_w = seed;
-			_x = seed << 16 + seed >> 16;
-			_y = seed + _x;
-			_z = _x ^ _y;
+			bitmap.noise(seed);
+			posiion.x = 0;
+			posiion.y = 0;
 		}
 	}
+
 }
