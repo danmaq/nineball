@@ -13,9 +13,9 @@ package danmaq.nineball.core.util.math.integer
 	{
 		if (limit1 > limit2)
 		{
-			var tmp:int = limit1;
-			limit1 = limit2;
-			limit2 = tmp;
+			limit1 ^= limit2;
+			limit2 ^= limit1;
+			limit1 ^= limit2;
 		}
 		return limit1 == limit2 ? limit1 : min(limit2, max(limit1, expr));
 	}
