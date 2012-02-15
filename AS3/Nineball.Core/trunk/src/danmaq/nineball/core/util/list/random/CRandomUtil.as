@@ -158,9 +158,9 @@ package danmaq.nineball.core.util.list.random
 		{
 			if (limit1 > limit2)
 			{
-				var tmp:int = limit1;
-				limit1 = limit2;
-				limit2 = tmp;
+				limit1 ^= limit2;
+				limit2 ^= limit1;
+				limit1 ^= limit2;
 			}
 			return next % (limit2 - limit1) + limit1;
 		}
