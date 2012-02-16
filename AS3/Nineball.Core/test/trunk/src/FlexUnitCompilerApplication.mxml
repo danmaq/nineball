@@ -8,6 +8,7 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
 	<fx:Script>
 		<![CDATA[
+			import danmaq.nineball.core.util.math.integer.TMath;
 			import danmaq.nineball.core.component.task.TTaskManager;
 			import danmaq.nineball.core.util.math.TMath;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
@@ -32,6 +33,8 @@
 			private var danmaq_nineball_core_util_math_TMath_obj:danmaq.nineball.core.util.math.TMath;
 			
 			private var danmaq_nineball_core_component_task_TTaskManager_obj:danmaq.nineball.core.component.task.TTaskManager;
+			
+			private var danmaq_nineball_core_util_math_integer_TMath_obj:danmaq.nineball.core.util.math.integer.TMath;
 		]]>
 	</fx:Script>
 	<fx:Declarations>

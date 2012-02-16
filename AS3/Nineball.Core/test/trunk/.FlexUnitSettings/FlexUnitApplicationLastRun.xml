@@ -10,6 +10,7 @@
 <testsuite name="danmaq.nineball.core.util.list.random:TRandom" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.list.random:TRandomAll" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.math:TMath" type="testcaseclass"/>
+<testsuite name="danmaq.nineball.core.util.math.integer:TMath" type="testcaseclass"/>
 </testsuite>
 <portNumber value="8765" />
 </testrun>

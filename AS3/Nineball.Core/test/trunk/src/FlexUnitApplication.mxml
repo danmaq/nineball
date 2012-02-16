@@ -6,10 +6,10 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:flexui="flexunit.flexui.*"
-			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()"
-			   viewSourceURL="srcview/index.html">
+			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
 	<fx:Script>
 		<![CDATA[
+			import danmaq.nineball.core.util.math.integer.TMath;
 			import danmaq.nineball.core.util.math.TMath;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
 			import danmaq.nineball.core.util.list.random.TRandom;
@@ -32,6 +32,7 @@
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandom);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomAll);
 				testsToRun.push(danmaq.nineball.core.util.math.TMath);
+				testsToRun.push(danmaq.nineball.core.util.math.integer.TMath);
 				return testsToRun;
 			}
 			
