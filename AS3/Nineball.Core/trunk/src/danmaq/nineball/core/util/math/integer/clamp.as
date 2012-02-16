@@ -17,6 +17,14 @@ package danmaq.nineball.core.util.math.integer
 			limit2 ^= limit1;
 			limit1 ^= limit2;
 		}
-		return limit1 == limit2 ? limit1 : min(limit2, max(limit1, expr));
+		if(limit1 < expr)
+		{
+			expr = limit1; 
+		}
+		else if(limit2 > expr)
+		{
+			expr = limit2; 
+		}
+		return expr;
 	}
 }
