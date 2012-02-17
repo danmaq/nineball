@@ -46,13 +46,13 @@ package danmaq.nineball.core.util.math.integer
 			Assert.assertFalse(danmaq.nineball.core.util.math.integer.contains(-7, b, a));
 			Assert.assertFalse(danmaq.nineball.core.util.math.integer.contains(4, b, a));
 			var tn:int = getTimer();
-			for(i = 300000; --i >= 0; )
+			for(i = 500000; --i >= 0; )
 			{
 				danmaq.nineball.core.util.math.contains(1, 0, 5);
 			}
 			tn = getTimer() - tn;
 			var ti:int = getTimer();
-			for(i = 300000; --i >= 0; )
+			for(i = 500000; --i >= 0; )
 			{
 				danmaq.nineball.core.util.math.integer.contains(1, 0, 5);
 			}
