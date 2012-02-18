@@ -58,5 +58,22 @@ package danmaq.nineball.core.util.math
 			Assert.assertFalse(contains(4, b, a));
 			Assert.assertFalse(contains(Number.POSITIVE_INFINITY, b, a));
 		}
+		
+		[Test]
+		public function testClamp():void
+		{
+			var a:Number = -5.25;
+			var b:Number = 3.1;
+			Assert.assertEquals(1, clamp(1, a, b));
+			Assert.assertEquals(-5.25, clamp(-7, a, b));
+			Assert.assertEquals(-5.25, clamp(Number.NEGATIVE_INFINITY, a, b));
+			Assert.assertEquals(3.1, clamp(4, a, b));
+			Assert.assertEquals(3.1, clamp(Number.POSITIVE_INFINITY, a, b));
+			Assert.assertEquals(1, clamp(1, b, a));
+			Assert.assertEquals(-5.25, clamp(-7, b, a));
+			Assert.assertEquals(-5.25, clamp(Number.NEGATIVE_INFINITY, b, a));
+			Assert.assertEquals(3.1, clamp(4, b, a));
+			Assert.assertEquals(3.1, clamp(Number.POSITIVE_INFINITY, b, a));
+		}
 	}
 }

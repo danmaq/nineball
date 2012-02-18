@@ -1,6 +1,6 @@
 package danmaq.nineball.core.component.task
 {
-	import danmaq.nineball.core.component.context.CContextProxy;
+	import danmaq.nineball.core.component.context.CContextBody;
 	import danmaq.nineball.core.component.context.IContext;
 	
 	/**
@@ -8,7 +8,7 @@ package danmaq.nineball.core.component.task
 	 *
 	 * @author Mc(danmaq)
 	 */
-	public final class CTaskManagerProxy extends CContextProxy
+	public final class CTaskManagerBody extends CContextBody
 	{
 
 		//* constants ──────────────────────────────-*
@@ -29,7 +29,7 @@ package danmaq.nineball.core.component.task
 		 *
 		 * @param context タスク管理クラス。
 		 */
-		public function CTaskManagerProxy(context:CTaskManager)
+		public function CTaskManagerBody(context:CTaskManager)
 		{
 			super(context);
 		}

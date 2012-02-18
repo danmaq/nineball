@@ -5,17 +5,17 @@ package danmaq.nineball.core.component.context
 	
 	import flexunit.framework.Assert;
 	
-	public class TContextProxy
+	public class TContextBody
 	{		
 
 		private var context:IContext;
-		private var proxy:CContextProxy;
+		private var body:CContextBody;
 		
 		[Before]
 		public function setUp():void
 		{
 			context = new CContext(CStateDelegate.instance);
-			proxy = new CContextProxy(context);
+			body = new CContextBody(context);
 		}
 		
 		[After]
@@ -23,8 +23,8 @@ package danmaq.nineball.core.component.context
 		{
 			context.dispose();
 			context = null;
-			proxy.dispose();
-			proxy = null;
+			body.dispose();
+			body = null;
 			CStateDelegate.instance.dispose();
 		}
 		
@@ -41,7 +41,7 @@ package danmaq.nineball.core.component.context
 		[Test]
 		public function testGet_context():void
 		{
-			Assert.assertObjectEquals(proxy.context, context);
+			Assert.assertObjectEquals(body.context, context);
 		}
 		
 		[Test]
@@ -52,19 +52,19 @@ package danmaq.nineball.core.component.context
 			{
 				passed = true;
 			};
-			Assert.assertEquals(proxy.counter, 0);
-			proxy.update();
+			Assert.assertEquals(body.counter, 0);
+			body.update();
 			Assert.assertTrue(passed);
-			Assert.assertEquals(proxy.counter, 1);
+			Assert.assertEquals(body.counter, 1);
 		}
 		
 		[Test]
 		public function testDispose():void
 		{
-			proxy.update();
-			proxy.dispose();
-			Assert.assertObjectEquals(proxy.context, context);
-			Assert.assertEquals(proxy.counter, 0);
+			body.update();
+			body.dispose();
+			Assert.assertObjectEquals(body.context, context);
+			Assert.assertEquals(body.counter, 0);
 		}
 	}
 }

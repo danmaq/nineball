@@ -15,7 +15,7 @@ package danmaq.nineball.core.component.task
 		//* fields ────────────────────────────────*
 		
 		/** タスク管理クラスの中身。 */
-		private var _proxy:CTaskManagerProxy;
+		private var _body:CTaskManagerBody;
 
 		/** インデックス。 */
 		private var _index:int;
@@ -25,11 +25,11 @@ package danmaq.nineball.core.component.task
 		/**
 		 * コンストラクタ。
 		 * 
-		 * @param proxy タスク管理クラスの中身。
+		 * @param body タスク管理クラスの中身。
 		 */
-		public function CTaskManagerIterator(proxy:CTaskManagerProxy)
+		public function CTaskManagerIterator(body:CTaskManagerBody)
 		{
-			_proxy = proxy;
+			_body = body;
 		}
 		
 		//* instance properties ─────────────────────────-*
@@ -46,7 +46,7 @@ package danmaq.nineball.core.component.task
 			{
 				throw new IllegalOperationError("反復子は既に終端まで到達しています。");
 			}
-			return _proxy.tasks[_index++];
+			return _body.tasks[_index++];
 		}
 		
 		/**
@@ -56,7 +56,7 @@ package danmaq.nineball.core.component.task
 		 */
 		public function get hasNext():Boolean
 		{
-			return _index < _proxy.tasks.length;
+			return _index < _body.tasks.length;
 		}
 		
 		//* instance methods ───────────────────────────*

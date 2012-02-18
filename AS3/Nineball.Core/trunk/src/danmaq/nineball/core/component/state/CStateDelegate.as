@@ -2,7 +2,7 @@ package danmaq.nineball.core.component.state
 {
 	
 	import danmaq.nineball.core.component.IDisposable;
-	import danmaq.nineball.core.component.context.CContextProxy;
+	import danmaq.nineball.core.component.context.CContextBody;
 	import danmaq.nineball.core.util.object.blockDuplicate;
 	
 	import flash.events.Event;
@@ -116,9 +116,9 @@ package danmaq.nineball.core.component.state
 		/**
 		 * 何もしません。
 		 * 
-		 * @param proxy 実体のアクセサ。
+		 * @param body 実体のアクセサ。
 		 */
-		private static function noop(proxy:CContextProxy):void
+		private static function noop(body:CContextBody):void
 		{
 		}
 		
@@ -127,31 +127,31 @@ package danmaq.nineball.core.component.state
 		/**
 		 * 状態が開始された際に呼び出されます。
 		 * 
-		 * @param proxy 実体へのアクセサ。
+		 * @param body 実体へのアクセサ。
 		 */
-		public function setup(proxy:CContextProxy):void
+		public function setup(body:CContextBody):void
 		{
-			onSetup(proxy);
+			onSetup(body);
 		}
 		
 		/**
 		 * 1フレーム分の更新処理を実行します。
 		 * 
-		 * @param proxy 実体へのアクセサ。
+		 * @param body 実体へのアクセサ。
 		 */
-		public function update(proxy:CContextProxy):void
+		public function update(body:CContextBody):void
 		{
-			onUpdate(proxy);
+			onUpdate(body);
 		}
 		
 		/**
 		 * 別の状態へと移行される際に呼び出されます。
 		 * 
-		 * @param proxy 実体のアクセサ。
+		 * @param body 実体のアクセサ。
 		 */
-		public function teardown(proxy:CContextProxy):void
+		public function teardown(body:CContextBody):void
 		{
-			onTeardown(proxy);
+			onTeardown(body);
 		}
 		
 		/**

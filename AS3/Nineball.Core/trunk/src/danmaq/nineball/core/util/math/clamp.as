@@ -17,11 +17,11 @@ package danmaq.nineball.core.util.math
 			limit1 = limit2;
 			limit2 = tmp;
 		}
-		if(limit1 < expr)
+		if(limit1 > expr)
 		{
 			expr = limit1; 
 		}
-		else if(limit2 > expr)
+		else if(limit2 < expr)
 		{
 			expr = limit2; 
 		}

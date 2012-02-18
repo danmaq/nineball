@@ -1,7 +1,7 @@
 package danmaq.nineball.core.component.task
 {
 	import danmaq.nineball.core.component.context.CContext;
-	import danmaq.nineball.core.component.context.CContextProxy;
+	import danmaq.nineball.core.component.context.CContextBody;
 	import danmaq.nineball.core.component.state.CStateDelegate;
 	import danmaq.nineball.core.util.list.iterator.IIterator;
 	
@@ -13,14 +13,14 @@ package danmaq.nineball.core.component.task
 		private var A:CContext;
 		private var B:CContext;
 		private var taskManager:CTaskManager;
-		private var proxy:CTaskManagerProxy;
+		private var body:CTaskManagerBody;
 		
 		[Before]
 		public function setUp():void
 		{
-			CStateDelegate.onSetup = function(o:CContextProxy):void
+			CStateDelegate.onSetup = function(o:CContextBody):void
 			{
-				proxy = CTaskManagerProxy(o);
+				body = CTaskManagerBody(o);
 			};
 			taskManager = new CTaskManager(CStateDelegate.instance);
 			CStateDelegate.instance.dispose();
@@ -60,27 +60,27 @@ package danmaq.nineball.core.component.task
 		[Test]
 		public function testAddReserve():void
 		{
-			Assert.assertEquals(0, proxy.add.length);
+			Assert.assertEquals(0, body.add.length);
 			taskManager.addReserve(A);
-			Assert.assertEquals(1, proxy.add.length);
+			Assert.assertEquals(1, body.add.length);
 			taskManager.addReserve(B);
-			Assert.assertEquals(2, proxy.add.length);
+			Assert.assertEquals(2, body.add.length);
 			taskManager.addReserve(A);
-			Assert.assertEquals(2, proxy.add.length);
+			Assert.assertEquals(2, body.add.length);
 			taskManager.commitReserve();
-			Assert.assertEquals(0, proxy.add.length);
+			Assert.assertEquals(0, body.add.length);
 			taskManager.addReserve(B);
-			Assert.assertEquals(0, proxy.add.length);
+			Assert.assertEquals(0, body.add.length);
 
 			taskManager.clear();
 			taskManager.addReserve(A);
 			taskManager.commitReserve();
 			taskManager.addReserve(B);
-			Assert.assertEquals(1, proxy.add.length);
+			Assert.assertEquals(1, body.add.length);
 			taskManager.removeReserve(A);
-			Assert.assertEquals(1, proxy.add.length);
+			Assert.assertEquals(1, body.add.length);
 			taskManager.removeReserve(B);
-			Assert.assertEquals(0, proxy.add.length);
+			Assert.assertEquals(0, body.add.length);
 		}
 		
 		[Test]
@@ -90,28 +90,28 @@ package danmaq.nineball.core.component.task
 			taskManager.commitReserve();
 			taskManager.addReserve(B);
 			taskManager.removeReserve(A);
-			Assert.assertEquals(1, proxy.tasks.length);
-			Assert.assertEquals(1, proxy.add.length);
-			Assert.assertEquals(1, proxy.remove.length);
+			Assert.assertEquals(1, body.tasks.length);
+			Assert.assertEquals(1, body.add.length);
+			Assert.assertEquals(1, body.remove.length);
 			taskManager.clear();
-			Assert.assertEquals(0, proxy.tasks.length);
-			Assert.assertEquals(0, proxy.add.length);
-			Assert.assertEquals(0, proxy.remove.length);
+			Assert.assertEquals(0, body.tasks.length);
+			Assert.assertEquals(0, body.add.length);
+			Assert.assertEquals(0, body.remove.length);
 		}
 		
 		[Test]
 		public function testCommitReserve():void
 		{
-			Assert.assertEquals(0, proxy.tasks.length);
+			Assert.assertEquals(0, body.tasks.length);
 			taskManager.addReserve(A);
 			taskManager.addReserve(B);
-			Assert.assertEquals(0, proxy.tasks.length);
+			Assert.assertEquals(0, body.tasks.length);
 			taskManager.commitReserve();
-			Assert.assertEquals(2, proxy.tasks.length);
+			Assert.assertEquals(2, body.tasks.length);
 			taskManager.removeReserve(A);
-			Assert.assertEquals(2, proxy.tasks.length);
+			Assert.assertEquals(2, body.tasks.length);
 			taskManager.commitReserve();
-			Assert.assertEquals(1, proxy.tasks.length);
+			Assert.assertEquals(1, body.tasks.length);
 		}
 		
 		[Test]
@@ -175,39 +175,39 @@ package danmaq.nineball.core.component.task
 			taskManager.addReserve(A);
 			taskManager.addReserve(B);
 			taskManager.commitReserve();
-			Assert.assertEquals(0, proxy.remove.length);
+			Assert.assertEquals(0, body.remove.length);
 			taskManager.removeReserve(A);
-			Assert.assertEquals(1, proxy.remove.length);
+			Assert.assertEquals(1, body.remove.length);
 			taskManager.removeReserve(A);
-			Assert.assertEquals(1, proxy.remove.length);
+			Assert.assertEquals(1, body.remove.length);
 			taskManager.removeReserve(B);
-			Assert.assertEquals(2, proxy.remove.length);
+			Assert.assertEquals(2, body.remove.length);
 			taskManager.commitReserve();
-			Assert.assertEquals(0, proxy.remove.length);
+			Assert.assertEquals(0, body.remove.length);
 			taskManager.removeReserve(B);
-			Assert.assertEquals(0, proxy.remove.length);
+			Assert.assertEquals(0, body.remove.length);
 
 			taskManager.clear();
 			taskManager.addReserve(A);
 			taskManager.commitReserve();
 			taskManager.removeReserve(A);
-			Assert.assertEquals(1, proxy.remove.length);
+			Assert.assertEquals(1, body.remove.length);
 			taskManager.addReserve(A);
-			Assert.assertEquals(0, proxy.remove.length);
-			Assert.assertEquals(0, proxy.add.length);
+			Assert.assertEquals(0, body.remove.length);
+			Assert.assertEquals(0, body.add.length);
 		}
 		
 		[Test]
 		public function testUpdate():void
 		{
 			var passed:int = 0;
-			CStateDelegate.onUpdate = function(o:CContextProxy):void
+			CStateDelegate.onUpdate = function(o:CContextBody):void
 			{
 				passed++;
 			};
 			taskManager.addReserve(A);
 			taskManager.addReserve(B);
-			Assert.assertEquals(0, proxy.tasks.length);
+			Assert.assertEquals(0, body.tasks.length);
 			taskManager.update();
 			Assert.assertEquals(2, passed);
 			passed = 0;

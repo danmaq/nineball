@@ -2,7 +2,7 @@ package danmaq.nineball.core.component.state
 {
 
 	import danmaq.nineball.core.component.context.CContext;
-	import danmaq.nineball.core.component.context.CContextProxy;
+	import danmaq.nineball.core.component.context.CContextBody;
 	import danmaq.nineball.core.component.context.IContext;
 	
 	import flexunit.framework.Assert;
@@ -10,19 +10,19 @@ package danmaq.nineball.core.component.state
 	public class TStateDelegate
 	{
 
-		private var proxy:CContextProxy;
+		private var body:CContextBody;
 		
 		[Before]
 		public function setUp():void
 		{
-			proxy = new CContextProxy(new CContext());
+			body = new CContextBody(new CContext());
 		}
 		
 		[After]
 		public function tearDown():void
 		{
-			proxy.dispose();
-			proxy = null;
+			body.dispose();
+			body = null;
 			CStateDelegate.instance.dispose();
 		}
 		
@@ -75,12 +75,12 @@ package danmaq.nineball.core.component.state
 		public function testSetup():void
 		{
 			var passed:Boolean = false;
-			CStateDelegate.onSetup = function(o:CContextProxy):void
+			CStateDelegate.onSetup = function(o:CContextBody):void
 			{
 				passed = true;
-				Assert.assertObjectEquals(proxy, o);
+				Assert.assertObjectEquals(body, o);
 			};
-			CStateDelegate.instance.setup(proxy);
+			CStateDelegate.instance.setup(body);
 			Assert.assertTrue(passed);
 		}
 		
@@ -88,12 +88,12 @@ package danmaq.nineball.core.component.state
 		public function testTeardown():void
 		{
 			var passed:Boolean = false;
-			CStateDelegate.onTeardown = function(o:CContextProxy):void
+			CStateDelegate.onTeardown = function(o:CContextBody):void
 			{
 				passed = true;
-				Assert.assertObjectEquals(proxy, o);
+				Assert.assertObjectEquals(body, o);
 			};
-			CStateDelegate.instance.teardown(proxy);
+			CStateDelegate.instance.teardown(body);
 			Assert.assertTrue(passed);
 		}
 		
@@ -101,12 +101,12 @@ package danmaq.nineball.core.component.state
 		public function testUpdate():void
 		{
 			var passed:Boolean = false;
-			CStateDelegate.onUpdate = function(o:CContextProxy):void
+			CStateDelegate.onUpdate = function(o:CContextBody):void
 			{
 				passed = true;
-				Assert.assertObjectEquals(proxy, o);
+				Assert.assertObjectEquals(body, o);
 			};
-			CStateDelegate.instance.update(proxy);
+			CStateDelegate.instance.update(body);
 			Assert.assertTrue(passed);
 		}
 		

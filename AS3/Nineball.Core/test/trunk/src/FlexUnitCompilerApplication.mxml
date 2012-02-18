@@ -8,7 +8,7 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
 	<fx:Script>
 		<![CDATA[
-			import danmaq.nineball.core.util.math.integer.TMath;
+			import danmaq.nineball.core.data.TPhase;
 			import danmaq.nineball.core.component.task.TTaskManager;
 			import danmaq.nineball.core.util.math.TMath;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
@@ -16,9 +16,9 @@
 			import danmaq.nineball.core.events.TDisposableEventDispatcher;
 			import danmaq.nineball.core.component.state.TStateDelegate;
 			import danmaq.nineball.core.component.context.TContext;
-			import danmaq.nineball.core.component.context.TContextProxy;
+			import danmaq.nineball.core.component.context.TContextBody;
 			
-			private var danmaq_nineball_core_component_context_TContextProxy_obj:danmaq.nineball.core.component.context.TContextProxy;
+			private var danmaq_nineball_core_component_context_TContextBody_obj:danmaq.nineball.core.component.context.TContextBody;
 			
 			private var danmaq_nineball_core_component_context_TContext_obj:danmaq.nineball.core.component.context.TContext;
 			
@@ -34,7 +34,7 @@
 			
 			private var danmaq_nineball_core_component_task_TTaskManager_obj:danmaq.nineball.core.component.task.TTaskManager;
 			
-			private var danmaq_nineball_core_util_math_integer_TMath_obj:danmaq.nineball.core.util.math.integer.TMath;
+			private var danmaq_nineball_core_data_TPhase_obj:danmaq.nineball.core.data.TPhase;
 		]]>
 	</fx:Script>
 	<fx:Declarations>

@@ -3,11 +3,14 @@ package danmaq.nineball.core.component.context
 	import danmaq.nineball.core.component.task.ITask;
 	
 	/**
-	 * 実体と状態との橋渡しをするクラス。
+	 * 実体に持つデータのうち、カプセル化により隠蔽したい情報を持つクラス。
+	 * 
+	 * ここにあるデータは、実体からはprotectedに、状態からはpublicに参照可能です。
+	 * また、実体を継承してアクセサを設置することで読み込みのみをpublicにすることも可能です。
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public class CContextProxy implements ITask
+	public class CContextBody implements ITask
 	{
 
 		//* fields ────────────────────────────────*
@@ -25,7 +28,7 @@ package danmaq.nineball.core.component.context
 		 *
 		 * @param context 実体。
 		 */
-		public function CContextProxy(context:IContext)
+		public function CContextBody(context:IContext)
 		{
 			_context = context;
 		}

@@ -40,7 +40,7 @@ package danmaq.nineball.core.component.context
 		private var _nextState:IState;
 
 		/** この実体のアクセサ。 */
-		private var _proxy:CContextProxy;
+		private var _body:CContextBody;
 		
 		/** 最後に状態変化した時のフレーム カウンタ値。 */
 		private var _stateChangedCounter:int;
@@ -57,7 +57,7 @@ package danmaq.nineball.core.component.context
 		 */
 		public function CContext(firstState:IState = null)
 		{
-			_proxy = createProxy();
+			_body = createBody();
 			nextState = firstState == null ? defaultState : firstState;
 			commitState();
 		}
@@ -125,7 +125,7 @@ package danmaq.nineball.core.component.context
 		 */
 		public function get counter():int
 		{
-			return proxy.counter;
+			return body.counter;
 		}
 
 		/**
@@ -153,9 +153,9 @@ package danmaq.nineball.core.component.context
 		 * 
 		 * @return この実体へのアクセサ オブジェクト。
 		 */
-		protected function get proxy():CContextProxy
+		protected function get body():CContextBody
 		{
-			return _proxy;
+			return _body;
 		}
 		
 		//* instance methods ───────────────────────────*
@@ -165,7 +165,7 @@ package danmaq.nineball.core.component.context
 		 */
 		override public function dispose():void
 		{
-			proxy.dispose();
+			body.dispose();
 			var empty:IState = CStateEmpty.instance;
 			nextState = empty;
 			commitState();
@@ -185,7 +185,7 @@ package danmaq.nineball.core.component.context
 		 */
 		public function update():void
 		{
-			proxy.update();
+			body.update();
 			commitState();
 		}
 		
@@ -197,7 +197,7 @@ package danmaq.nineball.core.component.context
 		{
 			if(nextState != null)
 			{
-				currentState.teardown(proxy);
+				currentState.teardown(body);
 			}
 			if(nextState != null)
 			{
@@ -206,7 +206,7 @@ package danmaq.nineball.core.component.context
 				nextState = null;
 				_stateChangedCounter = counter;
 				_stateChangedTime = getTimer();
-				_currentState.setup(proxy);
+				_currentState.setup(body);
 				if(hasEventListener(Event.CHANGE))
 				{
 					dispatchEvent(new Event(Event.CHANGE));
@@ -219,9 +219,9 @@ package danmaq.nineball.core.component.context
 		 * 
 		 * @return アクセサ オブジェクト。
 		 */
-		protected function createProxy():CContextProxy
+		protected function createBody():CContextBody
 		{
-			return new CContextProxy(this);
+			return new CContextBody(this);
 		}
 	}
 }

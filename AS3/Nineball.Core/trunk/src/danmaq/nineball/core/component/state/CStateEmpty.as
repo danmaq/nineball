@@ -1,7 +1,7 @@
 package danmaq.nineball.core.component.state
 {
 
-	import danmaq.nineball.core.component.context.CContextProxy;
+	import danmaq.nineball.core.component.context.CContextBody;
 	import danmaq.nineball.core.util.object.blockDuplicate;
 
 	/**
@@ -35,27 +35,27 @@ package danmaq.nineball.core.component.state
 		/**
 		 * 状態が開始された際に呼び出されます。
 		 * 
-		 * @param proxy 実体へのアクセサ。
+		 * @param body 実体へのアクセサ。
 		 */
-		public function setup(proxy:CContextProxy):void
+		public function setup(body:CContextBody):void
 		{
 		}
 
 		/**
 		 * 1フレーム分の更新処理を実行します。
 		 * 
-		 * @param proxy 実体へのアクセサ。
+		 * @param body 実体へのアクセサ。
 		 */
-		public function update(proxy:CContextProxy):void
+		public function update(body:CContextBody):void
 		{
 		}
 
 		/**
 		 * 別の状態へと移行される際に呼び出されます。
 		 * 
-		 * @param proxy 実体のアクセサ。
+		 * @param body 実体のアクセサ。
 		 */
-		public function teardown(proxy:CContextProxy):void
+		public function teardown(body:CContextBody):void
 		{
 		}
 	}
