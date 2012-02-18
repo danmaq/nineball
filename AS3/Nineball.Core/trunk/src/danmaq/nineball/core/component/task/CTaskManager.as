@@ -1,7 +1,7 @@
 package danmaq.nineball.core.component.task
 {
 	import danmaq.nineball.core.component.context.CContext;
-	import danmaq.nineball.core.component.context.CContextProxy;
+	import danmaq.nineball.core.component.context.CContextBody;
 	import danmaq.nineball.core.component.state.IState;
 	import danmaq.nineball.core.util.list.iterator.IAggregate;
 	import danmaq.nineball.core.util.list.iterator.IIterator;
@@ -43,7 +43,7 @@ package danmaq.nineball.core.component.task
 		 */
 		public function get iterator():IIterator
 		{
-			return new CTaskManagerIterator(CTaskManagerProxy(proxy));
+			return new CTaskManagerIterator(CTaskManagerBody(body));
 		}
 		
 		/**
@@ -63,7 +63,7 @@ package danmaq.nineball.core.component.task
 		 */
 		private function get tasks():Vector.<ITask>
 		{
-			return CTaskManagerProxy(proxy).tasks;
+			return CTaskManagerBody(body).tasks;
 		}
 		
 		/**
@@ -73,7 +73,7 @@ package danmaq.nineball.core.component.task
 		 */
 		private function get add():Vector.<ITask>
 		{
-			return CTaskManagerProxy(proxy).add;
+			return CTaskManagerBody(body).add;
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package danmaq.nineball.core.component.task
 		 */
 		private function get remove():Vector.<ITask>
 		{
-			return CTaskManagerProxy(proxy).remove;
+			return CTaskManagerBody(body).remove;
 		}
 		
 		//* instance methods ───────────────────────────*
@@ -135,7 +135,7 @@ package danmaq.nineball.core.component.task
 		 */
 		public function clear():void
 		{
-			CTaskManagerProxy(proxy).clear();
+			CTaskManagerBody(body).clear();
 		}
 		
 		/**
@@ -155,15 +155,15 @@ package danmaq.nineball.core.component.task
 		 */
 		public function commitReserve():void
 		{
-			CTaskManagerProxy(proxy).commitReserve();
+			CTaskManagerBody(body).commitReserve();
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		override protected function createProxy():CContextProxy
+		override protected function createBody():CContextBody
 		{
-			return new CTaskManagerProxy(this);
+			return new CTaskManagerBody(this);
 		}
 	}
 }

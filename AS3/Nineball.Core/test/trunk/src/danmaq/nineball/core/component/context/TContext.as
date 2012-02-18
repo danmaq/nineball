@@ -55,9 +55,9 @@ package danmaq.nineball.core.component.context
 			Assert.assertNull(context.nextState);
 
 			// 状態遷移のキャンセル
-			CStateDelegate.onTeardown = function(proxy:CContextProxy):void
+			CStateDelegate.onTeardown = function(body:CContextBody):void
 			{
-				proxy.context.nextState = null;
+				body.context.nextState = null;
 			};
 			context.nextState = CStateEmpty.instance;
 			context.commitState();
@@ -77,10 +77,10 @@ package danmaq.nineball.core.component.context
 		public function testDispose():void
 		{
 			var passed:Boolean = false;
-			CStateDelegate.onTeardown = function(proxy:CContextProxy):void
+			CStateDelegate.onTeardown = function(body:CContextBody):void
 			{
 				passed = true;
-				proxy.context.nextState = null;	// 状態遷移キャンセルはできない
+				body.context.nextState = null;	// 状態遷移キャンセルはできない
 			};
 			context.nextState = CStateDelegate.instance;
 			context.commitState();

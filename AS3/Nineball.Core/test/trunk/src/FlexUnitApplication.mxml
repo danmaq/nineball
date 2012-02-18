@@ -9,30 +9,30 @@
 			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
 	<fx:Script>
 		<![CDATA[
-			import danmaq.nineball.core.util.math.integer.TMath;
 			import danmaq.nineball.core.util.math.TMath;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
 			import danmaq.nineball.core.util.list.random.TRandom;
 			import danmaq.nineball.core.events.TDisposableEventDispatcher;
+			import danmaq.nineball.core.data.TPhase;
 			import danmaq.nineball.core.component.task.TTaskManager;
 			import danmaq.nineball.core.component.state.TStateEmpty;
 			import danmaq.nineball.core.component.state.TStateDelegate;
-			import danmaq.nineball.core.component.context.TContextProxy;
+			import danmaq.nineball.core.component.context.TContextBody;
 			import danmaq.nineball.core.component.context.TContext;
 			
 			public function currentRunTestSuite():Array
 			{
 				var testsToRun:Array = new Array();
 				testsToRun.push(danmaq.nineball.core.component.context.TContext);
-				testsToRun.push(danmaq.nineball.core.component.context.TContextProxy);
+				testsToRun.push(danmaq.nineball.core.component.context.TContextBody);
 				testsToRun.push(danmaq.nineball.core.component.state.TStateDelegate);
 				testsToRun.push(danmaq.nineball.core.component.state.TStateEmpty);
 				testsToRun.push(danmaq.nineball.core.component.task.TTaskManager);
+				testsToRun.push(danmaq.nineball.core.data.TPhase);
 				testsToRun.push(danmaq.nineball.core.events.TDisposableEventDispatcher);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandom);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomAll);
 				testsToRun.push(danmaq.nineball.core.util.math.TMath);
-				testsToRun.push(danmaq.nineball.core.util.math.integer.TMath);
 				return testsToRun;
 			}
 			

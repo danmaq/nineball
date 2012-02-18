@@ -5,7 +5,7 @@
     <classEntry path="danmaq.nineball.core.component.task.ITask"/>
     <classEntry path="danmaq.nineball.core.component.context.IContext"/>
     <classEntry path="danmaq.nineball.core.component.state.IState"/>
-    <classEntry path="danmaq.nineball.core.component.context.CContextProxy"/>
+    <classEntry path="danmaq.nineball.core.component.context.CContextBody"/>
     <classEntry path="danmaq.nineball.core.component.state.CStateEmpty"/>
     <classEntry path="danmaq.nineball.core.component.context.CContext"/>
     <classEntry path="danmaq.nineball.core.component.state.CStateDelegate"/>
@@ -19,9 +19,10 @@
     <classEntry path="danmaq.nineball.core.util.list.random.CXORShift"/>
     <classEntry path="danmaq.nineball.core.util.list.random.CSFMT"/>
     <classEntry path="danmaq.nineball.core.component.task.CTaskManager"/>
-    <classEntry path="danmaq.nineball.core.component.task.CTaskManagerProxy"/>
+    <classEntry path="danmaq.nineball.core.component.task.CTaskManagerBody"/>
     <classEntry path="danmaq.nineball.core.component.task.CStateTaskManager"/>
     <classEntry path="danmaq.nineball.core.component.task.CTaskManagerIterator"/>
+    <classEntry path="danmaq.nineball.core.data.CPhase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
