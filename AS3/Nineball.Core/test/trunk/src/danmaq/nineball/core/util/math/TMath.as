@@ -5,7 +5,7 @@ package danmaq.nineball.core.util.math
 	import flexunit.framework.Assert;
 
 	public class TMath
-	{		
+	{
 		[Before]
 		public function setUp():void
 		{
@@ -30,7 +30,7 @@ package danmaq.nineball.core.util.math
 		public function testOnBit():void
 		{
 			var bits:Vector.<uint> = Vector.<uint>([
-				0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 ]); 
+				0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 ]);
 			for(var i:int = bits.length; --i >= 0; )
 			{
 				Assert.assertEquals(onBit(i), bits[i]);
