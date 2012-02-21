@@ -1,7 +1,6 @@
 package danmaq.nineball.core.util.list.random
 {
 	import danmaq.nineball.core.util.list.iterator.IIterator;
-	import danmaq.nineball.core.util.object.blockStatic;
 
 	/**
 	 * 疑似乱数ジェネレータの補助関数群クラス。
@@ -27,7 +26,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			if (random == null)
 			{
-				random = new CSFMT();
+				random = new CSystem();
 			}
 			_random = random;
 		}
@@ -143,24 +142,6 @@ package danmaq.nineball.core.util.list.random
 				var tmp:Number = limit1;
 				limit1 = limit2;
 				limit2 = tmp;
-			}
-			return next % (limit2 - limit1) + limit1;
-		}
-
-		/**
-		 * 乱数を計算します。
-		 *
-		 * @param limit1 限界値。
-		 * @param limit2 限界値。
-		 * @return 値の範囲内の乱数。
-		 */
-		public function nextLimitInt(limit1:int, limit2:int):int
-		{
-			if (limit1 > limit2)
-			{
-				limit1 ^= limit2;
-				limit2 ^= limit1;
-				limit1 ^= limit2;
 			}
 			return next % (limit2 - limit1) + limit1;
 		}

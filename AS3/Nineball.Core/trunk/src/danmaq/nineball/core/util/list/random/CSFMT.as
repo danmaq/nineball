@@ -4,8 +4,7 @@ package danmaq.nineball.core.util.list.random
 	/**
 	 * SFMT法(改良版Mersenne twister)を用いた疑似乱数ジェネレータ。
 	 *
-	 * @author Mc(danmaq)
-	 *
+	 * <pre>
 	 *	Copyright (c) 2006,2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima
 	 *	University. All rights reserved.
 	 *
@@ -35,7 +34,10 @@ package danmaq.nineball.core.util.list.random
 	 *	THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 	 *	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	 *	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	 * </pre>
 	 *
+	 * @author Mc(danmaq)
+	 * @see http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/
 	 */
 	public final class CSFMT extends CRandom
 	{

@@ -11,6 +11,15 @@ package danmaq.nineball.core.component.state
 	/**
 	 * 状態実行時に任意のメソッドを実行する状態です。
 	 * 
+	 * <p>
+	 * このクラスにはこの状態が開始された時と別の状態へ移行される時、あるいはこの状態が適用中に
+	 * CContextインスタンスからupdateが呼び出された時の合わせて3種類のコールバックを登録できます。
+	 * </p>
+	 * <p>
+	 * ただし、CContextインスタンスの数にかかわらず、コールバックは常に1つであることに
+	 * 注意してください。新しいコールバックを登録すると、古いものは上書きされます。
+	 * </p>
+	 * 
 	 * @author Mc(danmaq)
 	 */
 	public final class CStateDelegate implements IState, IDisposable
@@ -26,7 +35,7 @@ package danmaq.nineball.core.component.state
 		/** 状態が開始された際に呼び出されます。 */
 		private static var _onSetup:Function;
 		
-		/** 状態が開始された際に呼び出されます。 */
+		/** updateメソッドが呼ばれた際に呼び出されます。 */
 		private static var _onUpdate:Function;
 		
 		/** 別の状態へと移行される際に呼び出されます。 */
@@ -61,6 +70,7 @@ package danmaq.nineball.core.component.state
 		
 		/**
 		 * 状態が開始された際に呼び出されるメソッドを設定します。
+		 * nullを設定することで、空のメソッドを登録することもできます。
 		 * 
 		 * @param value function(value:Function):void
 		 */
@@ -82,6 +92,7 @@ package danmaq.nineball.core.component.state
 		
 		/**
 		 * 毎フレームの更新メソッドが呼び出された際に呼び出されるメソッドを設定します。
+		 * nullを設定することで、空のメソッドを登録することもできます。
 		 * 
 		 * @param value function(value:Function):void
 		 */
@@ -103,6 +114,7 @@ package danmaq.nineball.core.component.state
 		
 		/**
 		 * 別の状態へと移行される際に呼び出されるメソッドを設定します。
+		 * nullを設定することで、空のメソッドを登録することもできます。
 		 * 
 		 * @param value function(value:Function):void
 		 */

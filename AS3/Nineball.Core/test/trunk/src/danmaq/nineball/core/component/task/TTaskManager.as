@@ -54,7 +54,7 @@ package danmaq.nineball.core.component.task
 		[Test]
 		public function testCTaskManager():void
 		{
-			Assert.assertObjectEquals(CStateTaskManager.instance, taskManager.currentState);
+			Assert.assertObjectEquals(CStateTaskManagerDefault.instance, taskManager.currentState);
 		}
 		
 		[Test]
@@ -128,7 +128,7 @@ package danmaq.nineball.core.component.task
 		[Test]
 		public function testGet_defaultState():void
 		{
-			Assert.assertObjectEquals(CStateTaskManager.instance, taskManager.defaultState);
+			Assert.assertObjectEquals(CStateTaskManagerDefault.instance, taskManager.defaultState);
 		}
 		
 		[Test]

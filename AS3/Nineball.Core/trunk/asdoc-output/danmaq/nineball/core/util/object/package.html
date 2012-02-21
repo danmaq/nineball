@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../../../../package-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../../class-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../../all-index-A.html" onclick="loadClassListFrame('../../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../../index.html?danmaq/nineball/core/util/object/package.html&amp;danmaq/nineball/core/util/object/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Package</td><td class="titleTableSubNav" id="subNav" align="right"><a href="package.html#methodSummary">Functions</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Nineball.Core</td><td class="titleTableTopNav" align="right"><a href="../../../../../package-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../../class-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../../all-index-A.html" onclick="loadClassListFrame('../../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../../index.html?danmaq/nineball/core/util/object/package.html&amp;danmaq/nineball/core/util/object/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">Package</td><td class="titleTableSubNav" id="subNav" align="right"><a href="package.html#methodSummary">Functions</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Package"); titleBar_setSubNav(false,false,false,false,false,false,false,false,false,false,false	,false,true,false,false,false);}	
@@ -16,11 +16,19 @@
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#blockDuplicate()" class="signatureLink">blockDuplicate</a>(expr:Object, ... args):void</div><div class="summaryTableDescription">
 	 Singletonクラスなどで、インスタンスが外部からの操作により余計に生成されることを阻止します。
 	 
+	 
 	 ロジックとしては引数がすべてnullでない場合にSingleton違反と見なし例外を発生させます。
-	 原理的に内部における余計な生成の場合、対応しきれない場合があります。
+	 原理的にコンストラクタ内部における余計な生成の場合、対応しきれない場合があります。
+	 
 	 
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#blockStatic()" class="signatureLink">blockStatic</a>():void</div><div class="summaryTableDescription">
-	 静的クラスのインスタンス生成を抑制します。
+	 静的クラスのインスタンス生成を抑制するための例外を発生します。
+	 
+	 
+	 この関数を静的クラスのコンストラクタで呼び出してください。この関数を呼び出した、即ち
+	 静的クラスのインスタンスが作成されようとした場合、下記のメッセージを含んだ例外が発生します。
+	 
+	 このオブジェクトは静的クラスです。直接生成は許可されていません。
 	 
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader"> Function detail </div><a name="blockAbstract()"></a><a name="blockAbstract(Object,Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockAbstract</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td></tr></table><div class="detailBody"><code> public function blockAbstract(instance:Object, constructor:Object):void</code><p></p><p></p><p>
 	 抽象クラスのコンストラクタに記述することで、抽象クラスが直接生成されることを阻止します。
@@ -28,17 +36,54 @@
 	 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">instance</span>:Object</code> &mdash; 現在のインスタンス。
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">constructor</span>:Object</code> &mdash; コンストラクタ関数への参照。
 	 </td></tr></table></p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ArgumentError </code> &mdash; 引数がnullである、または抽象クラスの直接生成を検出した場合。
-	 </td></tr></table></div><a name="blockDuplicate()"></a><a name="blockDuplicate(Object,restParam)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockDuplicate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockDuplicate(expr:Object, ... args):void</code><p></p><p></p><p>
+	 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody">下記の例では、Hogeクラスを抽象クラスと見なし、Hogeクラスのインスタンスを
+	 直接作成しようとした場合、例外を発生させてインスタンス作成を抑制します。
+	 <div class="listing" version="3.0"><pre>
+     import danmaq.nineball.core.util.object;
+     public class Hoge
+     {
+         public function Hoge()
+         {
+             blockAbstract(this, Hoge);
+         }
+     }
+     </pre></div>
+	 </div></div><a name="blockDuplicate()"></a><a name="blockDuplicate(Object,restParam)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockDuplicate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockDuplicate(expr:Object, ... args):void</code><p></p><p></p><p>
 	 Singletonクラスなどで、インスタンスが外部からの操作により余計に生成されることを阻止します。
 	 
+	 <p>
 	 ロジックとしては引数がすべてnullでない場合にSingleton違反と見なし例外を発生させます。
-	 原理的に内部における余計な生成の場合、対応しきれない場合があります。
+	 原理的にコンストラクタ内部における余計な生成の場合、対応しきれない場合があります。
+	 </p>
 	 
 	 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">expr</span>:Object</code> &mdash; 現在のインスタンス。
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code>... <span class="label">args</span></code> &mdash; Singletonオブジェクト一覧。
 	 </td></tr></table></p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ArgumentError </code> &mdash; 引数が不足しているか、またはSingleton違反を検出した場合。
-	 </td></tr></table></div><a name="blockStatic()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockStatic</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockStatic():void</code><p></p><p></p><p>
-	 静的クラスのインスタンス生成を抑制します。
+	 </td></tr></table><br/><span class="label"> Example </span><br/><div class="detailBody">下記の例では、HogeクラスをSingletonクラスと見なし、
+	 Hoge.instanceAおよびHoge.instanceB以外にHogeクラスのインスタンスを
+	 作成しようとした場合、例外を発生させてインスタンス作成を抑制します。
+	 <div class="listing" version="3.0"><pre>
+     import danmaq.nineball.core.util.object;
+     public class Hoge
+     {
+         public static const instanceA:Hoge = new Hoge();
+         public static const instanceB:Hoge = new Hoge();
+         public static const instanceC:Hoge = new Hoge();
+         public function Hoge()
+         {
+             blockDuplicate(this, instanceA, instanceB, instanceC);
+             // 注意: Hogeコンストラクタ内部におけるSingleton違反は原理的に検出できません。
+         }
+     }
+     </pre></div>
+	 </div></div><a name="blockStatic()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockStatic</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockStatic():void</code><p></p><p></p><p>
+	 静的クラスのインスタンス生成を抑制するための例外を発生します。
+	 
+	 <p>
+	 この関数を静的クラスのコンストラクタで呼び出してください。この関数を呼び出した、即ち
+	 静的クラスのインスタンスが作成されようとした場合、下記のメッセージを含んだ例外が発生します。
+	 </p>
+	 <pre>このオブジェクトは静的クラスです。直接生成は許可されていません。</pre>
 	 
 	 </p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ArgumentError </code> &mdash; 常に発生します。
-	 </td></tr></table></div><p></p><center class="copyright"><footer></footer><br/>Sun Feb 19 2012, 12:50 AM +09:00  </center></div></body></html>
+	 </td></tr></table></div><p></p><center class="copyright"><footer></footer><br/>Tue Feb 21 2012, 06:08 PM +09:00  </center></div></body></html>

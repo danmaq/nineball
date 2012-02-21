@@ -33,7 +33,7 @@ package danmaq.nineball.core.component.task
 		 */
 		override public function get defaultState():IState
 		{
-			return CStateTaskManager.instance;
+			return CStateTaskManagerDefault.instance;
 		}
 		
 		/**
