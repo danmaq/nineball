@@ -8,7 +8,14 @@ package danmaq.nineball.core.events
 	/**
 	 * イベント リスナの一括削除に対応した、イベント送出クラス。
 	 * 
+	 * <p>
+	 * このクラスをEventDispatcherの代わりに使用することで、dispose()メソッドを
+	 * 呼び出すことにより登録されているイベントをすべて抹消します。
+	 * </p>
+	 * 
 	 * @author Mc(danmaq)
+	 * @see flash.events.EventDispatcher
+	 * @see #dispose
 	 */
 	public class CDisposableEventDispatcher extends EventDispatcher implements IDisposable
 	{
@@ -25,7 +32,7 @@ package danmaq.nineball.core.events
 		 * 
 		 * @param target EventDispatcher オブジェクトに送出されるイベントのターゲットオブジェクト。
 		 */
-		public function CDisposableEventDispatcher(target:IEventDispatcher=null)
+		public function CDisposableEventDispatcher(target:IEventDispatcher = null)
 		{
 			super(target);
 		}
@@ -69,6 +76,12 @@ package danmaq.nineball.core.events
 		
 		/**
 		 * 明示的にオブジェクトを解放可能な状態にします。
+		 * 
+		 * <p>
+		 * このメソッドはclearEventListener()メソッドの別名として機能します。
+		 * </p>
+		 * 
+		 * @see #clearEventListener
 		 */
 		public function dispose():void
 		{

@@ -5,7 +5,7 @@
 			--></script>
 <script type="text/javascript">
 			scrollToNameAnchor();
-		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">API Documentation</td><td class="titleTableTopNav" align="right"><a href="../../../../../../package-summary.html" onclick="loadClassListFrame('../../../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../../../class-summary.html" onclick="loadClassListFrame('../../../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../../../all-index-A.html" onclick="loadClassListFrame('../../../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../../../index.html?danmaq/nineball/core/util/list/random/package-detail.html&amp;danmaq/nineball/core/util/list/random/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">danmaq.nineball.core.util.list.random</td><td class="titleTableSubNav" id="subNav" align="right"><a href="package-detail.html#interfaceSummary"> Interfaces </a>&nbsp;| <a href="package-detail.html#classSummary">Classes</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">Nineball.Core</td><td class="titleTableTopNav" align="right"><a href="../../../../../../package-summary.html" onclick="loadClassListFrame('../../../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../../../class-summary.html" onclick="loadClassListFrame('../../../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../../../all-index-A.html" onclick="loadClassListFrame('../../../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../../../index.html?danmaq/nineball/core/util/list/random/package-detail.html&amp;danmaq/nineball/core/util/list/random/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">danmaq.nineball.core.util.list.random</td><td class="titleTableSubNav" id="subNav" align="right"><a href="package-detail.html#interfaceSummary"> Interfaces </a>&nbsp;| <a href="package-detail.html#classSummary">Classes</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
 				<!--
 				
 					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("danmaq.nineball.core.util.list.random"); titleBar_setSubNav(false,false,false,false,false,false,false,false,false,false,false	,false,false,true,true,false);}	
@@ -19,13 +19,21 @@
 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CRandom.html">CRandom</a></td><td class="summaryTableLastCol">
 	 疑似乱数ジェネレータの基底となる抽象クラス。
 	 
+	 
+	 これはIRandomインターフェイスのうち、各種疑似乱数ジェネレータに共通する最低限の
+	 機能を実装した抽象クラスです。このクラスを単体で使用することはできません。
+	 各種ロジックを実装した疑似乱数ジェネレータの詳細については、継承先クラスを参照してください。
+	 
+	 
 	 </td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CRandomUtil.html">CRandomUtil</a></td><td class="summaryTableLastCol">
 	 疑似乱数ジェネレータの補助関数群クラス。
 	 
 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CSFMT.html">CSFMT</a></td><td class="summaryTableLastCol">
 	 SFMT法(改良版Mersenne twister)を用いた疑似乱数ジェネレータ。
 	 
-	 </td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CStaticRandom.html">CStaticRandom</a></td><td class="summaryTableLastCol">
+	 
+	 Copyright (c) 2006,2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima
+	 University.</td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CStaticRandom.html">CStaticRandom</a></td><td class="summaryTableLastCol">
 	 疑似乱数ジェネレータを静的に保持するクラス。
 	 
 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CSystem.html">CSystem</a></td><td class="summaryTableLastCol">
@@ -34,4 +42,4 @@
 	 </td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CXORShift.html">CXORShift</a></td><td class="summaryTableLastCol">
 	 XOR Shift法を用いた疑似乱数ジェネレータ。
 	 
-	 </td></tr></table><p></p><div><p></p><center class="copyright"><footer></footer><br/>Sun Feb 19 2012, 12:50 AM +09:00  </center></div></div></body></html><!--<br/>Sun Feb 19 2012, 12:50 AM +09:00  -->
+	 </td></tr></table><p></p><div><p></p><center class="copyright"><footer></footer><br/>Tue Feb 21 2012, 06:08 PM +09:00  </center></div></div></body></html><!--<br/>Tue Feb 21 2012, 06:08 PM +09:00  -->

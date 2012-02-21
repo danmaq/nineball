@@ -9,13 +9,13 @@ package danmaq.nineball.core.component.task
 	 * 
 	 * @author Mc(danmaq)
 	 */
-	public final class CStateTaskManager implements IState
+	public final class CStateTaskManagerDefault implements IState
 	{
 		
 		//* constants ──────────────────────────────-*
 		
 		/** クラス インスタンス。 */
-		public static const instance:IState = new CStateTaskManager();
+		public static const instance:IState = new CStateTaskManagerDefault();
 		
 		//* constructor & destructor ───────────────────────*
 		
@@ -25,7 +25,7 @@ package danmaq.nineball.core.component.task
 		 * Singletonクラスのため、このクラスの生成は許可されません。
 		 * 静的メンバinstanceを使用してください。
 		 */
-		public function CStateTaskManager()
+		public function CStateTaskManagerDefault()
 		{
 			blockDuplicate(this, instance);
 		}

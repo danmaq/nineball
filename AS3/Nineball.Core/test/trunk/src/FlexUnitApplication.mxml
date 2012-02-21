@@ -10,6 +10,7 @@
 	<fx:Script>
 		<![CDATA[
 			import danmaq.nineball.core.util.math.TMath;
+			import danmaq.nineball.core.util.list.random.TRandomUtil;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
 			import danmaq.nineball.core.util.list.random.TRandom;
 			import danmaq.nineball.core.events.TDisposableEventDispatcher;
@@ -32,6 +33,7 @@
 				testsToRun.push(danmaq.nineball.core.events.TDisposableEventDispatcher);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandom);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomAll);
+				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomUtil);
 				testsToRun.push(danmaq.nineball.core.util.math.TMath);
 				return testsToRun;
 			}

@@ -7,8 +7,16 @@ package danmaq.nineball.core.util.list.random
 	
 	/**
 	 * 疑似乱数ジェネレータの基底となる抽象クラス。
+	 * 
+	 * <p>
+	 * これはIRandomインターフェイスのうち、各種疑似乱数ジェネレータに共通する最低限の
+	 * 機能を実装した抽象クラスです。このクラスを単体で使用することはできません。
+	 * 各種ロジックを実装した疑似乱数ジェネレータの詳細については、継承先クラスを参照してください。
+	 * </p>
 	 *
 	 * @author Mc(danmaq)
+	 * @see danmaq.nineball.core.util.list.random.CRandomUtil
+	 * @see danmaq.nineball.core.util.list.random.CStaticRandom
 	 */
 	public class CRandom implements IRandom
 	{
@@ -29,8 +37,10 @@ package danmaq.nineball.core.util.list.random
 		/**
 		 * コンストラクタ。
 		 *
+		 * <p>
 		 * これは抽象クラスです。このクラスを直接生成することはできません。
-		 *
+		 * </p>
+		 * 
 		 * @param seed シード値。負数を指定した場合、システム依存値が設定されます。
 		 */
 		public function CRandom(seed:int=int.MIN_VALUE)
@@ -46,6 +56,7 @@ package danmaq.nineball.core.util.list.random
 		 * 擬似乱数系列の開始値を計算するために使用するシード値を取得します。
 		 *
 		 * @return シード値。
+		 * @see #reset
 		 */
 		public function get seed():uint
 		{
