@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testrun name="" >
 <testsuite  name="Default Test Suite" project="Nineball.Core.Test">
-<testsuite name="danmaq.nineball.core.component.context:TContext" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.component.context:TContextBody" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.component.state:TStateDelegate" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.component.state:TStateEmpty" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.component.task:TTaskManager" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.data:TPhase" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.events:TDisposableEventDispatcher" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.util.list.random:TRandom" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.util.list.random:TRandomAll" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.util.list.random:TRandomUtil" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.util.math:TMath" type="testcaseclass"/>
+<testsuite name="danmaq.nineball.core.component.state:TStateEmpty" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.component.task:TTaskManager" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.util.math:TMath" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.util.list.random:TRandomAll" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.component.context:TContextBody" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.util.list.random:TRandomUtil" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.util.list.random:TRandom" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.events:TDisposableEventDispatcher" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.component.state:TStateDelegate" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.component.context:TContext" type="testsuiteclass"/>
+<testsuite name="danmaq.nineball.core.data:TPhase" type="testsuiteclass"/>
 </testsuite>
 <portNumber value="8765" />
 </testrun>

@@ -20,7 +20,6 @@
     <classEntry path="danmaq.nineball.core.util.list.random.CSFMT"/>
     <classEntry path="danmaq.nineball.core.component.task.CTaskManager"/>
     <classEntry path="danmaq.nineball.core.component.task.CTaskManagerBody"/>
-    <classEntry path="danmaq.nineball.core.component.task.CStateTaskManagerDefault"/>
     <classEntry path="danmaq.nineball.core.component.task.CTaskManagerIterator"/>
     <classEntry path="danmaq.nineball.core.data.CPhase"/>
   </includeClasses>
