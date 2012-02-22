@@ -1,7 +1,5 @@
 package danmaq.nineball.core.util.math
 {
-	import flash.utils.getTimer;
-	
 	import flexunit.framework.Assert;
 
 	public class TMath
@@ -74,6 +72,22 @@ package danmaq.nineball.core.util.math
 			Assert.assertEquals(-5.25, clamp(Number.NEGATIVE_INFINITY, b, a));
 			Assert.assertEquals(3.1, clamp(4, b, a));
 			Assert.assertEquals(3.1, clamp(Number.POSITIVE_INFINITY, b, a));
+		}
+		
+		[Test]
+		public function testSign():void
+		{
+			Assert.assertStrictlyEquals(0, sign(0));
+			Assert.assertStrictlyEquals(0, sign(-0));
+			Assert.assertStrictlyEquals(0, sign(Number.NaN));
+			Assert.assertStrictlyEquals(-1, sign(-1));
+			Assert.assertStrictlyEquals(1, sign(1));
+			Assert.assertStrictlyEquals(-1, sign(-0.01));
+			Assert.assertStrictlyEquals(1, sign(0.01));
+			Assert.assertStrictlyEquals(-1, sign(-Number.MAX_VALUE));
+			Assert.assertStrictlyEquals(1, sign(Number.MAX_VALUE));
+			Assert.assertStrictlyEquals(-1, sign(Number.NEGATIVE_INFINITY));
+			Assert.assertStrictlyEquals(1, sign(Number.POSITIVE_INFINITY));
 		}
 	}
 }
