@@ -15,7 +15,7 @@ package danmaq.nineball.core.component.state
 		[Before]
 		public function setUp():void
 		{
-			body = new CContextBody(new CContext());
+			body = new CContextBody(new CContext(), null);
 		}
 		
 		[After]

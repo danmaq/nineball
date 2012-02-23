@@ -15,7 +15,7 @@ package danmaq.nineball.core.events
 	 * 
 	 * @author Mc(danmaq)
 	 * @see flash.events.EventDispatcher
-	 * @see #dispose
+	 * @see #dispose()
 	 */
 	public class CDisposableEventDispatcher extends EventDispatcher implements IDisposable
 	{
@@ -35,6 +35,18 @@ package danmaq.nineball.core.events
 		public function CDisposableEventDispatcher(target:IEventDispatcher = null)
 		{
 			super(target);
+		}
+		
+		//* instance properties ─────────────────────────-*
+		
+		/**
+		 * 登録されているイベント リスナの件数を取得します。
+		 * 
+		 * @return 登録されているイベント リスナの件数。
+		 */
+		public function get lengthEvent():uint
+		{
+			return listeners.length;
 		}
 		
 		//* instance methods ───────────────────────────*
@@ -81,7 +93,7 @@ package danmaq.nineball.core.events
 		 * このメソッドはclearEventListener()メソッドの別名として機能します。
 		 * </p>
 		 * 
-		 * @see #clearEventListener
+		 * @see #clearEventListener()
 		 */
 		public function dispose():void
 		{

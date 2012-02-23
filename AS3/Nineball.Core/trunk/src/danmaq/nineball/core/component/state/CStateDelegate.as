@@ -12,12 +12,13 @@ package danmaq.nineball.core.component.state
 	 * 状態実行時に任意のメソッドを実行する状態です。
 	 * 
 	 * <p>
-	 * このクラスにはこの状態が開始された時と別の状態へ移行される時、あるいはこの状態が適用中に
-	 * CContextインスタンスからupdateが呼び出された時の合わせて3種類のコールバックを登録できます。
+	 * このクラスにはこの状態が開始された時と別の状態へ移行される時、あるいはこの状態が
+	 * 適用中に<code>CContext</code>インスタンスからupdateが呼び出された時の合わせて
+	 * 3種類のコールバックを登録できます。主に一時的なデバッグ用途に役立つでしょう。
 	 * </p>
 	 * <p>
-	 * ただし、CContextインスタンスの数にかかわらず、コールバックは常に1つであることに
-	 * 注意してください。新しいコールバックを登録すると、古いものは上書きされます。
+	 * ただし、<code>CContext</code>インスタンスの数にかかわらず、コールバックは常に1つで
+	 * あることに注意してください。新しいコールバックを登録すると、古いものは上書きされます。
 	 * </p>
 	 * 
 	 * @author Mc(danmaq)
@@ -46,8 +47,12 @@ package danmaq.nineball.core.component.state
 		/**
 		 * コンストラクタ。
 		 * 
+		 * <p>
 		 * Singletonクラスのため、このクラスの生成は許可されません。
-		 * 静的メンバinstanceを使用してください。
+		 * 静的メンバ<code>instance</code>を使用してください。
+		 * </p>
+		 * 
+		 * @see #instance
 		 */
 		public function CStateDelegate()
 		{
@@ -61,7 +66,7 @@ package danmaq.nineball.core.component.state
 		 * 状態が開始された際に呼び出されるメソッドを取得します。
 		 * 
 		 * @default no-op function
-		 * @return function(value:Function):void
+		 * @return <code>function(body:CContextBody):void</code>
 		 */
 		public static function get onSetup():Function
 		{
@@ -70,9 +75,9 @@ package danmaq.nineball.core.component.state
 		
 		/**
 		 * 状態が開始された際に呼び出されるメソッドを設定します。
-		 * nullを設定することで、空のメソッドを登録することもできます。
+		 * <code>null</code>を設定することで、空のメソッドを登録することもできます。
 		 * 
-		 * @param value function(value:Function):void
+		 * @param value <code>function(body:CContextBody):void</code>
 		 */
 		public static function set onSetup(value:Function):void
 		{
@@ -83,7 +88,7 @@ package danmaq.nineball.core.component.state
 		 * 毎フレームの更新メソッドが呼び出された際に呼び出されるメソッドを取得します。
 		 * 
 		 * @default no-op function
-		 * @return function(value:Function):void
+		 * @return <code>function(body:CContextBody):void</code>
 		 */
 		public static function get onUpdate():Function
 		{
@@ -92,9 +97,9 @@ package danmaq.nineball.core.component.state
 		
 		/**
 		 * 毎フレームの更新メソッドが呼び出された際に呼び出されるメソッドを設定します。
-		 * nullを設定することで、空のメソッドを登録することもできます。
+		 * <code>null</code>を設定することで、空のメソッドを登録することもできます。
 		 * 
-		 * @param value function(value:Function):void
+		 * @param value <code>function(body:CContextBody):void</code>
 		 */
 		public static function set onUpdate(value:Function):void
 		{
@@ -105,7 +110,7 @@ package danmaq.nineball.core.component.state
 		 * 別の状態へと移行される際に呼び出されるメソッドを取得します。
 		 * 
 		 * @default no-op function
-		 * @return function(value:Function):void
+		 * @return <code>function(body:CContextBody):void</code>
 		 */
 		public static function get onTeardown():Function
 		{
@@ -114,9 +119,9 @@ package danmaq.nineball.core.component.state
 		
 		/**
 		 * 別の状態へと移行される際に呼び出されるメソッドを設定します。
-		 * nullを設定することで、空のメソッドを登録することもできます。
+		 * <code>null</code>を設定することで、空のメソッドを登録することもできます。
 		 * 
-		 * @param value function(value:Function):void
+		 * @param value <code>function(body:CContextBody):void</code>
 		 */
 		public static function set onTeardown(value:Function):void
 		{

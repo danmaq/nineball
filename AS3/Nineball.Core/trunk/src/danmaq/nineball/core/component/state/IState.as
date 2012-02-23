@@ -7,6 +7,7 @@ package danmaq.nineball.core.component.state
 	 * 状態としての振る舞いを定義するインターフェイス。
 	 * 
 	 * @author Mc(danmaq)
+	 * @see danmaq.nineball.core.component.context.CContext
 	 */
 	public interface IState
 	{

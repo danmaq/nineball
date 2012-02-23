@@ -20,10 +20,11 @@ package danmaq.nineball.core.component.task
 		 * コンストラクタ。
 		 * 
 		 * @param firstState 初回の状態。
+		 * @param owner 所有者とするオブジェクト。
 		 */
-		public function CTaskManager(firstState:IState=null)
+		public function CTaskManager(firstState:IState = null, owner:Object = null)
 		{
-			super(firstState);
+			super(firstState, owner);
 		}
 		
 		//* instance properties ─────────────────────────-*
@@ -161,9 +162,9 @@ package danmaq.nineball.core.component.task
 		/**
 		 * @inheritDoc
 		 */
-		override protected function createBody():CContextBody
+		override protected function createBody(owner:Object):CContextBody
 		{
-			return new CTaskManagerBody(this);
+			return new CTaskManagerBody(this, owner);
 		}
 	}
 }
