@@ -56,7 +56,7 @@ package danmaq.nineball.core.util.list.random
 		 * 擬似乱数系列の開始値を計算するために使用するシード値を取得します。
 		 *
 		 * @return シード値。
-		 * @see #reset
+		 * @see #reset()
 		 */
 		public function get seed():uint
 		{

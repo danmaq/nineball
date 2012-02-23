@@ -3,12 +3,16 @@ package danmaq.nineball.core.component.context
 	import danmaq.nineball.core.component.task.ITask;
 	
 	/**
-	 * 実体に持つデータのうち、カプセル化により隠蔽したい情報を持つクラス。
+	 * <code>CContext</code>実体に持つデータのうち、カプセル化により隠蔽したい情報を持つクラス。
 	 * 
-	 * ここにあるデータは、実体からはprotectedに、状態からはpublicに参照可能です。
-	 * また、実体を継承してアクセサを設置することで読み込みのみをpublicにすることも可能です。
+	 * <p>
+	 * ここにあるデータは、実体からは<code>protected</code>に、状態からは
+	 * <code>public</code>に参照可能です。また、実体を継承してアクセサを
+	 * 設置することで読み込みのみを<code>public</code>にすることもできます。
+	 * </p>
 	 * 
 	 * @author Mc(danmaq)
+	 * @see danmaq.nineball.core.component.context.CContext
 	 */
 	public class CContextBody implements ITask
 	{
@@ -20,6 +24,9 @@ package danmaq.nineball.core.component.context
 		
 		/** 実体。 */
 		private var _context:IContext;
+		
+		/** 親とするオブジェクト。 */
+		private var _owner:Object;
 
 		//* constructor & destructor ───────────────────────*
 
@@ -27,10 +34,12 @@ package danmaq.nineball.core.component.context
 		 * コンストラクタ。
 		 *
 		 * @param context 実体。
+		 * @param owner 親とするオブジェクト。
 		 */
-		public function CContextBody(context:IContext)
+		public function CContextBody(context:IContext, owner:Object)
 		{
 			_context = context;
+			_owner = owner;
 		}
 
 		//* instance properties ─────────────────────────-*
@@ -43,6 +52,16 @@ package danmaq.nineball.core.component.context
 		public function get context():IContext
 		{
 			return _context;
+		}
+		
+		/**
+		 * 親オブジェクトを取得します。
+		 * 
+		 * @return 親オブジェクト。
+		 */
+		public function get owner():Object
+		{
+			return _owner;
 		}
 		
 		//* instance methods ───────────────────────────*

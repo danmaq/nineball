@@ -15,7 +15,7 @@ package danmaq.nineball.core.component.context
 		public function setUp():void
 		{
 			context = new CContext(CStateDelegate.instance);
-			body = new CContextBody(context);
+			body = new CContextBody(context, null);
 		}
 		
 		[After]

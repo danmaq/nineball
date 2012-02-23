@@ -14,16 +14,20 @@ package danmaq.nineball.core.component.context
 	 * @eventType flash.events.Event.CHANGE
 	 */
 	[Event(name="change", type="flash.events.Event")]
+
 	/**
 	 * 明示的に解放可能な状態にした、即ちdisposeメソッドを実行した際に発行されるイベントです。
 	 * 
 	 * @eventType flash.events.Event.UNLOAD
 	 */
 	[Event(name="unload", type="flash.events.Event")]
+
 	/**
-	 * 状態を持つ実体クラス。
+	 * 状態による制御AI。
 	 * 
 	 * @author Mc(danmaq)
+	 * @see danmaq.nineball.core.component.context.CContextBody
+	 * @see danmaq.nineball.core.component.state.IState
 	 */
 	public class CContext extends CDisposableEventDispatcher implements IContext
 	{
@@ -54,10 +58,11 @@ package danmaq.nineball.core.component.context
 		 * コンストラクタ。
 		 * 
 		 * @param firstState 初回の状態。
+		 * @param owner 所有者とするオブジェクト。
 		 */
-		public function CContext(firstState:IState = null)
+		public function CContext(firstState:IState = null, owner:Object = null)
 		{
-			_body = createBody();
+			_body = createBody(owner);
 			nextState = firstState == null ? defaultState : firstState;
 			commitState();
 		}
@@ -149,6 +154,16 @@ package danmaq.nineball.core.component.context
 		}
 		
 		/**
+		 * このオブジェクトの所有者を取得します。
+		 * 
+		 * @return オブジェクトの所有者。存在しない場合、<code>null</code>。
+		 */
+		public function get owner():Object
+		{
+			return body.counter;
+		}
+		
+		/**
 		 * この実体へのアクセサ オブジェクトを取得します。
 		 * 
 		 * @return この実体へのアクセサ オブジェクト。
@@ -190,8 +205,22 @@ package danmaq.nineball.core.component.context
 		}
 		
 		/**
-		 * 予約されている状態は、updateメソッドによって確定されますが、
+		 * <code>update()</code>メソッドのラッパーです。
+		 * 
+		 * @param evt イベント情報。(無視されます)
+		 * @see #update()
+		 */
+		public function updateFromEvent(evt:Event = null):void
+		{
+			update();
+		}
+		
+		/**
+		 * 予約されている状態は、<code>update()</code>メソッドによって確定されますが、
 		 * このメソッドを使用することで強制的に即時確定します。
+		 * 
+		 * @see #nextState
+		 * @see #update()
 		 */
 		public function commitState():void
 		{
@@ -217,11 +246,12 @@ package danmaq.nineball.core.component.context
 		/**
 		 * この実体へのアクセサを生成します。
 		 * 
+		 * @param owner 所有者となるオブジェクト。
 		 * @return アクセサ オブジェクト。
 		 */
-		protected function createBody():CContextBody
+		protected function createBody(owner:Object):CContextBody
 		{
-			return new CContextBody(this);
+			return new CContextBody(this, owner);
 		}
 	}
 }

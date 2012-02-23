@@ -5,7 +5,13 @@ package danmaq.nineball.core.component.state
 	import danmaq.nineball.core.util.object.blockDuplicate;
 
 	/**
-	 * 空の状態。
+	 * 抜け殻の状態。
+	 * 
+	 * <p>
+	 * 実体に何もしてほしくない場合、状態として<code>null</code>の代わりにこのオブジェクトを
+	 * 設定します。抜け殻のガチャピンが動かないのと同様に、この状態が適用されている間は
+	 * <code>CContext.update()</code>メソッドを呼び出しても何の処理も行いません。
+	 * </p>
 	 * 
 	 * @author Mc(danmaq)
 	 */
@@ -22,8 +28,12 @@ package danmaq.nineball.core.component.state
 		/**
 		 * コンストラクタ。
 		 * 
+		 * <p>
 		 * Singletonクラスのため、このクラスの生成は許可されません。
-		 * 静的メンバinstanceを使用してください。
+		 * 静的メンバ<code>instance</code>を使用してください。
+		 * </p>
+		 * 
+		 * @see #instance
 		 */
 		public function CStateEmpty()
 		{

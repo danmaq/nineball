@@ -14,12 +14,13 @@
 	 状態実行時に任意のメソッドを実行する状態です。
 	 
 	 <p>
-	 このクラスにはこの状態が開始された時と別の状態へ移行される時、あるいはこの状態が適用中に
-	 CContextインスタンスからupdateが呼び出された時の合わせて3種類のコールバックを登録できます。
+	 このクラスにはこの状態が開始された時と別の状態へ移行される時、あるいはこの状態が
+	 適用中に<code>CContext</code>インスタンスからupdateが呼び出された時の合わせて
+	 3種類のコールバックを登録できます。主に一時的なデバッグ用途に役立つでしょう。
 	 </p>
 	              <p>
-	 ただし、CContextインスタンスの数にかかわらず、コールバックは常に1つであることに
-	 注意してください。新しいコールバックを登録すると、古いものは上書きされます。
+	 ただし、<code>CContext</code>インスタンスの数にかかわらず、コールバックは常に1つで
+	 あることに注意してください。新しいコールバックを登録すると、古いものは上書きされます。
 	 </p>
 	 
 	           <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#onSetup" class="signatureLink">onSetup</a> : Function<div class="summaryTableDescription">[static] 
@@ -34,8 +35,11 @@
 		 </div></td><td class="summaryTableOwnerCol">CStateDelegate</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#CStateDelegate()" class="signatureLink">CStateDelegate</a>()</div><div class="summaryTableDescription">
 		 コンストラクタ。
 		 
+		 
 		 Singletonクラスのため、このクラスの生成は許可されません。
 		 静的メンバinstanceを使用してください。
+		 
+		 
 		 </div></td><td class="summaryTableOwnerCol">CStateDelegate</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#dispose()" class="signatureLink">dispose</a>():void</div><div class="summaryTableDescription">
 		 明示的にオブジェクトを解放可能な状態にします。
 		 </div></td><td class="summaryTableOwnerCol">CStateDelegate</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#setup()" class="signatureLink">setup</a>(body:<a href="../../../../../danmaq/nineball/core/component/context/CContextBody.html">CContextBody</a>):void</div><div class="summaryTableDescription">
@@ -61,9 +65,12 @@
 		 </p><p> The default value is <code>no-op function</code>.</p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public static function get onUpdate():Function</code><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public static function set onUpdate(value:Function):void</code><br/></div><a name="constructorDetail"></a><div class="detailSectionHeader">Constructor Detail</div><a name="CStateDelegate()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">CStateDelegate</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">Constructor</td></tr></table><div class="detailBody"><code>public function CStateDelegate()</code><p></p><p>
 		 コンストラクタ。
 		 
+		 <p>
 		 Singletonクラスのため、このクラスの生成は許可されません。
-		 静的メンバinstanceを使用してください。
-		 </p></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="dispose()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function dispose():void</code><p></p><p></p><p>
+		 静的メンバ<code>instance</code>を使用してください。
+		 </p>
+		 
+		 </p><p><span class="label">See also</span></p><div class="seeAlso"><a href="CStateDelegate.html#instance" target="">instance</a></div></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="dispose()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function dispose():void</code><p></p><p></p><p>
 		 明示的にオブジェクトを解放可能な状態にします。
 		 </p></div><a name="setup()"></a><a name="setup(danmaq.nineball.core.component.context.CContextBody)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">setup</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function setup(body:<a href="../../../../../danmaq/nineball/core/component/context/CContextBody.html">CContextBody</a>):void</code><p></p><p></p><p>
 		 状態が開始された際に呼び出されます。
@@ -77,4 +84,4 @@
 		 1フレーム分の更新処理を実行します。
 		 
 		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">body</span>:<a href="../../../../../danmaq/nineball/core/component/context/CContextBody.html">CContextBody</a></code> &mdash; 実体へのアクセサ。
-		 </td></tr></table></p></div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="instance"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">instance</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>public static const instance:<a href="../../../../../danmaq/nineball/core/component/state/CStateDelegate.html">CStateDelegate</a></code><p></p><p></p><p> クラス インスタンス。 </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Thu Feb 23 2012, 12:18 AM +09:00  </center></div></body></html><!--<br/>Thu Feb 23 2012, 12:18 AM +09:00  -->
+		 </td></tr></table></p></div><div class="detailSectionHeader">Constant Detail</div><a name="constantDetail"></a><a name="instance"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">instance</td><td class="detailHeaderType">Constant</td></tr></table><div class="detailBody"><code>public static const instance:<a href="../../../../../danmaq/nineball/core/component/state/CStateDelegate.html">CStateDelegate</a></code><p></p><p></p><p> クラス インスタンス。 </p></div><br/><br/><hr><br/><p></p><center class="copyright"><footer></footer><br/>Thu Feb 23 2012, 04:57 PM +09:00  </center></div></body></html><!--<br/>Thu Feb 23 2012, 04:57 PM +09:00  -->

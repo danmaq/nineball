@@ -8,7 +8,7 @@ package danmaq.nineball.core.data
 	 * フェーズ進行・カウンタ進行の管理をするクラス。
 	 * 
 	 * <p>
-	 * 使用するためにはcount++を毎フレーム呼び出してください。
+	 * 使用するためには<code>count++</code>を毎フレーム呼び出してください。
 	 * </p>
 	 * 
 	 * @author Mc(danmaq)
@@ -102,7 +102,7 @@ package danmaq.nineball.core.data
 		/**
 		 * カウント変化時にフェーズを進めるかどうかを取得します。
 		 * 
-		 * @return カウント変化時にフェーズを進める場合、true
+		 * @return カウント変化時にフェーズを進める場合、<code>true</code>
 		 * @default false
 		 */
 		public function get reserveNextPhase():Boolean
@@ -185,7 +185,7 @@ package danmaq.nineball.core.data
 		//* instance methods ───────────────────────────*
 		
 		/**
-		 * 初期化をします。
+		 * 初期状態に戻します。
 		 */
 		public function dispose():void
 		{

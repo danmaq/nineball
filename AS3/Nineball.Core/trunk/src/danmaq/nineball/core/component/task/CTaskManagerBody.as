@@ -28,10 +28,11 @@ package danmaq.nineball.core.component.task
 		 * コンストラクタ。
 		 *
 		 * @param context タスク管理クラス。
+		 * @param owner 親とするオブジェクト。
 		 */
-		public function CTaskManagerBody(context:CTaskManager)
+		public function CTaskManagerBody(context:CTaskManager, owner:Object)
 		{
-			super(context);
+			super(context, owner);
 		}
 		
 		//* instance properties ─────────────────────────-*
