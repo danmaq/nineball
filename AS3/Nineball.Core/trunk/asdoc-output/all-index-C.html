@@ -42,14 +42,21 @@
 		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/CQuantize.html#ceil()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/class-list.html');">ceil</a>(expr:Number, resolution:Number) &mdash; Static Method                  ,  class danmaq.nineball.core.util.math.<a href="danmaq/nineball/core/util/math/CQuantize.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/class-list.html');">CQuantize</a></td></tr><tr><td width="20"></td><td>
 		 値を指定の分解能に合わせて切り上げます。
 		 
+		 最大で±0.0000000000000005程度の誤差が出ることに注意してください。
+		 
 		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/component/context/CContext.html#event:change" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/context/class-list.html');">change</a> &mdash; Event, class danmaq.nineball.core.component.context.<a href="danmaq/nineball/core/component/context/CContext.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/context/class-list.html');">CContext</a></td></tr><tr><td width="20"></td><td>
 	 状態が変化された際に発行されるイベントです。
 	 
 	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/package.html#clamp()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/class-list.html');">clamp</a>(expr:Number, limit1:Number, limit2:Number) &mdash; Package Function, <a href="danmaq/nineball/core/util/math/package.html" onclick="loadClassListFrame('danmaq/nineball/core/util/math/class-list.html')">danmaq.nineball.core.util.math</a></td></tr><tr><td width="20"></td><td>
 	 値を範囲内に丸めます。
 	 
+	 
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
+	 
+	 
 	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/list/random/CLCG.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CLCG</a> &mdash; final class, package <a href="danmaq/nineball/core/util/list/random/package-detail.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">danmaq.nineball.core.util.list.random</a></td></tr><tr><td width="20"></td><td>
-	 線形合同法を用いた疑似乱数ジェネレータ。
+	 線形合同法(Linear congruential generators)を用いた疑似乱数ジェネレータ。
 	 
 	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/list/random/CLCG.html#CLCG()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CLCG</a>(seed:int) &mdash; Constructor, class danmaq.nineball.core.util.list.random.<a href="danmaq/nineball/core/util/list/random/CLCG.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CLCG</a></td></tr><tr><td width="20"></td><td>
 		 コンストラクタ。
@@ -76,8 +83,8 @@
 	 値が範囲内に含まれているかどうかを取得します。
 	 
 	 
-	 limit1に最小値、limit2に最大値を設定することを推奨します。
-	 逆にしても内部で自動認識して対応しますが、余計な負荷がかかります。
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
 	 
 	 
 	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/component/task/CTaskManager.html#contains()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/task/class-list.html');">contains</a>(task:<a href="danmaq/nineball/core/component/task/ITask.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/task./class-list.html');">danmaq.nineball.core.component.task:ITask</a>) &mdash; method,  class danmaq.nineball.core.component.task.<a href="danmaq/nineball/core/component/task/CTaskManager.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/task/class-list.html');">CTaskManager</a></td></tr><tr><td width="20"></td><td>
@@ -119,6 +126,7 @@
 	 
 	 
 	 このクラスは静的クラスです。このクラスのインスタンスを生成することはできません。
+	 また、最大で±0.0000000000000005程度の誤差が出ることに注意してください。
 	 
 	 
 	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/CQuantize.html#CQuantize()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/class-list.html');">CQuantize</a>() &mdash; Constructor, class danmaq.nineball.core.util.math.<a href="danmaq/nineball/core/util/math/CQuantize.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/class-list.html');">CQuantize</a></td></tr><tr><td width="20"></td><td>
@@ -126,6 +134,21 @@
 		 
 		 
 		 このクラスは静的クラスです。このクラスのインスタンスを生成することはできません。
+		 
+		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">CQuaternion</a> &mdash; final class, package <a href="danmaq/nineball/core/util/math/trignometric/package-detail.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">danmaq.nineball.core.util.math.trignometric</a></td></tr><tr><td width="20"></td><td>
+	 ベクトル回転に使用する四元数を計算するクラスです。
+	 
+	 
+	 三角関数演算をオブジェクト作成時に先んじて行うため、高速軽量な回転演算が可能となります。
+	 また、要素が4個だけのため、回転のみしかできない代わりに、行列よりも高速な演算が行えます。
+	 
+	 
+	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html#CQuaternion()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">CQuaternion</a>(x:Number, y:Number, z:Number, w:Number) &mdash; Constructor, class danmaq.nineball.core.util.math.trignometric.<a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">CQuaternion</a></td></tr><tr><td width="20"></td><td>
+		 コンストラクタ。
+		 
+		 
+		 既定の引数を使用すると、回転を行わない四元数(identity)が作成されます。
+		 
 		 
 		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/list/random/CRandom.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CRandom</a> &mdash; class, package <a href="danmaq/nineball/core/util/list/random/package-detail.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">danmaq.nineball.core.util.list.random</a></td></tr><tr><td width="20"></td><td>
 	 疑似乱数ジェネレータの基底となる抽象クラス。
@@ -155,6 +178,22 @@
 		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/component/task/CTaskManager.html#createBody()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/task/class-list.html');">createBody</a>(owner:Object) &mdash; method,  class danmaq.nineball.core.component.task.<a href="danmaq/nineball/core/component/task/CTaskManager.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/component/task/class-list.html');">CTaskManager</a></td></tr><tr><td width="20"></td><td>
 		 
 		 この実体へのアクセサを生成します。
+		 
+		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html#createFromAxis()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">createFromAxis</a>(x:Number, y:Number, z:Number, radian:Number, result:<a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric./class-list.html');">danmaq.nineball.core.util.math.trignometric:CQuaternion</a>) &mdash; Static Method                  ,  class danmaq.nineball.core.util.math.trignometric.<a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">CQuaternion</a></td></tr><tr><td width="20"></td><td>
+		 軸ベクトルから四元数を作成します。
+		 
+		 
+		 軸ベクトルは予め正規化しておく必要があります。そうでない場合、正しい結果を取得することが
+		 できません。正規化にはVector3D.normalize()メソッドが便利です。
+		 
+		 
+		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html#createFromVectorAxis()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">createFromVectorAxis</a>(axis:flash.geom:Vector3D, radian:Number, result:<a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric./class-list.html');">danmaq.nineball.core.util.math.trignometric:CQuaternion</a>) &mdash; Static Method                  ,  class danmaq.nineball.core.util.math.trignometric.<a href="danmaq/nineball/core/util/math/trignometric/CQuaternion.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/math/trignometric/class-list.html');">CQuaternion</a></td></tr><tr><td width="20"></td><td>
+		 軸ベクトルから四元数を作成します。
+		 
+		 
+		 軸ベクトルは予め正規化しておく必要があります。
+		 そうでない場合、正しい結果を取得することができません。
+		 
 		 
 		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/list/random/CSFMT.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CSFMT</a> &mdash; final class, package <a href="danmaq/nineball/core/util/list/random/package-detail.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">danmaq.nineball.core.util.list.random</a></td></tr><tr><td width="20"></td><td>
 	 SFMT法(改良版Mersenne twister)を用いた疑似乱数ジェネレータ。
@@ -231,7 +270,7 @@
 		 
 		 このクラスは静的クラスです。このクラスのインスタンスを生成することはできません。
 		 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/list/random/CSystem.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CSystem</a> &mdash; final class, package <a href="danmaq/nineball/core/util/list/random/package-detail.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">danmaq.nineball.core.util.list.random</a></td></tr><tr><td width="20"></td><td>
-	 (恐らく)システム既定のものを用いた疑似乱数ジェネレータ。
+	 システム既定の疑似乱数ジェネレータのラッパー クラス。
 	 
 	 </td></tr><tr><td class="idxrow" colspan="2"><a href="danmaq/nineball/core/util/list/random/CSystem.html#CSystem()" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CSystem</a>(seed:int) &mdash; Constructor, class danmaq.nineball.core.util.list.random.<a href="danmaq/nineball/core/util/list/random/CSystem.html" onclick="javascript:loadClassListFrame('danmaq/nineball/core/util/list/random/class-list.html');">CSystem</a></td></tr><tr><td width="20"></td><td>
 		 コンストラクタ。
@@ -262,4 +301,4 @@
 		 コンストラクタ。
 		 初期シード値に負数を指定した場合、システム依存値が設定されます。
 		 
-		 </td></tr><tr><td colspan="2" style="padding-bottom:20px"></td></tr><tr><td colspan="2"><a href="all-index-A.html" onclick="javascript:loadClassListFrame('index-list.html');">A</a>&nbsp;&nbsp;<a href="all-index-B.html" onclick="javascript:loadClassListFrame('index-list.html');">B</a>&nbsp;&nbsp;<font color="black" size="10px" style="bold">C</font>&nbsp;&nbsp;<a href="all-index-D.html" onclick="javascript:loadClassListFrame('index-list.html');">D</a>&nbsp;&nbsp;<a href="all-index-E.html" onclick="javascript:loadClassListFrame('index-list.html');">E</a>&nbsp;&nbsp;<a href="all-index-F.html" onclick="javascript:loadClassListFrame('index-list.html');">F</a>&nbsp;&nbsp;<a href="all-index-G.html" onclick="javascript:loadClassListFrame('index-list.html');">G</a>&nbsp;&nbsp;<a href="all-index-H.html" onclick="javascript:loadClassListFrame('index-list.html');">H</a>&nbsp;&nbsp;<a href="all-index-I.html" onclick="javascript:loadClassListFrame('index-list.html');">I</a>&nbsp;&nbsp;<a href="all-index-J.html" onclick="javascript:loadClassListFrame('index-list.html');">J</a>&nbsp;&nbsp;<a href="all-index-K.html" onclick="javascript:loadClassListFrame('index-list.html');">K</a>&nbsp;&nbsp;<a href="all-index-L.html" onclick="javascript:loadClassListFrame('index-list.html');">L</a>&nbsp;&nbsp;<a href="all-index-M.html" onclick="javascript:loadClassListFrame('index-list.html');">M</a>&nbsp;&nbsp;<a href="all-index-N.html" onclick="javascript:loadClassListFrame('index-list.html');">N</a>&nbsp;&nbsp;<a href="all-index-O.html" onclick="javascript:loadClassListFrame('index-list.html');">O</a>&nbsp;&nbsp;<a href="all-index-P.html" onclick="javascript:loadClassListFrame('index-list.html');">P</a>&nbsp;&nbsp;<a href="all-index-Q.html" onclick="javascript:loadClassListFrame('index-list.html');">Q</a>&nbsp;&nbsp;<a href="all-index-R.html" onclick="javascript:loadClassListFrame('index-list.html');">R</a>&nbsp;&nbsp;<a href="all-index-S.html" onclick="javascript:loadClassListFrame('index-list.html');">S</a>&nbsp;&nbsp;<a href="all-index-T.html" onclick="javascript:loadClassListFrame('index-list.html');">T</a>&nbsp;&nbsp;<a href="all-index-U.html" onclick="javascript:loadClassListFrame('index-list.html');">U</a>&nbsp;&nbsp;<a href="all-index-V.html" onclick="javascript:loadClassListFrame('index-list.html');">V</a>&nbsp;&nbsp;<a href="all-index-W.html" onclick="javascript:loadClassListFrame('index-list.html');">W</a>&nbsp;&nbsp;<a href="all-index-X.html" onclick="javascript:loadClassListFrame('index-list.html');">X</a>&nbsp;&nbsp;<a href="all-index-Y.html" onclick="javascript:loadClassListFrame('index-list.html');">Y</a>&nbsp;&nbsp;<a href="all-index-Z.html" onclick="javascript:loadClassListFrame('index-list.html');">Z</a>&nbsp;&nbsp;</td></tr></table><p></p><center class="copyright"><footer></footer><br/>Thu Feb 23 2012, 04:57 PM +09:00  </center></div></body></html><!--<br/>Thu Feb 23 2012, 04:57 PM +09:00  -->
+		 </td></tr><tr><td colspan="2" style="padding-bottom:20px"></td></tr><tr><td colspan="2"><a href="all-index-A.html" onclick="javascript:loadClassListFrame('index-list.html');">A</a>&nbsp;&nbsp;<a href="all-index-B.html" onclick="javascript:loadClassListFrame('index-list.html');">B</a>&nbsp;&nbsp;<font color="black" size="10px" style="bold">C</font>&nbsp;&nbsp;<a href="all-index-D.html" onclick="javascript:loadClassListFrame('index-list.html');">D</a>&nbsp;&nbsp;<a href="all-index-E.html" onclick="javascript:loadClassListFrame('index-list.html');">E</a>&nbsp;&nbsp;<a href="all-index-F.html" onclick="javascript:loadClassListFrame('index-list.html');">F</a>&nbsp;&nbsp;<a href="all-index-G.html" onclick="javascript:loadClassListFrame('index-list.html');">G</a>&nbsp;&nbsp;<a href="all-index-H.html" onclick="javascript:loadClassListFrame('index-list.html');">H</a>&nbsp;&nbsp;<a href="all-index-I.html" onclick="javascript:loadClassListFrame('index-list.html');">I</a>&nbsp;&nbsp;<a href="all-index-J.html" onclick="javascript:loadClassListFrame('index-list.html');">J</a>&nbsp;&nbsp;<a href="all-index-K.html" onclick="javascript:loadClassListFrame('index-list.html');">K</a>&nbsp;&nbsp;<a href="all-index-L.html" onclick="javascript:loadClassListFrame('index-list.html');">L</a>&nbsp;&nbsp;<a href="all-index-M.html" onclick="javascript:loadClassListFrame('index-list.html');">M</a>&nbsp;&nbsp;<a href="all-index-N.html" onclick="javascript:loadClassListFrame('index-list.html');">N</a>&nbsp;&nbsp;<a href="all-index-O.html" onclick="javascript:loadClassListFrame('index-list.html');">O</a>&nbsp;&nbsp;<a href="all-index-P.html" onclick="javascript:loadClassListFrame('index-list.html');">P</a>&nbsp;&nbsp;<a href="all-index-Q.html" onclick="javascript:loadClassListFrame('index-list.html');">Q</a>&nbsp;&nbsp;<a href="all-index-R.html" onclick="javascript:loadClassListFrame('index-list.html');">R</a>&nbsp;&nbsp;<a href="all-index-S.html" onclick="javascript:loadClassListFrame('index-list.html');">S</a>&nbsp;&nbsp;<a href="all-index-T.html" onclick="javascript:loadClassListFrame('index-list.html');">T</a>&nbsp;&nbsp;<a href="all-index-U.html" onclick="javascript:loadClassListFrame('index-list.html');">U</a>&nbsp;&nbsp;<a href="all-index-V.html" onclick="javascript:loadClassListFrame('index-list.html');">V</a>&nbsp;&nbsp;<a href="all-index-W.html" onclick="javascript:loadClassListFrame('index-list.html');">W</a>&nbsp;&nbsp;<a href="all-index-X.html" onclick="javascript:loadClassListFrame('index-list.html');">X</a>&nbsp;&nbsp;<a href="all-index-Y.html" onclick="javascript:loadClassListFrame('index-list.html');">Y</a>&nbsp;&nbsp;<a href="all-index-Z.html" onclick="javascript:loadClassListFrame('index-list.html');">Z</a>&nbsp;&nbsp;</td></tr></table><p></p><center class="copyright"><footer></footer><br/>Fri Feb 24 2012, 06:55 PM +09:00  </center></div></body></html><!--<br/>Fri Feb 24 2012, 06:55 PM +09:00  -->

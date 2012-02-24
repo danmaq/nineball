@@ -13,16 +13,26 @@
 			</script><div class="MainContent"><br><br><hr><a name="methodSummary"></a><div class="summaryTableTitle">Functions</div><table cellpadding="3" cellspacing="0" class="summaryTable"><tr><th>&nbsp;</th><th width="30%">Function</th><th width="70%">Description</th></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#clamp()">clamp</a></td><td class="summaryTableLastCol">
 	 値を範囲内に丸めます。
 	 
+	 
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
+	 
+	 
 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#contains()">contains</a></td><td class="summaryTableLastCol">
 	 値が範囲内に含まれているかどうかを取得します。
 	 
 	 
-	 limit1に最小値、limit2に最大値を設定することを推奨します。
-	 逆にしても内部で自動認識して対応しますが、余計な負荷がかかります。
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
 	 
 	 
 	 </td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#onBit()">onBit</a></td><td class="summaryTableLastCol">
-	 1となっているビット数を計算します。
+	 対象値を最大32個のビット配列とみなし、1となっているビット数を計算します。
+	 
+	 
+	 例えば10進法の数値204は、2進法表記の場合11001100となり、
+	 1となっているビット数は4個のため、この関数の戻り値は4となります。
+	 
 	 
 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#sign()">sign</a></td><td class="summaryTableLastCol">
 	 数値の符号を取得します。
@@ -40,6 +50,7 @@
 	 
 	 
 	 このクラスは静的クラスです。このクラスのインスタンスを生成することはできません。
+	 また、最大で±0.0000000000000005程度の誤差が出ることに注意してください。
 	 
 	 
-	 </td></tr></table><p></p><div><p></p><center class="copyright"><footer></footer><br/>Thu Feb 23 2012, 04:57 PM +09:00  </center></div></div></body></html><!--<br/>Thu Feb 23 2012, 04:57 PM +09:00  -->
+	 </td></tr></table><p></p><div><p></p><center class="copyright"><footer></footer><br/>Fri Feb 24 2012, 06:55 PM +09:00  </center></div></div></body></html><!--<br/>Fri Feb 24 2012, 06:55 PM +09:00  -->

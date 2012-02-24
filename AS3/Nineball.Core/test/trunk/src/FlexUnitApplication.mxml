@@ -9,6 +9,8 @@
 			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
 	<fx:Script>
 		<![CDATA[
+			import danmaq.nineball.core.util.math.trignometric.TQuaternion;
+			import danmaq.nineball.core.util.math.TQuantize;
 			import danmaq.nineball.core.util.math.TMath;
 			import danmaq.nineball.core.util.list.random.TRandomUtil;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
@@ -35,6 +37,8 @@
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomAll);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomUtil);
 				testsToRun.push(danmaq.nineball.core.util.math.TMath);
+				testsToRun.push(danmaq.nineball.core.util.math.TQuantize);
+				testsToRun.push(danmaq.nineball.core.util.math.trignometric.TQuaternion);
 				return testsToRun;
 			}
 			
