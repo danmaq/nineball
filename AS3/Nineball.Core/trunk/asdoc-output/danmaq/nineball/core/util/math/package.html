@@ -13,16 +13,26 @@
 			</script><div class="MainContent"><br><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Function</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#clamp()" class="signatureLink">clamp</a>(expr:Number, limit1:Number, limit2:Number):Number</div><div class="summaryTableDescription">
 	 値を範囲内に丸めます。
 	 
+	 
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
+	 
+	 
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.math</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#contains()" class="signatureLink">contains</a>(expr:Number, limit1:Number, limit2:Number):Boolean</div><div class="summaryTableDescription">
 	 値が範囲内に含まれているかどうかを取得します。
 	 
 	 
-	 limit1に最小値、limit2に最大値を設定することを推奨します。
-	 逆にしても内部で自動認識して対応しますが、余計な負荷がかかります。
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
 	 
 	 
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.math</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#onBit()" class="signatureLink">onBit</a>(expr:uint):uint</div><div class="summaryTableDescription">
-	 1となっているビット数を計算します。
+	 対象値を最大32個のビット配列とみなし、1となっているビット数を計算します。
+	 
+	 
+	 例えば10進法の数値204は、2進法表記の場合11001100となり、
+	 1となっているビット数は4個のため、この関数の戻り値は4となります。
+	 
 	 
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.math</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#sign()" class="signatureLink">sign</a>(expr:Number):int</div><div class="summaryTableDescription">
 	 数値の符号を取得します。
@@ -38,6 +48,11 @@
 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.math</td></tr></table></div><a name="methodDetail"></a><div class="detailSectionHeader"> Function detail </div><a name="clamp()"></a><a name="clamp(Number,Number,Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">clamp</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td></tr></table><div class="detailBody"><code> public function clamp(expr:Number, limit1:Number, limit2:Number):Number</code><p></p><p></p><p>
 	 値を範囲内に丸めます。
 	 
+	 <p>
+	 <code>limit1</code>に最小値、<code>limit2</code>に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
+	 </p>
+	 
 	 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">expr</span>:Number</code> &mdash; 対象値。
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">limit1</span>:Number</code> &mdash; 限界値。
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">limit2</span>:Number</code> &mdash; 限界値。
@@ -46,8 +61,8 @@
 	 値が範囲内に含まれているかどうかを取得します。
 	 
 	 <p>
-	 <code>limit1</code>に最小値、<code>limit2</code>に最大値を設定することを推奨します。
-	 逆にしても内部で自動認識して対応しますが、余計な負荷がかかります。
+	 <code>limit1</code>に最小値、<code>limit2</code>に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
 	 </p>
 	 
 	 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">expr</span>:Number</code> &mdash; 対象値。
@@ -55,10 +70,15 @@
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">limit2</span>:Number</code> &mdash; 限界値。
 	 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Boolean</code> &mdash; 値が範囲内に含まれている場合、true。
 	 </td></tr></table></div><a name="onBit()"></a><a name="onBit(uint)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">onBit</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function onBit(expr:uint):uint</code><p></p><p></p><p>
-	 1となっているビット数を計算します。
+	 対象値を最大32個のビット配列とみなし、1となっているビット数を計算します。
+	 
+	 <p>
+	 例えば10進法の数値204は、2進法表記の場合11001100となり、
+	 1となっているビット数は4個のため、この関数の戻り値は4となります。
+	 </p>
 	 
 	 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">expr</span>:uint</code> &mdash; 対象値。
-	 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>uint</code> &mdash; 1となっているビット数。
+	 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>uint</code> &mdash; 1となっているビット数(0～32)。
 	 </td></tr></table></div><a name="sign()"></a><a name="sign(Number)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">sign</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function sign(expr:Number):int</code><p></p><p></p><p>
 	 数値の符号を取得します。
 	 
@@ -78,4 +98,4 @@
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">allowMin</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; 制限値1(最小)と同値の状態を許容するかどうか。
 	 </td></tr><tr><td class="paramSpacer">&nbsp;</td></tr><tr><td width="20px"></td><td><code><span class="label">allowMax</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; 制限値2(最大)と同値の状態を許容するかどうか。
 	 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>Number</code> &mdash; 制限された値。
-	 </td></tr></table></div><p></p><center class="copyright"><footer></footer><br/>Thu Feb 23 2012, 04:57 PM +09:00  </center></div></body></html>
+	 </td></tr></table></div><p></p><center class="copyright"><footer></footer><br/>Fri Feb 24 2012, 06:55 PM +09:00  </center></div></body></html>

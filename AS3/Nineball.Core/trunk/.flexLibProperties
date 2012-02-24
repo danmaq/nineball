@@ -26,6 +26,7 @@
     <classEntry path="danmaq.nineball.core.util.ntrace"/>
     <classEntry path="danmaq.nineball.core.util.string.sprintf"/>
     <classEntry path="danmaq.nineball.core.component.context.CSpriteWithContext"/>
+    <classEntry path="danmaq.nineball.core.util.math.trignometric.CQuaternion"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

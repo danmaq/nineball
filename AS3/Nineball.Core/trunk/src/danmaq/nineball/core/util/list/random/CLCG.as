@@ -2,7 +2,7 @@ package danmaq.nineball.core.util.list.random
 {
 	
 	/**
-	 * 線形合同法を用いた疑似乱数ジェネレータ。
+	 * 線形合同法(Linear congruential generators)を用いた疑似乱数ジェネレータ。
 	 *
 	 * @author Mc(danmaq)
 	 */

@@ -34,6 +34,7 @@ package danmaq.nineball.core.util.math
 				Assert.assertEquals(onBit(i), bits[i]);
 			}
 			Assert.assertEquals(0, onBit(0));
+			Assert.assertEquals(4, onBit(204));
 			Assert.assertEquals(8, onBit(0xFF));
 			Assert.assertEquals(16, onBit(0xFFFF));
 			Assert.assertEquals(24, onBit(0xFFFFFF));

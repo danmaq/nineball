@@ -4,7 +4,7 @@ package danmaq.nineball.core.util.list.random
 	import flash.geom.Point;
 
 	/**
-	 * (恐らく)システム既定のものを用いた疑似乱数ジェネレータ。
+	 * システム既定の疑似乱数ジェネレータのラッパー クラス。
 	 *
 	 * @author Mc(danmaq)
 	 */

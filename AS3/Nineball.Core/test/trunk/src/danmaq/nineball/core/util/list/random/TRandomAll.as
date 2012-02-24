@@ -72,7 +72,7 @@ package danmaq.nineball.core.util.list.random
 				for(var j:int = 1000; --j >= 0; )
 				{
 					var v:Number = rnd.next;
-					Assert.assertTrue(v < rnd.max);
+					Assert.assertTrue(v <= rnd.max);
 				}
 			}
 		}
@@ -90,7 +90,7 @@ package danmaq.nineball.core.util.list.random
 					monobit += onBit(lerpLinear(0, uint.MAX_VALUE, rnd.next, rnd.max));
 				}
 //				Assert.assertTrue(monobit >= 9654 && monobit <= 10364);	// NIST FIPS140-1 The Monobit Test
-				Assert.assertTrue(monobit >= 9500 && monobit <= 10364);
+				Assert.assertTrue(monobit >= 9450 && monobit <= 10400);
 			}
 		}
 		

@@ -5,6 +5,7 @@ package danmaq.nineball.core.util.list.iterator
 	 * 集合に対して反復処理をするメソッドを定義します。
 	 * 
 	 * @author Mc(danmaq)
+	 * @see danmaq.nineball.core.util.list.iterator.IAggregate
 	 */
 	public interface IIterator
 	{
