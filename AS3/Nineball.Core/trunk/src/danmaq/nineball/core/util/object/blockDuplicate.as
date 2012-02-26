@@ -3,12 +3,12 @@ package danmaq.nineball.core.util.object
 
 	/**
 	 * Singletonクラスなどで、インスタンスが外部からの操作により余計に生成されることを阻止します。
-	 * 
+	 *
 	 * <p>
 	 * ロジックとしては引数がすべてnullでない場合にSingleton違反と見なし例外を発生させます。
 	 * 原理的にコンストラクタ内部における余計な生成の場合、対応しきれない場合があります。
 	 * </p>
-	 * 
+	 *
 	 * @param expr 現在のインスタンス。
 	 * @param args Singletonオブジェクト一覧。
 	 * @throws ArgumentError 引数が不足しているか、またはSingleton違反を検出した場合。

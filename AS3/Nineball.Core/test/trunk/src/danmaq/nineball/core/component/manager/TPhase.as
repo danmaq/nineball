@@ -1,4 +1,4 @@
-package danmaq.nineball.core.data
+package danmaq.nineball.core.component.manager
 {
 	import flexunit.framework.Assert;
 	

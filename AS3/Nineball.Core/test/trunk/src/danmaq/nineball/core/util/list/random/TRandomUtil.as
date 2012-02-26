@@ -47,7 +47,7 @@ package danmaq.nineball.core.util.list.random
 		[Test]
 		public function testGet_next():void
 		{
-			for(var i:int = 1000; --i >= 0; )
+			for(var i:int = 600; --i >= 0; )
 			{
 				Assert.assertStrictlyEquals(i, _rnd.counter, _rndUtil.counter);
 				Assert.assertStrictlyEquals(_rnd.next, _rndUtil.next);
@@ -57,7 +57,7 @@ package danmaq.nineball.core.util.list.random
 		[Test]
 		public function testNextBlur():void
 		{
-			for(var i:int = 0; i < 1000; i++)
+			for(var i:int = 0; i < 600; i++)
 			{
 				Assert.assertStrictlyEquals(i, _rndUtil.counter);
 				var value:Number = _rndUtil.nextBlur(i);
@@ -68,7 +68,7 @@ package danmaq.nineball.core.util.list.random
 		[Test]
 		public function testNextLimit():void
 		{
-			for(var i:int = 0; i < 1000; i++)
+			for(var i:int = 0; i < 600; i++)
 			{
 				Assert.assertStrictlyEquals(i, _rndUtil.counter);
 				var value:Number = _rndUtil.nextLimit(i, i + 512.34);
@@ -79,7 +79,7 @@ package danmaq.nineball.core.util.list.random
 		[Test]
 		public function testGet_nextNumber():void
 		{
-			for(var i:int = 0; i < 1000; i++)
+			for(var i:int = 0; i < 600; i++)
 			{
 				Assert.assertStrictlyEquals(i, _rndUtil.counter);
 				var value:Number = _rndUtil.nextNumber;

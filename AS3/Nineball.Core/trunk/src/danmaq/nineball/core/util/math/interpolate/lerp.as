@@ -1,9 +1,9 @@
 package danmaq.nineball.core.util.math.interpolate
 {
-	
+
 	/**
 	 * 2つの数値間で線形補完の計算をします。
-	 * 
+	 *
 	 * @param expr1 対象値1。
 	 * @param expr2 対象値2。
 	 * @param amount 重み。

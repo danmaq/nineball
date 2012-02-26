@@ -1,5 +1,6 @@
 package danmaq.nineball.core.util.list.random
 {
+
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 
@@ -10,17 +11,17 @@ package danmaq.nineball.core.util.list.random
 	 */
 	public final class CSystem extends CRandom
 	{
-		
+
 		//* constants ──────────────────────────────-*
-		
+
 		/** 擬似乱数を計算に使用するビットマップ画像。 */
 		private const bitmap:BitmapData = new BitmapData(16, 16);
-		
+
 		/** 座標インデックス情報。 */
 		private const position:Point = new Point();
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
 		 * 初期シード値に負数を指定した場合、システム依存値が設定されます。
@@ -31,9 +32,9 @@ package danmaq.nineball.core.util.list.random
 		{
 			super(seed);
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 最大値を取得します。
 		 *
@@ -43,7 +44,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return 0xFFFFFF;
 		}
-		
+
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
 		 *
@@ -64,9 +65,9 @@ package danmaq.nineball.core.util.list.random
 			}
 			return result & max;
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * @inheritDoc
 		 */

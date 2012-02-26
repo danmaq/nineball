@@ -1,6 +1,6 @@
 package danmaq.nineball.core.util.string
 {
-	
+
 	/**
 	 *  sprintf(3) implementation in ActionScript 3.0.
 	 *
@@ -44,7 +44,7 @@ package danmaq.nineball.core.util.string
 	 *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 	 *  DEALINGS IN THE SOFTWARE.
 	 * </pre>
-	 * 
+	 *
 	 * @author Manish Jethani
 	 * @param format 実引数の変換方法。
 	 * @param args 実引数一覧。
@@ -52,30 +52,24 @@ package danmaq.nineball.core.util.string
 	public function sprintf(format:String, ... args:Array):String
 	{
 		var result:String = "";
-		
 		var length:int = format.length;
 		var next:*;
 		var str:String;
 		for (var i:int = 0; i < length; i++)
 		{
 			var c:String = format.charAt(i);
-			
 			if (c == "%")
 			{
 				var pastFieldWidth:Boolean = false;
 				var pastFlags:Boolean = false;
-				
 				var flagAlternateForm:Boolean = false;
 				var flagZeroPad:Boolean = false;
 				var flagLeftJustify:Boolean = false;
 				var flagSpace:Boolean = false;
 				var flagSign:Boolean = false;
-				
 				var fieldWidth:String = "";
 				var precision:String = "";
-				
 				c = format.charAt(++i);
-				
 				while (c != "d"
 					&& c != "i"
 					&& c != "o"
@@ -103,16 +97,13 @@ package danmaq.nineball.core.util.string
 						else
 							pastFlags = true;
 					}
-					
 					if (!pastFieldWidth && c == ".")
 					{
 						pastFlags = true;
 						pastFieldWidth = true;
-						
 						c = format.charAt(++i);
 						continue;
 					}
-					
 					if (pastFlags)
 					{
 						if (!pastFieldWidth)
@@ -120,25 +111,20 @@ package danmaq.nineball.core.util.string
 						else
 							precision += c;
 					}
-					
 					c = format.charAt(++i);
 				}
-				
 				switch (c)
 				{
 					case "d":
 					case "i":
 						next = args.shift();
 						str = String(Math.abs(int(next)));
-						
 						if (precision != "")
 							str = leftPad(str, int(precision), "0");
-						
 						if (int(next) < 0)
 							str = "-" + str;
 						else if (flagSign && int(next) >= 0)
 							str = "+" + str;
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -148,20 +134,15 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						result += str;
 						break;
-					
 					case "o":
 						next = args.shift();
 						str = uint(next).toString(8);
-						
 						if (flagAlternateForm && str != "0")
 							str = "0" + str;
-						
 						if (precision != "")
 							str = leftPad(str, int(precision), "0");
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -171,17 +152,13 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						result += str;
 						break;
-					
 					case "u":
 						next = args.shift();
 						str = uint(next).toString(10);
-						
 						if (precision != "")
 							str = leftPad(str, int(precision), "0");
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -191,29 +168,22 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						result += str;
 						break;
-					
 					case "X":
 						var capitalise:Boolean = true;
 					case "x":
 						next = args.shift();
 						str = uint(next).toString(16);
-						
 						if (precision != "")
 							str = leftPad(str, int(precision), "0");
-						
 						var prepend:Boolean = flagAlternateForm && uint(next) != 0;
-						
 						if (fieldWidth != "" && !flagLeftJustify
 							&& flagZeroPad && precision == "")
 							str = leftPad(str, prepend
 								? int(fieldWidth) - 2 : int(fieldWidth), "0");
-						
 						if (prepend)
 							str = "0x" + str;
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -221,27 +191,21 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						if (capitalise)
 							str = str.toUpperCase();
-						
 						result += str;
 						break;
-					
 					case "f":
 					case "F":
 						next = args.shift();
 						str = Math.abs(Number(next)).toFixed(
 							precision != "" ?  int(precision) : 6);
-						
 						if (int(next) < 0)
 							str = "-" + str;
 						else if (flagSign && int(next) >= 0)
 							str = "+" + str;
-						
 						if (flagAlternateForm && str.indexOf(".") == -1)
 							str += ".";
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -251,14 +215,11 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						result += str;
 						break;
-					
 					case "c":
 						next = args.shift();
 						str = String.fromCharCode(int(next));
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -266,17 +227,13 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						result += str;
 						break;
-					
 					case "s":
 						next = args.shift();
 						str = String(next);
-						
 						if (precision != "")
 							str = str.substring(0, int(precision));
-						
 						if (fieldWidth != "")
 						{
 							if (flagLeftJustify)
@@ -284,10 +241,8 @@ package danmaq.nineball.core.util.string
 							else
 								str = leftPad(str, int(fieldWidth));
 						}
-						
 						result += str;
 						break;
-					
 					case "%":
 						result += "%";
 				}
@@ -297,33 +252,24 @@ package danmaq.nineball.core.util.string
 				result += c;
 			}
 		}
-		
 		return result;
 	}
-	
 }
-
 // Private functions
-
 function leftPad(source:String, targetLength:int, padChar:String = " "):String
 {
 	if (source.length < targetLength)
 	{
 		var padding:String = "";
-		
 		while (padding.length + source.length < targetLength)
 			padding += padChar;
-		
 		return padding + source;
 	}
-	
 	return source;
 }
-
 function rightPad(source:String, targetLength:int, padChar:String = " "):String
 {
 	while (source.length < targetLength)
 		source += padChar;
-	
 	return source;
 }

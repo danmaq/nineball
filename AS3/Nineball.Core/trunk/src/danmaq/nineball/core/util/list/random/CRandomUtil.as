@@ -1,5 +1,6 @@
 package danmaq.nineball.core.util.list.random
 {
+
 	import danmaq.nineball.core.util.list.iterator.IIterator;
 
 	/**
@@ -11,12 +12,12 @@ package danmaq.nineball.core.util.list.random
 	{
 
 		//* fields ────────────────────────────────*
-		
+
 		/** 擬似乱数ジェネレータ。 */
 		private var _random:IRandom;
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
 		 *
@@ -32,7 +33,7 @@ package danmaq.nineball.core.util.list.random
 		}
 
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 擬似乱数系列の開始値を計算するために使用するシード値を取得します。
 		 *
@@ -52,7 +53,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return random.counter;
 		}
-		
+
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
 		 *
@@ -62,7 +63,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return random.next;
 		}
-		
+
 		/**
 		 * 最大値を取得します。
 		 *
@@ -72,7 +73,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return random.max;
 		}
-		
+
 		/**
 		 * 集合を反復処理する列挙子を取得します。
 		 *
@@ -94,7 +95,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return _random;
 		}
-		
+
 		/**
 		 * 0から1までの範囲内の擬似乱数を取得します。
 		 *
@@ -104,9 +105,9 @@ package danmaq.nineball.core.util.list.random
 		{
 			return next / max;
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * 乱数を初期化します。
 		 *
@@ -116,7 +117,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			random.reset(seed);
 		}
-		
+
 		/**
 		 * 乱数による誤差を計算します。
 		 *
@@ -127,7 +128,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return nextNumber * blur * 2 - blur;
 		}
-		
+
 		/**
 		 * 乱数を計算します。
 		 *

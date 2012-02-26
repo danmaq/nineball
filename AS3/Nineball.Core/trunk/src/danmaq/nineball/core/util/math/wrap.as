@@ -1,14 +1,14 @@
 package danmaq.nineball.core.util.math
 {
-	
+
 	/**
 	 * 値を指定された範囲内に制限し、超過した場合は範囲内でループします。
-	 * 
+	 *
 	 * <p>
 	 * 注意：最小値と最大値を逆さに設定しても内部で自動的に認識・交換しますが、
 	 * 無駄なオーバーヘッドが増えるだけなので極力避けてください。
 	 * </p>
-	 * 
+	 *
 	 * @param expr 対象の値。
 	 * @param min 制限値1(最小)。
 	 * @param max 制限値1(最大)。
@@ -57,7 +57,7 @@ package danmaq.nineball.core.util.math
 
 /**
  * 値が閾値未満かどうかを取得します。
- * 
+ *
  * @param expr 対象の値。
  * @param threshold 閾値。
  * @return 値が閾値未満である場合、true。
@@ -69,7 +69,7 @@ function less(expr:Number, threshold:Number):Boolean
 
 /**
  * 値が閾値以下かどうかを取得します。
- * 
+ *
  * @param expr 対象の値。
  * @param threshold 閾値。
  * @return 値が閾値以下である場合、true。
@@ -81,7 +81,7 @@ function eqLess(expr:Number, threshold:Number):Boolean
 
 /**
  * 値が閾値を超過しているかどうかを取得します。
- * 
+ *
  * @param expr 対象の値。
  * @param threshold 閾値。
  * @return 値が閾値を超過している場合、true。
@@ -93,7 +93,7 @@ function more(expr:Number, threshold:Number):Boolean
 
 /**
  * 値が閾値以上かどうかを取得します。
- * 
+ *
  * @param expr 対象の値。
  * @param threshold 閾値。
  * @return 値が閾値以下である場合、true。

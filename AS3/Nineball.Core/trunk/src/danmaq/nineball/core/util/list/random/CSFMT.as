@@ -1,6 +1,6 @@
 package danmaq.nineball.core.util.list.random
 {
-	
+
 	/**
 	 * SFMT法(改良版Mersenne twister)を用いた疑似乱数ジェネレータ。
 	 *
@@ -41,19 +41,19 @@ package danmaq.nineball.core.util.list.random
 	 */
 	public final class CSFMT extends CRandom
 	{
-		
+
 		//* constants ──────────────────────────────-*
 
 		/** 擬似乱数を計算するために使用する数値テーブル。 */
 		private const table:Vector.<uint> = new Vector.<uint>(624);
 
 		//* fields ────────────────────────────────*
-		
+
 		/** 数値テーブルのインデックス。 */
 		private var _index:int;
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
 		 * 初期シード値に負数を指定した場合、システム依存値が設定されます。
@@ -64,9 +64,9 @@ package danmaq.nineball.core.util.list.random
 		{
 			super(seed);
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 最大値を取得します。
 		 *
@@ -76,7 +76,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return uint.MAX_VALUE;
 		}
-		
+
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
 		 *
@@ -92,9 +92,9 @@ package danmaq.nineball.core.util.list.random
 			}
 			return table[_index++];
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * @inheritDoc
 		 */
@@ -124,7 +124,6 @@ package danmaq.nineball.core.util.list.random
 			var y:int;
 			var p:Vector.<uint> = table;
 			var length:int = p.length;
-			
 			do
 			{
 				y = p[a + 3] ^ (p[a + 3] << 8) ^ (p[a + 2] >>> 24) ^ ((p[b + 3] >>> 11) & 0xbffffff6);
@@ -146,7 +145,6 @@ package danmaq.nineball.core.util.list.random
 			}
 			while (a != length);
 		}
-		
 		private function periodCertification():void
 		{
 			var work:int;
@@ -159,7 +157,6 @@ package danmaq.nineball.core.util.list.random
 			parity.push(0x00000000);
 			parity.push(0x13c9e684);
 			_index = table.length;
-			
 			for (i = 0; i < 4; i++)
 			{
 				inner ^= table[i] & parity[i];

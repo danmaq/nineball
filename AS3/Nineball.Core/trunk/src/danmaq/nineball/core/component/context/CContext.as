@@ -4,59 +4,59 @@ package danmaq.nineball.core.component.context
 	import danmaq.nineball.core.component.state.CStateEmpty;
 	import danmaq.nineball.core.component.state.IState;
 	import danmaq.nineball.core.events.CDisposableEventDispatcher;
-	
+
 	import flash.events.Event;
 	import flash.utils.getTimer;
 
 	/**
 	 * 状態が変化された際に発行されるイベントです。
-	 * 
+	 *
 	 * @eventType flash.events.Event.CHANGE
 	 */
 	[Event(name="change", type="flash.events.Event")]
 
 	/**
 	 * 明示的に解放可能な状態にした、即ちdisposeメソッドを実行した際に発行されるイベントです。
-	 * 
+	 *
 	 * @eventType flash.events.Event.UNLOAD
 	 */
 	[Event(name="unload", type="flash.events.Event")]
 
 	/**
 	 * 状態による制御AI。
-	 * 
+	 *
 	 * @author Mc(danmaq)
 	 * @see danmaq.nineball.core.component.context.CContextBody
 	 * @see danmaq.nineball.core.component.state.IState
 	 */
 	public class CContext extends CDisposableEventDispatcher implements IContext
 	{
-		
+
 		//* fields ────────────────────────────────*
-		
+
 		/** 現在の状態。 */
 		private var _previousState:IState = CStateEmpty.instance;
-		
+
 		/** 直前の状態。 */
 		private var _currentState:IState = CStateEmpty.instance;
-		
+
 		/** 次の状態。 */
 		private var _nextState:IState;
 
 		/** この実体のアクセサ。 */
 		private var _body:CContextBody;
-		
+
 		/** 最後に状態変化した時のフレーム カウンタ値。 */
 		private var _stateChangedCounter:int;
-		
+
 		/** 最後に状態変化した時の時刻。 */
 		private var _stateChangedTime:int = getTimer();
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
-		 * 
+		 *
 		 * @param firstState 初回の状態。
 		 * @param owner 所有者とするオブジェクト。
 		 */
@@ -66,12 +66,12 @@ package danmaq.nineball.core.component.context
 			nextState = firstState == null ? defaultState : firstState;
 			commitState();
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 直前の状態を取得します。
-		 * 
+		 *
 		 * @default CStateEmpty.instance
 		 * @return 直前の状態。
 		 */
@@ -79,10 +79,10 @@ package danmaq.nineball.core.component.context
 		{
 			return _previousState;
 		}
-		
+
 		/**
 		 * 現在の状態を取得します。
-		 * 
+		 *
 		 * @default CStateEmpty.instance
 		 * @return 現在の状態。
 		 */
@@ -90,10 +90,10 @@ package danmaq.nineball.core.component.context
 		{
 			return _currentState;
 		}
-		
+
 		/**
 		 * 次の状態の予約を取得します。
-		 * 
+		 *
 		 * @default null
 		 * @return 次の状態。未決定の場合、null。
 		 */
@@ -101,30 +101,30 @@ package danmaq.nineball.core.component.context
 		{
 			return _nextState;
 		}
-		
+
 		/**
 		 * 次の状態の予約を設定、または取り消しします。
-		 * 
+		 *
 		 * @param value 次の状態。
 		 */
 		public function set nextState(value:IState):void
 		{
 			_nextState = value;
 		}
-		
+
 		/**
 		 * 既定の状態を取得します。
-		 * 
+		 *
 		 * @return 既定の状態。
 		 */
 		public function get defaultState():IState
 		{
 			return CStateEmpty.instance;
 		}
-		
+
 		/**
 		 * 汎用フレーム カウンタを取得します。
-		 * 
+		 *
 		 * @default 0
 		 * @return フレーム カウンタ。
 		 */
@@ -135,46 +135,46 @@ package danmaq.nineball.core.component.context
 
 		/**
 		 * 最後に状態変化した時のフレーム カウンタ値を取得します。
-		 * 
+		 *
 		 * @return フレーム カウンタ。
 		 */
 		public function get stateChangedCounter():int
 		{
 			return _stateChangedCounter;
 		}
-		
+
 		/**
 		 * 最後に状態変化した時の時刻を取得します。
-		 * 
+		 *
 		 * @return 時刻(AVM2起動時からの経過ミリ秒)。
 		 */
 		public function get stateChangedTime():int
 		{
 			return _stateChangedTime;
 		}
-		
+
 		/**
 		 * このオブジェクトの所有者を取得します。
-		 * 
+		 *
 		 * @return オブジェクトの所有者。存在しない場合、<code>null</code>。
 		 */
 		public function get owner():Object
 		{
 			return body.counter;
 		}
-		
+
 		/**
 		 * この実体へのアクセサ オブジェクトを取得します。
-		 * 
+		 *
 		 * @return この実体へのアクセサ オブジェクト。
 		 */
 		protected function get body():CContextBody
 		{
 			return _body;
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * @inheritDoc
 		 */
@@ -194,7 +194,7 @@ package danmaq.nineball.core.component.context
 			nextState = defaultState;
 			commitState();
 		}
-		
+
 		/**
 		 * 1フレーム分の更新処理を実行します。
 		 */
@@ -203,10 +203,10 @@ package danmaq.nineball.core.component.context
 			body.update();
 			commitState();
 		}
-		
+
 		/**
 		 * <code>update()</code>メソッドのラッパーです。
-		 * 
+		 *
 		 * @param evt イベント情報。(無視されます)
 		 * @see #update()
 		 */
@@ -214,11 +214,11 @@ package danmaq.nineball.core.component.context
 		{
 			update();
 		}
-		
+
 		/**
 		 * 予約されている状態は、<code>update()</code>メソッドによって確定されますが、
 		 * このメソッドを使用することで強制的に即時確定します。
-		 * 
+		 *
 		 * @see #nextState
 		 * @see #update()
 		 */
@@ -242,10 +242,10 @@ package danmaq.nineball.core.component.context
 				}
 			}
 		}
-		
+
 		/**
 		 * この実体へのアクセサを生成します。
-		 * 
+		 *
 		 * @param owner 所有者となるオブジェクト。
 		 * @return アクセサ オブジェクト。
 		 */

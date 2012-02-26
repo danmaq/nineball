@@ -3,6 +3,7 @@
   <includeClasses>
     <classEntry path="danmaq.nineball.flex.components.CForcePreloader"/>
     <classEntry path="danmaq.nineball.flex.components.CFlexibleContainer"/>
+    <classEntry path="danmaq.nineball.flex.components.CFPSViewer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

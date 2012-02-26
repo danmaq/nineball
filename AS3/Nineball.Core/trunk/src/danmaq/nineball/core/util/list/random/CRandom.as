@@ -1,13 +1,14 @@
 package danmaq.nineball.core.util.list.random
 {
+
 	import danmaq.nineball.core.util.list.iterator.IIterator;
 	import danmaq.nineball.core.util.object.blockAbstract;
-	
+
 	import flash.utils.getTimer;
-	
+
 	/**
 	 * 疑似乱数ジェネレータの基底となる抽象クラス。
-	 * 
+	 *
 	 * <p>
 	 * これはIRandomインターフェイスのうち、各種疑似乱数ジェネレータに共通する最低限の
 	 * 機能を実装した抽象クラスです。このクラスを単体で使用することはできません。
@@ -22,25 +23,25 @@ package danmaq.nineball.core.util.list.random
 	{
 
 		//* fields ────────────────────────────────*
-		
+
 		/** シード値。 */
 		private var _seed:uint;
 
 		/** 反復子。 */
 		private var _iterator:IIterator;
-		
+
 		/** 乱数の使用カウンタ。 */
 		private var _counter:uint;
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
 		 *
 		 * <p>
 		 * これは抽象クラスです。このクラスを直接生成することはできません。
 		 * </p>
-		 * 
+		 *
 		 * @param seed シード値。負数を指定した場合、システム依存値が設定されます。
 		 */
 		public function CRandom(seed:int=int.MIN_VALUE)
@@ -49,9 +50,9 @@ package danmaq.nineball.core.util.list.random
 			_iterator = new CRandomIterator(this);
 			reset(seed);
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 擬似乱数系列の開始値を計算するために使用するシード値を取得します。
 		 *
@@ -62,7 +63,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return _seed;
 		}
-		
+
 		/**
 		 * 乱数の使用カウンタを取得します。
 		 *
@@ -72,7 +73,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return _counter;
 		}
-		
+
 		/**
 		 * 最大値を取得します。
 		 *
@@ -84,7 +85,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			throw new Error("実装されていない抽象メソッドが呼び出されました。");
 		}
-		
+
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
 		 *
@@ -96,7 +97,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			throw new Error("実装されていない抽象メソッドが呼び出されました。");
 		}
-		
+
 		/**
 		 * 集合を反復処理する列挙子を取得します。
 		 *
@@ -108,9 +109,9 @@ package danmaq.nineball.core.util.list.random
 		{
 			return _iterator;
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * 乱数を初期化します。
 		 *
@@ -121,7 +122,7 @@ package danmaq.nineball.core.util.list.random
 			_seed = seed >= 0 ? seed : getTimer();
 			_counter = 0;
 		}
-		
+
 		/**
 		 * 乱数カウンタをインクリメントします。
 		 */
