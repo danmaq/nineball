@@ -1,0 +1,3 @@
+Text for description in danmaq.nineball.core.data:CBitmapSplitter/autoSplitter is not valid.
+org.xml.sax.SAXParseException: エレメント型 "Bitmap" は対応する終了タグ "</Bitmap>" で終了する必要があります。
+

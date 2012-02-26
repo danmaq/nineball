@@ -8,23 +8,22 @@ package danmaq.nineball.core.util.list.random
 	 */
 	public final class CXORShift extends CRandom
 	{
-		
 		//* fields ────────────────────────────────*
-		
+
 		/** 擬似乱数を計算するために使用する数値。 */
 		private var _x:uint;
-		
+
 		/** 擬似乱数を計算するために使用する数値。 */
 		private var _y:uint;
-		
+
 		/** 擬似乱数を計算するために使用する数値。 */
 		private var _z:uint;
-		
+
 		/** 擬似乱数を計算するために使用する数値。 */
 		private var _w:uint;
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
 		 * 初期シード値に負数を指定した場合、システム依存値が設定されます。
@@ -35,9 +34,9 @@ package danmaq.nineball.core.util.list.random
 		{
 			super(seed);
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 最大値を取得します。
 		 *
@@ -47,7 +46,7 @@ package danmaq.nineball.core.util.list.random
 		{
 			return uint.MAX_VALUE;
 		}
-		
+
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
 		 *
@@ -62,9 +61,9 @@ package danmaq.nineball.core.util.list.random
 			_z = _w;
 			return (_w = (_w ^ (_w >> 19)) ^ (t ^ (t >> 8)));
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * @inheritDoc
 		 */

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<overviews> 
+	<packages> 
+		<package name="danmaq.nineball.core.util"> 
+			<shortDescription> 
+				<![CDATA[ 
+					danmaq.nineball.core.util パッケージ
+				]]> 
+			</shortDescription> 
+			<description> 
+				<![CDATA[ 
+					danmaq.nineball.core.util パッケージ
+				]]> 
+			</description> 
+		</package> 
+	</packages>
+</overviews>

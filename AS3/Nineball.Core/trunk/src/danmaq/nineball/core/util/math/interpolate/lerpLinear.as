@@ -1,9 +1,9 @@
 package danmaq.nineball.core.util.math.interpolate
 {
-	
+
 	/**
 	 * 線形補完の直線変換をします。
-	 * 
+	 *
 	 * @param expr1 対象値1。
 	 * @param expr2 対象値2。
 	 * @param numerator 重みを決定する分子。

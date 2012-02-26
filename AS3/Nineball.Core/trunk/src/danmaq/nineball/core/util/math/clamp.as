@@ -1,6 +1,6 @@
 package danmaq.nineball.core.util.math
 {
-	
+
 	/**
 	 * 値を範囲内に丸めます。
 	 *
@@ -24,11 +24,11 @@ package danmaq.nineball.core.util.math
 		}
 		if(limit1 > expr)
 		{
-			expr = limit1; 
+			expr = limit1;
 		}
 		else if(limit2 < expr)
 		{
-			expr = limit2; 
+			expr = limit2;
 		}
 		return expr;
 	}

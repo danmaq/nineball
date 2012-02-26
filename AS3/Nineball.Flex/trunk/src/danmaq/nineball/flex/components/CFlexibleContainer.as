@@ -43,11 +43,11 @@ package danmaq.nineball.flex.components
 		 */
 		public function CFlexibleContainer()
 		{
-			addEventListener(ResizeEvent.RESIZE, onStageResized);
-			addEventListener(Event.ADDED_TO_STAGE, onStageResized);
+			addEventListener(ResizeEvent.RESIZE, onStageResized, false, 0, true);
+			addEventListener(Event.ADDED_TO_STAGE, onStageResized, false, 0, true);
 		}
 		
-		//* instance properties ─────────────────────────-*
+		//* instance methods ───────────────────────────*
 		
 		/**
 		 * リサイズされた際のイベントによって呼び出されます。

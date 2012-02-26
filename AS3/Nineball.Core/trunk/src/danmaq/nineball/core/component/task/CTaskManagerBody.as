@@ -1,8 +1,8 @@
 package danmaq.nineball.core.component.task
 {
+
 	import danmaq.nineball.core.component.context.CContextBody;
-	import danmaq.nineball.core.component.context.IContext;
-	
+
 	/**
 	 * タスク管理クラスと状態との橋渡しをするクラス。
 	 *
@@ -15,15 +15,15 @@ package danmaq.nineball.core.component.task
 
 		/** 現在稼働中のタスク一覧。 */
 		public const tasks:Vector.<ITask> = new Vector.<ITask>();
-		
+
 		/** 追加予約されているタスク一覧。 */
 		public const add:Vector.<ITask> = new Vector.<ITask>();
-		
+
 		/** 削除予約されているタスク一覧。 */
 		public const remove:Vector.<ITask> = new Vector.<ITask>();
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
 		 *
@@ -34,9 +34,9 @@ package danmaq.nineball.core.component.task
 		{
 			super(context, owner);
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * タスク管理クラスを取得します。
 		 *
@@ -46,7 +46,7 @@ package danmaq.nineball.core.component.task
 		{
 			return CTaskManager(context);
 		}
-		
+
 		//* instance methods ───────────────────────────*
 
 		/**
@@ -60,7 +60,7 @@ package danmaq.nineball.core.component.task
 		{
 			item.update();
 		}
-		
+
 		/**
 		 * @inheritDoc
 		 */
@@ -69,7 +69,7 @@ package danmaq.nineball.core.component.task
 			clear();
 			super.dispose();
 		}
-		
+
 		/**
 		 * 登録タスクをすべて即時削除します。
 		 */
@@ -79,7 +79,7 @@ package danmaq.nineball.core.component.task
 			tasks.forEach(disposeDelegate);
 			tasks.splice(0, tasks.length);
 		}
-		
+
 		/**
 		 * タスク登録・削除の予約を確定します。
 		 */
@@ -102,7 +102,7 @@ package danmaq.nineball.core.component.task
 		{
 			item.dispose();
 		}
-		
+
 		/**
 		 * 追加予約されているタスクを登録するためのコールバックです。
 		 *
@@ -114,7 +114,7 @@ package danmaq.nineball.core.component.task
 		{
 			tasks.push(item);
 		}
-		
+
 		/**
 		 * 削除予約されているタスクを削除するためのコールバックです。
 		 *

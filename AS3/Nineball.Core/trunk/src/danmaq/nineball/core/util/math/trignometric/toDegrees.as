@@ -1,5 +1,6 @@
 package danmaq.nineball.core.util.math.trignometric
 {
+
 	/**
 	 * ラジアンを角度に変換します。
 	 *

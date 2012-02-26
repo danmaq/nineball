@@ -11,7 +11,7 @@
 			import danmaq.nineball.core.util.math.trignometric.TQuaternion;
 			import danmaq.nineball.core.util.math.TQuantize;
 			import danmaq.nineball.core.util.list.random.TRandomUtil;
-			import danmaq.nineball.core.data.TPhase;
+			import danmaq.nineball.core.component.manager.TPhase;
 			import danmaq.nineball.core.component.task.TTaskManager;
 			import danmaq.nineball.core.util.math.TMath;
 			import danmaq.nineball.core.util.list.random.TRandomAll;
@@ -37,7 +37,7 @@
 			
 			private var danmaq_nineball_core_component_task_TTaskManager_obj:danmaq.nineball.core.component.task.TTaskManager;
 			
-			private var danmaq_nineball_core_data_TPhase_obj:danmaq.nineball.core.data.TPhase;
+			private var danmaq_nineball_core_data_TPhase_obj:danmaq.nineball.core.component.manager.TPhase;
 			
 			private var danmaq_nineball_core_util_list_random_TRandomUtil_obj:danmaq.nineball.core.util.list.random.TRandomUtil;
 			

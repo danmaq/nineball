@@ -1,58 +1,59 @@
 package danmaq.nineball.core.component.context
 {
+
 	import danmaq.nineball.core.component.state.IState;
 	import danmaq.nineball.core.component.task.ITask;
-	
+
 	import flash.display.Sprite;
 	import flash.events.Event;
-	
+
 	/**
 	 * 状態による制御AIを持った表示オブジェクト。
-	 * 
+	 *
 	 * <p>
 	 * AIであるcontextオブジェクトには、毎フレーム開始時に<code>update()</code>
 	 * メソッドが呼び出されます。このオブジェクトに任意の状態を設定して制御します。
 	 * スプライトは<code>context.owner</code>に格納されています。
 	 * </p>
-	 * 
+	 *
 	 * @author Mc(danmaq)
 	 * @see danmaq.nineball.core.component.context.CContext
 	 */
 	public class CSpriteWithContext extends Sprite implements ITask
 	{
-		
+
 		//* fields ────────────────────────────────*
-		
+
 		/** 状態による制御AI。 */
 		private var _context:CContext;
-		
+
 		//* constructor & destructor ───────────────────────*
-		
+
 		/**
 		 * コンストラクタ。
-		 * 
+		 *
 		 * @param firstState 初回の状態。
 		 */
 		public function CSpriteWithContext(firstState:IState = null)
 		{
 			_context = new CContext(firstState, this);
-			addEventListener(Event.ENTER_FRAME, updateFromEvent);
+			addEventListener(Event.ENTER_FRAME, updateFromEvent, false, 0, true);
 		}
-		
+
 		//* instance properties ─────────────────────────-*
-		
+
 		/**
 		 * 状態による制御AIを取得します。
-		 * 
+		 *
 		 * @return 状態による制御AI。
 		 */
 		public function get context():CContext
 		{
 			return _context;
 		}
-		
+
 		//* instance methods ───────────────────────────*
-		
+
 		/**
 		 * 強制的に1フレーム分の更新処理を実行します。
 		 */
@@ -68,10 +69,10 @@ package danmaq.nineball.core.component.context
 		{
 			context.dispose();
 		}
-		
+
 		/**
 		 * <code>update()</code>メソッドのラッパーです。
-		 * 
+		 *
 		 * @param evt イベント情報。(無視されます)
 		 * @see #update()
 		 */
