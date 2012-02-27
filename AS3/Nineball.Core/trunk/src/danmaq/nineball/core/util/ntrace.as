@@ -21,7 +21,7 @@ package danmaq.nineball.core.util
 	{
 		var message:String = args.join(" ");
 		var playerType:String = Capabilities.playerType;
-		if(playerType == "ActiveX" || playerType == "PlugIn")
+		if(ExternalInterface.available)
 		{
 			ExternalInterface.call(
 				sprintf("( function(){ if (console != null){ console.log('%s'); } })()", message));
