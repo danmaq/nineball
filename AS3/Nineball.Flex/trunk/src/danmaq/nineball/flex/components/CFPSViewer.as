@@ -24,8 +24,12 @@ package danmaq.nineball.flex.components
 
 		//* fields ────────────────────────────────*
 		
+		[Bindable(event="change")]
+
 		/** 接頭辞。 */
 		private var _prefix:String = "";
+
+		[Bindable(event="change")]
 		
 		/** 接尾辞。 */
 		private var _suffix:String = " FPS";
