@@ -11,9 +11,9 @@ package danmaq.nineball.core.component.context
 	 * 状態による制御AIを持った表示オブジェクト。
 	 *
 	 * <p>
-	 * AIであるcontextオブジェクトには、毎フレーム開始時に<code>update()</code>
+	 * AIである<code>context</code>オブジェクトには、毎フレーム開始時に<code>update()</code>
 	 * メソッドが呼び出されます。このオブジェクトに任意の状態を設定して制御します。
-	 * スプライトは<code>context.owner</code>に格納されています。
+	 * 状態からは<code>context.owner</code>で表示オブジェクトを参照することができます。
 	 * </p>
 	 *
 	 * @author Mc(danmaq)
