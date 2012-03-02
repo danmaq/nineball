@@ -4,6 +4,7 @@
     <classEntry path="danmaq.nineball.flex.components.CForcePreloader"/>
     <classEntry path="danmaq.nineball.flex.components.CFlexibleContainer"/>
     <classEntry path="danmaq.nineball.flex.components.CFPSViewer"/>
+    <classEntry path="danmaq.nineball.flex.components.CUIComponentWithContext"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
