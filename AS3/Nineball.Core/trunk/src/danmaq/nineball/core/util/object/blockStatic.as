@@ -1,6 +1,8 @@
 package danmaq.nineball.core.util.object
 {
 
+	import flash.errors.IllegalOperationError;
+
 	/**
 	 * 静的クラスのインスタンス生成を抑制するための例外を発生します。
 	 *
@@ -10,11 +12,11 @@ package danmaq.nineball.core.util.object
 	 * </p>
 	 * <pre>このオブジェクトは静的クラスです。直接生成は許可されていません。</pre>
 	 *
-	 * @throws ArgumentError 常に発生します。
+	 * @throws IllegalOperationError 常に発生します。
 	 */
 	public function blockStatic():void
 	{
-		throw new ArgumentError(
+		throw new IllegalOperationError(
 			"このオブジェクトは静的クラスです。直接生成は許可されていません。");
 	}
 }

@@ -18,7 +18,16 @@
 	 ロジックとしては引数がすべてnullでない場合にSingleton違反と見なし例外を発生させます。
 	 原理的にコンストラクタ内部における余計な生成の場合、対応しきれない場合があります。
 	 
-	 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#blockStatic()" class="signatureLink">blockStatic</a>():void</div><div class="summaryTableDescription">
+	 	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#blockNotImplements()" class="signatureLink">blockNotImplements</a>():void</div><div class="summaryTableDescription">
+	 未実装メソッドの呼び出しを抑制するための例外を発生します。
+	 
+	 
+	 この関数を抽象メソッドおよびプロパティで呼び出してください。
+	 この関数を呼び出した場合、下記のメッセージを含んだ例外が発生します。
+	 
+	 実装されていない抽象メソッド、または抽象プロパティが呼び出されました。
+	 
+	 </div></td><td class="summaryTableOwnerCol">danmaq.nineball.core.util.object</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#blockStatic()" class="signatureLink">blockStatic</a>():void</div><div class="summaryTableDescription">
 	 静的クラスのインスタンス生成を抑制するための例外を発生します。
 	 	 
 	 この関数を静的クラスのコンストラクタで呼び出してください。この関数を呼び出した、即ち
@@ -67,12 +76,22 @@
          }
      }
      </pre></div>
-	 </div></div><a name="blockStatic()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockStatic</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockStatic():void</code><p></p><p></p><p>
+	 </div></div><a name="blockNotImplements()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockNotImplements</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockNotImplements():void</code><p></p><p></p><p>
+	 未実装メソッドの呼び出しを抑制するための例外を発生します。
+	 
+	 <p>
+	 この関数を抽象メソッドおよびプロパティで呼び出してください。
+	 この関数を呼び出した場合、下記のメッセージを含んだ例外が発生します。
+	 </p>
+	 <pre>実装されていない抽象メソッド、または抽象プロパティが呼び出されました。</pre>
+	 
+	 </p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>IllegalOperationError </code> &mdash; 常に発生します。
+	 </td></tr></table></div><a name="blockStatic()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">blockStatic</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">function</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function blockStatic():void</code><p></p><p></p><p>
 	 静的クラスのインスタンス生成を抑制するための例外を発生します。
 	 	 <p>
 	 この関数を静的クラスのコンストラクタで呼び出してください。この関数を呼び出した、即ち
 	 静的クラスのインスタンスが作成されようとした場合、下記のメッセージを含んだ例外が発生します。
 	 </p>
 	 <pre>このオブジェクトは静的クラスです。直接生成は許可されていません。</pre>
-	 	 </p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>ArgumentError </code> &mdash; 常に発生します。
-	 </td></tr></table></div><p></p><center class="copyright"><footer>Copyright (c) 2008-2012 danmaq All rights reserved.</footer><br/>Mon Feb 27 2012, 12:28 AM +09:00  </center></div></body></html>
+	 	 </p><br/><span class="label">Throws</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>IllegalOperationError </code> &mdash; 常に発生します。
+	 </td></tr></table></div><p></p><center class="copyright"><footer>Copyright (c) 2008-2012 danmaq All rights reserved.</footer><br/>Sun Mar 4 2012, 12:19 PM +09:00  </center></div></body></html>

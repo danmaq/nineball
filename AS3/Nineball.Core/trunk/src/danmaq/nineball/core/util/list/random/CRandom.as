@@ -3,7 +3,8 @@ package danmaq.nineball.core.util.list.random
 
 	import danmaq.nineball.core.util.list.iterator.IIterator;
 	import danmaq.nineball.core.util.object.blockAbstract;
-
+	import danmaq.nineball.core.util.object.blockNotImplements;
+	
 	import flash.utils.getTimer;
 
 	/**
@@ -83,7 +84,8 @@ package danmaq.nineball.core.util.list.random
 		 */
 		public function get max():uint
 		{
-			throw new Error("実装されていない抽象メソッドが呼び出されました。");
+			blockNotImplements();
+			throw new Error();
 		}
 
 		/**
@@ -95,7 +97,8 @@ package danmaq.nineball.core.util.list.random
 		 */
 		public function get next():uint
 		{
-			throw new Error("実装されていない抽象メソッドが呼び出されました。");
+			blockNotImplements();
+			throw new Error();
 		}
 
 		/**

@@ -29,6 +29,8 @@
     <classEntry path="danmaq.nineball.core.util.math.trignometric.CQuaternion"/>
     <classEntry path="danmaq.nineball.core.data.CBitmapSplitter"/>
     <classEntry path="danmaq.nineball.core.component.manager.CFPSCalculator"/>
+    <classEntry path="danmaq.nineball.core.util.object.blockNotImplements"/>
+    <classEntry path="danmaq.nineball.core.util.string.CVersion"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
