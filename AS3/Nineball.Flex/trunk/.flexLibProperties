@@ -5,6 +5,7 @@
     <classEntry path="danmaq.nineball.flex.components.CFlexibleContainer"/>
     <classEntry path="danmaq.nineball.flex.components.CFPSViewer"/>
     <classEntry path="danmaq.nineball.flex.components.CUIComponentWithContext"/>
+    <classEntry path="danmaq.nineball.flex.data.CJSONStore"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
