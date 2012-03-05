@@ -1,7 +1,6 @@
 package danmaq.nineball.flex.data
 {
 	import danmaq.nineball.core.component.IDisposable;
-	import danmaq.nineball.core.util.object.blockAbstract;
 	
 	/**
 	 * JSONデータを貯蔵するクラスです。

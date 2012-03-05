@@ -8,6 +8,7 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
 	<fx:Script>
 		<![CDATA[
+			import danmaq.nineball.core.data.TVersion;
 			import danmaq.nineball.core.util.math.trignometric.TQuaternion;
 			import danmaq.nineball.core.util.math.TQuantize;
 			import danmaq.nineball.core.util.list.random.TRandomUtil;
@@ -44,6 +45,8 @@
 			private var danmaq_nineball_core_util_math_TQuantize_obj:danmaq.nineball.core.util.math.TQuantize;
 			
 			private var danmaq_nineball_core_util_math_trignometric_TQuaternion_obj:danmaq.nineball.core.util.math.trignometric.TQuaternion;
+			
+			private var danmaq_nineball_core_util_string_TVersion_obj:danmaq.nineball.core.data.TVersion;
 		]]>
 	</fx:Script>
 	<fx:Declarations>

@@ -30,7 +30,9 @@
     <classEntry path="danmaq.nineball.core.data.CBitmapSplitter"/>
     <classEntry path="danmaq.nineball.core.component.manager.CFPSCalculator"/>
     <classEntry path="danmaq.nineball.core.util.object.blockNotImplements"/>
-    <classEntry path="danmaq.nineball.core.util.string.CVersion"/>
+    <classEntry path="danmaq.nineball.core.data.CVersion"/>
+    <classEntry path="danmaq.nineball.core.data.IVersion"/>
+    <classEntry path="danmaq.nineball.core.data.CVersionWrapper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

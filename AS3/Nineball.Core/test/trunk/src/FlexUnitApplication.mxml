@@ -16,10 +16,11 @@
 			import danmaq.nineball.core.util.list.random.TRandomAll;
 			import danmaq.nineball.core.util.list.random.TRandom;
 			import danmaq.nineball.core.events.TDisposableEventDispatcher;
-			import danmaq.nineball.core.component.manager.TPhase;
+			import danmaq.nineball.core.data.TVersion;
 			import danmaq.nineball.core.component.task.TTaskManager;
 			import danmaq.nineball.core.component.state.TStateEmpty;
 			import danmaq.nineball.core.component.state.TStateDelegate;
+			import danmaq.nineball.core.component.manager.TPhase;
 			import danmaq.nineball.core.component.context.TContextBody;
 			import danmaq.nineball.core.component.context.TContext;
 			
@@ -28,10 +29,11 @@
 				var testsToRun:Array = new Array();
 				testsToRun.push(danmaq.nineball.core.component.context.TContext);
 				testsToRun.push(danmaq.nineball.core.component.context.TContextBody);
+				testsToRun.push(danmaq.nineball.core.component.manager.TPhase);
 				testsToRun.push(danmaq.nineball.core.component.state.TStateDelegate);
 				testsToRun.push(danmaq.nineball.core.component.state.TStateEmpty);
 				testsToRun.push(danmaq.nineball.core.component.task.TTaskManager);
-				testsToRun.push(danmaq.nineball.core.component.manager.TPhase);
+				testsToRun.push(danmaq.nineball.core.data.TVersion);
 				testsToRun.push(danmaq.nineball.core.events.TDisposableEventDispatcher);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandom);
 				testsToRun.push(danmaq.nineball.core.util.list.random.TRandomAll);
@@ -45,7 +47,7 @@
 			
 			private function onCreationComplete():void
 			{
-				testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "Nineball.Core.Test");
+				testRunner.runWithFlexUnit4Runner(currentRunTestSuite(), "Nineball.Test");
 			}
 			
 		]]>

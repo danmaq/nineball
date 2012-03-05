@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="main" basedir="." default="asdoc">
+	<!-- プロパティ定義（必要に応じて修正) -->
+	<!--<property file="build.properties"/>-->
+	<property name="eclipse.home" value="C:\Program Files (x86)\Adobe\Adobe Flash Builder 4.6"/>
+
+	<property name="sdk.version" value="4.6.0"/>
+	<property name="sdk.dir" value="${eclipse.home}/sdks/${sdk.version}"/>
+	<property name="FLEX_HOME" value="${sdk.dir}"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="doc.dir" value="${basedir}/asdoc-output"/>
+	<property name="lib.dir" value="${basedir}/libs"/>
+	<property name="asdoc.jvm.args" value="-Xmx512m"/>
+	
+	<target name="asdoc">
+		<!-- タスク定義 -->
+		<available property="flexTasksJar" value="${sdk.dir}/lib/flexTasks.jar" file="${sdk.dir}/lib/flexTasks.jar"/>
+		<available property="flexTasksJar" value="${sdk.dir}/ant/lib/flexTasks.jar" file="${sdk.dir}/ant/lib/flexTasks.jar"/>
+		<taskdef resource="flexTasks.tasks" classpath="${flexTasksJar}"/>
+		
+		<!-- ASDoc -->
+		<asdoc output="${doc.dir}" lenient="true" failonerror="true"
+			warnings="true" strict="true" locale="ja_JP" fork="true"
+			main-title="danmaq Nineball Library" window-title="danmaq Nineball Library API Documentation"
+			footer="Copyright (c) 2012 danmaq All rights reserved.">
+
+			<doc-sources path-element="${basedir}/../Nineball.Core/src"/>
+			<doc-sources path-element="${src.dir}"/>
+
+			<jvmarg line="${asdoc.jvm.args}"/>
+		</asdoc>
+	</target>
+	
+	<target name="clean"> 
+		<delete includeEmptyDirs="true"> 
+			<fileset dir="${doc.dir}" includes="**/*"/> 
+		</delete> 
+	</target>
+</project>

@@ -78,7 +78,9 @@ package danmaq.nineball.core.util.list.random
 		/**
 		 * 最大値を取得します。
 		 *
+		 * <p>
 		 * このメソッドは抽象メソッドです。継承先で上書きしないと例外が発生します。
+		 * </p>
 		 *
 		 * @return 最大値。
 		 */
@@ -91,7 +93,9 @@ package danmaq.nineball.core.util.list.random
 		/**
 		 * 0からmaxプロパティまでの範囲内の擬似乱数を取得します。
 		 *
+		 * <p>
 		 * このメソッドは抽象メソッドです。継承先で上書きしないと例外が発生します。
+		 * </p>
 		 *
 		 * @return 乱数値。
 		 */
@@ -104,7 +108,9 @@ package danmaq.nineball.core.util.list.random
 		/**
 		 * 集合を反復処理する列挙子を取得します。
 		 *
+		 * <p>
 		 * このクラスの反復子は常に同一のオブジェクトを返します。
+		 * </p>
 		 *
 		 * @return 列挙子。
 		 */
