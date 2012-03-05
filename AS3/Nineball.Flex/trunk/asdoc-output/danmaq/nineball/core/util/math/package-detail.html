@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../../override.css" type="text/css"><title>danmaq.nineball.core.util.math Summary</title></head><body><script language="javascript" type="text/javascript" src="../../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'danmaq.nineball.core.util.math package - danmaq Nineball Library API Documentation';
+				var baseRef = '../../../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">danmaq Nineball Library</td><td class="titleTableTopNav" align="right"><a href="../../../../../package-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../../class-summary.html" onclick="loadClassListFrame('../../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../../all-index-A.html" onclick="loadClassListFrame('../../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../../index.html?danmaq/nineball/core/util/math/package-detail.html&amp;danmaq/nineball/core/util/math/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">danmaq.nineball.core.util.math</td><td class="titleTableSubNav" id="subNav" align="right"><a href="package.html#methodSummary">Functions</a>&nbsp;| <a href="package-detail.html#classSummary">Classes</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("danmaq.nineball.core.util.math"); titleBar_setSubNav(false,false,false,false,false,false,false,false,false,false,false	,false,true,false,true,false);}	
+				-->
+			</script><div class="MainContent"><br><br><hr><a name="methodSummary"></a><div class="summaryTableTitle">Functions</div><table cellpadding="3" cellspacing="0" class="summaryTable"><tr><th>&nbsp;</th><th width="30%">Function</th><th width="70%">Description</th></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#clamp()">clamp</a></td><td class="summaryTableLastCol">
+	 値を範囲内に丸めます。
+	 	 
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
+	 
+	 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#contains()">contains</a></td><td class="summaryTableLastCol">
+	 値が範囲内に含まれているかどうかを取得します。
+	 	 
+	 limit1に最小値、limit2に最大値を設定することを強く推奨します。
+	 逆にしても内部で自動認識して置換しますが、その分の余計な負荷がかかってしまいます。
+	 
+	 	 </td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#onBit()">onBit</a></td><td class="summaryTableLastCol">
+	 対象値を最大32個のビット配列とみなし、1となっているビット数を計算します。
+	 	 
+	 例えば10進法の数値204は、2進法表記の場合11001100となり、
+	 1となっているビット数は4個のため、この関数の戻り値は4となります。
+	 
+	 	 </td></tr><tr class="prow0"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#sign()">sign</a></td><td class="summaryTableLastCol">
+	 数値の符号を取得します。
+	 	 </td></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="package.html#wrap()">wrap</a></td><td class="summaryTableLastCol">
+	 値を指定された範囲内に制限し、超過した場合は範囲内でループします。
+	 	 
+	 注意：最小値と最大値を逆さに設定しても内部で自動的に認識・交換しますが、
+	 無駄なオーバーヘッドが増えるだけなので極力避けてください。
+	 
+	 	 </td></tr></table><a name="classSummary"></a><div class="summaryTableTitle">Classes</div><table cellpadding="3" cellspacing="0" class="summaryTable"><tr><th>&nbsp;</th><th width="30%">Class</th><th width="70%">Description</th></tr><tr class="prow1"><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CQuantize.html">CQuantize</a></td><td class="summaryTableLastCol">
+	 値を指定の分解能に合わせて値を丸め込む関数をまとめたクラスです。
+	 	 
+	 このクラスは静的クラスです。このクラスのインスタンスを生成することはできません。
+	 また、最大で±0.0000000000000005程度の誤差が出ることに注意してください。
+	 
+	 	 </td></tr></table><p></p><div><p></p><center class="copyright"><footer>Copyright (c) 2012 danmaq All rights reserved.</footer><br/>Mon Mar 5 2012, 06:55 PM +09:00  </center></div></div></body></html><!--Copyright (c) 2012 danmaq All rights reserved.<br/>Mon Mar 5 2012, 06:55 PM +09:00  -->

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><!-- saved from url=(0014)about:internet --><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen"><link rel="stylesheet" href="../../../../print.css" type="text/css" media="print"><link rel="stylesheet" href="../../../../override.css" type="text/css"><meta name="keywords" content="CJSONStore,danmaq.nineball.flex.data.CJSONStore,store,decode,dispose,encode,merge"><title>danmaq.nineball.flex.data.CJSONStore</title></head><body><script language="javascript" type="text/javascript" src="../../../../asdoc.js"></script><script language="javascript" type="text/javascript" src="../../../../help.js"></script><script language="javascript" type="text/javascript" src="../../../../cookies.js"></script><script language="javascript" type="text/javascript"><!--
+				asdocTitle = 'CJSONStore - danmaq Nineball Library API Documentation';
+				var baseRef = '../../../../';
+				window.onload = configPage;
+			--></script>
+<script type="text/javascript">
+			scrollToNameAnchor();
+		</script><table class="titleTable" cellpadding="0" cellspacing="0" id="titleTable" style="display:none"><tr><td class="titleTableTitle" align="left">danmaq Nineball Library</td><td class="titleTableTopNav" align="right"><a href="../../../../package-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Packages</a>&nbsp;|&nbsp;<a href="../../../../class-summary.html" onclick="loadClassListFrame('../../../../all-classes.html')">All Classes</a>&nbsp;|&nbsp;<a href="../../../../all-index-A.html" onclick="loadClassListFrame('../../../../index-list.html')">Index</a>&nbsp;|&nbsp;<a id="framesLink1" href="../../../../index.html?danmaq/nineball/flex/data/CJSONStore.html&amp;danmaq/nineball/flex/data/class-list.html">Frames</a><a id="noFramesLink1" style="display:none" href="" onclick="parent.location=document.location"> No Frames </a></td><td class="titleTableLogo" align="right" rowspan="3"><img src="../../../../images/logo.jpg" class="logoImage" alt=" Adobe Logo " title=" Adobe Logo "></td></tr><tr class="titleTableRow2"><td class="titleTableSubTitle" id="subTitle" align="left">CJSONStore</td><td class="titleTableSubNav" id="subNav" align="right"><a href="#propertySummary">Properties</a>&nbsp;| <a href="#methodSummary">Methods</a></td></tr><tr class="titleTableRow3"><td colspan="3">&nbsp;</td></tr></table><script language="javascript" type="text/javascript" xml:space="preserve">
+				<!--
+				
+					if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("CJSONStore"); titleBar_setSubNav(false,true,false,false,false,false,false,false,true,false,false	,false,false,false,false,false);}	
+				-->
+			</script><div xmlns:fn="http://www.w3.org/2005/xpath-functions" class="MainContent"><table class="classHeaderTable" cellpadding="0" cellspacing="0"><tr><td class="classHeaderTableLabel">Package</td><td><a href="package-detail.html" onclick="javascript:loadClassListFrame('class-list.html')">danmaq.nineball.flex.data</a></td></tr><tr><td class="classHeaderTableLabel">Class</td><td class="classSignature">public  class  CJSONStore</td></tr><tr><td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">CJSONStore  <img src="../../../../images/inherit-arrow.gif" title="Inheritance" alt="Inheritance" class="inheritArrow"> Object</td></tr><tr><td class="classHeaderTableLabel">Implements</td><td> <a href="../../../../danmaq/nineball/core/component/IDisposable.html">IDisposable</a></td></tr></table><p></p><p></p><p></p>
+	 JSONデータを貯蔵するクラスです。
+	 
+	 <p></p><br/><hr></div><a name="propertySummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Properties</div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableProperty"><tr><th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a href="#store" class="signatureLink">store</a> : Object<div class="summaryTableDescription">[read-only] 
+		 展開されたJSONオブジェクトを取得します。
+		 </div></td><td class="summaryTableOwnerCol">CJSONStore</td></tr></table></div><a name="methodSummary"></a><div class="summarySection"><div class="summaryTableTitle">Public Methods </div><table cellspacing="0" cellpadding="3" class="summaryTable " id="summaryTableMethod"><tr><th>&nbsp;</th><th colspan="2">Method</th><th class="summaryTableOwnerCol">Defined By</th></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#decode()" class="signatureLink">decode</a>(json:String):void</div><div class="summaryTableDescription">
+		 JSONをパースして格納します。
+		 
+		 </div></td><td class="summaryTableOwnerCol">CJSONStore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#dispose()" class="signatureLink">dispose</a>():void</div><div class="summaryTableDescription">
+		 明示的にオブジェクトを解放可能な状態にします。
+		 </div></td><td class="summaryTableOwnerCol">CJSONStore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#encode()" class="signatureLink">encode</a>():String</div><div class="summaryTableDescription">
+		 現在の展開されているJSONオブジェクトをJSON文字列に変換します。
+		 
+		 </div></td><td class="summaryTableOwnerCol">CJSONStore</td></tr><tr class=""><td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><div class="summarySignature"><a href="#merge()" class="signatureLink">merge</a>(object:Object):int</div><div class="summaryTableDescription">
+		 JSONオブジェクトを結合します。
+		 
+		 
+		 キーが競合している場合、objectの値で上書きされます。
+		 
+		 
+		 </div></td><td class="summaryTableOwnerCol">CJSONStore</td></tr></table></div><script language="javascript" type="text/javascript"><!--
+										showHideInherited();
+										--></script><div class="MainContent"><div class="detailSectionHeader">Property Detail</div><a name="propertyDetail"></a><a name="store"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">store</td><td class="detailHeaderType">property</td></tr></table><div class="detailBody"><code>store:Object</code>&nbsp;&nbsp;[read-only] <p></p><p></p><p>
+		 展開されたJSONオブジェクトを取得します。
+		 </p><br/><span class="label"> Implementation </span><br/><code>&nbsp;&nbsp;&nbsp;&nbsp;public function get store():Object</code><br/></div><a name="methodDetail"></a><div class="detailSectionHeader">Method Detail</div><a name="decode()"></a><a name="decode(String)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">decode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td></tr></table><div class="detailBody"><code> public function decode(json:String):void</code><p></p><p></p><p>
+		 JSONをパースして格納します。
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">json</span>:String</code> &mdash; JSON文字列。
+		 </td></tr></table></p></div><a name="dispose()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">dispose</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function dispose():void</code><p></p><p></p><p>
+		 明示的にオブジェクトを解放可能な状態にします。
+		 </p></div><a name="encode()"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">encode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function encode():String</code><p></p><p></p><p>
+		 現在の展開されているJSONオブジェクトをJSON文字列に変換します。
+		 
+		 </p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>String</code></td></tr></table></div><a name="merge()"></a><a name="merge(Object)"></a><table class="detailHeader" cellpadding="0" cellspacing="0"><tr><td class="detailHeaderName">merge</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td></tr></table><div class="detailBody"><code> public function merge(object:Object):int</code><p></p><p></p><p>
+		 JSONオブジェクトを結合します。
+		 
+		 <p>
+		 キーが競合している場合、<code>object</code>の値で上書きされます。
+		 </p>
+		 
+		 </p><p><span class="label"> Parameters </span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20px"></td><td><code><span class="label">object</span>:Object</code> &mdash; JSONオブジェクト。
+		 </td></tr></table></p><p></p><span class="label">Returns</span><table cellpadding="0" cellspacing="0" border="0"><tr><td width="20"></td><td><code>int</code> &mdash; 取り込んだペアの数。上書き分もカウントされます。
+		 </td></tr></table></div><br/><br/><hr><br/><p></p><center class="copyright"><footer>Copyright (c) 2012 danmaq All rights reserved.</footer><br/>Mon Mar 5 2012, 06:55 PM +09:00  </center></div></body></html><!--Copyright (c) 2012 danmaq All rights reserved.<br/>Mon Mar 5 2012, 06:55 PM +09:00  -->
