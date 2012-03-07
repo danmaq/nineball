@@ -33,6 +33,8 @@
     <classEntry path="danmaq.nineball.core.data.CVersion"/>
     <classEntry path="danmaq.nineball.core.data.IVersion"/>
     <classEntry path="danmaq.nineball.core.data.CVersionWrapper"/>
+    <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundManager"/>
+    <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundSequence"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
