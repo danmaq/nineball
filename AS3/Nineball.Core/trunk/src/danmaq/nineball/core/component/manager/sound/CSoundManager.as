@@ -2,40 +2,35 @@ package danmaq.nineball.core.component.manager.sound
 {
 
 	import danmaq.nineball.core.component.IDisposable;
-	import danmaq.nineball.core.component.task.ITask;
-	import danmaq.nineball.core.events.CDisposableEventDispatcher;
 	import danmaq.nineball.core.util.math.clamp;
 	
-	import flash.events.Event;
 	import flash.media.Sound;
-	import flash.utils.ByteArray;
 	
 	/**
 	 * 音声再生管理クラス。
-	 * 
-	 * <p>
-	 * 使用するためには、毎フレーム<code>update()</code>メソッドを呼び出してください。
-	 * イベント呼び出しのための<code>updateFromEvent()</code>ラッパー メソッドも用意してあります。
-	 * </p>
 	 *
 	 * @author Mc(danmaq)
 	 */
-	public final class CSoundManager extends CDisposableEventDispatcher implements ITask
+	public final class CSoundManager implements IDisposable
 	{
 
-		// TODO : SoundSplitterを実装する(要Flash11→Flex)
-		// TODO : 同サウンドは排他再生かどうか
-		// TODO : 別サウンドは排他再生かどうか
-		// TODO : 同サウンド排他再生のQuantize
-		// TODO : 別サウンド排他再生のQuantize
-		// TODO : フェードアウト時間
-		// TODO : フェードイン時間
-		// TODO : フェードアウトのイージング
-		// TODO : フェードインのイージング
-		// TODO : クロスフェード時間
-		// TODO : 最後に停止したところから再開
+		// 優先度 v
+		// TODO : 5 同サウンドは排他再生かどうか
+		// TODO : 4 別サウンドは排他再生かどうか
+		// TODO : 3 同サウンド排他再生のQuantize
+		// TODO : 3 別サウンド排他再生のQuantize
+		// TODO : 2 フェードアウト時間
+		// TODO : 2 フェードイン時間
+		// TODO : 2 フェードアウトのイージング
+		// TODO : 2 フェードインのイージング
+		// TODO : 2 クロスフェード時間
+		// TODO : 1 最後に停止したところから再開
+		// TODO : 0 SoundSplitterを実装する(要Flash11→Flex)
 		
 		//* constants ──────────────────────────────-*
+
+		/** 再生リスト。 */
+		private const cues:Vector.<CSoundCue> = new Vector.<CSoundCue>();
 		
 		/** 予約リスト。 */
 		private const reserved:Vector.<Vector.<CSoundSequence>> =
@@ -44,7 +39,17 @@ package danmaq.nineball.core.component.manager.sound
 		//* fields ────────────────────────────────*
 		
 		/** ミュートかどうか。 */
-		public var _mute:Boolean;
+		private var _mute:Boolean;
+		
+		/**
+		 * 音声の先頭無音区間(ミリ秒)。
+		 * 
+		 * <p>
+		 * この値を設定した場合、先頭をスキップして再生します。
+		 * 無音区間をスキップしてギャップレス再生するのに有効です。
+		 * </p>
+		 */
+		public var mp3Delay:uint = 25;
 		
 		/** マスター ボリューム。 */
 		private var _masterVolume:Number;
@@ -60,9 +65,11 @@ package danmaq.nineball.core.component.manager.sound
 		}
 
 		/**
-		 * マスター ボリュームを取得します。
-		 *
-		 * @return マスター ボリューム(0～1)。
+		 * マスター音量を取得、および設定します。
+		 * 
+		 * <p>
+		 * マスター音量は0(無音)から1(最大)までの範囲内の値です。
+		 * </p>
 		 */
 		public function get masterVolume():Number
 		{
@@ -70,13 +77,35 @@ package danmaq.nineball.core.component.manager.sound
 		}
 		
 		/**
-		 * マスター ボリュームを設定します。
-		 *
-		 * @param v マスター ボリューム(0～1)。
+		 * @private
 		 */
 		public function set masterVolume(v:Number):void
 		{
-			_masterVolume = clamp(v, 0.0, 1.0);
+			if(_masterVolume != v)
+			{
+				_masterVolume = clamp(v, 0.0, 1.0);
+				cues.forEach(refleshVolume);
+			}
+		}
+		
+		/**
+		 * ミュートかどうかを取得、および設定します。
+		 */
+		public function get mute():Boolean
+		{
+			return _mute;
+		}
+		
+		/**
+		 * @private
+		 */
+		public function set mute(v:Boolean):void
+		{
+			if(_mute != v)
+			{
+				_mute = v;
+				cues.forEach(refleshVolume);
+			}
 		}
 		
 		//* instance methods ───────────────────────────*
@@ -103,31 +132,40 @@ package danmaq.nineball.core.component.manager.sound
 		}
 		
 		/**
-		 * 1フレーム分の更新処理を実行します。
+		 * 明示的に解放可能な状態にします。
 		 */
-		public function update():void
+		public function dispose():void
 		{
-		}
-		
-		/**
-		 * <code>update()</code>メソッドのラッパーです。
-		 *
-		 * @param evt イベント情報。(無視されます)
-		 * @see #update()
-		 */
-		public function updateFromEvent(evt:Event = null):void
-		{
-			update();
-		}
-		
-		/**
-		 * @inheritDoc
-		 */
-		override public function dispose():void
-		{
-			_mute = false;
+			mute = false;
+			mp3Delay = 25;
 			_masterVolume = 1;
-			super.dispose();
+			reserved.splice(0, reserved.length);
+			cues.forEach(disposeCue);
+			cues.splice(0, cues.length);
+		}
+		
+		/**
+		 * 各キューの再生を止め、明示的に解放可能な状態にします。
+		 * 
+		 * @param item キュー本体。
+		 * @param index キュー一覧のインデックス。
+		 * @param vector キュー一覧。
+		 */
+		private function disposeCue(item:CSoundCue, index:int, vector:Vector.<CSoundCue>):void
+		{
+			item.dispose();
+		}
+		
+		/**
+		 * 各キューにマスタ音量を反映させます。
+		 * 
+		 * @param item キュー本体。
+		 * @param index キュー一覧のインデックス。
+		 * @param vector キュー一覧。
+		 */
+		private function refleshVolume(item:CSoundCue, index:int, vector:Vector.<CSoundCue>):void
+		{
+			item.refreshVolume();
 		}
 	}
 }

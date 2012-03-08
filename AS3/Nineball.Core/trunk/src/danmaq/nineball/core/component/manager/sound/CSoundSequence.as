@@ -19,10 +19,10 @@ package danmaq.nineball.core.component.manager.sound
 		//* fields ────────────────────────────────*
 		
 		/** サウンド本体。 */
-		public var sound:Sound;
+		private var _sound:Sound;
 		
 		/** 再生終了後に遷移するインデックス加算値。 */
-		public var next:int;
+		private var _next:int;
 		
 		//* constructor & destructor ───────────────────────*
 		
@@ -34,8 +34,8 @@ package danmaq.nineball.core.component.manager.sound
 		 */
 		public function CSoundSequence(sound:Sound, next:int = -1)
 		{
-			this.sound = sound;
-			this.next = next;
+			_sound = sound;
+			_next = next;
 		}
 		
 		//* class methods ────────────────────────────-*
@@ -56,6 +56,24 @@ package danmaq.nineball.core.component.manager.sound
 			}
 			result.push(new CSoundSequence(loop, 0));
 			return result;
+		}
+
+		//* instance properties ─────────────────────────-*
+		
+		/**
+		 * サウンド本体を取得します。
+		 */
+		public function get sound():Sound
+		{
+			return _sound;
+		}
+		
+		/**
+		 * 再生終了後に遷移するインデックス加算値を取得します。
+		 */
+		public function get next():int
+		{
+			return _next;
 		}
 
 		//* instance methods ───────────────────────────*

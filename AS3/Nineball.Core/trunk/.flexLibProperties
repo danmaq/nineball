@@ -35,6 +35,11 @@
     <classEntry path="danmaq.nineball.core.data.CVersionWrapper"/>
     <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundManager"/>
     <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundSequence"/>
+    <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundCue"/>
+    <classEntry path="danmaq.nineball.core.CConstants"/>
+    <classEntry path="danmaq.nineball.core.util.math.interpolate.validateParams"/>
+    <classEntry path="danmaq.nineball.core.util.math.interpolate.amountInQuad"/>
+    <classEntry path="danmaq.nineball.core.util.math.interpolate.amountOutQuad"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
