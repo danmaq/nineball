@@ -11,7 +11,7 @@
 	<property name="doc.dir" value="${basedir}/asdoc-output"/>
 	<property name="lib.dir" value="${basedir}/libs"/>
 	<property name="package.description" value="${basedir}/package.xml"/>
-	<property name="asdoc.jvm.args" value="-Xmx512m"/>
+	<property name="asdoc.jvm.args" value="-Xmx512m -Dfile.encoding=utf-8"/>
 	
 	<target name="asdoc">
 		<!-- タスク定義 -->
@@ -24,10 +24,11 @@
 			warnings="true" strict="true" locale="ja_JP" fork="true"
 			main-title="Nineball.Core" window-title="Nineball.Core API Documentation"
 			footer="Copyright (c) 2008-2012 danmaq All rights reserved.">
-			<package-description-file>${package.description}</package-description-file>
-			<doc-sources path-element="${src.dir}"/>
 
 			<jvmarg line="${asdoc.jvm.args}"/>
+			
+			<package-description-file>${package.description}</package-description-file>
+			<doc-sources path-element="${src.dir}"/>
 		</asdoc>
 	</target>
 	

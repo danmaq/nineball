@@ -1,17 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<overviews> 
-	<packages> 
-		<package name="danmaq.nineball.core.util"> 
-			<shortDescription> 
-				<![CDATA[ 
-					danmaq.nineball.core.util パッケージ
-				]]> 
-			</shortDescription> 
-			<description> 
-				<![CDATA[ 
-					danmaq.nineball.core.util パッケージ
-				]]> 
-			</description> 
-		</package> 
+<overviews>
+	<all-packages>
+		<description>
+			<![CDATA[
+				danmaq Nineball-Libraryの共通ライブラリ。
+				原則flash.*パッケージのみ使用しているため、ソースレベルでFlash CSでも使いまわせます。
+			]]>
+		</description>
+	</all-packages>
+	<all-classes>
+		<description>
+			<![CDATA[
+				danmaq Nineball-Libraryの共通のクラス群。
+				原則flash.*パッケージのみ使用しているため、ソースレベルでFlash CSでも使いまわせます。
+			]]>
+		</description>
+	</all-classes>
+	<packages>
+		<package name="danmaq.nineball.core">
+			<shortDescription>
+				<![CDATA[
+					このライブラリ用の定数などがまとめてあります。
+				]]>
+			</shortDescription>
+			<description>
+				<![CDATA[
+					danmaq Nineball-Library Coreの基底となるパッケージ。
+					内部にはライブラリで使用する定数を設定したクラスがあります。
+				]]>
+			</description>
+		</package>
+		<package name="danmaq.nineball.core.data">
+			<shortDescription>
+				<![CDATA[
+					各種情報操作、管理のためのクラスを提供します。
+				]]>
+			</shortDescription>
+			<description>
+				<![CDATA[
+					各種情報の操作、保持、管理のためのクラスが格納されています。
+				]]>
+			</description>
+		</package>
+		<package name="danmaq.nineball.core.util.list.iterator">
+			<shortDescription>
+				<![CDATA[
+					Iteratorパターンを実現するための最小限のインターフェイスを提供します。
+				]]>
+			</shortDescription>
+			<description>
+				<![CDATA[
+					Iteratorパターンを実現するための最小限のインターフェイスを提供します。
+				]]>
+			</description>
+		</package>
+		<package name="danmaq.nineball.core.util.object">
+			<shortDescription>
+				<![CDATA[
+					インスタンス作成・操作関連の便利関数群。
+				]]>
+			</shortDescription>
+			<description>
+				<![CDATA[
+					インスタンス作成・操作関連の便利関数が格納されています。
+				]]>
+			</description>
+		</package>
+		<package name="danmaq.nineball.core.util.string">
+			<shortDescription>
+				<![CDATA[
+					文字列操作関連の便利関数群。
+				]]>
+			</shortDescription>
+			<description>
+				<![CDATA[
+					文字列操作関連の便利関数が格納されています。
+				]]>
+			</description>
+		</package>
+		<package name="danmaq.nineball.core.events">
+			<shortDescription>
+				<![CDATA[
+					このライブラリで使用する、各種イベントや便利機能クラスなど。
+				]]>
+			</shortDescription>
+			<description>
+				<![CDATA[
+					danmaq Nineball-Libraryで使用する、各種イベント クラスや
+					イベント発信のための便利機能を搭載したクラスなどが格納されます。
+				]]>
+			</description>
+		</package>
 	</packages>
 </overviews>
