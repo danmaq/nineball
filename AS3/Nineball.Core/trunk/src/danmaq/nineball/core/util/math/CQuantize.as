@@ -4,7 +4,7 @@ package danmaq.nineball.core.util.math
 	import danmaq.nineball.core.util.object.blockStatic;
 
 	/**
-	 * 値を指定の分解能に合わせて値を丸め込む関数をまとめたクラスです。
+	 * 値を指定の分解能に合わせて値を丸め込む関数をまとめた静的クラスです。
 	 *
 	 * <p>
 	 * このクラスは静的クラスです。このクラスのインスタンスを生成することはできません。

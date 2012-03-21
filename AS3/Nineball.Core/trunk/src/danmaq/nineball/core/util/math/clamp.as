@@ -1,6 +1,8 @@
 package danmaq.nineball.core.util.math
 {
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CMathHelper#clamp()")]
+	
 	/**
 	 * 値を範囲内に丸めます。
 	 *
@@ -16,20 +18,6 @@ package danmaq.nineball.core.util.math
 	 */
 	public function clamp(expr:Number, limit1:Number, limit2:Number):Number
 	{
-		if (limit1 > limit2)
-		{
-			var tmp:Number = limit1;
-			limit1 = limit2;
-			limit2 = tmp;
-		}
-		if(limit1 > expr)
-		{
-			expr = limit1;
-		}
-		else if(limit2 < expr)
-		{
-			expr = limit2;
-		}
-		return expr;
+		return CMathHelper.clamp(expr, limit1, limit2);
 	}
 }

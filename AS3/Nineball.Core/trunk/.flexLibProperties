@@ -40,6 +40,7 @@
     <classEntry path="danmaq.nineball.core.util.math.interpolate.validateParams"/>
     <classEntry path="danmaq.nineball.core.util.math.interpolate.amountInQuad"/>
     <classEntry path="danmaq.nineball.core.util.math.interpolate.amountOutQuad"/>
+    <classEntry path="danmaq.nineball.core.util.math.CMathHelper"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
