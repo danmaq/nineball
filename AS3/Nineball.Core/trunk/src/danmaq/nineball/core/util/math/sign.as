@@ -1,6 +1,8 @@
 package danmaq.nineball.core.util.math
 {
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CMathHelper#sign()")]
+
 	/**
 	 * 数値の符号を取得します。
 	 *
@@ -9,11 +11,6 @@ package danmaq.nineball.core.util.math
 	 */
 	public function sign(expr:Number):int
 	{
-		var result:int = 0;
-		if (!(isNaN(expr) || expr == 0))
-		{
-			result = expr > 0 ? 1 : -1;
-		}
-		return result;
+		return CMathHelper.sign(expr);
 	}
 }

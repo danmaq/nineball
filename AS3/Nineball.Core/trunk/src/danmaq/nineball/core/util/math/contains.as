@@ -1,6 +1,8 @@
 package danmaq.nineball.core.util.math
 {
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CMathHelper#contains()")]
+
 	/**
 	 * 値が範囲内に含まれているかどうかを取得します。
 	 *
@@ -16,12 +18,6 @@ package danmaq.nineball.core.util.math
 	 */
 	public function contains(expr:Number, limit1:Number, limit2:Number):Boolean
 	{
-		if (limit1 > limit2)
-		{
-			var tmp:Number = limit1;
-			limit1 = limit2;
-			limit2 = tmp;
-		}
-		return expr >= limit1 && expr <= limit2;
+		return CMathHelper.contains(expr, limit1, limit2);
 	}
 }

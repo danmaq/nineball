@@ -2,7 +2,7 @@ package danmaq.nineball.core.component.manager.sound
 {
 
 	import danmaq.nineball.core.component.IDisposable;
-	import danmaq.nineball.core.util.math.clamp;
+	import danmaq.nineball.core.util.math.CMathHelper;
 	
 	import flash.media.Sound;
 	
@@ -83,7 +83,7 @@ package danmaq.nineball.core.component.manager.sound
 		{
 			if(_masterVolume != v)
 			{
-				_masterVolume = clamp(v, 0.0, 1.0);
+				_masterVolume = CMathHelper.clamp(v, 0.0, 1.0);
 				cues.forEach(refleshVolume);
 			}
 		}
