@@ -12,7 +12,7 @@
 <testsuite name="danmaq.nineball.core.util.list.random:TRandom" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.list.random:TRandomAll" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.list.random:TRandomUtil" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.util.math:TMath" type="testcaseclass"/>
+<testsuite name="danmaq.nineball.core.util.math:TMathHelper" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.math:TQuantize" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.math.trignometric:TQuaternion" type="testcaseclass"/>
 </testsuite>
