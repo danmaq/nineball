@@ -103,6 +103,7 @@
     <Compile Include="data\CValue.cs" />
     <Compile Include="CStarter.cs" />
     <Compile Include="data\EDirection.cs" />
+    <Compile Include="data\ESkewDirection.cs" />
     <Compile Include="data\input\SForceData.cs" />
     <Compile Include="data\input\EDevice.cs" />
     <Compile Include="data\input\EGamePadButtons.cs" />
