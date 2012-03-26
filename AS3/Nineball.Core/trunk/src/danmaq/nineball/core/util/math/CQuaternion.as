@@ -1,4 +1,4 @@
-package danmaq.nineball.core.util.math.trignometric
+package danmaq.nineball.core.util.math
 {
 
 	import danmaq.nineball.core.util.string.sprintf;

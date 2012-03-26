@@ -1,6 +1,8 @@
 package danmaq.nineball.core.util.math.trignometric
 {
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CMathHelper#toDegrees()")]
+	
 	/**
 	 * ラジアンを角度に変換します。
 	 *
