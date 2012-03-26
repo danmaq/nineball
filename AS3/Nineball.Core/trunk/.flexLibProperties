@@ -22,11 +22,10 @@
     <classEntry path="danmaq.nineball.core.component.task.CTaskManagerBody"/>
     <classEntry path="danmaq.nineball.core.component.task.CTaskManagerIterator"/>
     <classEntry path="danmaq.nineball.core.component.manager.CPhase"/>
-    <classEntry path="danmaq.nineball.core.util.math.sign"/>
     <classEntry path="danmaq.nineball.core.util.ntrace"/>
     <classEntry path="danmaq.nineball.core.util.string.sprintf"/>
     <classEntry path="danmaq.nineball.core.component.context.CSpriteWithContext"/>
-    <classEntry path="danmaq.nineball.core.util.math.trignometric.CQuaternion"/>
+    <classEntry path="danmaq.nineball.core.util.math.CQuaternion"/>
     <classEntry path="danmaq.nineball.core.data.CBitmapSplitter"/>
     <classEntry path="danmaq.nineball.core.component.manager.CFPSCalculator"/>
     <classEntry path="danmaq.nineball.core.util.object.blockNotImplements"/>
@@ -41,6 +40,8 @@
     <classEntry path="danmaq.nineball.core.util.math.interpolate.amountInQuad"/>
     <classEntry path="danmaq.nineball.core.util.math.interpolate.amountOutQuad"/>
     <classEntry path="danmaq.nineball.core.util.math.CMathHelper"/>
+    <classEntry path="danmaq.nineball.core.util.math.CTrignometric"/>
+    <classEntry path="danmaq.nineball.core.util.math.CHyperbolic"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

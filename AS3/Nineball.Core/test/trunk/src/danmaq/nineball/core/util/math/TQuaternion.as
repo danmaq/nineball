@@ -1,4 +1,4 @@
-package danmaq.nineball.core.util.math.trignometric
+package danmaq.nineball.core.util.math
 {
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
