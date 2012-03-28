@@ -1,6 +1,9 @@
 package danmaq.nineball.core.util.math.interpolate
 {
+	import danmaq.nineball.core.util.math.CInterpolate;
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CInterpolate#amountInQuad()")]
+	
 	/**
 	 * 曲線形の重み計算をします。
 	 *
@@ -10,6 +13,6 @@ package danmaq.nineball.core.util.math.interpolate
 	 */
 	public function amountInQuad(numerator:Number, denominator:Number):Number
 	{
-		return validateParams(numerator, denominator) ? (numerator /= denominator) * numerator : 0;
+		return CInterpolate.amountInQuad(numerator, denominator);
 	}
 }

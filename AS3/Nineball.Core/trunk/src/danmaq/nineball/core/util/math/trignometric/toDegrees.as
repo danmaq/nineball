@@ -1,7 +1,8 @@
 package danmaq.nineball.core.util.math.trignometric
 {
+	import danmaq.nineball.core.util.math.CTrignometric;
 
-	[Deprecated(replacement="danmaq.nineball.core.util.math.CMathHelper#toDegrees()")]
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CTrignometric#toDegrees()")]
 	
 	/**
 	 * ラジアンを角度に変換します。
@@ -11,6 +12,6 @@ package danmaq.nineball.core.util.math.trignometric
 	 */
 	public function toDegrees(radians:Number):Number
 	{
-		return radians * 180 / Math.PI;
+		return CTrignometric.toDegrees(radians);
 	}
 }

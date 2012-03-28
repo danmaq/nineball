@@ -36,12 +36,12 @@
     <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundSequence"/>
     <classEntry path="danmaq.nineball.core.component.manager.sound.CSoundCue"/>
     <classEntry path="danmaq.nineball.core.CConstants"/>
-    <classEntry path="danmaq.nineball.core.util.math.interpolate.validateParams"/>
     <classEntry path="danmaq.nineball.core.util.math.interpolate.amountInQuad"/>
     <classEntry path="danmaq.nineball.core.util.math.interpolate.amountOutQuad"/>
     <classEntry path="danmaq.nineball.core.util.math.CMathHelper"/>
     <classEntry path="danmaq.nineball.core.util.math.CTrignometric"/>
     <classEntry path="danmaq.nineball.core.util.math.CHyperbolic"/>
+    <classEntry path="danmaq.nineball.core.util.math.CInterpolate"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
