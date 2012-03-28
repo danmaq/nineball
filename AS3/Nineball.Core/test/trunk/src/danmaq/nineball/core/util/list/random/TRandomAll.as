@@ -1,6 +1,7 @@
 package danmaq.nineball.core.util.list.random
 {
 	import danmaq.nineball.core.util.list.iterator.IIterator;
+	import danmaq.nineball.core.util.math.CInterpolate;
 	import danmaq.nineball.core.util.math.CMathHelper;
 	import danmaq.nineball.core.util.math.interpolate.lerpLinear;
 	
@@ -87,7 +88,8 @@ package danmaq.nineball.core.util.list.random
 				var monobit:int = 0;
 				for(var j:int = 625; --j >= 0; )
 				{
-					monobit += CMathHelper.onBit(lerpLinear(0, uint.MAX_VALUE, rnd.next, rnd.max));
+					monobit += CMathHelper.onBit(
+						CInterpolate.lerpLinear(0, uint.MAX_VALUE, rnd.next, rnd.max));
 				}
 //				Assert.assertTrue(monobit >= 9654 && monobit <= 10364);	// NIST FIPS140-1 The Monobit Test
 				Assert.assertTrue(monobit >= 9450 && monobit <= 10400);

@@ -1,6 +1,9 @@
 package danmaq.nineball.core.util.math.interpolate
 {
+	import danmaq.nineball.core.util.math.CInterpolate;
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CInterpolate#amountLinear()")]
+	
 	/**
 	 * 直線形の重み計算をします。
 	 *
@@ -10,6 +13,6 @@ package danmaq.nineball.core.util.math.interpolate
 	 */
 	public function amountLinear(numerator:Number, denominator:Number):Number
 	{
-		return validateParams(numerator, denominator) ? numerator / denominator : 0;
+		return CInterpolate.amountLinear(numerator, denominator);
 	}
 }

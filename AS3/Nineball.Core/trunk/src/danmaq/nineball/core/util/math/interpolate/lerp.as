@@ -1,6 +1,8 @@
 package danmaq.nineball.core.util.math.interpolate
 {
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CInterpolate#lerp()")]
+	
 	/**
 	 * 2つの数値間で線形補完の計算をします。
 	 *

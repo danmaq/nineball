@@ -1,6 +1,9 @@
 package danmaq.nineball.core.util.math.interpolate
 {
+	import danmaq.nineball.core.util.math.CInterpolate;
 
+	[Deprecated(replacement="danmaq.nineball.core.util.math.CInterpolate#lerpLinear()")]
+	
 	/**
 	 * 線形補完の直線変換をします。
 	 *
@@ -13,6 +16,6 @@ package danmaq.nineball.core.util.math.interpolate
 	public function lerpLinear(
 		expr1:Number, expr2:Number, numerator:Number, denominator:Number):Number
 	{
-		return lerp(expr1, expr2, amountLinear(numerator, denominator));
+		return CInterpolate.lerpLinear(expr1, expr2, numerator, denominator);
 	}
 }
