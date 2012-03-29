@@ -21,6 +21,9 @@ namespace danmaq.nineball.util.math
 		//* ─────＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿_*
 		//* constants ──────────────────────────────-*
 
+		/// <summary>1度辺りのラジアン数。</summary>
+		public const float RAD = MathHelper.Pi / 180f;
+
 		/// <summary>周回軌道の角速度。</summary>
 		public static readonly Func<float, float, float> _cycricOrbit = (fRadius, fSpeed) =>
 			fSpeed / fRadius;
