@@ -29,7 +29,7 @@ namespace danmaq.Nineball.Core.util
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
 		/// 
-		/// <exception cref="System.ApplicationException">多重起動した場合。</exception>
+		/// <exception cref="System.Exception">多重起動した場合。</exception>
 		public CMutexObject()
 			: this(Text.NAME)
 		{
@@ -39,7 +39,7 @@ namespace danmaq.Nineball.Core.util
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <param name="name">識別のためのユニークな名称。</param>
-		/// <exception cref="System.ApplicationException">多重起動した場合。</exception>
+		/// <exception cref="System.Exception">多重起動した場合。</exception>
 		public CMutexObject(string name)
 		{
 #if WINDOWS
