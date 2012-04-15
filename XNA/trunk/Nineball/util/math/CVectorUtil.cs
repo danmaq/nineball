@@ -98,5 +98,25 @@ namespace danmaq.nineball.util.math
 		{
 			return Vector3.Transform(source, Quaternion.CreateFromAxisAngle(axis, angle));
 		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>2Dベクトルの型変換を行います。</summary>
+		/// 
+		/// <param name="source">元のベクトル。</param>
+		/// <returns>変換されたベクトル。</returns>
+		public static Point toPoint(this Vector2 source)
+		{
+			return new Point((int)source.X, (int)source.Y);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>2Dベクトルの型変換を行います。</summary>
+		/// 
+		/// <param name="source">元のベクトル。</param>
+		/// <returns>変換されたベクトル。</returns>
+		public static Vector2 toVector2(this Point source)
+		{
+			return new Vector2(source.X, source.Y);
+		}
 	}
 }
