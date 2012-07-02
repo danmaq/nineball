@@ -149,6 +149,10 @@
     <value>このゲームパッドは初期化に失敗したため、使用できません。</value>
     <comment>レガシ ゲームパッド初期化失敗時</comment>
   </data>
+  <data name="INPUT_ERR_LEGACY_INIT_FAILED_MAYBE" xml:space="preserve">
+    <value>このゲームパッドは初期化に失敗したため、使用できないかもしれません。</value>
+    <comment>レガシ ゲームパッド初期化失敗時</comment>
+  </data>
   <data name="INPUT_WARN_LEGACY_CENTER" xml:space="preserve">
     <value>センタリング機能を設定できませんでした。
 このゲームパッドでは、フォース フィードバックは使用できません。</value>

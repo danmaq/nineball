@@ -59,7 +59,11 @@ namespace danmaq.nineball.util.collection.input
 				// TODO : なんかもうちょっとまともな区別方法ないの？
 				if (!(Regex.IsMatch(item.ProductName, "Xbox ?360", RegexOptions.IgnoreCase)))
 				{
-					dstList.Add(new CLegacyInput(item.InstanceGuid, hWnd));
+					CLegacyInput input = new CLegacyInput(item.InstanceGuid, hWnd);
+					if (input.device != null)
+					{
+						dstList.Add(input);
+					}
 				}
 			}
 			inputList = dstList.AsReadOnly();
