@@ -113,13 +113,13 @@ namespace danmaq.nineball.entity.input.low
 			: base(CStateLegacyInput.instance, new CPrivateMembers())
 		{
 			_privateMembers = (CPrivateMembers)privateMembers;
-			device = new Device(guid);
-			capsReport =
-				device.DeviceInformation.createCapsReport() + device.Caps.createCapsReport();
-			device.SetDataFormat(DeviceDataFormat.Joystick);
 			string errorReport = string.Empty;
 			try
 			{
+				device = new Device(guid);
+				device.SetDataFormat(DeviceDataFormat.Joystick);
+				capsReport =
+					device.DeviceInformation.createCapsReport() + device.Caps.createCapsReport();
 				availableForceFeedback = initializeForceFeedBack(ref errorReport);
 				initializeAxis();
 				device.Acquire();
@@ -127,8 +127,10 @@ namespace danmaq.nineball.entity.input.low
 			}
 			catch (Exception e)
 			{
-				errorReport +=
-					Resources.INPUT_ERR_LEGACY_INIT_FAILED + Environment.NewLine + e.ToString();
+				string err = device == null ?
+					Resources.INPUT_ERR_LEGACY_INIT_FAILED :
+					Resources.INPUT_ERR_LEGACY_INIT_FAILED_MAYBE;
+				errorReport += err + Environment.NewLine + e.ToString();
 			}
 			this.errorReport = errorReport;
 		}
