@@ -61,6 +61,7 @@ namespace danmaq.nineball.util.collection.input
 				GamePadDPad dpad = now.DPad;
 				GamePadThumbSticks nStks = now.ThumbSticks;
 				GamePadThumbSticks pStks = prev.ThumbSticks;
+				float thresholdSquared = threshold * threshold;
 				// TODO : トリガ忘れてね？
 				result =
 					btns != prev.Buttons && (
@@ -81,8 +82,10 @@ namespace danmaq.nineball.util.collection.input
 						dpad.Left == ButtonState.Pressed ||
 						dpad.Right == ButtonState.Pressed) ||
 					nStks != pStks && (
-						(nStks.Left.Length() >= threshold && pStks.Left.Length() < threshold) ||
-						(nStks.Right.Length() >= threshold && pStks.Right.Length() < threshold));
+						(nStks.Left.LengthSquared() >= thresholdSquared &&
+							pStks.Left.LengthSquared() < thresholdSquared) ||
+						(nStks.Right.LengthSquared() >= thresholdSquared &&
+							pStks.Right.LengthSquared() < thresholdSquared));
 			}
 			return result;
 		}

@@ -221,7 +221,7 @@ namespace danmaq.nineball.data.input
 		public SInputInfo updateVelocityWithAxisHPF(Vector3 velocity, float threshold)
 		{
 			Vector2 v2 = new Vector2(velocity.X, velocity.Y);
-			if (v2.Length() < threshold)
+			if (v2.LengthSquared() < threshold * threshold)
 			{
 				velocity.X = 0;
 				velocity.Y = 0;
