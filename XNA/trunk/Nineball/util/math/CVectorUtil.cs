@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 using Microsoft.Xna.Framework;
+using System;
 
 namespace danmaq.nineball.util.math
 {
@@ -117,6 +118,34 @@ namespace danmaq.nineball.util.math
 		public static Vector2 toVector2(this Point source)
 		{
 			return new Vector2(source.X, source.Y);
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>線から点への距離の平方を算出します。</summary>
+		/// 
+		/// <param name="point">点ベクトル。</param>
+		/// <param name="head">線ベクトルの端。</param>
+		/// <param name="tail">線ベクトルの端。</param>
+		/// <returns>線から点への距離の平方。</returns>
+		public static float distancePointToLineSquared(Vector2 point, Vector2 head, Vector2 tail)
+		{
+			Vector2 a = head - tail;
+			float lengthSquared = a.LengthSquared();
+			float result;
+			if (lengthSquared > 0)
+			{
+				Vector2 b = point - tail;
+				Vector2 ae = a;
+				ae.Normalize();
+				float k = MathHelper.Clamp(
+					Vector2.Dot(ae, b) / (float)Math.Sqrt(lengthSquared), 0f, 1f);
+				result = Vector2.DistanceSquared(a * k, b);
+			}
+			else
+			{
+				result = Vector2.DistanceSquared(head, point);
+			}
+			return result;
 		}
 	}
 }
