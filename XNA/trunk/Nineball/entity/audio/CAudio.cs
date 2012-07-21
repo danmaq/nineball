@@ -231,6 +231,10 @@ namespace danmaq.nineball.entity.audio
 		/// <param name="name">フレンドリ名。</param>
 		public void play(string name)
 		{
+			if (name == null)
+			{
+				throw new ArgumentNullException("name");
+			}
 			bool found = false;
 			List<string> reserved = _privateMembers.reservedList;
 			for (int i = reserved.Count; --i >= 0 && !found; )
