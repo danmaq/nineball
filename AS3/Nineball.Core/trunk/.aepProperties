@@ -1,0 +1,5 @@
+#Adobe Enterprise Suite Preferences
+#Wed Jul 25 11:41:21 JST 2012
+aes.project.settings.rds.server=Data Services on Tomcat (localhost)
+com.adobe.ep.tooling.mosaic.core.preferences.default_catalog=Default
+com.adobe.ep.tooling.mosaic.core.preferences.useProjectSettings=false

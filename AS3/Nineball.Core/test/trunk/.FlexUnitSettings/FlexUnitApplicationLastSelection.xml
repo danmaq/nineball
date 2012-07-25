@@ -14,7 +14,6 @@
 <testsuite name="danmaq.nineball.core.util.list.random:TRandomUtil" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.math:TMathHelper" type="testcaseclass"/>
 <testsuite name="danmaq.nineball.core.util.math:TQuantize" type="testcaseclass"/>
-<testsuite name="danmaq.nineball.core.util.math.trignometric:TQuaternion" type="testcaseclass"/>
+<testsuite name="danmaq.nineball.core.util.math:TQuaternion" type="testcaseclass"/>
 </testsuite>
-<portNumber value="8765" />
 </testrun>
