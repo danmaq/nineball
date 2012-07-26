@@ -52,6 +52,7 @@ package danmaq.nineball.core.util.math
 		[Test]
 		public function testTranform2D():void
 		{
+			// TODO : 三角関数を使った回転とも比較検証をする。できればベンチマークも取る。
 			var q:CQuaternion = CQuaternion.createFromVectorAxis(Vector3D.Z_AXIS, Math.PI * 0.5);
 			var got:Point = q.tranform2D(new Point(10, 0));
 			Assert.assertTrue(Math.abs(got.x - 0) < GAP);
