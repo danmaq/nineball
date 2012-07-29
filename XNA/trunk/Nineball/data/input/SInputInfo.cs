@@ -90,8 +90,6 @@ namespace danmaq.nineball.data.input
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>現在押されたかどうかを取得します。</summary>
-		/// 
-		/// <value>現在押された場合、<c>true</c>。</value>
 		public bool push
 		{
 			get
@@ -100,6 +98,19 @@ namespace danmaq.nineball.data.input
 					lastPressTimeX == counter ||
 					lastPressTimeY == counter ||
 					lastPressTimeZ == counter;
+			}
+		}
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>現在離されたかどうかを取得します。</summary>
+		public bool release
+		{
+			get
+			{
+				return
+					lastReleaseTimeX == counter ||
+					lastReleaseTimeY == counter ||
+					lastReleaseTimeZ == counter;
 			}
 		}
 
