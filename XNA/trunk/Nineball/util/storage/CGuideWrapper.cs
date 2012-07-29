@@ -334,9 +334,16 @@ namespace danmaq.nineball.util.storage
 		public IAsyncResult BeginShowStorageDeviceSelector(AsyncCallback callback, Object state)
 		{
 			IAsyncResult result = null;
-			if (isAvaliableUseGamerService)
+			if (isAvaliableUseGamerService && !IsVisible)
 			{
-				result = Guide.BeginShowStorageDeviceSelector(callback, state);
+				try
+				{
+					result = Guide.BeginShowStorageDeviceSelector(callback, state);
+				}
+				catch (Exception e)
+				{
+					CLogger.add(e);
+				}
 			}
 			else
 			{
