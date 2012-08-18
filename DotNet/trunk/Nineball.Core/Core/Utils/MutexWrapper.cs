@@ -44,7 +44,7 @@ namespace Danmaq.Nineball.Core.Utils
 		{
 #if WINDOWS
 			Mutex = new Mutex(false, name);
-			Mutex _mutex = Mutex;
+			Mutex _mutex = (Mutex)Mutex;
 			if (!_mutex.WaitOne(0, false))
 			{
 				_mutex.Dispose();
