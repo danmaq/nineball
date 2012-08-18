@@ -18,7 +18,7 @@ using System.Resources;
 // COM コンポーネントに公開されません。COM からこのアセンブリの型にアクセスする必要がある場合は、 
 // その型の ComVisible 属性を True に設定してください。
 // Windows アセンブリだけが COM に対応しています。
-[assembly: ComVisible(true)]
+[assembly: ComVisible(false)]
 
 // Windows 上では、このプロジェクトが COM に公開されている場合、 次の GUID が typelib の ID として設定されます。
 // Windows 以外のプラットフォームでは、このアセンブリをデバイスに展開するときに

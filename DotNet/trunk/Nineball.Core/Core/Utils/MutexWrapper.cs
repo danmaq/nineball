@@ -4,7 +4,7 @@
 using System.Threading;
 #endif
 
-namespace danmaq.Nineball.Core.util
+namespace Danmaq.Nineball.Core.Utils
 {
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
@@ -19,7 +19,7 @@ namespace danmaq.Nineball.Core.util
 	/// 事実上同等のものとなります。よってXBOX360版では上記の効果は全く発揮しません。
 	/// </para>
 	/// </remarks>
-	public sealed class CMutexObject
+	public sealed class MutexWrapper
 		: IDisposable
 	{
 
@@ -30,7 +30,7 @@ namespace danmaq.Nineball.Core.util
 		/// <summary>コンストラクタ。</summary>
 		/// 
 		/// <exception cref="System.Exception">多重起動した場合。</exception>
-		public CMutexObject()
+		public MutexWrapper()
 			: this(Text.NAME)
 		{
 		}
@@ -40,21 +40,22 @@ namespace danmaq.Nineball.Core.util
 		/// 
 		/// <param name="name">識別のためのユニークな名称。</param>
 		/// <exception cref="System.Exception">多重起動した場合。</exception>
-		public CMutexObject(string name)
+		public MutexWrapper(string name)
 		{
 #if WINDOWS
-			Mutex _mutex = new Mutex(false, name);
+			Mutex = new Mutex(false, name);
+			Mutex _mutex = Mutex;
 			if (!_mutex.WaitOne(0, false))
 			{
-				throw new ApplicationException(Text.ERR_IO_MUTEX);
+				_mutex.Dispose();
+				throw new InvalidOperationException(Text.ERR_IO_MUTEX);
 			}
-			mutex = _mutex;
 #endif
 		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>デストラクタ。</summary>
-		~CMutexObject()
+		~MutexWrapper()
 		{
 			Dispose();
 		}
@@ -66,7 +67,7 @@ namespace danmaq.Nineball.Core.util
 		/// <summary>ミューテックス オブジェクトを取得します。</summary>
 		/// 
 		/// <value>ミューテックス オブジェクト。</value>
-		public object mutex
+		public object Mutex
 		{
 			get;
 			private set;
@@ -79,12 +80,13 @@ namespace danmaq.Nineball.Core.util
 		/// <summary>このオブジェクトの終了処理を行います。</summary>
 		public void Dispose()
 		{
-			if (mutex != null)
+			if (Mutex != null)
 			{
 #if WINDOWS
-				((Mutex)mutex).Close();
+				((Mutex)Mutex).Close();
 #endif
-				mutex = null;
+				Mutex = null;
+				GC.SuppressFinalize(this);
 			}
 		}
 	}
