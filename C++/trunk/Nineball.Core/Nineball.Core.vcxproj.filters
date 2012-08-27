@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{46460f23-929a-4faf-9825-f0f4c74af23d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{3681a66d-a890-482a-b47f-317225ea9a91}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StateBase.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextEncapsulationBase.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextBase.h">
+      <Filter>State</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="StateBase.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextEncapsulationBase.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextBase.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
