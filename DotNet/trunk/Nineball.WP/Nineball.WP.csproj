@@ -82,6 +82,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\State\Context.cs" />
+    <Compile Include="Core\State\ContextEncapsulation.cs" />
+    <Compile Include="Core\State\IContext.cs" />
+    <Compile Include="Core\State\IContextEncapsulation.cs" />
+    <Compile Include="Core\State\IState.cs" />
+    <Compile Include="Core\State\StateNull.cs" />
     <Compile Include="Core\Text.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,9 +102,7 @@
       <LastGenOutput>Text.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\State\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
