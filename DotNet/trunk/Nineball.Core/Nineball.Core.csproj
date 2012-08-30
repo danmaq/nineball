@@ -109,10 +109,11 @@
     <Compile Include="Core\Nineball.cs" />
     <Compile Include="Core\State\Context.cs" />
     <Compile Include="Core\State\ContextEncapsulation.cs" />
+    <Compile Include="Core\State\CStateBase.cs" />
     <Compile Include="Core\State\IContext.cs" />
     <Compile Include="Core\State\IContextEncapsulation.cs" />
     <Compile Include="Core\State\IState.cs" />
-    <Compile Include="Core\State\StateNull.cs" />
+    <Compile Include="Core\State\NullState.cs" />
     <Compile Include="Core\Text.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
