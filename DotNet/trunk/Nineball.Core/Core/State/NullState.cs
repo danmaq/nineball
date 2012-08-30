@@ -12,20 +12,20 @@ namespace Danmaq.Nineball.Core.State
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary><c>null</c>を示す状態。</summary>
-	public sealed class StateNull
+	public sealed class NullState
 		: IState
 	{
 
 		//* constants ──────────────────────────────-*
 
 		/// <summary>クラス オブジェクト。</summary>
-		public static readonly IState Instance = new StateNull();
+		public static readonly IState Instance = new NullState();
 
 		//* constructor & destructor ───────────────────────*
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
-		private StateNull()
+		private NullState()
 		{
 		}
 
