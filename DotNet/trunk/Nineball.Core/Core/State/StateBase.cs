@@ -12,22 +12,10 @@ namespace Danmaq.Nineball.Core.State
 
 	//* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ *
 	/// <summary>状態を構成するための基底クラス。</summary>
-	public abstract class CStateBase<T>
+	public abstract class StateBase<T>
 		: IState
 		where T : class, IContextEncapsulation
 	{
-
-		//* instance properties ─────────────────────────-*
-
-		/// <summary>この状態が型不一致である場合、自動的に遷移する型を取得します。</summary>
-		/// <remarks>もし異なる型へ遷移したい場合、このプロパティをオーバーライドします。</remarks>
-		protected virtual IState NextStateOnTTypeMismatch
-		{
-			get
-			{
-				return NullState.Instance;
-			}
-		}
 
 		//* instance methods ───────────────────────────*
 
@@ -53,7 +41,7 @@ namespace Danmaq.Nineball.Core.State
 		/// <param name="data">
 		/// コンテクストと状態間で共有するカプセル化されたデータ。
 		/// </param>
-		public abstract void Teardown(T data);
+        public abstract void TearDown(T data);
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>この状態が開始された際に呼び出されます。</summary>
@@ -63,15 +51,7 @@ namespace Danmaq.Nineball.Core.State
 		/// </param>
 		void IState.Setup(IContextEncapsulation data)
 		{
-			T real = data as T;
-			if (real == null)
-			{
-				data.Context.NextState = NullState.Instance;
-			}
-			else
-			{
-				Setup(real);
-			}
+			Execute((T)data);
 		}
 
 		//* -----------------------------------------------------------------------*
@@ -93,7 +73,7 @@ namespace Danmaq.Nineball.Core.State
 		/// </param>
 		void IState.TearDown(IContextEncapsulation data)
 		{
-			Teardown((T)data);
+			TearDown((T)data);
 		}
 	}
 }
