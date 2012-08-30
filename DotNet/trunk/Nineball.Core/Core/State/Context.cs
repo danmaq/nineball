@@ -26,10 +26,10 @@ namespace Danmaq.Nineball.Core.State
 		//* fields ────────────────────────────────*
 
 		/// <summary>現在の状態。</summary>
-		private IState currentState = StateNull.Instance;
+		private IState currentState = NullState.Instance;
 
 		/// <summary>現在の状態の以前に設定されていた状態。</summary>
-		private IState previousState = StateNull.Instance;
+		private IState previousState = NullState.Instance;
 
 		/// <summary>次に遷移すべき状態。</summary>
 		private IState nextState;
@@ -38,6 +38,13 @@ namespace Danmaq.Nineball.Core.State
 		private IContextEncapsulation encapsulationData;
 
 		//* constructor & destructor ───────────────────────*
+
+		//* -----------------------------------------------------------------------*
+		/// <summary>コンストラクタ。</summary>
+		public Context()
+			: this(null)
+		{
+		}
 
 		//* -----------------------------------------------------------------------*
 		/// <summary>コンストラクタ。</summary>
@@ -116,7 +123,7 @@ namespace Danmaq.Nineball.Core.State
 		/// <summary>
 		/// 指定したオブジェクトの状態がヌルであるかどうかを取得します。
 		/// </summary>
-		public bool EmptyState
+		public virtual bool EmptyState
 		{
 			get
 			{
@@ -155,7 +162,7 @@ namespace Danmaq.Nineball.Core.State
 			{
 				throw new ArgumentNullException("context");
 			}
-			return context.CurrentState == StateNull.Instance && context.NextState == null;
+			return context.CurrentState == NullState.Instance && context.NextState == null;
 		}
 
 		//* instance methods ───────────────────────────*
@@ -173,9 +180,9 @@ namespace Danmaq.Nineball.Core.State
 		public virtual void Reset()
 		{
 			EncapsulationData.Reset();
-			NextState = StateNull.Instance;
+			NextState = NullState.Instance;
 			CommitNextState(true);
-			PreviousState = StateNull.Instance;
+			PreviousState = NullState.Instance;
 			NextState = null;
 		}
 
