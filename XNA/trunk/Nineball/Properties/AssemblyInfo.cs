@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyProduct( "danmaq Nineball Library" )]
 [assembly: AssemblyDescription("danmaq Nineball Library")]
 [assembly: AssemblyCompany( "danmaq" )]
-[assembly: AssemblyCopyright( "Copyright © 2008-2011 danmaq All rights reserved." )]
+[assembly: AssemblyCopyright( "Copyright © 2008-2013 danmaq All rights reserved." )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
@@ -29,5 +29,5 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.2.1.163")]
+[assembly: AssemblyVersion("0.2.1.165")]
 [assembly: NeutralResourcesLanguageAttribute( "ja-JP" )]
