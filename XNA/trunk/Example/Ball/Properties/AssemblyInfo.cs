@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyDescription( "キーを連打すると前進する玉を操り、相手の玉より早くゴールへ到着するかを競うワンキーゲーム。" )]
 [assembly: AssemblyCompany( "danmaq" )]
 
-[assembly: AssemblyCopyright( "Copyright © 1994-2011 danmaq All rights reserved." )]
+[assembly: AssemblyCopyright( "Copyright © 1994-2013 danmaq All rights reserved." )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
@@ -31,5 +31,5 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.1.26")]
+[assembly: AssemblyVersion("1.0.1.27")]
 [assembly: NeutralResourcesLanguageAttribute( "ja-JP" )]
