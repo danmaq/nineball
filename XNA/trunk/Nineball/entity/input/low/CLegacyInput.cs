@@ -331,8 +331,15 @@ namespace danmaq.nineball.entity.input.low
 					{
 						m_currentEffect.Stop();
 					}
-					eo.Start(1);
-					m_currentEffect = eo;
+					try
+					{
+						eo.Start(1);	// コケる場合がある
+						m_currentEffect = eo;
+					}
+					catch (Exception e)
+					{
+						// TODO: 握りつぶしてしまうのもなんか宜しくないが……とりあえず応急処置。
+					}
 				}
 			}
 		}
