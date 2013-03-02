@@ -336,7 +336,7 @@ namespace danmaq.nineball.entity.input.low
 						eo.Start(1);	// コケる場合がある
 						m_currentEffect = eo;
 					}
-					catch (Exception e)
+					catch (Exception)
 					{
 						// TODO: 握りつぶしてしまうのもなんか宜しくないが……とりあえず応急処置。
 					}
