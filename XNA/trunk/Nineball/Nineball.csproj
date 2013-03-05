@@ -32,6 +32,7 @@
     <Thumbnail>_resources\nineball.png</Thumbnail>
     <ApplicationIcon>_resources\nineball.ico</ApplicationIcon>
     <SignAssembly>false</SignAssembly>
+    <TargetFrameworkSubset>Client</TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
