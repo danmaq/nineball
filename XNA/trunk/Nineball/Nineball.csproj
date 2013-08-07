@@ -114,6 +114,7 @@
     <Compile Include="entity\audio\CAudio.cs" />
     <Compile Include="entity\audio\CEmptyAudio.cs" />
     <Compile Include="entity\audio\IAudio.cs" />
+    <Compile Include="entity\graphics\SpriteBit.cs" />
     <Compile Include="entity\manager\CAnimationLite.cs" />
     <Compile Include="entity\manager\CPresenceManager.cs" />
     <Compile Include="entity\CVariableOwner.cs" />
