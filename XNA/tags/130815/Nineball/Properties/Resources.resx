@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CLASS_ERR_READONLY" xml:space="preserve">
+    <value>設定・書き込みはサポートしません。</value>
+    <comment>読み取り専用状態のクラス等の状態を変更しようとした場合。</comment>
+  </data>
+  <data name="CLASS_ERR_SINGLETON" xml:space="preserve">
+    <value>{0}オブジェクトを、2つ以上作ることはできません。</value>
+    <comment>シングルトンクラスを複数個生成しようとした場合</comment>
+  </data>
+  <data name="DRAW_ERR_SPRITEBATCH" xml:space="preserve">
+    <value>描画に使用するSpriteBatchがありません。</value>
+    <comment>SpriteBatchがnullの場合</comment>
+  </data>
+  <data name="FAILED" xml:space="preserve">
+    <value>失敗</value>
+    <comment>失敗時</comment>
+  </data>
+  <data name="GENERAL_ERR_EXCEPTION" xml:space="preserve">
+    <value>予期しない不具合が発生した為、ゲームを強制終了します。</value>
+    <comment>例外発生時</comment>
+  </data>
+  <data name="GENERAL_ERR_RELEASE" xml:space="preserve">
+    <value>{0}の解放に失敗しました。</value>
+    <comment>解放失敗時</comment>
+  </data>
+  <data name="GENERAL_INFO_INITIALIZED" xml:space="preserve">
+    <value>{0}は初期化されました。</value>
+    <comment>初期化完了時</comment>
+  </data>
+  <data name="INPUT_ERR_LEGACY_INIT_FAILED" xml:space="preserve">
+    <value>このゲームパッドは初期化に失敗したため、使用できません。</value>
+    <comment>レガシ ゲームパッド初期化失敗時</comment>
+  </data>
+  <data name="INPUT_ERR_LEGACY_INIT_FAILED_MAYBE" xml:space="preserve">
+    <value>このゲームパッドは初期化に失敗したため、使用できないかもしれません。</value>
+    <comment>レガシ ゲームパッド初期化失敗時</comment>
+  </data>
+  <data name="INPUT_WARN_LEGACY_CENTER" xml:space="preserve">
+    <value>センタリング機能を設定できませんでした。
+このゲームパッドでは、フォース フィードバックは使用できません。</value>
+    <comment>レガシ ゲームパッド初期化時の警告</comment>
+  </data>
+  <data name="INPUT_WARN_LEGACY_COOP" xml:space="preserve">
+    <value>共有モードで再設定を試みます。
+このモードでは、フォース フィードバックは使用できません。</value>
+    <comment>レガシ ゲームパッド初期化時の警告</comment>
+  </data>
+  <data name="INPUT_WARN_LEGACY_EXCLUSIVE" xml:space="preserve">
+    <value>ウィンドウ ハンドルが指定されていないため、ゲームパッドを排他モードに設定できません。</value>
+    <comment>レガシ ゲームパッド初期化時の警告</comment>
+  </data>
+  <data name="IO_ERR_MODIFY_TITLE" xml:space="preserve">
+    <value>アプリケーション タイトルの変更はできません。</value>
+    <comment>コンテナに使用するアプリケーション タイトルの変更時</comment>
+  </data>
+  <data name="IO_ERR_MUTEX" xml:space="preserve">
+    <value>多重起動されました。
+このアプリケーションは多重起動に対応しておりません。</value>
+    <comment>Mutex初期化に失敗時</comment>
+  </data>
+  <data name="IO_ERR_NULL_MGR_CONTENT" xml:space="preserve">
+    <value>コンテンツ マネージャが初期化されていません。</value>
+    <comment>コンテンツ キャッシュにコンテンツ マネージャが設定されていない状態で読み込みを開始した場合</comment>
+  </data>
+  <data name="IO_INFO_LOADED" xml:space="preserve">
+    <value>{0}を{1}へ読み込みました。</value>
+    <comment>読み込み完了時</comment>
+  </data>
+  <data name="IO_INFO_LOADING" xml:space="preserve">
+    <value>{0}を{1}へ読込しています...。</value>
+    <comment>読込中</comment>
+  </data>
+  <data name="IO_INFO_SAVED" xml:space="preserve">
+    <value>{0}を{1}への保存に{2}しました。</value>
+    <comment>保存完了</comment>
+  </data>
+  <data name="IO_INFO_SAVING" xml:space="preserve">
+    <value>{0}を{1}へ保存しています...。</value>
+    <comment>保存中</comment>
+  </data>
+  <data name="IO_WARN_NOT_FOUND" xml:space="preserve">
+    <value>指定した補助記憶装置に{0}が存在しません。</value>
+    <comment>ファイルが見つからない場合の警告</comment>
+  </data>
+  <data name="IO_WARN_XML_COLLISION" xml:space="preserve">
+    <value>設定データに互換性がありません。解決するためにデータをリセットします。</value>
+    <comment>XMLの不一致発生時</comment>
+  </data>
+  <data name="LIVE_WARN_FAILED" xml:space="preserve">
+    <value>ゲーマー サービスを起動できませんでした。
+ダイアログ・ストレージ選択機能はWindowsの機能で代用します。</value>
+    <comment>ゲーマー サービスが使用できない場合</comment>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>danmaq Nineball Library</value>
+    <comment>ライブラリ名</comment>
+  </data>
+  <data name="NULL" xml:space="preserve">
+    <value>null</value>
+    <comment>NULL文字列</comment>
+  </data>
+  <data name="STDOUT" xml:space="preserve">
+    <value>標準出力</value>
+    <comment>標準出力</comment>
+  </data>
+  <data name="SUCCEEDED" xml:space="preserve">
+    <value>成功</value>
+    <comment>成功時</comment>
+  </data>
+  <data name="TEX_ERR_FORMAT" xml:space="preserve">
+    <value>テクスチャのピクセル フォーマットが一致しません。</value>
+  </data>
+  <data name="TRACE_ERR_CHANGE_FAILED" xml:space="preserve">
+    <value>現行のバージョンのXBOX360版では、ログ出力先を標準出力以外に設定することができません。</value>
+    <comment>出力先切り替え失敗時</comment>
+  </data>
+  <data name="TRACE_INFO_CHANGE_FAILED" xml:space="preserve">
+    <value>出力先を切り替えることが出来ませんでした。</value>
+    <comment>出力先切り替え失敗時</comment>
+  </data>
+  <data name="TRACE_INFO_CHANGE_SUCCEEDED" xml:space="preserve">
+    <value>出力先が切り替わりました。
+以前の出力先は {0} で、現在の変更された出力先は {1} です。</value>
+    <comment>出力先切り替え成功時</comment>
+  </data>
+  <data name="TRACE_INFO_START" xml:space="preserve">
+    <value>ログ出力開始</value>
+    <comment>ログ出力開始</comment>
+  </data>
+</root>
