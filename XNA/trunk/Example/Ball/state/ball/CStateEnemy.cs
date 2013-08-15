@@ -73,7 +73,7 @@ namespace danmaq.ball.state.ball
 		private bool movePatternLowLevel(CBall entity)
 		{
 			return entity.counter % (int)MathHelper.Lerp(
-				40, 6, CInterpolate._amountSlowdown(CCursor.instance.level, 5)) == 0;
+				40, 6, CInterpolate.amountOutQuadClamp(CCursor.instance.level, 5)) == 0;
 		}
 
 		//* -----------------------------------------------------------------------*

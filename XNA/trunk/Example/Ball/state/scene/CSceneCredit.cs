@@ -152,7 +152,7 @@ namespace danmaq.ball.state.scene
 		/// </returns>
 		private byte interpolate(float start, float end, float now, float limit)
 		{
-			float result = CInterpolate._clampAccelerate(start, end, now, limit);
+			float result = CInterpolate.lerpClampInQuad(start, end, now, limit);
 			return (byte)((int)(result / 16) * 16);
 		}
 	}

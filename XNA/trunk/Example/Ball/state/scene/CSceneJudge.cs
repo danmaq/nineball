@@ -30,11 +30,10 @@ namespace danmaq.ball.state.scene
 		//* constants ──────────────────────────────-*
 
 		/// <summary>勝利時クラス オブジェクト。</summary>
-		public static readonly IState<CEntity, CGame> won =
-			new CSceneJudge("勝ち", Color.CornflowerBlue);
+		public static readonly IState<CEntity, CGame> won = new CSceneJudge("勝ち", Color.Aqua);
 
 		/// <summary>敗北時クラス オブジェクト。</summary>
-		public static readonly IState<CEntity, CGame> lose = new CSceneJudge("負け", Color.Tomato);
+		public static readonly IState<CEntity, CGame> lose = new CSceneJudge("負け", Color.Red);
 
 		/// <summary>カウントダウン表示用フォント。</summary>
 		private readonly CFont description = new CFont(CONTENT.texFont98);
