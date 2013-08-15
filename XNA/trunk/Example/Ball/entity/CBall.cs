@@ -75,10 +75,10 @@ namespace danmaq.ball.entity
 				switch (phase)
 				{
 					case 0:
-						fSpeed = CInterpolate._clampSlowFastSlow(0, MAX_SPEED, nPCount, nPLimit);
+						fSpeed = CInterpolate.lerpClampInOutQuad(0, MAX_SPEED, nPCount, nPLimit);
 						break;
 					case 2:
-						fSpeed = CInterpolate._clampAccelerate(MAX_SPEED, 0, nPCount, nPLimit);
+						fSpeed = CInterpolate.lerpClampInQuad(MAX_SPEED, 0, nPCount, nPLimit);
 						break;
 				}
 				graph.Add(fSpeed);

@@ -67,7 +67,7 @@ namespace danmaq.ball.core
 			if (instance != null)
 			{
 				throw new InvalidOperationException(
-					string.Format(nineball.Properties.Resources.ERR_SINGLETON,
+					string.Format(nineball.Properties.Resources.CLASS_ERR_SINGLETON,
 					this.GetType().FullName));
 			}
 			instance = this;
@@ -137,7 +137,7 @@ namespace danmaq.ball.core
 			}
 			catch (GamerServicesNotAvailableException e)
 			{
-				CLogger.add(nineball.Properties.Resources.WARN_GAMER_SERVICE);
+				CLogger.add(nineball.Properties.Resources.LIVE_WARN_FAILED);
 				CLogger.add(e);
 				CGuideWrapper.instance.removeGamerServiceComponent();
 			}

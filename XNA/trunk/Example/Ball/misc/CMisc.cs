@@ -34,6 +34,7 @@ namespace danmaq.ball.misc
 		public static CFont create98Font(Point locate, EAlign hAlign, Color color, string text)
 		{
 			CFont result = new CFont(CONTENT.texFont98, text);
+			result.text = text;
 			result.alignHorizontal = hAlign;
 			result.alignVertical = EAlign.LeftTop;
 			result.color = color;
